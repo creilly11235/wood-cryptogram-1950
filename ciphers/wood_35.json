@@ -1,0 +1,6 @@
+{
+ "n": 35,
+ "text": "FVAMI NTKFX XWATB OIZVV X",
+ "method": "same as Thouless B: key = sequence of words from a non-English book, each word -> sum of letter values mod 26, added Vigenere-style",
+ "src": "Cipherbrain #35"
+}
