@@ -71,3 +71,21 @@ under either reading of "distinct", with an English plaintext. Gutenberg's
 non-English holdings are dominated by canonical literature, which is the right
 place to look, but they are still a minority of what was in print before 1950.
 A negative here would narrow the search; it would not close #35.
+
+## Search-procedure note (added before the expanded sweep ran)
+
+The primary run could hold the whole key matrix in memory and funnel the top
+5,000 rows per ciphertext into the full objective. The expanded class cannot be
+held, so `sweep_expanded.py` streams: every text is turned into its two
+keystream blocks, all ciphertexts are scored against that block in one pass, and
+a **running per-ciphertext top-400** is kept with its keystreams. Stage 2 then
+rescores those 400 under the full objective.
+
+The funnel is therefore 400 out of ~4 × 10^8 rather than 5,000 out of 2.9 × 10^7.
+That is a tighter funnel and it can in principle drop the truth; the gate runs
+through the identical pipeline, so any such loss is inside the measured power.
+
+Cross-check before the expanded run: with the shard directory empty, the
+streaming sweep reproduces the primary engine's result on Wood's ciphertext
+exactly — same best score −14.677742, same top ten candidates in the same order,
+from independent retention code.

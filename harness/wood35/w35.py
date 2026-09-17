@@ -114,9 +114,8 @@ def file_streams(path, L=L):
     n = _dedup_stream(shifts, wid, kd, pd, L)
     kd, pd = kd[:n], pd[:n]
     m = len(toks) - L + 1
-    kp = np.empty((m, L), dtype=np.uint8)
-    for i in range(m):
-        kp[i] = shifts[i:i + L]
+    kp = np.ascontiguousarray(np.lib.stride_tricks.sliding_window_view(
+        shifts.astype(np.uint8), L))
     pp = np.arange(m, dtype=np.int32)
     return kd, pd, kp, pp
 
