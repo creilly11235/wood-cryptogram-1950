@@ -147,3 +147,80 @@ corpus swept here. **#35 is not information-limited; it is corpus-limited.**
 That is a materially different status from the one the repository recorded, and
 it makes expanding the key corpus the highest-value follow-up — see
 `AMEND_R52_1.md`.
+
+---
+
+# Amendment 1 result: 3,977 texts, 428,787,544 hypotheses — still NEGATIVE
+
+Registered in `AMEND_R52_1.md` (committed 17 Sep 2026, 07:29 UTC) before a single book was
+downloaded. **#35 is still not solved.**
+
+## A1. What was added
+
+3,848 Gutenberg texts fetched in the registered round-robin order, 200,184,725
+key tokens, joined to the 129 texts of the primary run:
+
+| fr | es | it | nl | hu | de | pt | fi | sv | da | la | eo | ca | pl |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 429 | 419 | 420 | 414 | 422 | 404 | 417 | 411 | 186 | 58 | 81 | 94 | 74 | 27 |
+
+1,418 catalogued texts failed to download and were skipped; the small languages
+(da, la, ca, eo, pl) are effectively exhausted. **69 of the 3,848 duplicate a
+book already in tier B or E** — visible in the result table as the same passage
+appearing twice under two names. Duplicates cost a little K and cannot create a
+false hit, since acceptance is by plaintext and re-encryption, not by row.
+
+```
+K = 428,787,544    ln K = 19.876    margin = +10.04 nats    (primary: +12.75)
+```
+
+## A2. Result
+
+| | primary (K = 2.86 × 10⁷) | expanded (K = 4.29 × 10⁸) |
+|---|---:|---:|
+| gate | 97/100, LB **0.915** | 39/40, LB **0.871** |
+| null ceiling | −14.306 | **−13.267** |
+| plaintext floor (p05) | −13.976 | −13.633 |
+| Wood's best | −14.678 | **−13.937** |
+| percentile among nulls | 92.5 | **88.0** |
+| all three conditions | fail | **fail** |
+
+Best candidate: `sv_65580` variant P token 43328, decoding to
+`UNTONEASACRISTEALSBYR`. It is not English, and it loses to 12 of the 100 nulls.
+The one gate failure (plant 14, `SEEITOOONMYSIDEHADSOM`) is the first genuine
+decoy win seen in this round: the true row placed second.
+
+## A3. The finding that matters more than the negative
+
+Expanding the key corpus raises the noise ceiling, and at 21 letters it does so
+fast. The quantity to watch is how often a **genuine** plaintext, keyed with its
+**true** book and offset, scores below the null ceiling — i.e. how often the bar
+would reject the right answer:
+
+| corpus | K | true plaintexts below the null ceiling |
+|---|---:|---:|
+| primary | 2.86 × 10⁷ | **3 / 100** — and all three are the non-English plants; **0 / 97** on English prose |
+| expanded | 4.29 × 10⁸ | **7 / 40 = 17.5 %** |
+
+A 15× corpus expansion moved the false-rejection rate from ~0% to ~18%. The
+null ceiling (−13.267) has now risen *above* the 5th-percentile plaintext floor
+(−13.633), which at the primary size it was below. **This bounds the whole
+approach**: another order of magnitude of key texts would put the median
+genuine plaintext near the noise ceiling, and the search would stop being able
+to certify its own answer. The margin arithmetic said K could reach ~10¹³ before
+identifiability dies; the measurement says the *usable* ceiling at 21 letters is
+nearer 10⁹.
+
+So the corrected status of #35 is narrower than "corpus-limited" as
+`RESULT_R52.md` §9 put it, and this supersedes that sentence:
+
+> #35 is attackable and this attack works — the gate proves it — but the key
+> corpus can only grow about one more order of magnitude before 21 letters stops
+> being enough to tell the answer from the noise. Finding Wood's text needs a
+> *targeted* source (what a British parapsychologist would have named in 1950),
+> not a bigger blind sweep.
+
+## A4. Cost
+
+Fetch 53 min; sweep 5,170 s wall on 4 cores. Round 52 total ≈ **6.4 CPU-hours**
+against a registered 12-hour cap.

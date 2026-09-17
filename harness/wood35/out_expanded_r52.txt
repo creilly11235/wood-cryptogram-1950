@@ -1,0 +1,52 @@
+expanded class K = 428787544  ln K = 19.876  margin = 10.042  blocks 7954
+ciphertexts 141 = 40 plants + 100 nulls + 1 real
+texts 250 rows 39988440 elapsed 803 s eta 7805 s
+texts 500 rows 64656886 elapsed 1218 s eta 6859 s
+texts 750 rows 82283826 elapsed 1464 s eta 6164 s
+texts 1000 rows 112937656 elapsed 1813 s eta 5069 s
+texts 1250 rows 145158552 elapsed 2136 s eta 4173 s
+texts 1500 rows 160370170 elapsed 2306 s eta 3860 s
+texts 1750 rows 186714088 elapsed 2629 s eta 3408 s
+texts 2000 rows 223733114 elapsed 3075 s eta 2818 s
+texts 2250 rows 253085978 elapsed 3416 s eta 2371 s
+texts 2500 rows 277993894 elapsed 3702 s eta 2008 s
+texts 2750 rows 306677556 elapsed 4033 s eta 1606 s
+texts 3000 rows 339250754 elapsed 4374 s eta 1154 s
+texts 3250 rows 368472170 elapsed 4654 s eta 762 s
+texts 3500 rows 389080720 elapsed 4832 s eta 493 s
+texts 3750 rows 405932916 elapsed 4977 s eta 280 s
+{
+ "K": 428787544,
+ "ln_K": 19.876472118791487,
+ "margin_nats": 10.042227881208515,
+ "texts": 3977,
+ "plants": 40,
+ "recovered": 39,
+ "wilson_lb": 0.8711834051199223,
+ "gate_passes": true,
+ "nulls": 100,
+ "null_max": -13.2665077302016,
+ "null_median": -14.482351634039386,
+ "plaintext_floor_p05": -13.632787138829856,
+ "real_best": -13.936644672183633,
+ "cond1_beats_null_max": false,
+ "cond2_under_2pct": false,
+ "cond3_above_plaintext_floor": false,
+ "nulls_reaching_real": 12,
+ "real_percentile_in_nulls": 88.0,
+ "topT": 50,
+ "elapsed_s": 5170,
+ "passes_all_three": false
+}
+
+real top 10:
+  -13.9366 ['G:sv_65580', 'P', 43328] UNTONEASACRISTEALSBYR
+  -14.6777 ['G:nl_8100', 'P', 219311] TGEHADREEKSSENTEASYBI
+  -14.6777 ['B:nl/8099.txt', 'P', 24380] TGEHADREEKSSENTEASYBI
+  -14.6777 ['B:nl/8100.txt', 'P', 219150] TGEHADREEKSSENTEASYBI
+  -14.6777 ['G:nl_8099', 'P', 24543] TGEHADREEKSSENTEASYBI
+  -14.8403 ['G:de_19611', 'P', 56674] TSLAVINGWASROSESHBUZZ
+  -14.9515 ['G:es_39312', 'D', 13249] DDOESHEBRIEKTOTHATKUX
+  -14.9801 ['G:fr_9643', 'P', 113912] NGSHALLSVARANINFATABU
+  -15.0204 ['G:fr_16066', 'P', 199481] EDAORIESHOROUGHMINUNH
+  -15.0603 ['G:de_15070', 'D', 559] VCOURHEMIDWASSORIMIAE

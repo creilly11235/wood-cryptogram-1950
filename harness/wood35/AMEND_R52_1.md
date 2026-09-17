@@ -78,10 +78,16 @@ The primary run could hold the whole key matrix in memory and funnel the top
 5,000 rows per ciphertext into the full objective. The expanded class cannot be
 held, so `sweep_expanded.py` streams: every text is turned into its two
 keystream blocks, all ciphertexts are scored against that block in one pass, and
-a **running per-ciphertext top-400** is kept with its keystreams. Stage 2 then
-rescores those 400 under the full objective.
+a **running per-ciphertext top-T** is kept with its keystreams. Stage 2 then
+rescores those T under the full objective.
 
-The funnel is therefore 400 out of ~4 × 10^8 rather than 5,000 out of 2.9 × 10^7.
+**Correction, written after the run:** this paragraph originally said T = 400,
+which was the value used in the empty-shard cross-check. The sweep itself ran at
+the module default **T = 50**, so the funnel was 50 out of 4.29 × 10^8 rather
+than 5,000 out of 2.9 × 10^7. The gate ran through that same T = 50 pipeline and
+recovered 39 of 40, so the tighter funnel is measured rather than assumed, and
+the registered claim below is unaffected — but the number in this note was wrong
+and is corrected here rather than quietly edited.
 That is a tighter funnel and it can in principle drop the truth; the gate runs
 through the identical pipeline, so any such loss is inside the measured power.
 
