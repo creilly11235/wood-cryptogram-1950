@@ -1,0 +1,110 @@
+0 OK -13.7006 true -13.7006 rank 2
+1 OK -13.883 true -13.883 rank 1
+2 OK -11.6716 true -11.6716 rank 1
+3 OK -12.5071 true -12.5071 rank 1
+4 OK -11.5926 true -11.5926 rank 1
+5 OK -13.1789 true -13.1789 rank 1
+6 OK -13.3319 true -13.3319 rank 2
+7 OK -13.4859 true -13.4859 rank 1
+8 OK -11.4549 true -11.4549 rank 1
+9 OK -11.9603 true -11.9603 rank 1
+10 OK -10.937 true -10.937 rank 1
+11 OK -12.9839 true -12.9839 rank 1
+12 OK -11.5838 true -11.5838 rank 1
+13 OK -11.9951 true -11.9951 rank 1
+14 OK -13.4637 true -13.4637 rank 1
+15 OK -11.2136 true -11.2136 rank 1
+16 OK -12.0573 true -12.0573 rank 1
+17 OK -13.5494 true -13.5494 rank 1
+18 OK -11.3523 true -11.3523 rank 1
+19 OK -12.0852 true -12.0852 rank 2
+20 OK -11.2306 true -11.2306 rank 1
+21 OK -11.2168 true -11.2168 rank 1
+22 OK -12.7668 true -12.7668 rank 1
+23 OK -11.5439 true -11.5439 rank 1
+24 OK -11.5655 true -11.5655 rank 1
+25 OK -11.609 true -11.609 rank 1
+26 OK -13.3394 true -13.3394 rank 1
+27 OK -10.8677 true -10.8677 rank 1
+28 OK -11.6163 true -11.6163 rank 1
+29 OK -12.2068 true -12.2068 rank 1
+30 OK -11.8256 true -11.8256 rank 1
+31 OK -11.0132 true -11.0132 rank 1
+32 OK -12.7372 true -12.7372 rank 2
+33 OK -12.5563 true -12.5563 rank 1
+34 OK -12.6889 true -12.6889 rank 1
+35 OK -10.6874 true -10.6874 rank 1
+36 OK -11.655 true -11.655 rank 1
+37 -- -15.7628 true -16.1219 rank 7
+38 OK -12.1325 true -12.1325 rank 1
+39 OK -11.054 true -11.054 rank 1
+40 OK -12.1516 true -12.1516 rank 1
+41 OK -13.8372 true -13.8372 rank 1
+42 OK -12.185 true -12.185 rank 1
+43 OK -12.2413 true -12.2413 rank 1
+44 OK -10.7696 true -10.7696 rank 1
+45 OK -12.2225 true -12.2225 rank 1
+46 OK -11.4881 true -11.4881 rank 1
+47 OK -12.1116 true -12.1116 rank 1
+48 OK -14.2939 true -14.2939 rank 1
+49 OK -14.2872 true -14.2872 rank 1
+50 OK -10.8813 true -10.8813 rank 1
+51 OK -12.8277 true -12.8277 rank 1
+52 OK -10.8866 true -10.8866 rank 1
+53 OK -12.4199 true -12.4199 rank 2
+54 OK -12.1378 true -12.1378 rank 1
+55 -- -15.3195 true -20.572 rank None
+56 OK -10.9348 true -10.9348 rank 1
+57 OK -12.1087 true -12.1087 rank 1
+58 OK -12.9761 true -12.9761 rank 1
+59 OK -11.4491 true -11.4491 rank 1
+60 OK -12.2548 true -12.2548 rank 1
+61 OK -12.4041 true -12.4041 rank 1
+62 OK -12.1014 true -12.1014 rank 1
+63 OK -11.5144 true -11.5144 rank 1
+64 OK -11.3274 true -11.3274 rank 1
+65 OK -12.0032 true -12.0032 rank 1
+66 -- -15.5351 true -16.0442 rank 3
+67 OK -11.9118 true -11.9118 rank 2
+68 OK -11.5476 true -11.5476 rank 1
+69 OK -11.0165 true -11.0165 rank 1
+70 OK -11.0073 true -11.0073 rank 1
+71 OK -12.5716 true -12.5716 rank 1
+72 OK -10.3633 true -10.3633 rank 1
+73 OK -11.9949 true -11.9949 rank 2
+74 OK -11.5633 true -11.5633 rank 1
+75 OK -11.7382 true -11.7382 rank 1
+76 OK -10.7697 true -10.7697 rank 1
+77 OK -11.5481 true -11.5481 rank 1
+78 OK -11.3769 true -11.3769 rank 1
+79 OK -11.35 true -11.35 rank 1
+80 OK -13.6364 true -13.6364 rank 1
+81 OK -12.251 true -12.251 rank 1
+82 OK -13.784 true -13.784 rank 1
+83 OK -12.8793 true -12.8793 rank 1
+84 OK -10.2881 true -10.2881 rank 2
+85 OK -12.4637 true -12.4637 rank 1
+86 OK -11.0155 true -11.0155 rank 1
+87 OK -10.8863 true -10.8863 rank 2
+88 OK -13.96 true -13.96 rank 1
+89 OK -11.5371 true -11.5371 rank 1
+90 OK -12.3598 true -12.3598 rank 2
+91 OK -12.6896 true -12.6896 rank 1
+92 OK -11.4465 true -11.4465 rank 1
+93 OK -11.0042 true -11.0042 rank 2
+94 OK -12.8307 true -12.8307 rank 1
+95 OK -11.9975 true -11.9975 rank 1
+96 OK -11.2837 true -11.2837 rank 1
+97 OK -11.5847 true -11.5847 rank 1
+98 OK -12.0772 true -12.0772 rank 1
+99 OK -11.0691 true -11.0691 rank 4
+{
+ "plants": 100,
+ "recovered": 97,
+ "rate": 0.97,
+ "wilson_lb": 0.915479219195973,
+ "gate_passes": true,
+ "truth_score_p05": -13.976338552497765,
+ "truth_score_median": -11.996308143902183,
+ "K": 28602798
+}

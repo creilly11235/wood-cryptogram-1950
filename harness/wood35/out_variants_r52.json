@@ -1,0 +1,288 @@
+{
+ "convB": {
+  "K": 28602798,
+  "best_score": -15.366181459595605,
+  "bar": {
+   "cond1_beats_null_max": false,
+   "cond2_under_2pct": false,
+   "cond3_above_plaintext_floor": false,
+   "nulls_reaching_real": 94,
+   "null_max": -14.30606633575028,
+   "plaintext_floor_p05": -13.976338552497765
+  },
+  "top": [
+   {
+    "tier": "E",
+    "file": "en/5200.txt",
+    "var": "D",
+    "token": 20803,
+    "score": -15.366181459595605,
+    "pt": "RAWPATIRSOTHINTHEYUPY"
+   },
+   {
+    "tier": "B",
+    "file": "sv/13101.txt",
+    "var": "D",
+    "token": 109267,
+    "score": -15.823982159212823,
+    "pt": "MINTOFKREGARDMOURFADT"
+   },
+   {
+    "tier": "B",
+    "file": "sv/10117.txt",
+    "var": "P",
+    "token": 17716,
+    "score": -16.025374282232637,
+    "pt": "SWOTTEDEERITHYORDOMEU"
+   },
+   {
+    "tier": "E",
+    "file": "en/10.txt",
+    "var": "P",
+    "token": 159774,
+    "score": -16.03056006829771,
+    "pt": "XLTENDUSEESIAMONAHOAC"
+   },
+   {
+    "tier": "B",
+    "file": "nl/8098.txt",
+    "var": "D",
+    "token": 6044,
+    "score": -16.072757672288883,
+    "pt": "BITSHALLIQXOPMORTHECO"
+   },
+   {
+    "tier": "B",
+    "file": "nl/8100.txt",
+    "var": "D",
+    "token": 135106,
+    "score": -16.072757672288883,
+    "pt": "BITSHALLIQXOPMORTHECO"
+   },
+   {
+    "tier": "B",
+    "file": "sv/13100.txt",
+    "var": "P",
+    "token": 111612,
+    "score": -16.17634311732101,
+    "pt": "HONDSTANEVENSSECHCCBB"
+   },
+   {
+    "tier": "E",
+    "file": "en/2600.txt",
+    "var": "P",
+    "token": 397221,
+    "score": -16.320252077161523,
+    "pt": "PREESAMADETMITRESAENA"
+   },
+   {
+    "tier": "B",
+    "file": "sv/13100.txt",
+    "var": "P",
+    "token": 128046,
+    "score": -16.41588232339457,
+    "pt": "JTBTHDURINGBOUNTLEAJY"
+   },
+   {
+    "tier": "E",
+    "file": "en/1342.txt",
+    "var": "D",
+    "token": 6283,
+    "score": -16.425974367674563,
+    "pt": "MTBCEHOUWERETCAROUTUS"
+   }
+  ],
+  "passes_all_three": false
+ },
+ "add": {
+  "K": 28602798,
+  "best_score": -14.913358759304344,
+  "bar": {
+   "cond1_beats_null_max": false,
+   "cond2_under_2pct": false,
+   "cond3_above_plaintext_floor": false,
+   "nulls_reaching_real": 25,
+   "null_max": -14.30606633575028,
+   "plaintext_floor_p05": -13.976338552497765
+  },
+  "top": [
+   {
+    "tier": "E",
+    "file": "en/3623.txt",
+    "var": "D",
+    "token": 146563,
+    "score": -14.913358759304344,
+    "pt": "RBROATHEAISEDECKHASCR"
+   },
+   {
+    "tier": "E",
+    "file": "en/2701.txt",
+    "var": "P",
+    "token": 214009,
+    "score": -15.132559129489728,
+    "pt": "HVXOSTPAYTHEPALMONLYP"
+   },
+   {
+    "tier": "E",
+    "file": "en/1524.txt",
+    "var": "D",
+    "token": 7325,
+    "score": -15.135275032156443,
+    "pt": "HNONETASEADBEREDLARDH"
+   },
+   {
+    "tier": "E",
+    "file": "en/100.txt",
+    "var": "D",
+    "token": 178760,
+    "score": -15.135275032156443,
+    "pt": "HNONETASEADBEREDLARDH"
+   },
+   {
+    "tier": "B",
+    "file": "es/2000.txt",
+    "var": "D",
+    "token": 212223,
+    "score": -15.38127190210976,
+    "pt": "YEISALTASECOLBUTADELI"
+   },
+   {
+    "tier": "B",
+    "file": "fr/14155.txt",
+    "var": "P",
+    "token": 68662,
+    "score": -15.888199020857567,
+    "pt": "RDLEGERESONHERASRLLON"
+   },
+   {
+    "tier": "E",
+    "file": "en/100.txt",
+    "var": "P",
+    "token": 424796,
+    "score": -15.9450426049037,
+    "pt": "CRZHAOWROTECORTHATTEX"
+   },
+   {
+    "tier": "E",
+    "file": "en/100.txt",
+    "var": "D",
+    "token": 953744,
+    "score": -16.047287551328953,
+    "pt": "HDRSCHALINASSISENIOHG"
+   },
+   {
+    "tier": "E",
+    "file": "en/1661.txt",
+    "var": "P",
+    "token": 89206,
+    "score": -16.062909040015867,
+    "pt": "XBTITASMOFANTVIEDFARD"
+   },
+   {
+    "tier": "E",
+    "file": "en/84.txt",
+    "var": "D",
+    "token": 56226,
+    "score": -16.19853156897422,
+    "pt": "NENSCHEDADOORSOFAVVWR"
+   }
+  ],
+  "passes_all_three": false
+ },
+ "S": {
+  "K": 22132525,
+  "best_score": -16.044688161619366,
+  "bar": {
+   "cond1_beats_null_max": false,
+   "cond2_under_2pct": false,
+   "cond3_above_plaintext_floor": false,
+   "nulls_reaching_real": 188,
+   "null_max": -14.30606633575028,
+   "plaintext_floor_p05": -13.976338552497765
+  },
+  "note": "B+E nulls reused; tier S has the smaller K, so this is conservative",
+  "top": [
+   {
+    "tier": "S",
+    "file": "lit/tatoeba.txt",
+    "var": "D",
+    "token": 372181,
+    "score": -16.044688161619366,
+    "pt": "KUBYPTWARISSOWEATENON"
+   },
+   {
+    "tier": "S",
+    "file": "rulat/tatoeba_rus.txt",
+    "var": "D",
+    "token": 387610,
+    "score": -16.078600880934726,
+    "pt": "EOLMRYLANDPOLLINFLATM"
+   },
+   {
+    "tier": "S",
+    "file": "rulat/tatoeba_rus.txt",
+    "var": "P",
+    "token": 4958113,
+    "score": -16.230535007128687,
+    "pt": "NVASSAWHILIESTSHDIDKE"
+   },
+   {
+    "tier": "S",
+    "file": "ces/tatoeba.txt",
+    "var": "D",
+    "token": 357855,
+    "score": -16.23545921169607,
+    "pt": "VUOWNSCANWHIPTTALLYDA"
+   },
+   {
+    "tier": "S",
+    "file": "ukr/tatoeba.txt",
+    "var": "D",
+    "token": 505125,
+    "score": -16.301495252172767,
+    "pt": "YLISORTUCEXPRESSGROWT"
+   },
+   {
+    "tier": "S",
+    "file": "rulat/tatoeba_rus.txt",
+    "var": "D",
+    "token": 4547898,
+    "score": -16.39988215193426,
+    "pt": "EDBYASSEDBITAFFTDRAMM"
+   },
+   {
+    "tier": "S",
+    "file": "lat/tatoeba.txt",
+    "var": "D",
+    "token": 167372,
+    "score": -16.437897889171616,
+    "pt": "EESCISSAFORICANSLEBVK"
+   },
+   {
+    "tier": "S",
+    "file": "rulat/tatoeba_rus.txt",
+    "var": "D",
+    "token": 3784327,
+    "score": -16.533073473523096,
+    "pt": "VITEPAPEATCHISMACEWMC"
+   },
+   {
+    "tier": "S",
+    "file": "lit/tatoeba.txt",
+    "var": "P",
+    "token": 608631,
+    "score": -16.596202418815068,
+    "pt": "STNTEREISETAKROVEDASK"
+   },
+   {
+    "tier": "S",
+    "file": "rulat/tatoeba_rus.txt",
+    "var": "P",
+    "token": 695023,
+    "score": -16.685546168799174,
+    "pt": "HMHMEETSFLOWITOFIHANF"
+   }
+  ],
+  "passes_all_three": false
+ }
+}
