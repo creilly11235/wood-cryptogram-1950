@@ -7,6 +7,8 @@ It is #35 on Klaus Schmeh's list of the Top 50 unsolved encrypted messages.
 
 This repository holds the solution, the code that found it, and the checks. **Klaus Schmeh
 confirmed the solution on 4 October 2026.**
+His announcement: ["Wood's cryptogram from the crypt: Another top 50 crypto mystery
+solved"](https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/).
 
 | | |
 |---|---|
