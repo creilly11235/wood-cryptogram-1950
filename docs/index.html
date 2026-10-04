@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Wood&#x27;s 1950 Cryptogram Was Solved</title>
+<meta name="description" content="How T. E. Wood's 1950 survival-test cryptogram, #35 on Klaus Schmeh's Top 50 unsolved list, was solved: the key is the Lord's Prayer in German.">
+<style>
+:root { --bg:#fbfaf7; --fg:#1f1d1a; --muted:#6b6660; --rule:#e4e0d8; --accent:#8a3b12; --code:#f1eee8; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#16150f; --fg:#e9e6df; --muted:#a39d93; --rule:#34312b; --accent:#e39a6c; --code:#24221c; }
+}
+* { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:18px/1.65 Charter, "Iowan Old Style", Georgia, "Times New Roman", serif; }
+main { max-width:680px; margin:0 auto; padding:48px 16px 64px; }
+header h1 { font-size:2.1rem; line-height:1.2; margin:0 0 8px; letter-spacing:-0.01em; }
+header p { color:var(--muted); margin:0 0 32px; font-size:0.95rem; }
+h2 { font-size:1.35rem; line-height:1.3; margin:2.2em 0 0.6em; }
+p, li { margin:0 0 1em; }
+ul, ol { padding-left:1.3em; margin:0 0 1em; }
+li > p { margin:0 0 0.35em; }
+li { margin:0 0 0.35em; }
+a { color:var(--accent); }
+strong { font-weight:650; }
+code { background:var(--code); padding:0.1em 0.3em; border-radius:4px; font-size:0.9em; }
+.table-wrap { overflow-x:auto; margin:0 0 1.4em; }
+table { border-collapse:collapse; width:100%; font-size:0.9rem; line-height:1.4;
+  font-family:-apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+th, td { text-align:left; padding:6px 10px; border-bottom:1px solid var(--rule); vertical-align:top; }
+th { font-weight:600; border-bottom:2px solid var(--rule); }
+figure { margin:1.6em 0; }
+figure img { width:100%; height:auto; border:1px solid var(--rule); border-radius:6px; background:#fff; }
+figcaption { color:var(--muted); font-size:0.85rem; margin-top:6px; }
+footer { border-top:1px solid var(--rule); margin-top:48px; padding-top:16px; color:var(--muted); font-size:0.9rem; }
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>How Wood&#x27;s 1950 Cryptogram Was Solved</h1>
+<p>4 October 2026 · <a href="https://github.com/creilly11235/wood-cryptogram-1950">Code and data on GitHub</a></p>
+</header>
+<article>
+<h2>Summary</h2>
+<p>T. E. Wood's 1950 cryptogram, unsolved for 76 years and #35 on Klaus Schmeh's Top 50 list, is solved. Schmeh checked it and confirmed it on 4 October 2026.</p>
+<ul>
+<li><strong>Ciphertext (encrypted message):</strong> FVAMI NTKFX XWATB OIZVV X</li>
+<li><strong>Key passage:</strong> the Lord's Prayer in German, 1912 Luther Bible wording, from "Unser Vater in dem Himmel" (Matthew 6:9b-11)</li>
+<li><strong>Method:</strong> Robert Thouless's 1948 word-sum system, which Wood said he used</li>
+<li><strong>Plaintext (decoded message):</strong> HIERBINICHTOTSIENSTEW, read as "Hier bin ich. Totsiens. T.E.W."</li>
+</ul>
+<p>That is German for "here I am", Afrikaans for "goodbye", and Wood's initials. It fits a message meant to come from beyond the grave, and it fits Wood's own clue that the message "will not be in any one language".</p>
+<h2>The puzzle</h2>
+<p>Wood's cryptogram was a test of life after death: he would publish a message, die, and then try to send the key back through a medium. He was copying an idea from the psychologist Robert Thouless.</p>
+<p><strong>Thouless, 1948.</strong> In "A Test of Survival" (<em>Proceedings of the Society for Psychical Research</em> 48), Thouless published enciphered messages whose keys only he knew. One of them used a system meant to be unbreakable without the key:</p>
+<ol>
+<li>Pick a passage of text as the key, and skip any word that has already appeared.</li>
+<li>Turn each word into one letter: add up its letters (A=1 to Z=26), divide by 26, and take the remainder (1 is A, 25 is Y, 0 is Z).</li>
+<li>Use that key letter to shift one message letter along the alphabet: A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way.</li>
+</ol>
+<p>Each key word supplies the shift for one message letter. So a 21-letter message needs 21 distinct key words.</p>
+<p><strong>Wood, 1950.</strong> T. E. Wood, a solicitor born in Yorkshire in 1887 who had practised in Burma, answered with "A Further Test for Survival" (<em>Proceedings</em> 49). He published FVAMI NTKFX XWATB OIZVV X and said:</p>
+<ul>
+<li>he used Thouless's method, with repeated words omitted</li>
+<li>the key passage "is in an accessible book", in a foreign language</li>
+<li>the message "will not be in any one language"</li>
+</ul>
+<p>He chose foreign languages on purpose, to defeat anyone guessing common English words. Wood died decades ago, according to Schmeh, and no key ever arrived from the other side.</p>
+<h2>Why it stayed open, and our own wrong turn</h2>
+<p>Thouless himself pointed out the problem: with a free choice of key letters, any ciphertext from his system can be turned into any message of the same length. With only 21 letters, a "solution" seemed impossible to tell apart from luck.</p>
+<p>This project believed that too at first. Its notes called Wood's cryptogram "too under-determined for a blind Gutenberg scan", because "any 21-letter key sequence can produce 'plausible' text", and it was not attempted.</p>
+<p><strong>That reasoning was wrong, and fixing it is what opened the door.</strong> It holds for a key of random letters, but Wood's key is not random: it is consecutive words of a published book. So the only possible keys are the starting points in real books, a finite list that can be searched.</p>
+<p>Round 52 (17 September 2026) measured it. Across 28.6 million combinations of starting point and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries. The search could work.</p>
+<p>But Wood's message still came back blank: first over those 129 books, then over 3,977 texts, adding 3,848 Project Gutenberg books in 14 languages (about 429 million combinations). The bigger run also threw up more convincing false leads, a sign that adding ever more books would not help. The note at the time said the problem needed "a targeted source", not a bigger sweep.</p>
+<h2>The idea that cracked it: take Wood at his word</h2>
+<p>The breakthrough on the evening of 3 October 2026 came from going back to one of Wood's own clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written "in several different languages". Round 52 had noted the claim but scored candidates as English only.</p>
+<p>That matters because of how a search decides what counts as a hit. It decrypts with every possible key and ranks the results by how much they look like language. A message that switches from German to Afrikaans looks like gibberish to an English-only scorer. The right book also has to be in the collection, and the German Bible was not among the earlier runs' texts.</p>
+<p>Two changes followed:</p>
+<ol>
+<li><strong>Scoring across seven languages.</strong> A quick first pass keeps the 3,000 candidates whose letter patterns look most like English, French, German, Latin, Italian, Spanish or Portuguese. Those are then split into dictionary words, with the language allowed to change from word to word.</li>
+<li><strong>Bibles as the key source.</strong> Wood said the key was in "an accessible book" in a foreign language. A Bible is the obvious candidate, so 19 Bibles in Latin-alphabet languages were added.</li>
+</ol>
+<p>A first pass had tried famous passages typed in by hand, including the German Lord's Prayer, and found nothing. Both of its German versions began "Vater unser", the familiar church wording, which gives garbage. The Bible run used the full Bible text, where the prayer begins "Unser Vater in dem Himmel".</p>
+<p>The rules for what would count as a hit in the Bible search were written down and committed before that search was run, so the bar could not quietly move afterwards.</p>
+<h2>The hit</h2>
+<p>The Bible run tried 26.7 million combinations of starting point and treatment of repeated words, for each of two versions of the arithmetic; the first pass took under three minutes. Under Thouless's rule, the top result came from the German Bible, starting at the sixth word of Matthew 6:9, the opening of the Lord's Prayer. It decrypted to HIERBINICHTOTSIENSTEW.</p>
+<p>The runner-up was RASFATAFITEANDAMAPOSE, which is junk. Every one of the 21 letters works, using the 21 distinct words from "Unser" to "uns". Four repeats are skipped ("Dein" twice, "Himmel" and "Unser" once each), and the ä in "täglich" is read as a:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Key word</th>
+<th>Letter sum</th>
+<th>Key letter</th>
+<th>Cipher → plain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Unser</td>
+<td>77</td>
+<td>Y</td>
+<td>F → H</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Vater</td>
+<td>66</td>
+<td>N</td>
+<td>V → I</td>
+</tr>
+<tr>
+<td>3</td>
+<td>in</td>
+<td>23</td>
+<td>W</td>
+<td>A → E</td>
+</tr>
+<tr>
+<td>4</td>
+<td>dem</td>
+<td>22</td>
+<td>V</td>
+<td>M → R</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Himmel</td>
+<td>60</td>
+<td>H</td>
+<td>I → B</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Dein</td>
+<td>32</td>
+<td>F</td>
+<td>N → I</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Name</td>
+<td>33</td>
+<td>G</td>
+<td>T → N</td>
+</tr>
+<tr>
+<td>8</td>
+<td>werde</td>
+<td>55</td>
+<td>C</td>
+<td>K → I</td>
+</tr>
+<tr>
+<td>9</td>
+<td>geheiligt</td>
+<td>82</td>
+<td>D</td>
+<td>F → C</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Reich</td>
+<td>43</td>
+<td>Q</td>
+<td>X → H</td>
+</tr>
+<tr>
+<td>11</td>
+<td>komme</td>
+<td>57</td>
+<td>E</td>
+<td>X → T</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Wille</td>
+<td>61</td>
+<td>I</td>
+<td>W → O</td>
+</tr>
+<tr>
+<td>13</td>
+<td>geschehe</td>
+<td>60</td>
+<td>H</td>
+<td>A → T</td>
+</tr>
+<tr>
+<td>14</td>
+<td>auf</td>
+<td>28</td>
+<td>B</td>
+<td>T → S</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Erden</td>
+<td>46</td>
+<td>T</td>
+<td>B → I</td>
+</tr>
+<tr>
+<td>16</td>
+<td>wie</td>
+<td>37</td>
+<td>K</td>
+<td>O → E</td>
+</tr>
+<tr>
+<td>17</td>
+<td>im</td>
+<td>22</td>
+<td>V</td>
+<td>I → N</td>
+</tr>
+<tr>
+<td>18</td>
+<td>täglich</td>
+<td>60</td>
+<td>H</td>
+<td>Z → S</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Brot</td>
+<td>55</td>
+<td>C</td>
+<td>V → T</td>
+</tr>
+<tr>
+<td>20</td>
+<td>gib</td>
+<td>18</td>
+<td>R</td>
+<td>V → E</td>
+</tr>
+<tr>
+<td>21</td>
+<td>uns</td>
+<td>54</td>
+<td>B</td>
+<td>X → W</td>
+</tr>
+</tbody>
+</table></div>
+<p>To read a row: UNSER is 21+14+19+5+18 = 77, which leaves 25 after dividing by 26, so the key letter is Y. Y shifts by 24, so cipher F goes back 24 places to H.</p>
+<p><strong>It did not pass our own automatic test.</strong> The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081). The reason is visible in the output: the scorer had no Afrikaans and no idea of initials, so it read the end as "TOT SIEN STEW". Under the other version of the arithmetic, a nonsense string, ALENRENDRAYCUTREFUGES, scored slightly higher still. That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.</p>
+<h2>How it was checked</h2>
+<p>Before anything went to Schmeh, the result was attacked from five directions:</p>
+<ul>
+<li><strong>Rebuilt from scratch.</strong> A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.</li>
+<li><strong>A second AI, working independently.</strong> GPT-6 Astra, run through OpenAI's Codex tool, reviewed the claim and came back "confirmed with reservations". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.</li>
+<li><strong>The original papers.</strong> Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that "A means no shift" comes from Thouless's own text, not from a later guess.</li>
+<li><strong>Near misses fail.</strong> The modern church wording gives SXFFFLOEPTPPQMAVDXEUR. Keeping the repeated words breaks the text after "HIERBINIC". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk.</li>
+<li><strong>Could it be luck?</strong> A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature. With TEW there was exactly one match: this one. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad. TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.</li>
+</ul>
+<p>Finally, priority. Searches of Schmeh's blog and its comments, Reddit's r/codes, and the other 2026 solver logs found no earlier solution of Wood's cryptogram. That is not proof that nobody got there first.</p>
+<h2>The correction: Thouless got his own example wrong</h2>
+<p>While checking the method against the 1948 paper, we found an arithmetic slip in Thouless's own worked example. It has been in print for 78 years, and we have not seen it pointed out anywhere.</p>
+<p>To show how his system works, Thouless enciphered THERE IS NO DEATH with Hamlet's "To be or not to be" speech as the key. He printed the key letters IGGWW BG PI VNWNU and the ciphertext BNKNA JYCWY RWGB.</p>
+<p>The first 13 key letters are right. The 14th key word is "suffer":</p>
+<ul>
+<li>S+U+F+F+E+R = 19+21+6+6+5+18 = <strong>75</strong></li>
+<li>75 = 2 × 26 + 23, so the key letter should be <strong>W</strong>, the 23rd letter</li>
+<li>Thouless printed <strong>U</strong>, the 21st</li>
+</ul>
+<p>His printed ciphertext follows the printed U, so this is not a single misprint. The 14th plain letter is the final H of DEATH. Shifted by U it becomes B, which he printed. Shifted by the correct W it would be <strong>D</strong>. So the last group of his example should read RWGD, not RWGB.</p>
+<figure><img src="thouless_1948_suffer_slip.png" alt="Thouless 1948, pp. 259-260, with the slip marked: &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below"><figcaption>Thouless 1948, pp. 259-260, with the slip marked: &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below</figcaption></figure>
+
+<p>The man who invented the system mis-added one word in 14 in his showcase example. Wood's 21 key letters, presumably worked out by hand in 1950, contain no error at all. The method that decrypts Wood is Thouless's rule as he wrote it, not the flawed example.</p>
+<h2>Next: telling the Society for Psychical Research</h2>
+<p>Wood asked that anyone who tried to decipher his message "communicate the result (even if negative) to the Society". He promised the Society "fuller particulars" about himself and photographs of him and his home, and said his executors would be asked to tell it "the circumstances" and date of his death. If that file survives, the Society and the files may be able to finish the story.</p>
+<h2>Timeline and credits</h2>
+<p>Times are Pacific. Most are commit times, which record when each step was saved.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Date (Pacific time)</th>
+<th>What happened</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4 Oct 2026, 12:56 am</td>
+<td>Schmeh confirms the solution by email</td>
+</tr>
+<tr>
+<td>3 Oct 2026, 11:28 pm</td>
+<td>The solution is sent to Schmeh</td>
+</tr>
+<tr>
+<td>3 Oct 2026, about 11:10–11:35 pm</td>
+<td>Checks of Schmeh's blog and comments, Reddit's r/codes and other 2026 solver logs find no earlier solution</td>
+</tr>
+<tr>
+<td>3 Oct 2026, 10:43 pm</td>
+<td>Checking Thouless's worked example turns up his 1948 arithmetic slip</td>
+</tr>
+<tr>
+<td>3 Oct 2026, 10:06–10:43 pm</td>
+<td>Checks: Astra's review, the 1948 and 1950 papers, the 854-million-decryption luck test</td>
+</tr>
+<tr>
+<td>3 Oct 2026, 9:44 pm</td>
+<td>The Bible run finds the Lord's Prayer key</td>
+</tr>
+<tr>
+<td>3 Oct 2026, 9:37 pm</td>
+<td>Famous passages typed in by hand, including two German Lord's Prayers that begin "Vater unser", come back empty</td>
+</tr>
+<tr>
+<td>3 Oct 2026, 9:33 pm</td>
+<td>The multilingual search rules are committed; the Bible search is added at 9:41 pm</td>
+</tr>
+<tr>
+<td>17 Sep 2026</td>
+<td>Round 52 (Claude Opus 5) corrects the "too short" dismissal; English-only searches of 129 and then 3,977 texts come back empty</td>
+</tr>
+<tr>
+<td>2 Sep 2026</td>
+<td>First project commit</td>
+</tr>
+<tr>
+<td>Aug 2019</td>
+<td>Richard Bean solves Thouless's Message B by searching books by computer, pinning down exactly how the method works</td>
+</tr>
+<tr>
+<td>17 Apr 2017</td>
+<td>Schmeh lists Wood's cryptogram as #35 of his Top 50</td>
+</tr>
+<tr>
+<td>1950</td>
+<td>Wood publishes his cryptogram</td>
+</tr>
+<tr>
+<td>1948</td>
+<td>Thouless publishes "A Test of Survival"</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Credits.</strong> Robert Thouless designed the method. Richard Bean's 2019 solve of Thouless's Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer. Claude Opus 5.5 (Anthropic) wrote the search code and found the key, building on code written by Claude Opus 5; GPT-6 Astra (OpenAI) checked it independently.</p>
+<p><strong>Sources</strong></p>
+<ul>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">"The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt"</a>, 17 Apr 2017</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">"Richard Bean solves another Top 50 crypto mystery"</a>, 16 Aug 2019</li>
+<li>T. E. Wood, "A Further Test for Survival", <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, pp. 105-106</li>
+<li>R. H. Thouless, "A Test of Survival", <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the SPR</em> 48</a>, pp. 258-260</li>
+<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Luther Bible 1912, Matthew 6</a></li>
+</ul>
+</article>
+<footer>
+<p>Check the decryption yourself with <code>python3 harness/wood35t/verify_wood.py</code> from
+<a href="https://github.com/creilly11235/wood-cryptogram-1950">the repository</a>. Code under the MIT License.</p>
+</footer>
+</main>
+</body>
+</html>
