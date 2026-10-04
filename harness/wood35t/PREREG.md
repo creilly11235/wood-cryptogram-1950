@@ -48,3 +48,11 @@ Also score the literal published convention, shift = sum mod 26 (Thouless's prin
 description, which Wood may have followed instead of Thouless's actual off-by-one practice).
 Implemented exactly by scoring a second ciphertext `WOODm1` = Wood's letters each minus one:
 ct - ((sum - 1) + 1) = (ct - 1) - (sum - 1). Same gate, nulls and bar; both rows reported.
+
+## Amendment 2 (before any Bible-tier score of Wood)
+Separate arm, tier BIB: 19 complete Latin-script Bibles from christos-c/bible-corpus
+(raw.githubusercontent.com; Latin = Vulgate, plus French, German, Italian, Spanish,
+Portuguese, Dutch, Danish, Swedish, Norwegian, Icelandic, Esperanto, Finnish, Hungarian,
+Polish, Czech, Romanian, Afrikaans, Maori), verse order, same tokenisation
+(`bible_shards.py`). Same pipeline, its own 40 plants (keys drawn from this tier) and 20
+nulls, same bar. Reported separately from the Round 52 class.
