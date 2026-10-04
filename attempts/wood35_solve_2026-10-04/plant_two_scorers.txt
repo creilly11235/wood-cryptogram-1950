@@ -1,0 +1,4 @@
+# harness/wood35t/mlseg.py score() on a Bible-tier planted message (bib_ml.json plants[1]).
+# Used by docs/index.html, chapter 3: the same line under the seven-language scorer and under the English lexicon alone.
+seven languages: -0.7308 [('VERSTEHT', 'de'), ('GEWISSE', 'de'), ('MINDER', 'de')]
+english only   : -2.1366 [('VERS', 'en'), ('TE', 'en'), ('HT', 'en'), ('GE', 'en'), ('WIS', 'en'), ('SEM', 'en'), ('IN', 'en'), ('DER', 'en')]

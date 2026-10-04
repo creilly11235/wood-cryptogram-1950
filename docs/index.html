@@ -2,85 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>How Wood&#x27;s 1950 Cryptogram Was Solved</title>
 <meta name="description" content="How T. E. Wood's 1950 survival-test cryptogram, #35 on Klaus Schmeh's Top 50 unsolved list, was solved: the key is the Lord's Prayer in German.">
 <link rel="canonical" href="https://creilly11235.github.io/wood-cryptogram-1950/">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
-* { box-sizing:border-box; }
-html { -webkit-text-size-adjust:100%; }
-body { margin:0; background:#c0c0c0; color:#000; font:17px/1.45 "Times New Roman", Times, serif; }
-main { max-width:820px; margin:0 auto; padding:16px 16px 32px; }
-header, footer { text-align:center; }
-h1 { color:#000080; font-size:2.3rem; line-height:1.15; margin:16px 0 14px; text-shadow:2px 2px 0 #808080; }
-.marquee { background:#000080; color:#ffff00; font:bold 15px/1 Arial, Helvetica, sans-serif; border:2px inset #e8e8e8;
-  overflow:hidden; white-space:nowrap; padding:6px 0; margin:0 0 14px; }
-.marquee span { display:inline-block; padding-left:100%; animation:scroll 22s linear infinite; animation-delay:-8.4s; }
-@keyframes scroll { to { transform:translateX(-100%); } }
-.byline { margin:0 0 2px; }
-.updated { font-size:13px; margin:0 0 12px; }
-.nav { font:15px/1.6 Arial, Helvetica, sans-serif; margin:0 0 16px; }
-article { background:#fff; padding:8px 36px 28px; margin:0 0 16px;
-  border:2px solid; border-color:#fff #808080 #808080 #fff; box-shadow:1px 1px 0 #404040; }
-h2 { font:bold 1.3rem/1.25 Arial, Helvetica, sans-serif; color:#000080; margin:1.6em 0 .5em; }
-article h2:first-child { margin-top:.9em; }
-p { margin:0 0 .9em; }
-ul, ol { margin:0 0 .9em; }
-li { margin:0 0 .3em; }
-li > p { margin:0 0 .3em; }
-a { color:#0000ee; } a:visited { color:#551a8b; } a:active { color:#ff0000; }
-code, .cipher { font-family:"Courier New", Courier, monospace; }
-.table-wrap { overflow-x:auto; margin:0 0 1em; }
-table { border:2px outset #e8e8e8; border-spacing:2px; border-collapse:separate; background:#c0c0c0;
-  font-size:.95em; line-height:1.3; }
-th, td { border:1px inset #e8e8e8; padding:3px 8px; text-align:left; vertical-align:top; background:#fff; }
-th { background:#000080; color:#fff; font:bold .85em Arial, Helvetica, sans-serif; }
-figure { margin:1.2em 0; }
-figure img { width:100%; height:auto; border:1px solid #808080; background:#fff; }
-figcaption { font:italic 14px/1.4 "Times New Roman", Times, serif; text-align:center; margin-top:4px; }
-footer p { margin:0 0 .7em; }
-.new { color:#ff0000; font:bold 12px Arial, sans-serif; animation:blink 1s steps(1) infinite; }
-@keyframes blink { 50% { visibility:hidden; } }
-.counter { display:inline-block; background:#000; color:#33ff33; font:18px/1 "Courier New", monospace;
-  letter-spacing:3px; padding:3px 6px; border:2px inset #e8e8e8; }
-.small { font-size:13px; }
-.buttons { margin-top:14px; }
-.b88 { display:inline-flex; align-items:center; justify-content:center; width:88px; height:31px; vertical-align:middle;
-  border:2px outset #e8e8e8; font:bold 9px/1.05 Verdana, Arial, sans-serif; text-align:center; margin:2px; }
-.b1 { background:#fff; color:#000080; } .b2 { background:#ffd43b; color:#306998; } .b3 { background:#000; color:#fff; }
-@media (max-width:600px) {
-  main { padding:12px 10px 28px; }
-  h1 { font-size:2rem; }
-  article { padding:4px 16px 20px; }
+/* Layout, after r2d3.us: the article scrolls down a narrow column; one graphic stays pinned beside it, one per chapter.
+   Look, after the page Wood's cipher was printed on: an old-style serif, the title set like a journal article,
+   the passage centred, decoded letters as printed slips on dark umber cloth. Brass is used sparingly. */
+:root{
+  --room:#17120e; --room-2:#211a14; --veil:#2e261d; --veil-2:#43392c;
+  --bone:#e8dfcb; --bone-2:#b4a78f; --bone-3:#857864; --ink:#1c1611;
+  --candle:#b8873a; --candle-soft:rgba(184,135,58,.14); --ember:#d0583f;
+  --dot-g:#6f6454; --dot-p:#1f9c86; --dot-b:#b8873a; --dot-v:#d0583f; --dot-s:#352c22; --dot-tew:#e8dfcb;
+  --de:#b8873a; --af:#1f9c86; --sig:#e8dfcb; --label-bg:rgba(23,18,14,.88);
+  /* type scale: two display sizes, body, one note style, one label style, one data style */
+  --t-note:italic 14.5px/1.5 var(--body); --t-label:400 12px/1.4 var(--body); --t-data:13px/1.5 var(--mono);
+  --display:"Libre Caslon Display","Libre Caslon Text",Georgia,serif; --body:"Libre Caslon Text",Georgia,"Times New Roman",serif; --mono:"Courier Prime","Courier New",Courier,monospace;
+  color-scheme:dark;
 }
-@media (prefers-reduced-motion:reduce) {
-  .marquee { white-space:normal; padding:6px 8px; line-height:1.3; }
-  .marquee span { animation:none; padding-left:0; }
-  .new { animation:none; }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--room)}
+body{margin:0;background:var(--room);color:var(--bone);font:17.5px/1.65 var(--body)}
+a{color:var(--bone);text-decoration-color:var(--candle);text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{color:var(--candle)}
+.cipher,code{font-family:var(--mono);font-size:.9em}
+/* hero: set like the opening of a Proceedings article */
+.hero{max-width:760px;margin:0 auto;padding-block:64px 8px;padding-inline:20px;text-align:center}
+.hero .kick{font:var(--t-note);color:var(--bone-3);margin:0 0 26px}
+.hero h1{font:400 clamp(2.3rem,6.4vw,4rem)/1.04 var(--display);margin:0 auto;text-wrap:balance;max-width:15ch}
+.hero .byline{font:var(--t-label);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2);margin:22px 0 0}
+.hero .byline span{display:block;margin-top:6px;font:var(--t-note);letter-spacing:0;text-transform:none;color:var(--bone-3)}
+.hero .byline a{color:var(--bone-2)}
+.cipher-row{--tw:clamp(16px,calc((100vw - 100px) / 15),30px);margin:40px 0 0;display:flex;flex-direction:column;align-items:center}
+.cipher-row .intro{font:var(--t-note);color:var(--bone-2);margin:0 0 14px}
+.cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 10px}
+.cipher-row .grp,.cipher-row .tail{display:flex;gap:3px}
+.cipher-row .tail{gap:10px}
+.cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.2);display:grid;place-items:center;padding-top:.14em;background:var(--bone);color:var(--ink);font:700 calc(var(--tw) * .6)/1 var(--mono);border-radius:1px}
+.cipher-row figcaption{font:var(--t-note);color:var(--bone-3);margin-top:14px;max-width:46ch}
+.hero .answer,.hero .lede{max-width:620px;margin-inline:auto;text-align:left}
+.hero .answer{margin-top:44px;padding-top:28px;border-top:1px solid var(--veil-2);color:var(--bone)}
+.hero .answer b{font-weight:700}
+.hero .answer .sv{font:var(--t-label);letter-spacing:.14em;text-transform:uppercase;color:var(--candle);margin-right:.4em}
+.hero .lede{color:var(--bone-2);margin-top:18px}
+/* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
+.scrolly{max-width:1140px;margin:0 auto;padding-inline:20px}
+.chapter{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:0 52px;align-items:start}
+.chapter+.chapter{border-top:1px solid var(--veil)}
+.graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
+.gbody{display:flex;flex-direction:column;flex:1;min-height:0}
+.gbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--veil)}
+.gbar .ct{font:var(--t-label);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.replay:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
+.replay{font:var(--t-data);line-height:1;padding:7px 10px;border:1px solid var(--veil-2);background:transparent;color:var(--bone-2);border-radius:1px;cursor:pointer;white-space:nowrap}
+.replay:hover{border-color:var(--candle);color:var(--bone)}
+.tiles{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;max-width:680px}
+.t{position:relative;min-width:0;aspect-ratio:1/1.2;display:grid;place-items:center;padding-top:.14em;background:var(--room-2);border:1px solid var(--veil-2);font:700 clamp(11px,1.7vw,20px)/1 var(--mono);color:var(--bone);border-radius:1px;transition:background .45s,color .45s,border-color .45s,box-shadow .45s}
+.t.lit{background:var(--bone);border-color:var(--bone);color:var(--ink)}
+.t.de{border-bottom:3px solid var(--de)} .t.af{border-bottom:3px solid var(--af)} .t.sig{border-bottom:3px solid var(--bone-3)}
+.t.dim{color:var(--bone-3)} .t.junk{color:var(--bone-2);font-weight:400} .t.bad{color:var(--ember);border-color:var(--ember)}
+.t.lit.bad{background:var(--room-2)}
+.sub{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;margin-top:4px;min-height:1.2em;max-width:680px}
+.sub span{min-width:0;text-align:center;font:clamp(8px,1.1vw,11px)/1.2 var(--mono);color:var(--bone-3);overflow:hidden;white-space:nowrap;transition:color .5s}
+.sub span.on{color:var(--candle)}
+.gcap{display:flex;justify-content:space-between;gap:12px;font:var(--t-note);color:var(--bone-2);margin:10px 0 2px;min-height:1.4em;max-width:680px}
+.gcap b{font:700 13px/1.5 var(--mono);color:var(--bone)}
+canvas{flex:1;width:100%;min-height:0;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font:var(--t-data);color:var(--bone-2);margin-top:4px;min-height:1.4em}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.text{min-width:0}
+.beats,.beatcap,.progress{display:none}
+/* article column */
+.text{padding-block:10vh 14vh}
+.chapter:first-child .text{padding-top:12vh}
+.step{min-height:58vh;padding:0 0 10vh;opacity:.38;transition:opacity .4s}
+.step.on{opacity:1}
+.eyebrow{font:var(--t-note);color:var(--bone-3);margin:0 0 8px}
+.step h2{font:400 clamp(1.9rem,4vw,2.5rem)/1.12 var(--display);margin:0 0 .55em;text-wrap:balance}
+.step p,.step li{margin:0 0 1em}
+.step ul,.step ol{padding-left:1.3em;margin:0 0 1em}
+.step li{margin:0 0 .45em}
+.step li::marker{color:var(--bone-3)}
+.step strong,.step b{font-weight:700}
+.step em{color:var(--bone-2)}
+.step .fig{font:var(--t-data);color:var(--bone-2);border-top:1px solid var(--veil-2);border-bottom:1px solid var(--veil-2);padding:9px 0;margin:0 0 1.1em}
+.step .fig b{color:var(--bone);font-weight:700}
+.quote{font-style:italic;color:var(--bone);margin:1.3em 0 1.3em 1.2em}
+.quote small{display:block;font:var(--t-note);color:var(--bone-3);margin-top:8px}
+figure{margin:1.4em 0}
+figure img{width:100%;height:auto;border:0;border-radius:1px;background:#fff}
+figcaption{font:var(--t-note);color:var(--bone-3);margin-top:8px}
+.table-wrap{overflow-x:auto;margin:0 0 1.2em}
+table{border-collapse:collapse;width:100%;font:var(--t-data);font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--veil);vertical-align:top}
+th{font:var(--t-note);color:var(--bone-3);border-bottom:1px solid var(--veil-2);white-space:nowrap}
+/* footer */
+footer{max-width:1140px;margin:0 auto;padding:28px 20px 64px;border-top:1px solid var(--veil);color:var(--bone-2);font:var(--t-note)}
+footer p{margin:0 0 .7em}
+.counter{display:inline-block;font:var(--t-data);line-height:1;letter-spacing:3px;padding:5px 8px 4px;border:1px solid var(--veil-2);border-radius:1px;background:var(--room-2);color:var(--bone)}
+.small{color:var(--bone-3)}
+@media (max-width:900px){
+  /* phone: the chapter's text first, then the graphic alone, pinned for one screen per beat, then the next chapter */
+  body{font-size:17px}
+  .hero{padding-top:44px}
+  .chapter{display:flex;flex-direction:column}
+  .chapter>*{width:100%;max-width:100%;min-width:0}
+  .chapter+.chapter{border-top:0}
+  .text{order:1;padding-block:3vh 4vh}
+  .chapter:first-child .text{padding-top:3vh}
+  .step{min-height:0;opacity:1;padding:0 0 1.2em}
+  .graphic{order:2;height:100vh;height:100dvh;z-index:2;padding:12px 0 12px;border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
+  .beats{order:3;display:block}
+  html{scroll-snap-type:y proximity}
+  .beat{height:100vh;height:100dvh;scroll-snap-align:center}
+  .progress{display:flex;gap:5px;align-items:center;margin-left:auto}
+  .progress i{width:5px;height:5px;border-radius:50%;background:var(--veil-2);transition:background .3s}
+  .progress i.on{background:var(--candle)}
+  .beatcap{display:block;margin:10px 0 0;font:inherit;line-height:1.45;color:var(--bone);border-top:1px solid var(--veil);padding-top:10px;min-height:calc(4 * 1.45em + 11px)}
+  .gbar{margin-bottom:8px}
+  .gcap{margin-top:6px;line-height:1.3;flex-wrap:wrap;justify-content:flex-start;gap:2px 14px}
+  .gcap span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .legend{font-size:12px;min-height:38px;align-content:flex-start}
 }
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<main>
-<header>
-<h1>How Wood&#x27;s 1950 Cryptogram Was Solved</h1>
-<div class="marquee"><span>*** SOLVED after 76 years! *** &nbsp; Hier bin ich. Totsiens. T.E.W. &nbsp; *** The key: the Lord's Prayer in German *** &nbsp; Confirmed by Klaus Schmeh, 4 Oct 2026 ***</span></div>
-<p class="byline">by <b>Colin Reilly, with assistance from Claude</b></p>
-<p class="updated">Last updated: October 4, 2026</p>
-<p class="nav">[ <a href="#summary">Summary</a> | <a href="#the-puzzle">The puzzle</a> | <a href="#the-hit">The hit</a> | <a href="#how-it-was-checked">Checks</a> | <a href="#the-correction">The correction</a> | <a href="#timeline-and-credits">Timeline</a> | <a href="https://github.com/creilly11235/wood-cryptogram-1950">Code on GitHub</a> ]</p>
-</header>
-<article>
-<h2 id="summary">Summary</h2>
-<p>T. E. Wood's 1950 cryptogram, unsolved for 76 years and #35 on Klaus Schmeh's Top 50 list, is solved. Schmeh checked it and confirmed it on 4 October 2026.</p>
-<ul>
-<li><strong>Ciphertext (encrypted message):</strong> <span class="cipher">FVAMI NTKFX XWATB OIZVV X</span></li>
-<li><strong>Key passage:</strong> the Lord's Prayer in German, 1912 Luther Bible wording, from "Unser Vater in dem Himmel" (Matthew 6:9b-11)</li>
-<li><strong>Method:</strong> Robert Thouless's 1948 word-sum system, which Wood said he used</li>
-<li><strong>Plaintext (decoded message):</strong> <span class="cipher">HIERBINICHTOTSIENSTEW</span>, read as "Hier bin ich. Totsiens. T.E.W."</li>
-</ul>
-<p>That is German for "here I am", Afrikaans for "goodbye", and Wood's initials. It fits a message meant to come from beyond the grave, and it fits Wood's own clue that the message "will not be in any one language".</p>
-<h2 id="the-puzzle">The puzzle</h2>
+
+<div class="hero">
+  <p class="kick">Proceedings of the S.P.R., vol. 49 · No. 35 of Klaus Schmeh's Top 50</p>
+  <h1>How Wood&#x27;s 1950 cryptogram was solved</h1>
+  <p class="byline">By Colin Reilly, with assistance from Claude<span>4 October 2026 · <a href="https://github.com/creilly11235/wood-cryptogram-1950">code and data on GitHub</a></span></p>
+  <figure class="cipher-row" aria-label="Wood's ciphertext, FVAMI NTKFX XWATB OIZVV X">
+    <p class="intro">&ldquo;My ciphered passage is:&rdquo;</p>
+    <div class="line">
+      <div class="grp"><span class="t">F</span><span class="t">V</span><span class="t">A</span><span class="t">M</span><span class="t">I</span></div>
+      <div class="grp"><span class="t">N</span><span class="t">T</span><span class="t">K</span><span class="t">F</span><span class="t">X</span></div>
+      <div class="grp"><span class="t">X</span><span class="t">W</span><span class="t">A</span><span class="t">T</span><span class="t">B</span></div>
+      <div class="tail"><div class="grp"><span class="t">O</span><span class="t">I</span><span class="t">Z</span><span class="t">V</span><span class="t">V</span></div><div class="grp"><span class="t">X</span></div></div>
+    </div>
+    <figcaption>T. E. Wood, &ldquo;A Further Test for Survival&rdquo;, <em>Proceedings of the S.P.R.</em> 49 (1950), p.&nbsp;105. Twenty-one letters, no key.</figcaption>
+  </figure>
+  <p class="answer"><span class="sv">Solved</span> The key is the opening of the Lord's Prayer in the 1912 Luther Bible, used with Robert Thouless's 1948 word-sum system. The message reads <b>Hier bin ich. Totsiens. T.E.W.</b> German, Afrikaans, and Wood's initials. Klaus Schmeh confirmed it on 4 October 2026.</p>
+  <p class="lede">In 1950 a solicitor named T. E. Wood published 21 letters as a test of life after death. He would die, then try to send the key back through a medium. This is how the key was found by searching books instead. Below, the story runs down the page; beside it, the strip of letters and the field of dots follow along, every dot one way of reading the cipher.</p>
+</div>
+
+<div class="scrolly">
+<section class="chapter" data-ch="1">
+  <div class="graphic" data-g="1">
+    <div class="gbar"><span class="ct">I · The cipher</span><span class="progress" aria-hidden="true"></span></div>
+    <div class="gbody">
+    <div class="tiles" aria-live="polite"></div>
+    <div class="sub" aria-hidden="true"></div>
+    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
+    <canvas aria-label="Candidate keys, one dot each; the chart changes with the section being read"></canvas>
+    <div class="legend"></div>
+    <p class="beatcap"></p>
+    </div>
+  </div>
+  <div class="text">
+<section class="step" data-s="summary" data-cap="Wood, 1950: 21 letters, a test of life after death. Each dot is a key and the reading it gives; one reading is the message." id="the-puzzle">
+<p class="eyebrow">1948 and 1950</p>
+<h2>The puzzle</h2>
 <p>Wood's cryptogram was a test of life after death: he would publish a message, die, and then try to send the key back through a medium. He was copying an idea from the psychologist Robert Thouless.</p>
+</section>
+
+<section class="step" data-s="method" data-cap="Thouless's rule: a word's letters sum to a key letter, which shifts one cipher letter. UNSER gives Y, and F becomes H.">
 <p><strong>Thouless, 1948.</strong> In "A Test of Survival" (<em>Proceedings of the Society for Psychical Research</em> 48), Thouless published enciphered messages whose keys only he knew. One of them used a system meant to be unbreakable without the key:</p>
 <ol>
 <li>Pick a passage of text as the key, and skip any word that has already appeared.</li>
@@ -88,34 +178,117 @@ footer p { margin:0 0 .7em; }
 <li>Use that key letter to shift one message letter along the alphabet: A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way.</li>
 </ol>
 <p>Each key word supplies the shift for one message letter. So a 21-letter message needs 21 distinct key words.</p>
+</section>
+
+<section class="step" data-s="wood" data-cap="Wood's clues: the key is in an accessible foreign book; the message is not in any one language. Most book keys read as junk.">
 <p><strong>Wood, 1950.</strong> T. E. Wood, a solicitor born in Yorkshire in 1887 who had practised in Burma, answered with "A Further Test for Survival" (<em>Proceedings</em> 49). He published <span class="cipher">FVAMI NTKFX XWATB OIZVV X</span> and said:</p>
 <ul>
 <li>he used Thouless's method, with repeated words omitted</li>
 <li>the key passage "is in an accessible book", in a foreign language</li>
 <li>the message "will not be in any one language"</li>
 </ul>
-<figure><img src="wood_1950_p105.png" alt="The top of Wood's 1950 article, A Further Test for Survival, by T. E. Wood, ending with his ciphered passage FVAMI NTKFX XWATB OIZVV X" width="1525" height="617"><figcaption>Wood's cryptogram as printed: <em>Proceedings of the SPR</em> 49 (1950), p. 105</figcaption></figure>
+<figure><img src="wood_1950_p105.png" alt="The top of Wood's 1950 article, A Further Test for Survival, by T. E. Wood, ending with his ciphered passage FVAMI NTKFX XWATB OIZVV X" width="1525" height="617" loading="lazy"><figcaption>Wood's cryptogram as printed: <em>Proceedings of the SPR</em> 49 (1950), p. 105</figcaption></figure>
 <p>He chose foreign languages on purpose, to defeat anyone guessing common English words. Wood died decades ago, according to Schmeh, and no key ever arrived from the other side.</p>
-<h2 id="why-it-stayed-open">Why it stayed open, and our own wrong turn</h2>
+</section>
+  </div>
+  <div class="beats" aria-hidden="true"><div class="beat" data-s="summary"></div><div class="beat" data-s="method"></div><div class="beat" data-s="wood"></div></div>
+</section>
+
+<section class="chapter" data-ch="2">
+  <div class="graphic" data-g="2">
+    <div class="gbar"><span class="ct">II · Why it stayed open</span><span class="progress" aria-hidden="true"></span></div>
+    <div class="gbody">
+    <div class="tiles" aria-live="polite"></div>
+    <div class="sub" aria-hidden="true"></div>
+    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
+    <canvas aria-label="Candidate keys, one dot each; the chart changes with the section being read"></canvas>
+    <div class="legend"></div>
+    <p class="beatcap"></p>
+    </div>
+  </div>
+  <div class="text">
+<section class="step" data-s="trap" data-cap="With a free choice of shifts, any key gives any reading, even English. A &ldquo;solution&rdquo; looks like luck." id="why-it-stayed-open">
+<p class="eyebrow">The trap · 1950 to 2026</p>
+<h2>Why it stayed open, and our own wrong turn</h2>
 <p>Thouless himself pointed out the problem: with a free choice of key letters, any ciphertext from his system can be turned into any message of the same length. With only 21 letters, a "solution" seemed impossible to tell apart from luck.</p>
 <p>This project believed that too at first. Its notes called Wood's cryptogram "too under-determined for a blind Gutenberg scan", because "any 21-letter key sequence can produce 'plausible' text", and it was not attempted.</p>
-<p><strong>That reasoning was wrong, and fixing it is what opened the door.</strong> It holds for a key of random letters, but Wood's key is not random: it is consecutive words of a published book. So the only possible keys are the starting points in real books, a finite list that can be searched.</p>
-<p>Round 52 (17 September 2026) measured it. Across 28.6 million combinations of starting point and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries. The search could work.</p>
-<p>But Wood's message still came back blank: first over those 129 books, then over 3,977 texts, adding 3,848 Project Gutenberg books in 14 languages (about 429 million combinations). The bigger run also threw up more convincing false leads, a sign that adding ever more books would not help. The note at the time said the problem needed "a targeted source", not a bigger sweep.</p>
-<h2 id="the-idea-that-cracked-it">The idea that cracked it: take Wood at his word</h2>
+</section>
+
+<section class="step" data-s="shelves" data-cap="But the key is consecutive words of a real book: 129 books, 28.6 million starting points. A finite list.">
+<p><strong>That reasoning was wrong, and fixing it is what opened the door.</strong> It holds for a key of random letters, but Wood's key is not random: it is consecutive words of a published book. So the only possible keys are the starting points in real books, a finite list that can be searched. The cloud becomes shelves: one spine per book, one dot per starting point.</p>
+<p class="fig"><b>129 books</b> · 28.6 million starting points<br>Each dot stands for many thousands.</p>
+</section>
+
+<section class="step" data-s="plants" data-cap="September 2026: messages planted with book keys come back at rank 1 in 97 of 100 tries. The search works.">
+<p>Round 52 (17 September 2026) measured it. Decrypt the cipher with every starting point and score each result by how much it looks like English. To test whether this can work at all, encrypt known messages with random book keys and see if the search finds them. Across 28.6 million combinations of starting point and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries. The search could work.</p>
+<p class="fig">Planted messages back at rank 1: <b>97 of 100</b></p>
+</section>
+
+<section class="step" data-s="round52" data-cap="Wood's letters, 429 million keys, scored as English: his best is junk, and 12 of 100 random ciphertexts beat it.">
+<p>But Wood's message still came back blank: first over those 129 books, then over 3,977 texts, adding 3,848 Project Gutenberg books in 14 languages (about 429 million combinations). The best decryption scored worse than what random ciphertexts reach by chance. The bigger run also threw up more convincing false leads, a sign that adding ever more books would not help. The note at the time said the problem needed "a targeted source", not a bigger sweep.</p>
+<p class="fig">Best: <b>−13.94</b> · random ciphertexts reached −13.27<br>12 of 100 random ciphertexts beat Wood's best</p>
+</section>
+  </div>
+  <div class="beats" aria-hidden="true"><div class="beat" data-s="trap"></div><div class="beat" data-s="shelves"></div><div class="beat" data-s="plants"></div><div class="beat" data-s="round52"></div></div>
+</section>
+
+<section class="chapter" data-ch="3">
+  <div class="graphic" data-g="3">
+    <div class="gbar"><span class="ct">III · The idea</span><span class="progress" aria-hidden="true"></span></div>
+    <div class="gbody">
+    <div class="tiles" aria-live="polite"></div>
+    <div class="sub" aria-hidden="true"></div>
+    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
+    <canvas aria-label="Candidate keys, one dot each; the chart changes with the section being read"></canvas>
+    <div class="legend"></div>
+    <p class="beatcap"></p>
+    </div>
+  </div>
+  <div class="text">
+<section class="step" data-s="idea" data-cap="One planted German line, two scorers. In English alone it sinks into the pile; in seven languages it tops it. Wood&#x27;s best is still junk." id="the-idea-that-cracked-it">
+<p class="eyebrow">3 October 2026, evening</p>
+<h2>The idea that cracked it: take Wood at his word</h2>
 <p>The breakthrough on the evening of 3 October 2026 came from going back to one of Wood's own clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written "in several different languages". Round 52 had noted the claim but scored candidates as English only.</p>
-<p>That matters because of how a search decides what counts as a hit. It decrypts with every possible key and ranks the results by how much they look like language. A message that switches from German to Afrikaans looks like gibberish to an English-only scorer. The right book also has to be in the collection, and the German Bible was not among the earlier runs' texts.</p>
+<p>That matters because of how a search decides what counts as a hit. It decrypts with every possible key and ranks the results by how much they look like language. A message that switches from German to Afrikaans looks like gibberish to an English-only scorer. Scored across seven languages, with the language free to change at every word, a planted German message jumps to the top. The right book also has to be in the collection, and the German Bible was not among the earlier runs' texts.</p>
+<p class="fig">Wood's best over the same 3,847 books, seven languages: <b>−1.313</b> · null ceiling −1.207</p>
+</section>
+
+<section class="step" data-s="church" data-cap="The church wording, Vater unser, gives junk. The Bible's Unser Vater differs in wording and order, so every key letter changes.">
 <p>Two changes followed:</p>
 <ol>
 <li><strong>Scoring across seven languages.</strong> A quick first pass keeps the 3,000 candidates whose letter patterns look most like English, French, German, Latin, Italian, Spanish or Portuguese. Those are then split into dictionary words, with the language allowed to change from word to word.</li>
 <li><strong>Bibles as the key source.</strong> Wood said the key was in "an accessible book" in a foreign language. A Bible is the obvious candidate, so 19 Bibles in Latin-alphabet languages were added.</li>
 </ol>
-<p>A first pass had tried famous passages typed in by hand, including the German Lord's Prayer, and found nothing. Both of its German versions began "Vater unser", the familiar church wording, which gives garbage. The Bible run used the full Bible text, where the prayer begins "Unser Vater in dem Himmel".</p>
+<p>A first pass had tried famous passages typed in by hand, including the German Lord's Prayer, and found nothing. Both of its German versions began "Vater unser", the familiar church wording, which gives garbage, as the strip shows. The Bible run used the full Bible text, where the prayer begins "Unser Vater in dem Himmel".</p>
 <p>The rules for what would count as a hit in the Bible search were written down and committed before that search was run, so the bar could not quietly move afterwards.</p>
-<h2 id="the-hit">The hit</h2>
+</section>
+  </div>
+  <div class="beats" aria-hidden="true"><div class="beat" data-s="idea"></div><div class="beat" data-s="church"></div></div>
+</section>
+
+<section class="chapter" data-ch="4">
+  <div class="graphic" data-g="4">
+    <div class="gbar"><span class="ct">IV · The hit</span><span class="progress" aria-hidden="true"></span></div>
+    <div class="gbody">
+    <div class="tiles" aria-live="polite"></div>
+    <div class="sub" aria-hidden="true"></div>
+    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
+    <canvas aria-label="Candidate keys, one dot each; the chart changes with the section being read"></canvas>
+    <div class="legend"></div>
+    <p class="beatcap"></p>
+    </div>
+  </div>
+  <div class="text">
+<section class="step" data-s="prayer" data-cap="Nineteen Bibles, 26.7 million more keys. One lands clear: the German Bible at Matthew 6:9." id="the-hit">
+<p class="eyebrow">Matthew 6:9–11 · Luther Bible 1912</p>
+<h2>The hit</h2>
 <p>The Bible run tried 26.7 million combinations of starting point and treatment of repeated words, for each of two versions of the arithmetic; the first pass took under three minutes. Under Thouless's rule, the top result came from the German Bible, starting at the sixth word of Matthew 6:9, the opening of the Lord's Prayer. It decrypted to <span class="cipher">HIERBINICHTOTSIENSTEW</span>.</p>
-<figure><img src="luther_1922_mt6_9-11.jpg" alt="Matthew 6:9-11 in Fraktur type: Darum sollt ihr also beten: Unser Vater in dem Himmel. Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns heute." width="1272" height="538"><figcaption>The key passage, Matthew 6:9&ndash;11, in a 1922 Berlin printing of the 1912 Luther Bible (British and Foreign Bible Society). The 21 key words run from &ldquo;Unser&rdquo; to &ldquo;uns&rdquo;. Scan: <a href="https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up">Internet Archive</a></figcaption></figure>
-<p>The runner-up was <span class="cipher">RASFATAFITEANDAMAPOSE</span>, which is junk. Every one of the 21 letters works, using the 21 distinct words from "Unser" to "uns". Four repeats are skipped ("Dein" twice, "Himmel" and "Unser" once each), and the ä in "täglich" is read as a:</p>
+<figure><img src="luther_1922_mt6_9-11.jpg" alt="Matthew 6:9-11 in Fraktur type: Darum sollt ihr also beten: Unser Vater in dem Himmel. Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns heute." width="1272" height="538" loading="lazy"><figcaption>The key passage, Matthew 6:9&ndash;11, in a 1922 Berlin printing of the 1912 Luther Bible (British and Foreign Bible Society). The 21 key words run from &ldquo;Unser&rdquo; to &ldquo;uns&rdquo;. Scan: <a href="https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up">Internet Archive</a></figcaption></figure>
+<p class="quote">Unser Vater in dem Himmel! Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns …<small>21 distinct words, from "Unser" to "uns"</small></p>
+<p>The runner-up was <span class="cipher">RASFATAFITEANDAMAPOSE</span>, which is junk. Every one of the 21 letters works, using the 21 distinct words from "Unser" to "uns". Four repeats are skipped ("Dein" twice, "Himmel" and "Unser" once each), and the ä in "täglich" is read as a. <button class="replay" type="button">Replay the decryption</button></p>
+</section>
+
+<section class="step" data-s="table" data-cap="Alone at the top, junk in second place. But the scorer knew no Afrikaans or initials, so it missed its own bar.">
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -277,18 +450,67 @@ footer p { margin:0 0 .7em; }
 </tbody>
 </table></div>
 <p>To read a row: UNSER is 21+14+19+5+18 = 77, which leaves 25 after dividing by 26, so the key letter is Y. Y shifts by 24, so cipher F goes back 24 places to H.</p>
+</section>
+
+<section class="step" data-s="bar" data-cap="The scorer knew no Afrikaans or initials, so it missed its own bar. A human reads it at once.">
 <p><strong>It did not pass our own automatic test.</strong> The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081). The reason is visible in the output: the scorer had no Afrikaans and no idea of initials, so it read the end as "TOT SIEN STEW". Under the other version of the arithmetic, a nonsense string, <span class="cipher">ALENRENDRAYCUTREFUGES</span>, scored slightly higher still. That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.</p>
-<h2 id="how-it-was-checked">How it was checked</h2>
+<p class="fig"><b>HIERBINICHTOTSIENSTEW</b> · −1.270<br>null ceiling −1.273 · plant floor −1.081</p>
+</section>
+  </div>
+  <div class="beats" aria-hidden="true"><div class="beat" data-s="prayer"></div><div class="beat" data-s="table"></div><div class="beat" data-s="bar"></div></div>
+</section>
+
+<section class="chapter" data-ch="5">
+  <div class="graphic" data-g="5">
+    <div class="gbar"><span class="ct">V · Checked</span><span class="progress" aria-hidden="true"></span></div>
+    <div class="gbody">
+    <div class="tiles" aria-live="polite"></div>
+    <div class="sub" aria-hidden="true"></div>
+    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
+    <canvas aria-label="Candidate keys, one dot each; the chart changes with the section being read"></canvas>
+    <div class="legend"></div>
+    <p class="beatcap"></p>
+    </div>
+  </div>
+  <div class="text">
+<section class="step" data-s="checks" data-cap="Rebuilt, reviewed by a second AI, checked against the papers. Change the method or the words and it breaks: red letters differ." id="how-it-was-checked">
+<p class="eyebrow">Before it went out</p>
+<h2>How it was checked</h2>
 <p>Before anything went to Schmeh, the result was attacked from five directions:</p>
 <ul>
 <li><strong>Rebuilt from scratch.</strong> A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.</li>
 <li><strong>A second AI, working independently.</strong> GPT-6 Astra, run through OpenAI's Codex tool, reviewed the claim and came back "confirmed with reservations". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.</li>
 <li><strong>The original papers.</strong> Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that "A means no shift" comes from Thouless's own text, not from a later guess.</li>
-<li><strong>Near misses fail.</strong> The modern church wording gives <span class="cipher">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after "<span class="cipher">HIERBINIC</span>". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk.</li>
+<li><strong>Near misses fail.</strong> The modern church wording gives <span class="cipher">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after "<span class="cipher">HIERBINIC</span>". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these was scored; they were never candidates.</li>
+</ul>
+</section>
+
+<section class="step" data-s="luck" data-cap="Could it be luck? Of 500 random signatures in place of TEW, 7 match, all word salad. TEW matches once: this message.">
+<ul>
 <li><strong>Could it be luck?</strong> A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature. With TEW there was exactly one match: this one. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad. TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.</li>
 </ul>
 <p>Finally, priority. Searches of Schmeh's blog and its comments, Reddit's r/codes, and the other 2026 solver logs found no earlier solution of Wood's cryptogram. That is not proof that nobody got there first.</p>
-<h2 id="the-correction">The correction: Thouless got his own example wrong</h2>
+</section>
+  </div>
+  <div class="beats" aria-hidden="true"><div class="beat" data-s="checks"></div><div class="beat" data-s="luck"></div></div>
+</section>
+
+<section class="chapter" data-ch="6">
+  <div class="graphic" data-g="6">
+    <div class="gbar"><span class="ct">VI · The correction</span><span class="progress" aria-hidden="true"></span></div>
+    <div class="gbody">
+    <div class="tiles" aria-live="polite"></div>
+    <div class="sub" aria-hidden="true"></div>
+    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
+    <canvas aria-label="Candidate keys, one dot each; the chart changes with the section being read"></canvas>
+    <div class="legend"></div>
+    <p class="beatcap"></p>
+    </div>
+  </div>
+  <div class="text">
+<section class="step" data-s="slip" data-cap="Thouless mis-added suffer in his own 1948 example: 75 gives W, he printed U, so his last letter is B, not D. Wood made no such error." id="the-correction">
+<p class="eyebrow">A 78-year-old arithmetic error</p>
+<h2>The correction: Thouless got his own example wrong</h2>
 <p>While checking the method against the 1948 paper, we found an arithmetic slip in Thouless's own worked example. It has been in print for 78 years, and we have not seen it pointed out anywhere.</p>
 <p>To show how his system works, Thouless enciphered THERE IS NO DEATH with Hamlet's "To be or not to be" speech as the key. He printed the key letters <span class="cipher">IGGWW BG PI VNWNU</span> and the ciphertext <span class="cipher">BNKNA JYCWY RWGB</span>.</p>
 <p>The first 13 key letters are right. The 14th key word is "suffer":</p>
@@ -298,12 +520,19 @@ footer p { margin:0 0 .7em; }
 <li>Thouless printed <strong>U</strong>, the 21st</li>
 </ul>
 <p>His printed ciphertext follows the printed U, so this is not a single misprint. The 14th plain letter is the final H of DEATH. Shifted by U it becomes B, which he printed. Shifted by the correct W it would be <strong>D</strong>. So the last group of his example should read <span class="cipher">RWGD</span>, not <span class="cipher">RWGB</span>.</p>
-<figure><img src="thouless_1948_suffer_slip.png" alt="Thouless 1948, pp. 259-260, with the slip marked: &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below"><figcaption>Thouless 1948, pp. 259-260, with the slip marked: &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below</figcaption></figure>
-
+<figure><img src="thouless_1948_suffer_slip.png" alt="Thouless 1948, pp. 259-260, with the slip marked: &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below" loading="lazy"><figcaption>Thouless 1948, pp. 259-260, with the slip marked: &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below</figcaption></figure>
 <p>The man who invented the system mis-added one word in 14 in his showcase example. Wood's 21 key letters, presumably worked out by hand in 1950, contain no error at all. The method that decrypts Wood is Thouless's rule as he wrote it, not the flawed example.</p>
-<h2 id="next">Next: telling the Society for Psychical Research</h2>
+</section>
+
+<section class="step" data-s="next" data-cap="Wood asked that any result, &ldquo;even if negative&rdquo;, be sent to the Society for Psychical Research. That is the next step." id="next">
+<p class="eyebrow">What Wood asked for</p>
+<h2>Next: telling the Society for Psychical Research</h2>
 <p>Wood asked that anyone who tried to decipher his message "communicate the result (even if negative) to the Society". He promised the Society "fuller particulars" about himself and photographs of him and his home, and said his executors would be asked to tell it "the circumstances" and date of his death. If that file survives, the Society and the files may be able to finish the story.</p>
-<h2 id="timeline-and-credits">Timeline and credits</h2>
+</section>
+
+<section class="step" data-s="confirmed" data-cap="Confirmed by Klaus Schmeh, 4 October 2026. Next, as Wood asked, the result goes to the Society for Psychical Research." id="timeline-and-credits">
+<p class="eyebrow">4 October 2026 · confirmed</p>
+<h2>Timeline and credits</h2>
 <p>Times are Pacific. Most are commit times, which record when each step was saved.</p>
 <div class="table-wrap"><table>
 <thead>
@@ -380,15 +609,545 @@ footer p { margin:0 0 .7em; }
 <li>R. H. Thouless, "A Test of Survival", <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the SPR</em> 48</a>, pp. 258-260</li>
 <li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Luther Bible 1912, Matthew 6</a></li>
 </ul>
-</article>
+<p class="small">Dot positions inside the piles are illustrative, as are the places of the 7 matched control signatures in the luck grid (which ones matched was not saved); every other labelled dot, score, count and reference line is from the saved runs. Page format after <a href="http://www.r2d3.us/">r2d3.us</a>.</p>
+</section>
+  </div>
+  <div class="beats" aria-hidden="true"><div class="beat" data-s="slip"></div><div class="beat" data-s="next"></div><div class="beat" data-s="confirmed"></div></div>
+</section>
+</div>
+
 <footer>
-<p><span class="new">NEW!</span> Check the decryption yourself: run <code>python3 harness/wood35t/verify_wood.py</code> from <a href="https://github.com/creilly11235/wood-cryptogram-1950">the repository</a>.</p>
+<p>Check the decryption yourself: run <code>python3 harness/wood35t/verify_wood.py</code> from <a href="https://github.com/creilly11235/wood-cryptogram-1950">the repository</a>. Code under the MIT License.</p>
 <p>You are visitor no. <span class="counter" id="visits">------</span></p>
 <p class="small">Visits counted by <a href="https://www.goatcounter.com/">GoatCounter</a>, no cookies. The number updates every few hours.</p>
-<p class="buttons" aria-hidden="true"><span class="b88 b1">Best viewed<br>at 800&times;600</span> <span class="b88 b2">Powered by<br>PYTHON</span> <span class="b88 b3">MIT<br>LICENSE</span></p>
-<p class="small">Code under the MIT License.</p>
 </footer>
-</main>
+
+<script>
+(function(){
+"use strict";
+const CT="FVAMINTKFXXWATBOIZVVX",PT="HIERBINICHTOTSIENSTEW";
+const KEY=[["Unser",77],["Vater",66],["in",23],["dem",22],["Himmel",60],["Dein",32],["Name",33],["werde",55],["geheiligt",82],["Reich",43],["komme",57],["Wille",61],["geschehe",60],["auf",28],["Erden",46],["wie",37],["im",22],["täglich",60],["Brot",55],["gib",18],["uns",54]];
+const L=i=>String.fromCharCode(65+((i%26)+26)%26);
+const KL=KEY.map(k=>L(k[1]-1));
+const JUNK=["UNTONEASACRISTEALSBYR","TGEHADREEKSSENTEASYBI","TSLAVINGWASROSESHBUZZ","DDOESHEBRIEKTOTHATKUX","NGSHALLSVARANINFATABU","EDAORIESHOROUGHMINUNH","VCOURHEMIDWASSORIMIAE"]; /* Round 52, 3,977 texts, English scoring: harness/wood35/out_expanded_r52.jsonl */
+/* ---- chapter 2 constants: Round 52, September 2026, all from harness/wood35 ----
+   R52_TRAP: three English strings (Round 52 plant texts, out_expanded_r52.jsonl) that a free key could equally produce.
+   R52_STARTS: real starting points from the 129-book run (out_real_r52_BE.json): the book and its 21 consecutive distinct key words.
+   R52_PLANT: score as English of each of the 100 planted messages over the 129 books (out_gate_r52.jsonl); R52_MISS the three not found first;
+   R52_PLANT_J the one shown on the strip. R52_NULL129: best score for each of 200 random ciphertexts over the same books (out_null_r52.jsonl).
+   R52_NULLX: the same for 100 random ciphertexts over 3,977 texts (out_expanded_r52.jsonl); R52_WOOD: Wood's best there. */
+const R52_TRAP=["WHATISTHEUSEOFLIVINGA","THEYHADPLANSTOGOTOADA","STRENGTHTOLEAVETHEDAR"];
+const R52_STARTS=[["an English book","THE RESIDUE AND BULK OF PROPERTY WAS SETTLED ON ME UNDER TRUST TO MR NIXON UNTIL I AGE WITH A REQUEST"],["a French book","FAITS INTIMEMENT CONNEXES LA VIEILLE NOTION DE LA DESTRUCTION COMPLETE DE TOUS LES HABITANTS DU GLOBE A LA SUITE DE CATACLYSMES"],["a Dutch book","ZYN UITTERMATEN GEMAKKELYK ALS DE KOFFY VOLKOMEN DROOG IS BRENGT MEN ZE IN HET MAGAZYN VAN DE DROOGERYE EEN GEBOUW DOORGAANS"]];
+const R52_PLANT=[-13.70,-13.88,-11.67,-12.51,-11.59,-13.18,-13.33,-13.49,-11.45,-11.96,-10.94,-12.98,-11.58,-12.00,-13.46,-11.21,-12.06,-13.55,-11.35,-12.09,-11.23,-11.22,-12.77,-11.54,-11.57,-11.61,-13.34,-10.87,-11.62,-12.21,-11.83,-11.01,-12.74,-12.56,-12.69,-10.69,-11.66,-16.12,-12.13,-11.05,-12.15,-13.84,-12.18,-12.24,-10.77,-12.22,-11.49,-12.11,-14.29,-14.29,-10.88,-12.83,-10.89,-12.42,-12.14,-20.57,-10.93,-12.11,-12.98,-11.45,-12.25,-12.40,-12.10,-11.51,-11.33,-12.00,-16.04,-11.91,-11.55,-11.02,-11.01,-12.57,-10.36,-11.99,-11.56,-11.74,-10.77,-11.55,-11.38,-11.35,-13.64,-12.25,-13.78,-12.88,-10.29,-12.46,-11.02,-10.89,-13.96,-11.54,-12.36,-12.69,-11.45,-11.00,-12.83,-12.00,-11.28,-11.58,-12.08,-11.07],R52_MISS=[37,55,66],R52_PLANT_J=15,R52_PLANT_MSG="THEFORMOFTHEUNKNOWNMI";
+const R52_NULL129=[-15.00,-14.58,-14.31,-15.85,-16.22,-16.13,-15.88,-15.43,-15.11,-15.45,-15.74,-15.43,-15.56,-15.72,-15.26,-14.91,-15.15,-15.64,-15.70,-15.48,-15.41,-15.05,-15.52,-15.09,-14.53,-14.75,-15.44,-15.84,-15.61,-15.33,-15.69,-14.63,-15.72,-14.95,-15.00,-15.24,-16.01,-15.78,-15.49,-15.17,-15.84,-14.36,-15.93,-15.24,-15.92,-15.21,-15.05,-15.13,-15.19,-15.59,-15.18,-15.65,-14.97,-15.81,-15.34,-15.27,-15.72,-15.03,-15.19,-15.17,-15.72,-15.30,-15.56,-15.84,-15.65,-14.98,-15.85,-15.22,-15.43,-15.61,-15.58,-15.29,-15.73,-15.35,-15.71,-16.05,-15.79,-14.87,-15.03,-15.70,-14.53,-14.64,-15.37,-15.61,-16.12,-15.03,-15.96,-15.90,-15.23,-14.58,-15.49,-15.85,-15.52,-15.55,-15.50,-15.33,-16.18,-14.64,-15.09,-15.56,-15.33,-15.26,-15.91,-15.31,-15.76,-15.31,-15.54,-14.88,-15.11,-15.47,-14.97,-15.75,-15.35,-15.59,-15.49,-15.97,-15.36,-15.84,-15.18,-15.35,-15.23,-14.60,-14.47,-14.97,-15.29,-15.22,-15.36,-15.20,-15.59,-15.55,-15.41,-15.52,-15.05,-15.13,-15.58,-14.62,-14.95,-15.65,-15.60,-15.04,-15.57,-16.11,-15.43,-15.28,-16.10,-15.66,-15.91,-15.60,-15.13,-14.59,-16.03,-15.69,-15.32,-15.44,-14.76,-15.30,-16.15,-15.73,-15.88,-15.91,-15.31,-15.29,-14.66,-15.38,-15.22,-15.82,-15.65,-15.33,-15.44,-15.59,-16.26,-16.32,-15.37,-14.91,-14.86,-15.11,-14.86,-15.64,-15.88,-15.75,-15.57,-15.89,-15.69,-15.58,-15.26,-15.29,-15.70,-16.14,-15.30,-14.64,-15.19,-14.73,-15.06,-15.55,-15.69,-14.83,-16.23,-15.50,-15.35,-14.96];
+const R52_NULLX=[-14.139,-15.037,-14.929,-13.935,-14.719,-14.523,-14.074,-14.242,-14.038,-14.837,-14.746,-13.807,-14.170,-14.659,-14.849,-13.876,-14.538,-13.852,-14.768,-14.133,-14.378,-13.748,-14.271,-14.743,-14.219,-14.419,-14.231,-13.920,-14.479,-14.308,-14.565,-13.407,-14.833,-13.530,-14.705,-14.843,-14.727,-13.267,-14.183,-14.277,-14.649,-14.640,-14.626,-14.612,-14.163,-14.910,-15.121,-14.236,-14.143,-13.868,-14.683,-14.864,-14.595,-13.688,-14.839,-14.050,-13.943,-14.490,-14.219,-14.355,-14.769,-14.512,-14.898,-13.981,-14.990,-14.181,-14.659,-13.968,-14.475,-14.144,-14.694,-14.994,-14.835,-14.094,-14.331,-14.684,-14.316,-14.409,-14.241,-14.820,-14.447,-14.656,-14.180,-14.909,-14.841,-13.826,-14.241,-14.098,-14.484,-14.596,-14.721,-14.840,-14.603,-14.325,-14.641,-14.510,-14.481,-14.783,-14.498,-14.910],R52_WOOD=-13.937;
+const PLANT_EN="NOTSOMUCHDEPENDUPONEX",PLANT_DE="VERSTEHTGEWISSEMINDER",CHURCH="SXFFFLOEPTPPQMAVDXEUR";
+/* ---- chapter 6: Thouless's worked example, Proc. SPR 48 (1948), pp. 259-260 (harness/wood35t/thouless_example_check.py):
+   THERE IS NO DEATH keyed by Hamlet; his printed key letters and ciphertext, and the same recomputed (only letter 14 differs) ---- */
+const THOU={key:["to","be","or","not","that","is","the","question","whether","tis","nobler","in","mind","suffer"],sums:[35,7,33,49,49,28,33,120,87,48,66,23,40,75],printed:"IGGWWBGPIVNWNU",comp:"IGGWWBGPIVNWNW",plain:"THEREISNODEATH",cipher:"BNKNAJYCWYRWGB",fixed:"BNKNAJYCWYRWGD"};
+/* ---- chapter 6: what each chapter-6 canvas mode writes, one label per line, built only from THOU, KEY, CT and PT.
+   cols: side-by-side columns of lines; foot: lines under them. A line is {t:text, ck:dot colour, r:dot size, 0 = text only},
+   {rule:1} (a thin line) or {gap:1}. ---- */
+const CH6={
+  ord:n=>n+((n%100>10&&n%100<14)?"th":(["th","st","nd","rd"][n%10]||"th")),
+  mod:s=>`${Math.floor(s/26)}×26+${s%26}`,
+  thouless(compact){ /* compact: a short canvas folds the 13 right rows into one line */
+    const T=THOU,n=T.key.length-1,su=[...T.key[n].toUpperCase()],s=T.sums[n],H=T.plain[n];
+    const sh=(p,k)=>L(p.charCodeAt(0)+k.charCodeAt(0)-130);
+    const row=(w,v,i)=>{const k=L(v-1),ok=k===T.printed[i];return{t:`${w.padEnd(9)}${String(v).padStart(3)} = ${CH6.mod(v).padEnd(7)} → ${k}`+(ok?"":`  printed ${T.printed[i]}`),ck:ok?"--bone-3":"--ember",r:ok?1:1.5};};
+    return{cols:[[
+      {t:"key word sum = n×26+r  → key",r:0},
+      ...(compact?[{t:`${T.key[0]} … ${T.key[n-1]}: ${n} key letters, right`,ck:"--bone-3",r:1},row(T.key[n],s,n)]:T.key.map((w,i)=>row(w,T.sums[i],i))),
+      {rule:1},
+      {t:`${su.join("+")} = ${su.map(c=>c.charCodeAt(0)-64).join("+")} = ${s}`,r:0},
+      {t:`${s} = ${CH6.mod(s).replace("+"," + ")} → ${T.comp[n]}, the ${CH6.ord(s%26)} letter`,ck:"--candle",r:1.2},
+      {t:`Thouless printed ${T.printed[n]}, the ${CH6.ord(T.printed.charCodeAt(n)-64)}`,ck:"--ember",r:1.2},
+      {t:`${H} shifted by ${T.printed[n]} → ${sh(H,T.printed[n])}, printed ${T.cipher.slice(10)}`,ck:"--ember",r:1.2},
+      {t:`${H} shifted by ${T.comp[n]} → ${sh(H,T.comp[n])}, should be ${T.fixed.slice(10)}`,ck:"--candle",r:1.2}]]};
+  },
+  request(){
+    return{cols:[[
+      {t:"“communicate the result (even if negative)",ck:"--candle",r:1.4},
+      {t:" to the Society”",r:0},
+      {t:"T. E. Wood, Proceedings of the SPR 49 (1950)",r:0},
+      {rule:1},
+      {t:"he promised the Society “fuller particulars”",ck:"--bone-3",r:1},
+      {t:" and photographs of him and his home",r:0},
+      {t:"his executors would tell it “the circumstances”",ck:"--bone-3",r:1},
+      {t:" and the date of his death",r:0}]]};
+  },
+  solution(){
+    const ck=i=>i<10?"--de":(i<18?"--af":"--sig");
+    const row=i=>({t:`${KEY[i][0].padEnd(9)} ${String(KEY[i][1]).padStart(2)}  ${KL[i]}  ${CT[i]}→${PT[i]}`,ck:ck(i),r:1});
+    const rows=(a,b)=>KEY.slice(a,b).map((_,j)=>row(a+j));
+    return{cols:[
+      [{t:"Hier bin ich",ck:"--de",r:1.5},{t:"German: here I am",r:0},...rows(0,10)],
+      [{t:"Totsiens",ck:"--af",r:1.5},{t:"Afrikaans: goodbye",r:0},...rows(10,18),{gap:1},{t:"T. E. W.",ck:"--sig",r:1.5},{t:"Wood's initials",r:0},...rows(18,21)]],
+      foot:[{t:"21 words of Matthew 6:9b–11, Luther Bible 1912",r:0}]};
+  }
+};
+/* chapter 3: one planted German line, two scorers. harness/wood35t/mlseg.py splits it VERSTEHT/de GEWISSE/de MINDER/de at
+   −0.731 (its score in bib_ml.json plants, recovered at rank 1); the same scorer given only its English word list splits it
+   VERS TE HT GE WIS SEM IN DER at −2.137. The church wording's first 21 distinct words are the ones verify_wood.py uses for
+   its "liturgical wording" control (→ CHURCH); no key letter of theirs matches the Bible key's letter at the same position. */
+const CH3_DE={words:["VERSTEHT","GEWISSE","MINDER"],lang:"de",score:-0.731},CH3_EN={words:["VERS","TE","HT","GE","WIS","SEM","IN","DER"],lang:"en",score:-2.137};
+const CH3_CHURCH=["Vater","unser","im","Himmel","geheiligt","werde","dein","Name","Reich","komme","Wille","geschehe","wie","so","auf","Erden","tägliches","Brot","gib","uns","heute"];
+const TOP=[["HIERBINICHTOTSIENSTEW",-1.270],["RASFATAFITEANDAMAPOSE",-1.493],["TUTANUMTOCAOANDEERSEL",-1.545],["BATAOSUESPITKINMENQUI",-1.577],["NOMRAMOPOCHARILSGENCH",-1.588],["AVEAYESCROURAQUEAAPON",-1.639],["AABORGTUTOALEESVACOSA",-1.663],["OVEGENOVOPTAFOREIBIAS",-1.681],["IOQUEOLAIALTANREGTOCF",-1.686],["ELATAFIMFEPOTETAINEXL",-1.689],["JECFITSOSNAVISEEDUREV",-1.694],["ETJENTTANGAAPLAGAOVAL",-1.712],["VEFURSESOIFURCHEREUDC",-1.719]];
+/* chapter 5: the four changed methods, as printed by harness/wood35t/verify_wood.py (verify_output.txt); none was ever scored.
+   [decryption, what was changed, what happens]; the first nine letters of the first survive, then the tenth key word is a second "Dein" */
+const VARS=[["HIERBINICSHSVLUNPPAOZ","keep the repeated words","right until the 2nd Dein"],["GHDQAHMHBGSNSRHDMRSDV","shift by the raw sum","every letter one off"],["SXFFFLOEPTPPQMAVDXEUR","church wording, Vater unser","no reading"],["XVXJCPBOEDIQLICBMRLBY","Thouless's Hound of Heaven key","no reading"]];
+/* chapter 5: the three rebuilds that reproduce all 21 letters (REPORT.md; the page's own "How it was checked") */
+const PASS5=["rebuilt by a standalone script: 21 of 21","a second AI's own decryption: 21 of 21","1950 scan: all 21 cipher letters as printed"];
+/* chapter 5: the luck test (lookelsewhere.json, tew_hits.json, REPORT.md addendum 2): 854,049,904 decryptions, 3,866 shards;
+   TEW matched once (the solution); 7 of 500 random control signatures (1.4%) also matched, all word salad. The control
+   hits were not saved in full; these are the report's own truncated examples. Which 7 signatures matched was not saved either,
+   so their places in the grid are illustrative. */
+const LUCK5={ctrl:500,hit:7,share:"1.4%",salad:["PAYNAULADDUCDAEEVA…","BUMTOPSOIWEIIWATAYE…","WANMOSCALMTORNTOUR…"]};
+/* chapter 1: a few dots in the cloud carry the real reading their key gives: [reading, key's book, cloud x, cloud y].
+   Round 52's best English-scored decryptions (harness/wood35/out_expanded_r52.jsonl, kind "real"; books' languages from
+   fetch_r52.jsonl) and the Bible run's runner-up (attempts/wood35_solve_2026-10-04/bib_ml.out). The gold dot is the solution. */
+const CH1_READ=[["UNTONEASACRISTEALSBYR","Swedish book",.04,.10],["DDOESHEBRIEKTOTHATKUX","Spanish book",.96,.30],["RASFATAFITEANDAMAPOSE","Romanian Bible",.06,.74],["TGEHADREEKSSENTEASYBI","Dutch book",.94,.93]];
+const CH1_HIT=[.22,.50];
+/* chapter 1, "method": Thouless's rule worked for the first letter (KEY[0]; same arithmetic as the key table and verify_wood.py) */
+const CH1_RULE=["UNSER, the first key word","U+N+S+E+R = 21+14+19+5+18 = 77","77 = 2×26 + 25 → Y, the 25th letter","Y means a shift of 24 (A = none)","cipher F, back 24 places → H","then VATER, IN, DEM …, one word a letter"];
+const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const randStr=n=>Array.from({length:n},()=>L(Math.random()*26|0)).join("");
+/* which dot layout each step uses, and the state a chapter's graphic shows before its first step is reached */
+const DOTS={summary:"cloud",method:"cloud",wood:"cloud",trap:"cloudLabels",shelves:"shelves",plants:"histEnPlants",round52:"histEn",idea:"mlTwoScorers",church:"churchOrder",prayer:"histBibles",table:"top",bar:"top",checks:"vars",luck:"grid",slip:"thouless",next:"request",confirmed:"solution"};
+const PRELUDE={1:"summary",2:"wood",3:"round52",4:"church",5:"bar",6:"luck"}; /* each graphic opens on the state the previous chapter ended on */
+/* ---- chapter 4 constants: the hit ---- */
+Object.assign(DOTS,{prayer:"ch4pour",table:"ch4top",bar:"ch4top"}); /* chapter 4's own dot modes; histBibles and top are no longer used */
+const SKIP4={9:"Dein",11:"Dein",17:"Himmel, Unser"}; /* repeated words skipped just before key word i (0-based), REPORT.md */
+const SCORER4=[["HIER","de"],["BIN","de"],["ICH","de"],["TOT","de"],["SIEN","fr"],["STEW","en"]]; /* the scorer's segmentation, bib_ml.out */
+const NULL4=-1.273,FLOOR4=-1.081,DROP4=1100; /* Bible-tier null ceiling and plant floor (bib_ml.out); ms before the hit drops */
+const PHONE4=matchMedia("(max-width:900px)");
+const f4=v=>"−"+Math.abs(v).toFixed(3);
+
+function Graphic(el){
+  const self=this;this.el=el;
+  const tilesEl=el.querySelector(".tiles"),subEl=el.querySelector(".sub"),capL=el.querySelector(".capL"),capR=el.querySelector(".capR"),legendEl=el.querySelector(".legend"),cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
+  let stripTimers=[];const stripClear=()=>{stripTimers.forEach(t=>{clearTimeout(t);clearInterval(t);});stripTimers=[];};
+  const cellW=()=>tilesEl.clientWidth/21,wide=()=>cellW()>=30;
+  function drawTiles(letters,subs,cls){
+    const ts=[...tilesEl.children];
+    if(ts.length===letters.length&&ts.every(t=>t.classList.contains("t")&&!t.style.visibility)){letters.forEach((c,i)=>{const t=ts[i],k="t "+(cls?cls(i):"");if(t.textContent!==c)t.textContent=c;if(t.className!==k.trim())t.className=k.trim();t.style.boxShadow="";t.style.borderColor="";});}
+    else tilesEl.innerHTML=letters.map((c,i)=>`<div class="t ${cls?cls(i):""}">${c}</div>`).join("");
+    subEl.innerHTML=(subs||letters.map(()=>"")).map(s=>`<span>${s}</span>`).join("");}
+  function cap(l,r){capL.innerHTML=l;capR.textContent=r;}
+  const reading=i=>i<10?"de":(i<18?"af":"sig");
+  const STRIP={
+   /* ---- chapter 1: the cipher ---- */
+   summary(){drawTiles([...CT],null,()=>"lit");cap("","");},
+   /* method: the first tile is worked by its key word (UNSER = 77 → Y, F back 24 → H) as the canvas spells it out; the other 20 wait for theirs */
+   method(){drawTiles([...CT],[...CT].map((c,i)=>i?"?":""),i=>i?"dim":"lit");cap("one book word → one key letter → one message letter","");
+     const t=tilesEl.children[0],u=subEl.children[0],done=()=>{t.textContent=PT[0];u.textContent=wide()?KEY[0][1]+"→"+KL[0]:KL[0];u.classList.add("on");};
+     if(reduced)done();else stripTimers.push(setTimeout(done,wide()?1900:1100));},
+   wood(){drawTiles([...CT],null,()=>"lit");cap("","");},
+   /* ---- chapter 2: why it stayed open ---- */
+   trap(){cap("a free key (small letters) → a reading (tiles)","");
+     const keyOf=t=>[...t].map((c,i)=>L(CT.charCodeAt(i)-c.charCodeAt(0)));
+     const show=(t,en)=>{drawTiles([...t],keyOf(t),()=>en?"lit":"junk");if(en)[...subEl.children].forEach(x=>x.classList.add("on"));};
+     if(reduced){show(R52_TRAP[0],true);return;}
+     let n=0;show(randStr(21),false);stripTimers.push(setInterval(()=>{n++;const k=n%24;if(k===10)show(R52_TRAP[Math.floor(n/24)%R52_TRAP.length],true);else if(k<10)show(randStr(21),false);},130));},
+   shelves(){const show=j=>{const st=R52_STARTS[j],ws=st[1].split(" "),ks=ws.map(x=>[...x].reduce((t,c)=>t+c.charCodeAt(0)-64,0)-1);
+       drawTiles([...CT].map((c,i)=>L(c.charCodeAt(0)-65-ks[i])),ks.map(L),()=>"junk");[...subEl.children].forEach(x=>x.classList.add("on"));
+       cap("<b>"+ws.slice(0,4).join(" ")+" …</b> 21 words → key letters → tiles","");};
+     show(0);if(!reduced){let j=0;stripTimers.push(setInterval(()=>show(++j%R52_STARTS.length),3200));}},
+   plants(){drawTiles([...R52_PLANT_MSG],null,()=>"lit");cap("a planted message, enciphered with a random book key","");},
+   round52(){drawTiles([...JUNK[0]],null,()=>"junk");cap("Wood's best reading, scored as English","");},
+   /* ---- chapter 3: the idea ---- */
+   /* idea: the same planted string as each scorer splits it, English words first, then seven languages; the matching dot
+      on the canvas glows (self.ch3v is read by the mlTwoScorers layout) */
+   idea(){const view=v=>{const en=v==="en",S=en?CH3_EN:CH3_DE,starts=new Set();let at=0;S.words.forEach(w=>{starts.add(at);at+=w.length;});self.ch3v=v;
+       drawTiles([...PLANT_DE],[...PLANT_DE].map((c,i)=>starts.has(i)?S.lang:""),i=>en?"junk":"lit de");if(!en)[...subEl.children].forEach(s=>s.classList.add("on"));
+       /* captions say what the tiles mean; the splits themselves are labelled on the canvas */
+       cap(en?"<b>English only</b>: a planted German line falls apart":"<b>7 languages</b>: the same line reads as German","");
+       const c=self.ch3dots;if(c){c.en.tr=en?1.9:1.4;c.de.tr=en?1.4:1.9;}};
+     if(reduced){view("de");return;}view("en");stripTimers.push(setTimeout(()=>view("de"),wide()?1800:1100));},
+   /* church: the hand-typed church wording's decryption; the canvas sets its words against the Bible's (churchOrder) */
+   church(){self.ch3v=null;drawTiles([...CHURCH],null,()=>"junk");cap("the church wording, <b>Vater unser</b>, decrypts to junk","");},
+   /* ---- chapter 4: the hit ---- */
+   /* captions here say what just happened or what the tiles mean, never the letters the tiles already show */
+   ch4cap(l,r){capL.innerHTML=l;capR.innerHTML=r;},
+   /* phones without a "bar" beat end the chapter on "table", so there it also carries bar's contrast */
+   ch4merged(){return PHONE4.matches&&!el.closest(".chapter").querySelector('.beat[data-s="bar"]');},
+   prayer(){
+     self.ch4Pour=true;
+     const W4=wide(),C=STRIP.ch4cap;
+     drawTiles([...CT],null,()=>"dim");
+     subEl.innerHTML=KEY.map(()=>`<span${W4?"":' style="font-size:10px"'}></span>`).join("");
+     const subs=[...subEl.children],ts=[...tilesEl.children];
+     C("","");
+     const show=i=>{
+       if(i>0){ts[i-1].style.boxShadow="";ts[i-1].style.borderColor="";}
+       ts[i].textContent=PT[i];ts[i].classList.remove("dim");ts[i].classList.add("lit");
+       if(!reduced&&i<20){ts[i].style.boxShadow="0 0 0 2px var(--candle)";ts[i].style.borderColor="var(--bone)";}
+       subs[i].textContent=W4?`${KEY[i][1]}→${KL[i]}`:KL[i];subs[i].classList.add("on");
+       const sk=SKIP4[i];
+       C(`<b>${KEY[i][0]}</b> = ${KEY[i][1]} → key <b>${KL[i]}</b>`,`word ${i+1}`+(sk?` · skips repeated ${sk}`:` of 21 · shift ${(KEY[i][1]-1)%26}`)+(i===17?" · ä read as a":""));
+     };
+     const finish=()=>{
+       ts.forEach(t=>{t.style.borderColor="";t.style.boxShadow=reduced?"":"0 0 0 1px var(--candle)";});
+       C("reads <b>Hier bin ich · Totsiens · T. E. W.</b>","");
+       if(!reduced)HIT.tr=2.7;
+     };
+     if(reduced){KEY.forEach((k,i)=>show(i));finish();return;}
+     /* after layout has run: wait for the hit to land unless the dots were placed instantly */
+     stripTimers.push(setTimeout(()=>{
+       const snapped=Math.abs(HIT.x-HIT.tx)+Math.abs(HIT.y-HIT.ty)<2,sm=small();
+       const t0=snapped?250:DROP4*(sm?.5:1)+(sm?650:850),dt=sm?90:125,slow=sm?210:300;
+       if(!snapped)stripTimers.push(setTimeout(()=>C("one lands clear: <b>the German Bible</b>, Matthew 6:9",""),t0-200));
+       let t=t0;KEY.forEach((k,i)=>{stripTimers.push(setTimeout(()=>show(i),t));t+=i>=17?slow:dt;});
+       stripTimers.push(setTimeout(finish,t+100));
+       stripTimers.push(setTimeout(()=>{ts.forEach(x=>x.style.boxShadow="");HIT.tr=1.8;},t+1000));
+     },0));
+   },
+   table(){
+     if(STRIP.ch4merged()){STRIP.ch4read();return;}
+     const W4=wide();drawTiles([...PT],null,()=>"lit");
+     subEl.innerHTML=KEY.map((k,i)=>`<span class="on"${W4?"":' style="font-size:10px"'}>${W4?k[1]+"→"+KL[i]:KL[i]}</span>`).join("");
+     STRIP.ch4cap("<b>Unser</b> = 21+14+19+5+18 = 77 → key <b>Y</b>, shift 24",W4?"under each tile: its word's letter sum → key letter":"under each tile: its key letter");
+   },
+   bar(){STRIP.ch4read();},
+   /* tile underlines: a human's reading (German, Afrikaans, initials); brackets below: the scorer's words, wrong ones in ember */
+   ch4read(){
+     drawTiles([...PT],null,reading);
+     const W4=wide();let a=0;
+     subEl.innerHTML=SCORER4.map(([wd,lang])=>{const b=a+wd.length,c=a>=10?"var(--ember)":"var(--bone-3)",mid=a+((wd.length-1)>>1),out=[];
+       for(let i=a;i<b;i++){let st=`height:${W4?15:6}px;margin:2px -2px 0;border:0 solid ${c};border-bottom-width:2px;color:${c};`;if(i===a)st+="margin-left:1px;border-left-width:2px;";if(i===b-1)st+="margin-right:1px;border-right-width:2px;";out.push(`<span style="${st}">${W4&&i===mid?lang:""}</span>`);}
+       a=b;return out.join("");}).join("");
+     STRIP.ch4cap(`a human: <b style="color:var(--de)">Hier bin ich</b>&ensp;·&ensp;<b style="color:var(--af)">Totsiens</b>&ensp;·&ensp;<b style="color:var(--sig)">T. E. W.</b>`,`the scorer: <b style="color:var(--ember);line-height:1">TOT/de SIEN/fr STEW/en</b>`);
+   },
+   /* ---- chapter 5: checked ---- */
+   /* checks: the solution, then each changed method decrypted letter by letter under it; a letter that survives stays lit, one that differs turns red */
+   checks(){
+     const rows=[[PT,"as found: repeats skipped, A = no shift",""]].concat(VARS);
+     const head=(r,n,k)=>`<div style="grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:${k?7:0}px;font:italic clamp(13px,1.25vw,15px)/1.15 var(--display);color:var(--bone-2)"><span>${r[1]}${r[2]?" · "+r[2]:""}</span><b style="font:700 11px/1.15 var(--mono);letter-spacing:.04em;white-space:nowrap;color:var(${n===21?"--candle":"--ember"})">${n} of 21</b></div>`;
+     tilesEl.innerHTML=rows.map((r,k)=>head(r,[...r[0]].filter((c,i)=>c===PT[i]).length,k)+[...r[0]].map((c,i)=>`<div class="t ${k===0?reading(i)+" lit":(reduced?(c===PT[i]?"lit":"bad"):"dim")}">${c}</div>`).join("")).join("");
+     subEl.innerHTML="";
+     cap("the same 21 cipher letters, five ways","");
+     if(!reduced){const ts=[...tilesEl.querySelectorAll(".t")];rows.forEach((r,k)=>{if(k)[...r[0]].forEach((c,i)=>{const t=ts[k*21+i];stripTimers.push(setTimeout(()=>{t.classList.remove("dim");t.classList.add(c===PT[i]?"lit":"bad");},300+(k-1)*200+i*45));});});}
+   },
+   /* luck: the test's shape on the real message: 18 letters that split into words, then the signature */
+   luck(){drawTiles([...PT],null,i=>i<18?"":"sig lit");subEl.innerHTML=[4,3,3,8].map(n=>`<span style="grid-column:span ${n};border-top:1px solid var(--bone-3)">word</span>`).join("")+'<span class="on" style="grid-column:span 3;border-top:1px solid var(--candle)">'+(cellW()<17?"sig.":"signature")+'</span>';cap("words, then a three-letter signature","");},
+   /* ---- chapter 6: the correction and after ---- */
+   slip(){const T=THOU,n=T.plain.length,v=T.sums[n-1];
+     /* three rows of 21 columns: 14 letters, the recomputed 14th letter (gold), then the row's name */
+     const tile=(c,cls)=>`<div class="t ${cls}">${c}</div>`,blank='<div class="t" style="visibility:hidden"></div>';
+     const name=t=>`<div style="grid-column:span ${20-n};align-self:center;padding-left:6px;font:clamp(10px,1.3vw,13px)/1.1 var(--mono);color:var(--bone-2);white-space:nowrap;overflow:hidden">${t}</div>`;
+     const row=(str,fix,lab,cls)=>[...str].map((c,i)=>tile(c,i<n-1?cls:(fix?"bad":""))).join("")+(fix?tile(fix,"lit"):blank)+name(lab);
+     tilesEl.innerHTML=row(T.plain,null,"plain","dim")+row(T.printed,T.comp[n-1],"key","")+row(T.cipher,T.fixed[n-1],"cipher","");
+     subEl.innerHTML=Array(21).fill("<span></span>").join("");
+     const su=[...T.key[n-1].toUpperCase()].map(c=>c.charCodeAt(0)-64);
+     cap(`<b>${T.key[n-1]}: ${su.join("+")} = ${v}</b>`,"red: as Thouless printed · gold: recomputed");},
+   next(){drawTiles([...PT],null,reading);cap("","");},
+   confirmed(){drawTiles([...PT],null,i=>reading(i)+" lit");cap("","");}
+  };
+  /* dots */
+  let seed=35;const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;};
+  const gauss=()=>{let u=0,v=0;while(!u)u=rnd();while(!v)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);};
+  const dots=[];
+  const mk=(kind,ck,extra)=>{const d={kind,ck,x:rnd(),y:rnd(),tx:rnd(),ty:rnd(),a:0,ta:1,r:1,tr:1,delay:0,label:null,cx:rnd(),cy:rnd(),...extra};dots.push(d);return d;};
+  const NG=900;
+  for(let i=0;i<NG;i++)mk("g","--dot-g",{en:Math.min(-14.25,-15.9+gauss()*0.75),ml:Math.min(-1.72,-2.1+gauss()*0.17)});
+  dots[0].en=-13.94;dots[0].label_en="−13.94  UNTONEASACRISTEALSBYR";dots[0].ml=-1.313;dots[0].label_ml="−1.313  OFERANTREFUSAIDAUTIOR";
+  dots[1].en=-14.1;dots[2].en=-14.2;dots[1].ml=-1.36;dots[2].ml=-1.40;
+  const PL=[];for(let i=0;i<10;i++)PL.push(mk("p","--dot-p",{en:-13.0-rnd()*0.55,ml:-0.95-rnd()*0.12,ta:0}));
+  PL[0].ml=-0.731;PL[0].label_ml="VERSTEHTGEWISSEMINDER  planted German";PL[1].en=-12.9;PL[1].label_en="planted messages";
+  const BI=[];for(let i=0;i<220;i++)BI.push(mk("b","--dot-b",{ml:Math.min(-1.74,-2.05+gauss()*0.15),ta:0,rank:i}));
+  TOP.forEach((t,i)=>{BI[i].ml=t[1];BI[i].name=t[0];});
+  const HIT=BI[0];
+  for(let i=0;i<=500;i++)mk("s","--dot-s",{ta:0,i});
+  const lit=new Set();while(lit.size<7)lit.add(1+Math.floor(rnd()*500));
+  /* ---- chapter 2 dots, made last so the shared random sequence above is unchanged: real Round 52 scores, and label anchors ---- */
+  const NUL2=R52_NULL129.map((v,i)=>mk("n2","--dot-g",{en:v,en2:i<R52_NULLX.length?R52_NULLX[i]:null,ta:0}));
+  const PLA2=R52_PLANT.map((v,i)=>mk("p2",R52_MISS.includes(i)?"--dot-v":"--dot-p",{en:v,ta:0}));
+  const WOOD2=mk("w2","--dot-tew",{en2:R52_WOOD,ta:0});
+  const ANC2=[0,1,2].map(()=>mk("a2","--bone",{ta:0}));
+  /* chapter 2 shelves: 129 spines, 81 non-English books then 48 English, the 900 dots split between those two groups by their
+     starting points (14,826,428 and 13,776,370 of 28,602,798); the width and height of each single spine are illustrative */
+  const SHELF2=(()=>{let z=52;const r=()=>(z=(z*16807)%2147483647)/2147483647,out=[];const nB=Math.round(NG*14826428/28602798);
+    [[81,nB,0.12],[48,NG-nB,0.45]].forEach(([n,tot,wide2])=>{
+      const bk=[];for(let i=0;i<n;i++)bk.push({c:r()<wide2?2:1,h:4+Math.floor(r()*5),tone:r()});
+      const sum=()=>bk.reduce((t,b)=>t+b.c*b.h,0);let guard=0;
+      while(sum()!==tot&&guard++<5000){const b=bk[Math.floor(r()*n)],d=tot-sum();if(d>0&&b.h<9&&(b.c===1||d>1))b.h++;else if(d<0&&b.h>4&&(b.c===1||d<-1))b.h--;}
+      out.push(...bk);});
+    return out;})();
+  /* chapter 4: invisible anchors whose labels name the null ceiling, the plant floor and the shortfall (boxed, so they stay legible over the lines) */
+  const A4=[0,1,2].map(()=>mk("k4","--bone-3",{ta:0}));
+  let W=0,H=0,DPR=1,step=null,prevMode=null,lines=[],axis=null,t0=performance.now();
+  const small=()=>W<520;
+  const pad=()=>({l:small()?10:24,r:small()?10:24,t:30,b:38});
+  function resize(){const r=cv.getBoundingClientRect();if(r.width<10||r.height<10)return;const snap=Math.abs(r.width-W)>0.5;W=r.width;H=r.height;DPR=Math.min(2,devicePixelRatio||1);cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);if(step){const keep=t0;layout(step,snap);if(!snap)t0=keep;}}
+  new ResizeObserver(resize).observe(cv);
+  function setAll(fn){dots.forEach((d,i)=>{const o=fn(d,i)||{};if("x"in o)d.tx=o.x;if("y"in o)d.ty=o.y;d.ta=("a"in o)?o.a:d.ta;d.tr=("r"in o)?o.r:1;d.delay=o.delay||0;d.label=o.label||null;});}
+  function hist(group,key,x0,x1,opts){
+    const p=pad(),w=W-p.l-p.r,h=H-p.t-p.b,nb=opts.nb||34,bw=w/nb;let sp=small()?5:6.5,k=Math.max(1,Math.floor((bw-2)/sp));
+    const binOf=d=>Math.max(0,Math.min(nb-1,Math.floor((d[key]-x0)/(x1-x0)*nb)));
+    const pre=new Array(nb).fill(0);group.forEach(d=>pre[binOf(d)]++);const mx=Math.max(...pre);
+    for(let it=0;it<3;it++){const rows=Math.ceil(mx/k);if(rows*sp>h-36){sp=Math.max(2.6,(h-36)/rows);k=Math.max(1,Math.floor((bw-2)/sp));}}
+    const cnt=new Array(nb).fill(0),pos=new Map();
+    group.slice().sort((a,b)=>a[key]-b[key]).forEach(d=>{const b=binOf(d),n=cnt[b]++,col=n%k,row=Math.floor(n/k);pos.set(d,{x:p.l+b*bw+2+col*sp+sp/2,y:H-p.b-row*sp-sp/2,b,row});});
+    return pos;
+  }
+  function layout(s,instant){
+    step=s;lines=[];axis=null;
+    const p=pad(),w=W-p.l-p.r,h=H-p.t-p.b,mode=DOTS[s]||"cloud";
+    const G=dots.filter(d=>d.kind==="g"),B=dots.filter(d=>d.kind==="b");
+    const cloud=(d,i)=>({x:p.l+(0.04+0.92*d.cx)*w,y:p.t+(0.04+0.92*d.cy)*h,a:1,delay:0});
+    const px=(v,x0,x1)=>p.l+(v-x0)/(x1-x0)*w;
+    /* ---- chapter 1 (cloud) and chapter 2 (cloudLabels, shelves, histEn*) ---- */
+    if(mode==="cloud"&&(el.dataset.g==="1"||s==="wood")){
+      /* chapter 1 only (other chapters use "summary" as a plain prelude): every dot is a key; a few carry the reading their
+         key gives, and the gold one is the solution. In "method" the gold key unfolds into Thouless's rule for the first letter. */
+      const G1=G.slice(3,3+CH1_READ.length),S1=dots.filter(d=>d.kind==="s").slice(0,CH1_RULE.length-1);
+      if(s==="method"){
+        const sm=small(),rh=Math.min(sm?30:36,(h-10)/CH1_RULE.length),x0=p.l+(sm?6:w*0.06),y0=p.t+Math.max(4,(h-(CH1_RULE.length-1)*rh)*0.28);
+        lines.push({x:x0,y0,y1:y0+(CH1_RULE.length-1)*rh,ck:"--veil"});
+        setAll((d,i)=>{
+          if(d===HIT)return{x:x0,y:y0,a:1,r:1.6,label:CH1_RULE[0]};
+          const k=S1.indexOf(d);
+          if(k>=0){if(d.a<0.05){d.x=x0;d.y=y0;}d.ck="--bone-3";return{x:x0,y:y0+(k+1)*rh,a:1,r:.7,delay:250+k*300,label:CH1_RULE[k+1]};}
+          return d.kind==="g"?{...cloud(d,i),a:.14}:{a:0};});
+      } else {
+        const wood=s==="wood",at=(fx,fy)=>({x:p.l+fx*w,y:p.t+fy*h});
+        setAll((d,i)=>{
+          if(d===HIT)return{...at(...CH1_HIT),a:1,r:1.6,label:PT+(wood?" · German Bible":"")};
+          const k=G1.indexOf(d);
+          if(k>=0)return{...at(CH1_READ[k][2],CH1_READ[k][3]),a:1,label:CH1_READ[k][0]+(wood?" · "+CH1_READ[k][1]:"")};
+          return d.kind==="g"?cloud(d,i):{a:0};});
+      }
+    } else if(mode==="cloud"){
+      setAll((d,i)=>d.kind==="g"?cloud(d,i):{a:0});
+    /* ---- chapter 2 (cloudLabels, shelves, histEnPlants, histEn) ---- */
+    } else if(mode==="cloudLabels"){
+      /* the trap: free keys never run out, so the cloud spills past the frame; a few dots show their reading, English among them */
+      const n=small()?4:6,lab=new Map();
+      for(let j=0;j<n;j++){const tx=0.1+((j*0.29)%0.42),ty=0.08+0.84*j/(n-1);let best=null,bd=9;G.forEach(d=>{const e=Math.hypot(d.cx-tx,d.cy-ty);if(e<bd&&!lab.has(d)){bd=e;best=d;}});lab.set(best,j%2?R52_TRAP[(j>>1)%R52_TRAP.length]:randStr(21));}
+      setAll(d=>d.kind==="g"?{x:p.l+(-0.12+1.24*d.cx)*w,y:p.t+(-0.1+1.2*d.cy)*h,a:lab.has(d)?1:0.75,r:lab.has(d)?1.25:1,delay:0,label:lab.get(d)||null}:{a:0});
+    } else if(mode==="shelves"){
+      /* the finite list: each book a spine of dots standing on a shelf, one dot for many thousand starting points */
+      const gapF=0.8,shelfH=q=>9*q+2.2*q;let top=p.t+22;
+      const place=q=>{const out=[];let x=0,row=0;SHELF2.forEach(b=>{const bw=b.c*q;if(x>0&&x+bw>w){x=0;row++;}out.push({x,row});x+=bw+gapF*q;});return{out,rows:row+1};};
+      let q=small()?9:11,pl=place(q);while(q>3&&top+pl.rows*shelfH(q)>p.t+h){q-=0.25;pl=place(q);}
+      top+=Math.max(0,(p.t+h-top-pl.rows*shelfH(q))*0.4);
+      const base=small()?2.4:3.2,rr=Math.min(1.25,q*0.52/base),boardY=k=>top+(k+1)*shelfH(q)-1.6*q;
+      const slot=[];SHELF2.forEach((b,bi)=>{const o=pl.out[bi];for(let c=0;c<b.c;c++)for(let k=0;k<b.h;k++)slot.push({x:p.l+o.x+c*q+q/2,y:boardY(o.row)-k*q-q/2,a:b.tone<0.33?0.62:(b.tone<0.66?0.82:1),delay:bi*9+k*14});});
+      setAll((d,i)=>{if(d.kind==="g"){const t=slot[i];return t?{x:t.x,y:t.y,a:t.a,r:rr,delay:t.delay}:{a:0};}
+        if(d===ANC2[0]){d.x=p.l-9;d.y=top-20;return{x:p.l-9,y:top-20,a:1,r:0.01,label:"129 books · 28,602,798 starting points"};}
+        return{a:0};});
+      for(let k=0;k<pl.rows;k++){lines.push({y:boardY(k)+q*0.35,x0:p.l,x1:W-p.r,ck:"--bone-3"});lines.push({y:boardY(k)+q*0.35+2,x0:p.l,x1:W-p.r,ck:"--veil"});}
+    } else if(mode==="histEnPlants"||mode==="histEn"){
+      /* real Round 52 scores, same axis in both states. Grey: the best reading found for each random ciphertext, i.e. how far chance reaches.
+         plants: teal, the 100 planted messages over the 129 books. round52: the grey pile moves to the 3,977-text run, Wood's best joins it,
+         and the planted messages stay behind, faint, to show where a real message lands */
+      const plants=mode==="histEnPlants",x0=-17.3,x1=-10.1,base=H-p.b,nb=small()?34:Math.max(34,Math.round(w/13));
+      axis={x0,x1,ticks:[-17,-16,-15,-14,-13,-12,-11],title:small()?"score as English  →  more like English":"score of the best reading as English  →  more like English"};
+      const N=plants?NUL2:NUL2.filter(d=>d.en2!=null),grp=plants?N.concat(PLA2):N.concat([WOOD2]);
+      const pos=hist(grp,plants?"en":"en2",x0,x1,{nb}),ghost=plants?new Map():hist(PLA2,"en",x0,x1,{nb});
+      /* the faint planted messages stack on top of the grey pile in shared bins; then stretch the piles upward to use the frame,
+         never spacing dots further apart vertically than the bins are wide */
+      const v0=pos.values().next().value,sp=(base-v0.y)/(v0.row+0.5),used=[];pos.forEach(v=>{used[v.b]=Math.max(used[v.b]||0,v.row+1);});
+      ghost.forEach(v=>{v.y-=(used[v.b]||0)*sp;});
+      const tall=Math.max(...[...pos.values(),...ghost.values()].map(v=>base-v.y)),f=Math.max(1,Math.min(w/nb/sp,h*0.6/tall));
+      [pos,ghost].forEach(m=>m.forEach(v=>{v.y=base-(base-v.y)*f;}));
+      let j=0;grp.concat(plants?[]:PLA2).forEach(d=>{if(d.a<0.05){const g=G[(j++*7)%G.length];d.x=g.x;d.y=g.y;}});
+      const top=Math.min(...[...pos.values()].map(v=>v.y)),topOf=f2=>Math.min(...grp.filter(f2).map(d=>pos.get(d).y));
+      N.forEach(d=>{d.ck=(!plants&&d.en2>R52_WOOD)?"--bone-2":"--dot-g";});
+      const PJ=PLA2[R52_PLANT_J],off=PLA2[55],q2=plants?pos.get(PJ):pos.get(WOOD2),tealTop=plants?topOf(x=>x.kind==="p2"&&x.en>-14):0,rr=small()?1.1:1;
+      setAll(d=>{const q=pos.get(d)||ghost.get(d);
+        if(d===ANC2[0]&&plants)return{x:px(-14.1,x0,x1),y:tealTop-46,a:1,r:0.01,label:small()?"planted: 97 of 100 found first":"planted messages: 97 of 100 found at rank 1"};
+        if(d===ANC2[1])return{x:px(-16.6,x0,x1),y:top-(plants?20:46),a:1,r:0.01,label:"random ciphertexts"};
+        if(d===ANC2[2])return{x:q2.x,y:(plants?tealTop:top)-22,a:1,r:0.01,label:plants?"the message above  −11.21":"Wood's best  −13.94"};
+        if(!q)return{a:0};
+        const o={x:q.x,y:q.y,a:1,r:rr,delay:(q.b*18+q.row*6)*0.5};
+        if(ghost.has(d))return{...o,a:0.38,delay:0};
+        if(d===WOOD2)return{...o,r:1.9,delay:700};
+        if(d===PJ)return{...o,r:1.6};
+        if(d===off)return{...o,label:"← −20.57"};
+        return o;});
+      lines.push({x:q2.x,y0:(plants?tealTop:top)-18,y1:q2.y-8,ck:plants?"--dot-p":"--dot-tew"});
+      lines.push({x:px(plants?-14.306:-13.267,x0,x1),y0:top-74,y1:base,ck:"--bone-3",dash:true,text:plants?"chance reaches −14.31":"chance reaches −13.27"});
+    /* ---- chapter 3 (mlTwoScorers, churchOrder) ---- */
+    } else if(mode==="mlTwoScorers"){
+      /* idea: the seven-language pile with the planted German line on it twice, once as the English word list alone scores it
+         (atop the pile) and once as all seven languages score it (far right); STRIP.idea makes whichever its strip shows glow */
+      const x0=-2.62,x1=-0.62;axis={x0,x1,ticks:[-2.5,-2.0,-1.5,-1.0],title:"score per letter  →  more like words"};
+      const de=PL[0],en=PL[9];en.ml=CH3_EN.score;self.ch3dots={de,en};const enOn=self.ch3v==="en";
+      const pos=hist(G.concat([de]),"ml",x0,x1,{nb:40});
+      /* the English-only copy sits on top of the pile column at its score, so it is not lost inside the pile */
+      const ex=px(en.ml,x0,x1);let colTop=H-p.b;pos.forEach(q=>{if(Math.abs(q.x-ex)<(W-p.l-p.r)/40)colTop=Math.min(colTop,q.y);});
+      setAll(d=>{if(d===en)return{x:ex,y:colTop-12,a:1,r:enOn?1.9:1.4,delay:300,label:"English: "+CH3_EN.words.join(" ")};
+        const q=pos.get(d);if(!q)return{a:0};
+        return{x:q.x,y:q.y,a:1,r:d===de?(enOn?1.4:1.9):1,delay:(q.b*10+q.row*3)*0.4,label:d===G[0]?"Wood's best: OFERANTREFUSAIDAUTIOR":null};});
+      /* the seven-language copy is named on a leader line, clear of the pile and of Wood's best below it */
+      const qd=pos.get(de),xd=qd.x,ly=Math.max(p.t+70,H-p.b-130);
+      lines.push({x:xd,y0:ly,y1:qd.y-9,ck:"--dot-p",text:"7 languages:"});
+      lines.push({x:xd,y0:ly+16,y1:ly+16,ck:"--dot-p",text:CH3_DE.words.join(" ")});
+      lines.push({x:px(-1.207,x0,x1),y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true,text:"null ceiling −1.207"});
+    } else if(mode==="churchOrder"){
+      /* church: the 21 key words of the hand-typed church wording (red, each with the letter it gives) beside the Bible's 21 (gold);
+         the first two rows, Vater unser / Unser Vater, glow. Its dots are made on first use, in this graphic only */
+      if(!self.ch3c)self.ch3c={rows:CH3_CHURCH.map(()=>mk("c","--dot-v",{ta:0})),heads:[mk("c","--room",{ta:0}),mk("c","--room",{ta:0})]};
+      const C=self.ch3c,n=21,rh=Math.min(26,(H-p.t)/(n+1.2)),top=Math.max(p.t-6,(H-rh*(n+1.2))/2-6),cx=p.l+w/2,dx=Math.min(w*0.3,210),xl=cx-dx,xr=cx+dx;
+      C.rows.concat(C.heads,B.slice(0,n)).forEach(d=>{if(d.a<0.05){d.x=cx;d.y=top+rh*(n+1)/2;}});
+      setAll(d=>{let i=C.rows.indexOf(d);
+        if(i>=0)return{x:xl,y:top+rh*(i+1.7),a:1,r:i<2?1.7:1,delay:i*45,label:CH3_CHURCH[i]+" → "+CHURCH[i]};
+        if(d.kind==="b"&&d.rank<n){i=d.rank;return{x:xr,y:top+rh*(i+1.7),a:1,r:i<2?1.7:1,delay:i*45+20,label:KEY[i][0]};}
+        i=C.heads.indexOf(d);if(i>=0)return{x:i?xr:xl,y:top+rh*0.5,a:1,r:0.01,label:i?"LUTHER 1912":"CHURCH WORDING"};
+        return{a:0};});
+    /* ---- chapter 5 (vars): three rebuilds, one dot per letter under its tile; the changed methods are on the strip, never on a score axis ---- */
+    } else if(mode==="vars"){
+      const cr=cv.getBoundingClientRect(),ts=[...tilesEl.querySelectorAll(".t")].slice(0,21).map(t=>t.getBoundingClientRect());
+      const xs=ts.length===21&&ts[0].width>0?ts.map(r=>r.left+r.width/2-cr.left):Array.from({length:21},(_,j)=>p.l+(j+.5)*w/21),xL=ts.length===21&&ts[0].width>0?ts[0].left-cr.left:p.l;
+      const lh=small()?16:18,step5=Math.max(lh+20,Math.min(lh+34,(H-24)/3.4)),y00=small()?14:24,y0=y00+Math.max(0,Math.min(40,(H-y00-3*step5)*0.3));
+      setAll((d,i)=>{
+        if(d.kind==="s"&&d.i<63){const k=Math.floor(d.i/21),j=d.i%21;d.ck="--candle";return{x:xs[j],y:y0+k*step5+lh+4,a:1,r:1,delay:150+k*260+j*22};}
+        if(d.kind==="g"&&i<3){const x=xL-9,y=y0+i*step5+lh-12;if(d.a<0.05){d.x=x;d.y=y;}return{x,y,a:1,r:0.001,delay:i*260,label:PASS5[i]};}
+        return{a:0};});
+    /* ---- chapter 4 (ch4pour): the Bibles pour onto the dimmed Gutenberg pile; the hit drops last ---- */
+    } else if(mode==="ch4pour"){
+      const x0=-2.62,x1=-0.62,nb=40;axis={x0,x1,ticks:[-2.5,-2.0,-1.5,-1.0],title:"score across seven languages  →"};
+      /* same bins as the score, but each bin stacks Gutenberg dots first and Bible dots on top */
+      G.concat(B).forEach(d=>{const u=(d.ml-x0)/(x1-x0)*nb,b=Math.max(0,Math.min(nb-1,Math.floor(u)));d.ml4=x0+(b+(d.kind==="b"?0.5:0.02)+0.46*Math.max(0,Math.min(1,u-b)))*(x1-x0)/nb;});
+      const pos=hist(G.concat(B),"ml4",x0,x1,{nb});
+      const pour=self.ch4Pour||prevMode!=="ch4pour";self.ch4Pour=false;
+      if(pour)B.forEach(d=>{d.x=p.l+rnd()*w;d.y=-10;});
+      const xc=px(NULL4,x0,x1),xf=px(FLOOR4,x0,x1);
+      setAll(d=>{
+        if(d===A4[0])return{x:xc,y:p.t+6,a:1,r:.01,label:"null ceiling "+f4(NULL4)};
+        if(d===A4[1])return{x:xf,y:p.t+26,a:1,r:.01,label:"plant floor "+f4(FLOOR4)};
+        const q=pos.get(d);if(!q)return{a:0};
+        if(d===HIT)return{x:q.x,y:q.y,a:1,r:1.8,delay:DROP4,label:"German Bible, Matthew 6:9  "+f4(HIT.ml)};
+        return{x:q.x,y:q.y,a:d.kind==="g"?.3:1,delay:d.kind==="b"?(q.b*10+q.row*4):0};});
+      if(pour)HIT.x=HIT.tx; /* the hit falls straight down its own column */
+      lines.push({x:xc,y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true},{x:xf,y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true});
+      A4.forEach(d=>{d.x=d.tx;d.y=d.ty;d.r=d.tr;});
+    /* ---- chapter 4 (ch4top): the Bible run's real top 13, zoomed so the gap after the hit shows ---- */
+    } else if(mode==="ch4top"){
+      const x0=-1.8,x1=-1.0;axis={x0,x1,ticks:[-1.8,-1.6,-1.4,-1.2,-1.0],title:"score, top of the Bible run  →"};
+      const xc=px(NULL4,x0,x1),xf=px(FLOOR4,x0,x1),xh=px(HIT.ml,x0,x1),top0=p.t+70,gap=0.9;
+      const rh=Math.min(34,(H-74-top0)/(TOP.length-1+gap)) /* last row stays above the shared label code's low zone (H-70) */,rowY=r=>top0+(r?(r+gap)*rh:0);
+      const short=s==="bar"||(s==="table"&&STRIP.ch4merged());
+      setAll(d=>{
+        if(d===A4[0])return{x:xc,y:p.t+6,a:1,r:.01,label:"null ceiling "+f4(NULL4)};
+        if(d===A4[1])return{x:xf,y:p.t+26,a:1,r:.01,label:"plant floor "+f4(FLOOR4)};
+        if(d===A4[2])return short?{x:xf+6,y:top0-16,a:1,r:.01,label:(FLOOR4-HIT.ml).toFixed(3)+" short"}:{a:0};
+        if(d.kind==="b"&&d.rank<TOP.length){const hit=d===HIT;return{x:px(d.ml,x0,x1),y:rowY(d.rank),a:hit?1:.55,r:hit?1.8:1,delay:d.rank*40,label:d.name+(hit||d.rank===1?"  "+f4(d.ml):"")};}
+        return{a:0};});
+      lines.push({x:xc,y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true},{x:xf,y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true});
+      if(short)[0,1].forEach(o=>lines.push({y:top0+o,x0:xh+8,x1:xf,ck:"--ember"}));
+      A4.forEach(d=>{d.x=d.tx;d.y=d.ty;d.r=d.tr;});
+    /* ---- chapter 5 (grid) ---- */
+    } else if(mode==="grid"){
+      /* chapter 5: TEW on its own line, then the 500 random signatures that stood in for it, 7 of them red (matched, word salad) */
+      const cr=cv.getBoundingClientRect(),t0r=tilesEl.querySelector(".t"),tr0=t0r?t0r.getBoundingClientRect():null,tw=tilesEl.getBoundingClientRect().width;
+      const cols=25,rows=LUCK5.ctrl/cols,lh=small()?17:19,ox=tr0&&tr0.width>0?tr0.left-cr.left:p.l,below=lh*4+14;
+      const cs0=Math.max(6,Math.min((tw>0?tw:w)/cols,22,(H-lh*2-24-below-6)/rows)),spare=H-(lh*2+12+cs0*rows+below),top=(small()?10:18)+Math.max(0,Math.min(40,spare*0.25));
+      const cs=cs0,gy=top+lh*2+12,gb=gy+cs*rows;
+      const text=[[gy-lh+2,"500 random signatures in place of TEW:",120],[gb+lh+4,LUCK5.hit+" matched by chance ("+LUCK5.share+"), all word salad:",900],[gb+lh*2+6,LUCK5.salad[0],1000],[gb+lh*3+6,LUCK5.salad[1],1080],[gb+lh*4+6,LUCK5.salad[2],1160]];
+      setAll((d,i)=>{
+        if(d.kind==="g"&&i<text.length){const t=text[i],x=ox-9,y=t[0]-4;if(d.a<0.05){d.x=x;d.y=y;}return{x,y,a:1,r:0.001,delay:t[2],label:t[1]};}
+        if(d.kind!=="s")return{a:0};
+        if(d.i===0){d.ck="--dot-tew";return{x:ox+cs/2,y:top+lh/2,a:1,r:1.8,delay:0,label:"TEW, Wood's initials: 1 match, this message"};}
+        const j=d.i-1,c=j%cols,r=Math.floor(j/cols),hit=lit.has(d.i);d.ck=hit?"--dot-v":"--dot-s";return{x:ox+c*cs+cs/2,y:gy+r*cs+cs/2,a:1,r:hit?1.25:0.9,delay:d.i*1.5,label:null};});
+    /* ---- chapter 6 (thouless, request, solution; anything else: off) ----
+       the canvas writes out lines of text from CH6: each line is one dot (r 0 = no dot) carrying the line as its label */
+    } else if(mode==="thouless"||mode==="request"||mode==="solution"){
+      const sm=small(),units=a=>a.reduce((u,l)=>u+(l.rule?0.7:(l.gap?0.6:1)),0),need=sp=>Math.max(...sp.cols.map(units))+(sp.foot?0.8+units(sp.foot):0);
+      let spec=CH6[mode](false);if(need(spec)*16>h+16)spec=CH6[mode](true);
+      const cols=spec.cols,foot=spec.foot||[];ctx.font=(sm?"11px ":"12px ")+(cssv("--mono")||"monospace");
+      const colW=cols.map(c=>Math.max(...c.filter(l=>l.t).map(l=>13+ctx.measureText(l.t).width)));
+      const gx=sm?10:36,tot=colW.reduce((a,b)=>a+b,0)+gx*(cols.length-1);
+      const nU=need(spec),rh=Math.max(16,Math.min(sm?21:23,(h+16)/(nU+0.4)));
+      const xs=[];cols.forEach((c,j)=>xs.push(j?xs[j-1]+colW[j-1]+gx:p.l+4+Math.max(0,(w-tot)/2)));
+      const over=Math.min(xs[xs.length-1]-(W*0.55-2),xs[0]-(p.l+4));if(over>0)xs.forEach((x,j)=>xs[j]=x-over); /* labels flip left past 0.55W */
+      const y0=p.t-8+rh/2+Math.max(0,(h+16-nU*rh)/2),items=[];let q=0;
+      const put=(a,x,y,wd)=>{a.forEach(l=>{if(l.rule){lines.push({y:y-rh*0.15,x0:x-4,x1:x+wd-4,ck:"--veil"});y+=rh*0.7;}else if(l.gap)y+=rh*0.6;else{items.push({x,y,t:l.t,ck:l.ck||"--bone-3",r:("r"in l)?l.r:1,delay:q++*(mode==="solution"?40:70)});y+=rh;}});return y;};
+      const yEnd=Math.max(...cols.map((c,j)=>put(c,xs[j],y0,colW[j])));
+      if(foot.length)put(foot,xs[0],yEnd+rh*0.8,tot);
+      const off={thouless:0,request:60,solution:120}[mode],pool=new Map();items.forEach((it,j)=>pool.set(G[off+j],it));
+      setAll(d=>{const it=pool.get(d);if(!it)return{a:0};d.ck=it.ck;if(d.a<0.05){d.x=it.x;d.y=it.y;d.r=it.r;}return{x:it.x,y:it.y,a:1,r:it.r,delay:it.delay,label:it.t};});
+    } else {
+      setAll(()=>({a:0}));
+    }
+    prevMode=mode;legendFor(mode);
+    if(instant||reduced)dots.forEach(d=>{d.x=d.tx;d.y=d.ty;d.a=d.ta;d.r=d.tr;d.delay=0;});
+    t0=performance.now();
+  }
+  function legendFor(m){const Lg=[];
+    /* chapter 5 */
+    if(m==="vars"||m==="grid"){(m==="vars"?[["--candle","letter as found"],["--ember","letter differs"]]:[["--dot-tew","TEW"],["--dot-v","random signature, matched"],["--dot-s","random signature, no match"]]).forEach(x=>Lg.push(x));legendEl.innerHTML=Lg.map(x=>`<span><i style="background:var(${x[0]})"></i>${x[1]}</span>`).join("");return;}
+    if(m==="cloud"&&(el.dataset.g==="1"||step==="wood")){Lg.push(["--dot-g",step==="method"?"every other key":"one key, and the reading it gives"]);Lg.push(["--dot-b",step==="method"?"the key that worked, word 1":"the key that worked"]);} /* chapter 1 */
+    /* chapter 3 */
+    if(m==="mlTwoScorers")Lg.push(["--dot-g","Gutenberg books"],["--dot-p","one planted German line, scored two ways"]);
+    if(m==="churchOrder")Lg.push(["--dot-v","church wording: junk"],["--dot-b","Bible wording, in the Bible run"]);
+    /* chapter 2 */
+    if(m==="cloudLabels")Lg.push(["--dot-g","one free key, one reading"]);
+    if(m==="shelves")Lg.push(["--dot-g","a spine is a book; a dot, many thousand starting points"]);
+    if(m==="histEnPlants"){Lg.push(["--dot-p","planted message"]);Lg.push(["--dot-v","3 not recovered first"]);Lg.push(["--dot-g","random ciphertext, its best reading"]);}
+    if(m==="histEn"){Lg.push(["--dot-tew","Wood's best"]);Lg.push(["--bone-2","12 of 100 random ciphertexts beat it"]);Lg.push(["--dot-g","the other 88"]);Lg.push(["--dot-p","planted messages, for comparison"]);}
+    /* other chapters */
+    /* chapter 6 */
+    if(m==="thouless"){Lg.push(["--bone-3","printed right"]);Lg.push(["--ember","printed wrong"]);Lg.push(["--candle","recomputed"]);}
+    if(m==="solution"){Lg.push(["--de","German"]);Lg.push(["--af","Afrikaans"]);Lg.push(["--sig","Wood's initials"]);}
+    if(m==="ch4pour")Lg.push(["--dot-g","Gutenberg books"],["--dot-b","19 Bibles"]); /* chapter 4 */
+    if(m==="ch4top")Lg.push(["--dot-b","the Bible run's top 13 of 26.7 million"]); /* chapter 4 */
+    legendEl.innerHTML=Lg.map(x=>`<span><i style="background:var(${x[0]})"></i>${x[1]}</span>`).join("");}
+  this.frame=function(now){
+    if(W<=0)return;
+    const dt=now-t0;ctx.clearRect(0,0,W,H);
+    const mono=cssv("--mono")||"monospace",ink=cssv("--bone"),ink2=cssv("--bone-2"),ink3=cssv("--bone-3"),lbg=cssv("--label-bg"),bg=cssv("--room"),glow=cssv("--candle");
+    ctx.save();ctx.font="12px "+mono;
+    lines.forEach(l=>{ctx.strokeStyle=cssv(l.ck);ctx.lineWidth=1;ctx.setLineDash(l.dash?[4,4]:[]);ctx.beginPath();if("y0"in l){ctx.moveTo(l.x,l.y0);ctx.lineTo(l.x,l.y1);}else{ctx.moveTo(l.x0,l.y);ctx.lineTo(l.x1,l.y);}ctx.stroke();ctx.setLineDash([]);
+      if(l.text){ctx.fillStyle=ink2;ctx.textAlign=l.x>W*0.6?"right":"left";ctx.fillText(l.text,l.x+(l.x>W*0.6?-6:6),l.bottom?l.y1-6:l.y0+12);}});
+    if(axis){const p=pad();ctx.strokeStyle=ink3;ctx.beginPath();ctx.moveTo(p.l,H-p.b+4);ctx.lineTo(W-p.r,H-p.b+4);ctx.stroke();ctx.fillStyle=ink2;axis.ticks.forEach(v=>{const x=p.l+(v-axis.x0)/(axis.x1-axis.x0)*(W-p.l-p.r);ctx.textAlign=x<18?"left":(x>W-18?"right":"center");ctx.fillText(v.toFixed(1),x,H-p.b+20);});ctx.textAlign="left";ctx.fillStyle=ink3;ctx.fillText(axis.title,p.l,H-6);}
+    ctx.restore();
+    const base=small()?2.4:3.2,k=reduced?1:(small()?0.13:0.085),colors={};
+    for(const d of dots){
+      if(dt>=d.delay*(small()?0.5:1)){d.x+=(d.tx-d.x)*k;d.y+=(d.ty-d.y)*k;d.a+=(d.ta-d.a)*k;d.r+=(d.tr-d.r)*k;}
+      if(d.a<0.01)continue;
+      ctx.globalAlpha=d.a;ctx.fillStyle=colors[d.ck]||(colors[d.ck]=cssv(d.ck));ctx.beginPath();ctx.arc(d.x,d.y,base*d.r,0,6.283);ctx.fill();
+      if(d.r>1.3){ctx.shadowColor=glow;ctx.shadowBlur=7;ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle=bg;ctx.lineWidth=2;ctx.stroke();}
+    }
+    ctx.globalAlpha=1;ctx.font=(small()?"11px ":"12px ")+mono;const placed=[];
+    for(const d of dots){const want=d.label&&d.a>=0.5&&Math.abs(d.x-d.tx)+Math.abs(d.y-d.ty)<=3;d.la=reduced?(want?1:0):(d.la||0)+((want?1:0)-(d.la||0))*0.12;if(!want&&d.la<0.03){d.la=0;continue;}if(!d.label)continue;
+      ctx.globalAlpha=Math.min(1,d.la);const right=d.x>W*0.55,low=d.ty>H-70&&axis&&!["top","vars"].includes(DOTS[step]);ctx.textAlign=right?"right":"left";const m=ctx.measureText(d.label).width,tx=d.x+(right?-9:9);let ty=low?d.y-10:d.y+4;
+      let bx=right?tx-m-3:tx-3;if(bx+m+6>W-2)bx=W-2-m-6;if(bx<2)bx=2;for(let k=0;k<6;k++){const hit=placed.some(r=>bx<r.x+r.w&&bx+m+6>r.x&&ty-11<r.y+r.h&&ty+4>r.y);if(!hit)break;ty-=16;}placed.push({x:bx,y:ty-11,w:m+6,h:15});
+      ctx.fillStyle=lbg;ctx.fillRect(bx,ty-11,m+6,15);ctx.fillStyle=ink;ctx.textAlign="left";ctx.fillText(d.label,bx+3,ty);}
+    ctx.globalAlpha=1;
+  };
+  let current=null;
+  this.go=function(s,instant){if(s===current)return;current=s;stripClear();(STRIP[s]||STRIP.summary)();if(W>0)layout(s,instant);else step=s;};
+  this.replay=function(){current=null;this.go("prayer");};
+  this.pause=function(){stripClear();};
+  this.resume=function(){if(current){const c=current;current=null;this.go(c,true);}};
+  this.visible=true;
+}
+
+/* one graphic per chapter; each starts, at rest, in the state the previous chapter ended on */
+const graphics=new Map();
+document.querySelectorAll(".chapter").forEach(ch=>{const g=new Graphic(ch.querySelector(".graphic"));graphics.set(ch,g);g.go(PRELUDE[ch.dataset.ch],true);const pre=document.querySelector(`.step[data-s="${PRELUDE[ch.dataset.ch]}"]`);g.el.querySelector(".beatcap").textContent=pre?pre.dataset.cap||"":"";});
+const vis=new IntersectionObserver(es=>{es.forEach(e=>{const g=graphics.get(e.target.closest(".chapter"));g.visible=e.isIntersecting;if(e.isIntersecting)g.resume();else g.pause();});},{threshold:0});
+graphics.forEach(g=>vis.observe(g.el));
+(function loop(now){graphics.forEach(g=>{if(g.visible)g.frame(now);});requestAnimationFrame(loop);})(performance.now());
+const secs=[...document.querySelectorAll(".step")];
+const mq=matchMedia("(max-width:900px)");
+function activate(el,offscreen){const ch=el.closest(".chapter"),g=graphics.get(ch),sid=el.dataset.s,st=ch.querySelector(`.step[data-s="${sid}"]`);secs.forEach(x=>x.classList.toggle("on",x===st));if(offscreen){g.go(sid,true);g.pause();}else g.go(sid);g.el.querySelector(".beatcap").textContent=st?st.dataset.cap||"":"";
+  const beats=[...ch.querySelectorAll(".beat")],k=beats.findIndex(b=>b.dataset.s===sid);g.el.querySelectorAll(".progress i").forEach((dot,i)=>dot.classList.toggle("on",i<=k));}
+graphics.forEach((g,ch)=>{g.el.querySelector(".progress").innerHTML=[...ch.querySelectorAll(".beat")].map(()=>"<i></i>").join("");});
+/* the active beat (phone) or step (desktop) is the last one whose top has passed the trigger line, so scrolling down
+   always ends on the chapter's end state and only scrolling back up reverses it; no event can be skipped */
+function catchUp(){const mobile=mq.matches,line=innerHeight*(mobile?0.5:0.55);graphics.forEach((g,ch)=>{const els=[...ch.querySelectorAll(mobile?".beat":".step")];let cur=null;els.forEach(e=>{if(e.getBoundingClientRect().top<=line)cur=e;});if(cur)activate(cur,!g.visible);else prelude(ch,g,!g.visible);});}
+function prelude(ch,g,offscreen){const sid=PRELUDE[ch.dataset.ch];if(offscreen){g.go(sid,true);g.pause();}else g.go(sid);const pre=document.querySelector(`.step[data-s="${sid}"]`);g.el.querySelector(".beatcap").textContent=pre?pre.dataset.cap||"":"";secs.forEach(x=>x.classList.remove("on"));g.el.querySelectorAll(".progress i").forEach(d=>d.classList.remove("on"));}
+let ticking=false;const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;catchUp();});};
+addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);mq.addEventListener("change",onScroll);
+secs[0].classList.add("on");catchUp();
+document.querySelectorAll(".replay").forEach(b=>b.addEventListener("click",()=>{const ch=b.closest(".chapter"),g=graphics.get(ch);if(mq.matches)g.el.scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});g.replay();}));
+
+})();
+</script>
 <script data-goatcounter="https://creilly11235.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script>
 fetch("https://creilly11235.goatcounter.com/counter/" + encodeURIComponent("/wood-cryptogram-1950/") + ".json")
