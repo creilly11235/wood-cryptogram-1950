@@ -64,7 +64,7 @@ if __name__ == '__main__':
     rng = random.Random(SEED)
     plants = make_plants(files, rng)
     nulls = [''.join(rng.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for _ in range(21)) for _ in range(NN)]
-    cts = {'WOOD': WOOD} if not os.environ.get('NOWOOD') else {'WOOD': 'A' * 21}
+    cts = {'WOOD': WOOD, 'WOODm1': ''.join(chr((ord(c) - 66) % 26 + 65) for c in WOOD)} if not os.environ.get('NOWOOD') else {'WOOD': 'A' * 21}
     for i, p in enumerate(plants): cts[f'P{i:02d}'] = p['ct']
     for i, c in enumerate(nulls): cts[f'N{i:02d}'] = c
     t0 = time.time()
@@ -99,6 +99,10 @@ if __name__ == '__main__':
         r = rescore(f'N{i:02d}'); b = r[0] if r else None
         out['nulls'].append(b[:6] if b else None); nullmax = max(nullmax, b[0] if b else -99)
     w = rescore('WOOD'); out['wood'] = [x[:7] for x in w[:30]]
+    if 'WOODm1' in cts:
+        wm = rescore('WOODm1'); out['wood_m1'] = [x[:7] for x in wm[:30]]
+        for x in wm[:10]:
+            print(f'WOODm1 {x[0]:7.3f} {x[1]:7.1f} {x[2]} {x[3]} {x[4]} {x[5]} {" ".join(a + "/" + b for a, b in x[6])}')
     floor = sorted(floor_vals)[max(0, int(0.05 * len(floor_vals)) - 1)]
     out.update(recovered=rec, n_plants=NP, null_ceiling=nullmax, plant_floor=floor)
     json.dump(out, open(os.environ.get('OUT', os.path.join(HERE, 'run_ml_out.json')), 'w'), indent=1, default=str)

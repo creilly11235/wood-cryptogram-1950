@@ -42,3 +42,9 @@ re-encryption by script. Anything less is reported as a lead.
 
 ## Kill criterion
 If the gate fails, the arm reports "not powered" and no claim either way is made.
+
+## Amendment 1 (before the main run)
+Also score the literal published convention, shift = sum mod 26 (Thouless's printed
+description, which Wood may have followed instead of Thouless's actual off-by-one practice).
+Implemented exactly by scoring a second ciphertext `WOODm1` = Wood's letters each minus one:
+ct - ((sum - 1) + 1) = (ct - 1) - (sum - 1). Same gate, nulls and bar; both rows reported.
