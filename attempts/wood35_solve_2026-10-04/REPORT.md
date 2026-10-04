@@ -1,6 +1,8 @@
 # #35 T. E. Wood's cryptogram (1950): decipherment, 4 October 2026
 
-**Status, stated precisely (revised after Astra's independent review,
+**Confirmed by Klaus Schmeh on 4 October 2026.**
+
+**Status before confirmation, stated precisely (revised after Astra's independent review,
 `notes/astra/REVIEW_WOOD35.md`, verdict CONFIRMED WITH RESERVATIONS):**
 1. **The decipherment is exact and independently reproduced**: 21/21 letters, exact
    re-encryption, using the repository's established Thouless convention with no
