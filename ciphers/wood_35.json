@@ -2,5 +2,12 @@
  "n": 35,
  "text": "FVAMI NTKFX XWATB OIZVV X",
  "method": "same as Thouless B: key = sequence of words from a non-English book, each word -> sum of letter values mod 26, added Vigenere-style",
- "src": "Cipherbrain #35"
+ "src": "Cipherbrain #35",
+ "status": "SOLVED 2026-10-04 (this project)",
+ "key_text": "Matthew 6:9-11, Luther Bible 1912, from 'Unser Vater': Unser Vater in dem Himmel! Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns ...",
+ "key_words": "UNSER VATER IN DEM HIMMEL DEIN NAME WERDE GEHEILIGT REICH KOMME WILLE GESCHEHE AUF ERDEN WIE IM TAGLICH BROT GIB UNS",
+ "plaintext": "HIERBINICHTOTSIENSTEW",
+ "reading": "HIER BIN ICH (de: here am I) / TOTSIENS (af: goodbye) / T. E. W.",
+ "verifier": "harness/wood35t/verify_wood.py",
+ "report": "attempts/wood35_solve_2026-10-04/REPORT.md"
 }
