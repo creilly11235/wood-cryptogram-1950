@@ -7,6 +7,7 @@ Quotations are from the scans' OCR text layer, checked against the page images.
 
 PDF: http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf
 (SHA-256 668c24d8f7e64584dd25fc2e00d32695ebe713cfdc3e7ca24d6ec98c7141f811; PDF pages 109-110)
+`wood_1950_p105.png` is the top of p. 105 (PDF page 109), rendered at 300 dpi.
 
 > My ciphered passage is : FVAMI NTKFX XWATB OIZVV X
 
@@ -48,3 +49,9 @@ the last cipher letter would be D, not B. See `thouless_1948_suffer_slip.png` an
 
 Luther Bible, 1912 text, Matthew 6:9-11: https://www.bibel-online.net/text/luther_1912/matthaeus/6/
 The search found it in `bibles/German.xml` of https://github.com/christos-c/bible-corpus.
+
+Printed copy: *Die Bibel oder die ganze heilige Schrift des Alten und Neuen Testaments*, Berlin:
+Britische und Ausländische Bibelgesellschaft (British and Foreign Bible Society), 1922, the 1912
+revised text. Matthew 6:9-11 is on p. 8. Scan: https://archive.org/details/diebibeloderdie00luth
+(page image n923, SHA-256 2de90209f47901321112fa46ad1e9fb0f08cdf82837fd9f5a1d2ab9d66efa3e6).
+`luther_1922_mt6_9-11.jpg` is a crop of that page. Its wording of the 21 key words matches the 1912 text.
