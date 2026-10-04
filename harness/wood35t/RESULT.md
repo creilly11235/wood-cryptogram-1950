@@ -19,6 +19,14 @@ misremembered text still gives a mostly-correct plaintext, so memory errors cost
   segment in 16/20000 cases, best -2.15. `attempts/wood35t/passages_ml.txt`.
 **Negative for these passages.**
 
-## Arm B: multilingual re-scoring of the Round 52 key class (pre-registered, running)
+## Arm B: multilingual re-scoring of the Round 52 key class (pre-registered, done, negative)
 See PREREG.md. Pilot on the first 786 rebuilt books (K = 79,173,018, plants only, Wood not
 scored): gate 8/8 plants recovered at rank 1, plant floor -1.05, null ceiling -1.37 (4 nulls).
+
+Full run: 3,847 books, K = 400,294,934; gate 40/40; plant floor -1.081; null ceiling -1.207;
+Wood best -1.313 (junk). Negative, as expected (key not in the book list).
+
+## Arm C: Bible tier (Amendment 2) -- SOLVED
+19 Latin-script Bibles, K = 26,730,018; gate 40/40; floor -1.081; null ceiling -1.273.
+Wood's top decryption: German Bible, Matthew 6:9 from "Unser Vater", variant D:
+HIERBINICHTOTSIENSTEW. See attempts/wood35_solve_2026-10-04/REPORT.md.

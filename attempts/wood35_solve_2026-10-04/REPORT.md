@@ -74,3 +74,14 @@ chance calculation above. The score shortfall is a property of the scorer, not o
 Method: Robert Thouless (1948); its exact convention recovered by Richard Bean (2019).
 Ciphertext and Wood's statements: Klaus Schmeh (Cipherbrain #35; *Nicht zu knacken*).
 The multilingual-plaintext reading of Schmeh's note and the Bible-tier search are this round's.
+
+## Addendum: the pre-registered full-corpus arm (Round 52 key class, multilingual scoring)
+
+Rebuilt Round 52 amendment-1 corpus: 3,847 of 3,848 books (one fetch failure), 14 languages,
+K = 400,294,934 hypotheses (variants D and P). Gate **40/40** plants recovered at rank 1,
+plant floor -1.081, null ceiling -1.207 (20 nulls). Wood's best decryption here is junk
+("OFERANTREFUSAIDAUTIOR", -1.313, below the null ceiling); the literal sum-mod-26 row is junk
+too ("ALENRENDRAYCUTREFUGES"). This is the expected negative -- the German Bible is not in that
+book list -- and it is a useful control: across a search 15 times the size of the Bible tier,
+no wrong key produced anything resembling a German phrase plus the author's initials.
+Outputs: `full_gutenberg_ml.json`, `full_gutenberg_ml.out`.
