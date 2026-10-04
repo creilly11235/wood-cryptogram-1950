@@ -95,7 +95,7 @@ documents mention files from that repository that are not included here.
 
 ## Credits
 
-Robert Thouless designed the method, and Richard Bean's 2019 solution of Thouless's own
+The project was run by Colin Reilly. Robert Thouless designed the method, and Richard Bean's 2019 solution of Thouless's own
 Message B showed exactly how it works. Klaus Schmeh kept the puzzle in view and confirmed the
 answer. Claude (Anthropic) wrote the search code and found the key; GPT-6 Astra (OpenAI)
 reviewed it independently.
