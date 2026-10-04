@@ -392,7 +392,7 @@ footer p { margin:0 0 .7em; }
 <script data-goatcounter="https://creilly11235.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script>
 fetch("https://creilly11235.goatcounter.com/counter/" + encodeURIComponent("/wood-cryptogram-1950/") + ".json")
-  .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(function (r) { return r.json(); })  // a page with no visits yet answers 404 with a count of 0
   .then(function (d) {
     var n = String(d.count).replace(/\D/g, "");
     if (n) document.getElementById("visits").textContent = n.padStart(6, "0");
