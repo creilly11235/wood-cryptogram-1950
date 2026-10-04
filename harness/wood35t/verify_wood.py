@@ -53,7 +53,7 @@ if __name__ == "__main__":
     assert encrypt(pt, key) == CT
     print("re-encryption matches the published ciphertext exactly")
     print("reading   : HIER BIN ICH (German: here am I) / TOTSIENS (Afrikaans: goodbye) / T. E. W.")
-    # controls: each deviation from the method destroys the reading
+    # controls: how specific deviations change the reading
     print("control, all words (no dedup)   :", decrypt(CT, keyseq(KEY, 21, distinct=False)))
     print("control, shift = sum mod 26     :", decrypt(CT, key, minus_one=False))
     print("control, liturgical wording     :", decrypt(CT, keyseq("Vater unser im Himmel, geheiligt werde dein Name. Dein Reich komme. Dein Wille geschehe, wie im Himmel so auf Erden. Unser tägliches Brot gib uns heute. Und vergib uns unsere Schuld", 21)))
