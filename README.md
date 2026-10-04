@@ -99,3 +99,11 @@ Robert Thouless designed the method, and Richard Bean's 2019 solution of Thoules
 Message B showed exactly how it works. Klaus Schmeh kept the puzzle in view and confirmed the
 answer. Claude (Anthropic) wrote the search code and found the key; GPT-6 Astra (OpenAI)
 reviewed it independently.
+
+## License
+
+The code is under the MIT License (see `LICENSE`). The quotations and page images from the 1948
+and 1950 *Proceedings of the Society for Psychical Research* are short extracts included for
+commentary, and are not covered by that license. Nor are the third-party texts and data: the
+key-text passages in `harness/wood35t/passages/`, the word lists behind `mlseg_lex.pkl` and
+`pooled_4.npy`, and the Bible and Gutenberg texts the searches download.
