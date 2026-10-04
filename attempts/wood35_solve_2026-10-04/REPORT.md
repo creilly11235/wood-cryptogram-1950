@@ -122,7 +122,7 @@ Outputs: `full_gutenberg_ml.json`, `full_gutenberg_ml.out`.
 ## Addendum 2: further local validation (after Astra's review)
 
 **Primary sources obtained** (`research/incoming/wood35_primary/`, PDFs from iapsop.com, hashes
-in EXCERPTS.md):
+in SOURCES.md):
 - Wood, "A Further Test for Survival", *Proc. SPR* 49 (Part 178), pp. 105-106. Confirms the
   ciphertext `FVAMI NTKFX XWATB OIZVV X`; method = Thouless 1948 pp. 258-260; "The first 21
   words of the key passage are used ... all second and later repetitions of words already used

@@ -1,0 +1,9 @@
+{
+ "n": 35,
+ "text": "INXPH CJKGM JIRPR FBCVY WYWES NOECN SCVHE GYRJQ TEBJM TGXAT TWPNH CNYBC FNXPF LFXRV QWQL",
+ "plaintext": "A number of successful experiments of this kind would give strong evidence for survival",
+ "key_source": "Francis Thompson, The Hound of Heaven, beginning 'I fled Him, down'",
+ "method": "For each consecutive distinct key-text word, sum A=1 through Z=26; subtract that sum modulo 26 from one ciphertext letter",
+ "note": "Solved 2019 by Richard Bean; use as known-answer test for the running-key-by-word-sum method",
+ "src": "Cipherbrain #35"
+}
