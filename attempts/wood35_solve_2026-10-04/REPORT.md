@@ -116,3 +116,47 @@ book list -- and it is qualitative context only: its saved top candidates per ro
 the pipeline did not apply the human criterion to every output and it scores signatures poorly,
 so it does not certify that no wrong key anywhere produced a comparable reading.
 Outputs: `full_gutenberg_ml.json`, `full_gutenberg_ml.out`.
+
+## Addendum 2: further local validation (after Astra's review)
+
+**Primary sources obtained** (`research/incoming/wood35_primary/`, PDFs from iapsop.com, hashes
+in EXCERPTS.md):
+- Wood, "A Further Test for Survival", *Proc. SPR* 49 (Part 178), pp. 105-106. Confirms the
+  ciphertext `FVAMI NTKFX XWATB OIZVV X`; method = Thouless 1948 pp. 258-260; "The first 21
+  words of the key passage are used ... all second and later repetitions of words already used
+  in the key passage have been omitted"; "The key passage ... is in an accessible book"; he will
+  communicate "in what foreign language the key passage is" (one language); "The message, if
+  and when deciphered, will not be in any one language"; the foreign languages are meant to
+  defeat attacks by lists of common English words; "My name is T. E. Wood"; born 21 June 1887,
+  Yorkshire; practised as a solicitor in Burma. (No South African connection is stated.)
+- Thouless, "A Test of Survival", *Proc. SPR* 48 (1948), pp. 258-260: word -> letter whose
+  serial number is the letter-sum (remainder mod 26), enciphered through the Vigenere square
+  with key A = no shift, i.e. shift = (sum - 1) mod 26 -- **the convention follows from the
+  1948 primary text itself**, not only from Bean's reconstruction. Thouless's printed worked
+  example (key "To be or not [to be], that is the question. Whether 'tis nobler in [the] mind
+  [to] suffer", plaintext THERE IS NO DEATH) is reproduced on letters 1-13 by
+  `harness/wood35t/thouless_example_check.py`; letter 14 differs because Thouless himself
+  mis-added SUFFER (75 -> W; he printed U, confirmed on the page image
+  `thouless_1948_suffer_slip.png`).
+
+**Empirical look-elsewhere test on Wood's real ciphertext** (`harness/wood35t/lookelsewhere.py`,
+`tew_hits.py`; outputs `lookelsewhere.json`, `tew_hits.json`). All 3,866 shards (3,847 Gutenberg
+books + 19 Bibles), variants D and P, both arithmetic conventions: 854,049,904 decryptions.
+Detectors use Wood's initials TEW, known in advance from his paper, as the signature, and 500
+random control signatures to measure chance:
+
+| detector | TEW hits | control signatures: mean hits, share with >= 1 |
+|---|---:|---|
+| first 10 letters = German words (>= 3 letters), last 3 = signature | 1 (ours) | 0.014, 1.4% |
+| first 10 letters = words of any of 9 languages, last 3 = signature | 18 | 10.4, 100% (not discriminating) |
+| all 18 letters = words (>= 3 letters; union lexicon + TOTSIENS), last 3 = signature | **1 (ours)** | 0.016, 1.4% |
+
+- Of the 18 TEW decryptions with a word-like opening, only one reads all the way through:
+  HIERBINICHTOTSIENSTEW at the start of the Lord's Prayer. The other 17 collapse after a few
+  letters (LATOSACJAYQJ..., UNDWALKARCQX..., ALLWOOLPYPQF...).
+- The rare full-length chance hits for control signatures are word salad from obscure lexicon
+  entries (PAYNAULADDUCDAEEVA..., BUMTOPSOIWEIIWATAYE..., WANMOSCALMTORNTOUR...).
+- Reading: a mechanical "words + pre-specified signature" criterion is met by chance for about
+  1.4% of signatures over this entire search, but none of those chance hits is grammatical or
+  meaningful; the Wood decryption is the unique hit for his own initials and is coherent
+  German and Afrikaans, at the most natural passage start in an accessible non-English book.

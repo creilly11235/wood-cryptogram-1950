@@ -1,0 +1,20 @@
+{
+ "German": {
+  "TEW": 1,
+  "ctrl_mean": 0.014,
+  "ctrl_max": 1,
+  "ctrl_frac_ge1": 0.014,
+  "ctrl_frac_ge_tew": 0.014
+ },
+ "union": {
+  "TEW": 18,
+  "ctrl_mean": 10.388,
+  "ctrl_max": 28,
+  "ctrl_frac_ge1": 1.0,
+  "ctrl_frac_ge_tew": 0.054
+ },
+ "K_per_convention": 427024952,
+ "conventions": 2,
+ "n_ctrl": 500,
+ "cpu_wall_s": 26
+}

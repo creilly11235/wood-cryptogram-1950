@@ -1,0 +1,151 @@
+{
+ "full18_TEW": 1,
+ "full18_ctrl_mean": 0.016,
+ "full18_ctrl_frac_ge1": 0.014,
+ "tew_hits": [
+  {
+   "file": "it_30030.npz",
+   "conv": "sum",
+   "var": "D",
+   "off": 47246,
+   "pt": "LATOSACJAYQJTKRBQETEW",
+   "full18": false
+  },
+  {
+   "file": "nl_11024.npz",
+   "conv": "sum",
+   "var": "D",
+   "off": 3193,
+   "pt": "UNDWALKARCQXCOHCOXTEW",
+   "full18": false
+  },
+  {
+   "file": "es_40810.npz",
+   "conv": "sum",
+   "var": "P",
+   "off": 91117,
+   "pt": "LORNAOHEEDWYFASFZYTEW",
+   "full18": false
+  },
+  {
+   "file": "es_54861.npz",
+   "conv": "sum",
+   "var": "P",
+   "off": 56179,
+   "pt": "IUNONONTODIZTDSFECTEW",
+   "full18": false
+  },
+  {
+   "file": "fr_11484.npz",
+   "conv": "sum",
+   "var": "D",
+   "off": 64874,
+   "pt": "NEDDERFARAWCZZGJQTTEW",
+   "full18": false
+  },
+  {
+   "file": "fr_12284.npz",
+   "conv": "sum-1",
+   "var": "D",
+   "off": 91150,
+   "pt": "OMOOZNIFAMOZBBJFPGTEW",
+   "full18": false
+  },
+  {
+   "file": "fr_13303.npz",
+   "conv": "sum-1",
+   "var": "D",
+   "off": 25677,
+   "pt": "ALLWOOLPYPQFGWRQHMTEW",
+   "full18": false
+  },
+  {
+   "file": "hu_63513.npz",
+   "conv": "sum",
+   "var": "P",
+   "off": 8412,
+   "pt": "ESRIAGTTORLRBZHMBYTEW",
+   "full18": false
+  },
+  {
+   "file": "hu_72623.npz",
+   "conv": "sum",
+   "var": "P",
+   "off": 3495,
+   "pt": "HURVAOSOOKCWHMUWHZTEW",
+   "full18": false
+  },
+  {
+   "file": "pt_27542.npz",
+   "conv": "sum",
+   "var": "D",
+   "off": 5781,
+   "pt": "LUNETELJAWJMMVJHBUTEW",
+   "full18": false
+  },
+  {
+   "file": "bible_Italian.npz",
+   "conv": "sum",
+   "var": "P",
+   "off": 34625,
+   "pt": "OOMDISCLAPJTJCZJIITEW",
+   "full18": false
+  },
+  {
+   "file": "fi_12906.npz",
+   "conv": "sum",
+   "var": "D",
+   "off": 9723,
+   "pt": "VISOVEXOUEATRPEGRCTEW",
+   "full18": false
+  },
+  {
+   "file": "bible_German.npz",
+   "conv": "sum-1",
+   "var": "D",
+   "off": 533250,
+   "pt": "HIERBINICHTOTSIENSTEW",
+   "full18": true
+  },
+  {
+   "file": "es_30425.npz",
+   "conv": "sum",
+   "var": "P",
+   "off": 43851,
+   "pt": "WEHDIEDIENYGJVGNLITEW",
+   "full18": false
+  },
+  {
+   "file": "it_22503.npz",
+   "conv": "sum",
+   "var": "P",
+   "off": 23085,
+   "pt": "DOVHOYOGOTZRHTWIVITEW",
+   "full18": false
+  },
+  {
+   "file": "it_47276.npz",
+   "conv": "sum-1",
+   "var": "D",
+   "off": 177125,
+   "pt": "UGOMEDOVITEAQIOQFYTEW",
+   "full18": false
+  },
+  {
+   "file": "sv_15724.npz",
+   "conv": "sum",
+   "var": "D",
+   "off": 8903,
+   "pt": "ESCUDIKACETTPJIDIBTEW",
+   "full18": false
+  },
+  {
+   "file": "bible_Afrikaans.npz",
+   "conv": "sum-1",
+   "var": "P",
+   "off": 523580,
+   "pt": "AEREGINRYSSRBEKEVGTEW",
+   "full18": false
+  }
+ ]
+}
