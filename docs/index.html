@@ -204,7 +204,7 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="wood" data-cap="Wood's clues say the key is in an accessible foreign book and the message is not in any one language. Most book keys read as junk.">
-<p><strong>Wood, 1950.</strong> T. E. Wood, a solicitor born in Yorkshire in 1887 who had practised in Burma, answered with "A Further Test for Survival" (<em>Proceedings</em> 49). He published <span class="cipher" translate="no">FVAMI NTKFX XWATB OIZVV X</span> and said:</p>
+<p><strong>Wood, 1950.</strong> T. E. Wood, a solicitor born in Yorkshire in 1887 who had practised in Burma, answered with "A Further Test for Survival" (<em>Proceedings</em> 49). He published <span class="cipher" translate="no">FVAMI NTKFX XWATB OIZVV X</span> and left the following clues:</p>
 <ul>
 <li>he used Thouless's method, with repeated words omitted</li>
 <li>the key passage "is in an accessible book", in a foreign language</li>
@@ -232,7 +232,7 @@ footer p{margin:0 0 .7em}
   <div class="text">
 <section class="step" data-s="trap" data-cap="With a free choice of shifts, any key gives any reading, even English. A &ldquo;solution&rdquo; looks like luck." id="why-it-stayed-open">
 <p class="eyebrow">The trap · 1950 to 2026</p>
-<h2>Why it stayed open, and our own wrong turn</h2>
+<h2>Why it stayed open</h2>
 <p>Thouless himself pointed out the problem. With a free choice of key letters, any ciphertext from his system can be turned into any message of the same length. With only 21 letters, a "solution" seemed impossible to tell apart from luck.</p>
 <p>This project believed that too at first. Its notes called Wood's cryptogram "too under-determined for a blind Gutenberg scan", because "any 21-letter key sequence can produce 'plausible' text", and it was not attempted.</p>
 </section>
@@ -243,7 +243,7 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="plants" data-cap="In September 2026, messages planted with book keys came back at rank 1 in 97 of 100 tries. The search works.">
-<p>Round 52 (17 September 2026) measured it. Decrypt the cipher with every starting point and score each result by how much it looks like English. To test whether this can work at all, encrypt known messages with random book keys and see if the search finds them. Across 28.6 million combinations of starting point and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries. The search could work.</p>
+<p>On 17 September, 2026, attempt 52 measured the search space. Decrypt the cipher with every starting point and score each result by how much it looks like English. To test whether this can work at all, encrypt known messages with random book keys and see if the search finds them. Across 28.6 million combinations of starting points and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries, proving the search could work.</p>
 <p class="fig">Planted messages back at rank 1: <b>97 of 100</b></p>
 </section>
 
@@ -272,7 +272,7 @@ footer p{margin:0 0 .7em}
 <p class="eyebrow">3 October 2026, evening</p>
 <h2>Taking Wood at his word</h2>
 <p>The breakthrough on the evening of 3 October 2026 came from going back to one of Wood's own clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written "in several different languages". Round 52 had noted the claim but scored candidates as English only.</p>
-<p>That matters because of how a search decides what counts as a hit. It decrypts with every possible key and ranks the results by how much they look like language. A message that switches from German to Afrikaans looks like gibberish to an English-only scorer. Scored across seven languages, with the language free to change at every word, a planted German message jumps to the top. The right book also has to be in the collection, and the German Bible was not among the earlier runs' texts.</p>
+<p>That matters because of how a search decides what counts as a hit. It decrypts with every possible key and ranks the results by how much they look like language. A message that switches from German to Afrikaans looks like gibberish to an English-only scorer. Scored across seven languages, with the language free to change at any word, a planted German message jumps to the top. The right book also has to be in the collection, and the German Bible was not among the earlier runs' texts.</p>
 <p class="fig">Wood's best over the same 3,847 books, seven languages: <b>−1.313</b> · null ceiling −1.207</p>
 </section>
 
@@ -505,7 +505,7 @@ footer p{margin:0 0 .7em}
 <li><strong>Rebuilt from scratch.</strong> A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.</li>
 <li><strong>A second AI, working independently.</strong> GPT-6 Astra, run through OpenAI's Codex tool, reviewed the claim and came back "confirmed with reservations". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.</li>
 <li><strong>The original papers.</strong> Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that "A means no shift" comes from Thouless's own text, not from a later guess.</li>
-<li><strong>Near misses fail.</strong> The modern church wording gives <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after "<span class="cipher" translate="no">HIERBINIC</span>". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these was scored; they were never candidates.</li>
+<li><strong>Near misses fail.</strong> The modern church wording gives <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after "<span class="cipher" translate="no">HIERBINIC</span>". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these were scored and were never candidates.</li>
 </ul>
 </section>
 
@@ -552,6 +552,7 @@ footer p{margin:0 0 .7em}
 <p class="eyebrow">What Wood asked for</p>
 <h2>Telling the Society for Psychical Research</h2>
 <p>The key came from a search of books, not from a medium, so the solve says nothing either way about life after death. What remains is Wood's own request. He asked that anyone who tried to decipher his message "communicate the result (even if negative) to the Society". He promised the Society "fuller particulars" about himself and photographs of him and his home, and said his executors would be asked to tell it "the circumstances" and date of his death. If that file survives, it may say when Wood died, and whether any medium ever claimed to have heard from him.</p>
+<p>I have reached out to the Society and archivist with the solution, I will update if I hear any response.</p>
 </section>
 
 <section class="step" data-s="confirmed" data-cap="Confirmed by Klaus Schmeh, 4 October 2026. Next, as Wood asked, the result goes to the Society for Psychical Research." id="timeline-and-credits">
@@ -638,7 +639,7 @@ footer p{margin:0 0 .7em}
 <li>R. H. Thouless, "A Test of Survival", <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the SPR</em> 48</a>, pp. 258-260</li>
 <li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Luther Bible 1912, Matthew 6</a></li>
 </ul>
-<p class="small">Dot positions inside the piles are illustrative, as are the places of the 7 matched control signatures in the luck grid (which ones matched was not saved); every other labelled dot, score, count and reference line is from the saved runs. Page format after <a href="http://www.r2d3.us/">r2d3.us</a>.</p>
+<p class="small">Dot positions inside the piles are illustrative, as are the places of the 7 matched control signatures in the luck grid (matches were not saved). Every other labelled dot, score, count and reference line is from the saved runs.</p>
 </section>
   </div>
   <div class="beats" aria-hidden="true"><div class="beat" data-s="slip"></div><div class="beat" data-s="next"></div><div class="beat" data-s="confirmed"></div></div>
