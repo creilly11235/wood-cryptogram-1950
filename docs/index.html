@@ -1161,16 +1161,17 @@ graphics.forEach(g=>vis.observe(g.el));
 (function loop(now){graphics.forEach(g=>{if(g.visible)g.frame(now);});requestAnimationFrame(loop);})(performance.now());
 const secs=[...document.querySelectorAll(".step")];
 const mq=matchMedia("(max-width:900px)");
-function activate(el,offscreen){const ch=el.closest(".chapter"),g=graphics.get(ch),sid=el.dataset.s,st=ch.querySelector(`.step[data-s="${sid}"]`);secs.forEach(x=>x.classList.toggle("on",x===st));if(offscreen){g.go(sid,true);g.pause();}else g.go(sid);g.el.querySelector(".beatcap").textContent=st?st.dataset.cap||"":"";
+function activate(el,offscreen){const ch=el.closest(".chapter"),g=graphics.get(ch),sid=el.dataset.s,st=ch.querySelector(`.step[data-s="${sid}"]`);if(offscreen){g.go(sid,true);g.pause();}else g.go(sid);g.el.querySelector(".beatcap").textContent=st?st.dataset.cap||"":"";
   const beats=[...ch.querySelectorAll(".beat")],k=beats.findIndex(b=>b.dataset.s===sid);g.el.querySelectorAll(".progress i").forEach((dot,i)=>dot.classList.toggle("on",i<=k));}
 graphics.forEach((g,ch)=>{g.el.querySelector(".progress").innerHTML=[...ch.querySelectorAll(".beat")].map(()=>"<i></i>").join("");});
 /* the active beat (phone) or step (desktop) is the last one whose top has passed the trigger line, so scrolling down
    always ends on the chapter's end state and only scrolling back up reverses it; no event can be skipped */
-function catchUp(){const mobile=mq.matches,line=innerHeight*(mobile?0.5:0.55);graphics.forEach((g,ch)=>{const els=[...ch.querySelectorAll(mobile?".beat":".step")];let cur=null;els.forEach(e=>{if(e.getBoundingClientRect().top<=line)cur=e;});if(cur)activate(cur,!g.visible);else prelude(ch,g,!g.visible);});}
-function prelude(ch,g,offscreen){const sid=PRELUDE[ch.dataset.ch];if(offscreen){g.go(sid,true);g.pause();}else g.go(sid);const pre=document.querySelector(`.step[data-s="${sid}"]`);g.el.querySelector(".beatcap").textContent=pre?pre.dataset.cap||"":"";secs.forEach(x=>x.classList.remove("on"));g.el.querySelectorAll(".progress i").forEach(d=>d.classList.remove("on"));}
+function catchUp(){const mobile=mq.matches,line=innerHeight*(mobile?0.5:0.55);graphics.forEach((g,ch)=>{const els=[...ch.querySelectorAll(mobile?".beat":".step")];let cur=null;els.forEach(e=>{if(e.getBoundingClientRect().top<=line)cur=e;});if(cur)activate(cur,!g.visible);else prelude(ch,g,!g.visible);});
+  const lit=secs.filter(e=>e.getBoundingClientRect().top<=line).pop()||secs[0];secs.forEach(x=>x.classList.toggle("on",x===lit));}
+function prelude(ch,g,offscreen){const sid=PRELUDE[ch.dataset.ch];if(offscreen){g.go(sid,true);g.pause();}else g.go(sid);const pre=document.querySelector(`.step[data-s="${sid}"]`);g.el.querySelector(".beatcap").textContent=pre?pre.dataset.cap||"":"";g.el.querySelectorAll(".progress i").forEach(d=>d.classList.remove("on"));}
 let ticking=false;const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;catchUp();});};
 addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);mq.addEventListener("change",onScroll);
-secs[0].classList.add("on");catchUp();
+catchUp();
 document.querySelectorAll(".replay").forEach(b=>b.addEventListener("click",()=>{const ch=b.closest(".chapter"),g=graphics.get(ch);if(mq.matches)g.el.scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});g.replay();}));
 
 })();
