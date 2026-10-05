@@ -163,7 +163,7 @@
   },
   {
    "kind": "span",
-   "en": "II · Why it stayed open",
+   "en": "II · Why it remained unsolved",
    "de": "II · Warum es ungelöst blieb"
   },
   {
@@ -173,12 +173,12 @@
   },
   {
    "kind": "p",
-   "en": "The trap · 1950 to 2026",
-   "de": "Die Falle · 1950 bis 2026"
+   "en": "1950 to 2026",
+   "de": "1950 bis 2026"
   },
   {
    "kind": "h2",
-   "en": "Why it stayed open",
+   "en": "Why it remained unsolved",
    "de": "Warum es ungelöst blieb"
   },
   {
@@ -198,8 +198,8 @@
   },
   {
    "kind": "p",
-   "en": "<strong>That reasoning was wrong, and fixing it is what opened the door.</strong> It holds for a key of random letters, but Wood's key is not random. It is consecutive words of a published book. So the only possible keys are the starting points in real books, a finite list that can be searched. The cloud becomes shelves, with one spine per book and one dot per starting point.",
-   "de": "<strong>Diese Überlegung war falsch, und ihre Korrektur öffnete die Tür.</strong> Sie gilt für einen Schlüssel aus zufälligen Buchstaben, aber Woods Schlüssel ist nicht zufällig. Er besteht aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs. Die einzig möglichen Schlüssel sind also die Startpunkte in echten Büchern, eine endliche Liste, die sich durchsuchen lässt. Aus der Wolke werden Regale, mit einem Buchrücken je Buch und einem Punkt je Startpunkt."
+   "en": "That argument assumes a key chosen freely, letter by letter. Wood's key came from consecutive words of a published book, so a search could test each starting point in a collection of books. In the graphic, each spine represents a book and each dot a starting point.",
+   "de": "Dieses Argument setzt voraus, dass jeder Schlüsselbuchstabe frei gewählt werden kann. Woods Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs. Eine Suche konnte deshalb jeden Startpunkt in einer Sammlung von Büchern prüfen. In der Grafik steht jeder Buchrücken für ein Buch und jeder Punkt für einen Startpunkt."
   },
   {
    "kind": "p",
@@ -253,13 +253,13 @@
   },
   {
    "kind": "h2",
-   "en": "Taking Wood at his word",
-   "de": "Wood beim Wort nehmen"
+   "en": "Searching across languages",
+   "de": "Suche in mehreren Sprachen"
   },
   {
    "kind": "p",
-   "en": "The breakthrough on the evening of 3 October 2026 came from going back to one of Wood's own clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written \"in several different languages\". The September search had noted the claim but scored candidates as English only.",
-   "de": "Der Durchbruch am Abend des 3.&nbsp;Oktober 2026 gelang, als wir einen von Woods eigenen Hinweisen erneut aufgriffen. Schmehs Beitrag von 2017 gibt Woods Angabe wieder, der Klartext sei „in mehreren verschiedenen Sprachen“ geschrieben. Die Suche im September hatte das notiert, die Kandidaten aber nur als Englisch bewertet."
+   "en": "On the evening of 3 October 2026, we revisited one of Wood's clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written \"in several different languages\". The September search had noted the claim but scored candidates as English only.",
+   "de": "Am Abend des 3.&nbsp;Oktober 2026 griffen wir einen von Woods Hinweisen erneut auf. Schmehs Beitrag von 2017 gibt Woods Angabe wieder, der Klartext sei „in mehreren verschiedenen Sprachen“ geschrieben. Die Suche im September hatte das notiert, die Kandidaten aber nur als Englisch bewertet."
   },
   {
    "kind": "p",
@@ -283,13 +283,13 @@
   },
   {
    "kind": "li",
-   "en": "<strong>Scoring across seven languages.</strong> A quick first pass keeps the 3,000 candidates whose letter patterns look most like English, French, German, Latin, Italian, Spanish or Portuguese. Those are then split into dictionary words, with the language allowed to change from word to word.",
-   "de": "<strong>Bewertung über sieben Sprachen.</strong> Ein schneller erster Durchgang behält die 3.000 Kandidaten, deren Buchstabenmuster am meisten nach Englisch, Französisch, Deutsch, Latein, Italienisch, Spanisch oder Portugiesisch aussehen. Diese werden dann in Wörterbuchwörter zerlegt, wobei die Sprache von Wort zu Wort wechseln darf."
+   "en": "A quick first pass keeps the 3,000 candidates whose letter patterns look most like English, French, German, Latin, Italian, Spanish or Portuguese. Those are then split into dictionary words, with the language allowed to change from word to word.",
+   "de": "Ein schneller erster Durchgang behält die 3.000 Kandidaten, deren Buchstabenmuster am meisten nach Englisch, Französisch, Deutsch, Latein, Italienisch, Spanisch oder Portugiesisch aussehen. Diese werden dann in Wörterbuchwörter zerlegt, wobei die Sprache von Wort zu Wort wechseln darf."
   },
   {
    "kind": "li",
-   "en": "<strong>Bibles as the key source.</strong> Wood said the key was in \"an accessible book\" in a foreign language. A Bible is the obvious candidate, so 19 Bibles in Latin-alphabet languages were added.",
-   "de": "<strong>Bibeln als Schlüsselquelle.</strong> Wood schrieb, der Schlüssel stehe „in einem zugänglichen Buch“ in einer Fremdsprache. Eine Bibel ist der naheliegende Kandidat, also kamen 19 Bibeln in Sprachen mit lateinischer Schrift hinzu."
+   "en": "Wood said the key was in \"an accessible book\" in a foreign language. A Bible was a plausible source, so 19 Bibles in Latin-alphabet languages were added.",
+   "de": "Wood schrieb, der Schlüssel stehe „in einem zugänglichen Buch“ in einer Fremdsprache. Eine Bibel kam als Quelle infrage, also kamen 19 Bibeln in Sprachen mit lateinischer Schrift hinzu."
   },
   {
    "kind": "p",
@@ -378,8 +378,8 @@
   },
   {
    "kind": "p",
-   "en": "<strong>It did not pass our own automatic test.</strong> The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081). The reason is visible in the output. The scorer had no Afrikaans and no idea of initials, so it read the end as \"<span translate=\"no\">TOT SIEN STEW</span>\". Under the other version of the arithmetic, a nonsense string, <span class=\"cipher\" translate=\"no\">ALENRENDRAYCUTREFUGES</span>, scored slightly higher still. That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.",
-   "de": "<strong>Unseren eigenen automatischen Test bestand es nicht.</strong> Die vorab festgelegte Regel verlangte, dass die Bewertung eine Schwelle übertrifft, die eingeschleuste Testbotschaften vorgeben, und sie blieb darunter (−1,270 gegenüber −1,081). Der Grund ist in der Ausgabe zu sehen. Das Bewertungsprogramm kannte weder Afrikaans noch Initialen und las das Ende daher als „<span translate=\"no\">TOT SIEN STEW</span>“. Unter der anderen Rechenvariante schnitt eine unsinnige Zeichenfolge, <span class=\"cipher\" translate=\"no\">ALENRENDRAYCUTREFUGES</span>, sogar noch etwas besser ab. Dieser Test entschied nur darüber, ob die Suche selbstständig eine Lösung melden durfte. Das Ergebnis war trotzdem das beste von 26,7 Millionen nach Thouless’ Regel, mit Buchstabensalat auf Platz zwei, also lasen wir es, und es war eindeutig Deutsch, dann Afrikaans, dann Woods Initialen."
+   "en": "It did not pass our own automatic test. The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081). The reason is visible in the output. The scorer had no Afrikaans and no idea of initials, so it read the end as \"<span translate=\"no\">TOT SIEN STEW</span>\". Under the other version of the arithmetic, a nonsense string, <span class=\"cipher\" translate=\"no\">ALENRENDRAYCUTREFUGES</span>, scored slightly higher still. That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.",
+   "de": "Unseren eigenen automatischen Test bestand es nicht. Die vorab festgelegte Regel verlangte, dass die Bewertung eine Schwelle übertrifft, die eingeschleuste Testbotschaften vorgeben, und sie blieb darunter (−1,270 gegenüber −1,081). Der Grund ist in der Ausgabe zu sehen. Das Bewertungsprogramm kannte weder Afrikaans noch Initialen und las das Ende daher als „<span translate=\"no\">TOT SIEN STEW</span>“. Unter der anderen Rechenvariante schnitt eine unsinnige Zeichenfolge, <span class=\"cipher\" translate=\"no\">ALENRENDRAYCUTREFUGES</span>, sogar noch etwas besser ab. Dieser Test entschied nur darüber, ob die Suche selbstständig eine Lösung melden durfte. Das Ergebnis war trotzdem das beste von 26,7 Millionen nach Thouless’ Regel, mit Buchstabensalat auf Platz zwei, also lasen wir es, und es war eindeutig Deutsch, dann Afrikaans, dann Woods Initialen."
   },
   {
    "kind": "p",
@@ -398,8 +398,8 @@
   },
   {
    "kind": "p",
-   "en": "Before it went out",
-   "de": "Vor der Weitergabe"
+   "en": "Verification",
+   "de": "Überprüfung"
   },
   {
    "kind": "h2",
@@ -408,28 +408,28 @@
   },
   {
    "kind": "p",
-   "en": "Before anything went to Schmeh, the result was attacked from five directions:",
-   "de": "Bevor irgendetwas an Schmeh ging, wurde das Ergebnis auf fünf Wegen auf die Probe gestellt:"
+   "en": "Before sending the result to Schmeh, we checked the decryption in several ways:",
+   "de": "Bevor wir das Ergebnis an Schmeh schickten, überprüften wir die Entschlüsselung auf mehrere Arten:"
   },
   {
    "kind": "li",
-   "en": "<strong>Rebuilt from scratch.</strong> A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.",
-   "de": "<strong>Von Grund auf neu nachgerechnet.</strong> Ein kurzes eigenständiges Skript, das keinen anderen Projektcode verwendet, baut den Schlüssel aus dem Gebetstext auf, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu genau Woods Geheimtext."
+   "en": "A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.",
+   "de": "Ein kurzes eigenständiges Skript, das keinen anderen Projektcode verwendet, baut den Schlüssel aus dem Gebetstext auf, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu genau Woods Geheimtext."
   },
   {
    "kind": "li",
-   "en": "<strong>A second AI, working independently.</strong> GPT-6 Astra, run through OpenAI's Codex tool, reviewed the claim and came back \"confirmed with reservations\". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.",
-   "de": "<strong>Eine zweite KI, unabhängig.</strong> GPT-6 Astra, ausgeführt über OpenAIs Werkzeug Codex, prüfte die Behauptung und kam zu „bestätigt mit Vorbehalten“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Ausgabe der Bibel und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung, die Buchstabe für Buchstabe mit dem Skript übereinstimmte."
+   "en": "A second AI, GPT-6 Astra, reviewed the claim independently through OpenAI's Codex tool and returned \"confirmed with reservations\". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.",
+   "de": "Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig über OpenAIs Werkzeug Codex und kam zu „bestätigt mit Vorbehalten“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Ausgabe der Bibel und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung, die Buchstabe für Buchstabe mit dem Skript übereinstimmte."
   },
   {
    "kind": "li",
-   "en": "<strong>The original papers.</strong> Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that \"A means no shift\" comes from Thouless's own text, not from a later guess.",
-   "de": "<strong>Die Originalartikel.</strong> Scans von Woods Artikel von 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie bestätigten auch, dass „A bedeutet keine Verschiebung“ aus Thouless’ eigenem Text stammt und keine spätere Vermutung ist."
+   "en": "Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that \"A means no shift\" comes from Thouless's own text, not from a later guess.",
+   "de": "Scans von Woods Artikel von 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie bestätigten auch, dass „A bedeutet keine Verschiebung“ aus Thouless’ eigenem Text stammt und keine spätere Vermutung ist."
   },
   {
    "kind": "li",
-   "en": "<strong>Near misses fail.</strong> The modern church wording gives <span class=\"cipher\" translate=\"no\">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after \"<span class=\"cipher\" translate=\"no\">HIERBINIC</span>\". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these were scored and were never candidates.",
-   "de": "<strong>Beinahe-Treffer scheitern.</strong> Die heutige liturgische Fassung ergibt <span class=\"cipher\" translate=\"no\">SXFFFLOEPTPPQMAVDXEUR</span>. Behält man die wiederholten Wörter, wird der Text nach „<span class=\"cipher\" translate=\"no\">HIERBINIC</span>“ unlesbar. Verschiebt man um den Rest selbst statt um den Schlüsselbuchstaben (bei dem A keine Verschiebung bedeutet), entsteht Buchstabensalat. Ebenso mit Thouless’ eigenem Schlüssel aus „The Hound of Heaven“. Keine dieser Varianten wurde bewertet, und keine war je ein Kandidat."
+   "en": "The modern church wording gives <span class=\"cipher\" translate=\"no\">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after \"<span class=\"cipher\" translate=\"no\">HIERBINIC</span>\". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these were scored and were never candidates.",
+   "de": "Die heutige liturgische Fassung ergibt <span class=\"cipher\" translate=\"no\">SXFFFLOEPTPPQMAVDXEUR</span>. Behält man die wiederholten Wörter, wird der Text nach „<span class=\"cipher\" translate=\"no\">HIERBINIC</span>“ unlesbar. Verschiebt man um den Rest selbst statt um den Schlüsselbuchstaben (bei dem A keine Verschiebung bedeutet), entsteht Buchstabensalat. Ebenso mit Thouless’ eigenem Schlüssel aus „The Hound of Heaven“. Keine dieser Varianten wurde bewertet, und keine war je ein Kandidat."
   },
   {
    "kind": "attr",
@@ -438,13 +438,13 @@
   },
   {
    "kind": "li",
-   "en": "<strong>Could it be luck?</strong> A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature. With TEW there was exactly one match, and it was this message. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad. TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.",
-   "de": "<strong>Könnte es Zufall sein?</strong> Eine Nachuntersuchung führte rund 854 Millionen Probeentschlüsselungen über 3.847 Gutenberg-Bücher und 19 Bibeln durch, mit beiden Rechenvarianten, mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter von 3 bis 10 Buchstaben aus einer Wortliste zerlegen lassen, gefolgt von einer dreibuchstabigen Signatur. Mit TEW gab es genau einen Treffer, und das war diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW fanden 7 davon (1,4&nbsp;%) ebenfalls einen Treffer, und die Beispiele waren Wortsalat. TOTSIENS kam erst nach der Lösung in die Wortliste, und der Test wurde nach dem Treffer entworfen; er zeigt also, dass solche Treffer selten sind, ist aber kein Beweis."
+   "en": "A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature. With TEW there was exactly one match, and it was this message. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad. TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.",
+   "de": "Eine Nachuntersuchung führte rund 854 Millionen Probeentschlüsselungen über 3.847 Gutenberg-Bücher und 19 Bibeln durch, mit beiden Rechenvarianten, mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter von 3 bis 10 Buchstaben aus einer Wortliste zerlegen lassen, gefolgt von einer dreibuchstabigen Signatur. Mit TEW gab es genau einen Treffer, und das war diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW fanden 7 davon (1,4&nbsp;%) ebenfalls einen Treffer, und die Beispiele waren Wortsalat. TOTSIENS kam erst nach der Lösung in die Wortliste, und der Test wurde nach dem Treffer entworfen; er zeigt also, dass solche Treffer selten sind, ist aber kein Beweis."
   },
   {
    "kind": "p",
-   "en": "Finally, priority. Searches of Schmeh's blog and its comments, Reddit's r/codes, and the other 2026 solver logs found no earlier solution of Wood's cryptogram. That is not proof that nobody got there first.",
-   "de": "Zuletzt die Frage der Priorität. Suchen in Schmehs Blog und dessen Kommentaren, im Reddit-Forum r/codes und in den Protokollen anderer Löser aus dem Jahr 2026 fanden keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand vorher darauf gekommen ist."
+   "en": "Searches of Schmeh's blog and its comments, Reddit's r/codes, and the other 2026 solver logs found no earlier solution of Wood's cryptogram. That is not proof that nobody got there first.",
+   "de": "Suchen in Schmehs Blog und dessen Kommentaren, im Reddit-Forum r/codes und in den Protokollen anderer Löser aus dem Jahr 2026 fanden keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand vorher darauf gekommen ist."
   },
   {
    "kind": "span",
@@ -463,8 +463,8 @@
   },
   {
    "kind": "h2",
-   "en": "Thouless got his own example wrong",
-   "de": "Thouless lag bei seinem eigenen Beispiel falsch"
+   "en": "An error in Thouless's example",
+   "de": "Ein Fehler in Thouless’ Beispiel"
   },
   {
    "kind": "p",
@@ -503,8 +503,8 @@
   },
   {
    "kind": "p",
-   "en": "The man who invented the system mis-added one word in 14 in his showcase example. Wood's 21 key letters, presumably worked out by hand in 1950, contain no error at all. The method that decrypts Wood is Thouless's rule as he wrote it, not the flawed example.",
-   "de": "Der Erfinder des Verfahrens verrechnete sich in seinem Vorzeigebeispiel bei einem von 14 Wörtern. Woods 21 Schlüsselbuchstaben, vermutlich 1950 von Hand berechnet, enthalten keinen einzigen Fehler. Woods Text entschlüsselt sich mit Thouless’ Regel, wie er sie beschrieben hat, nicht mit dem fehlerhaften Beispiel."
+   "en": "Wood's 21 key letters all agree with Thouless's written rule, which is the method used to decrypt his message.",
+   "de": "Woods 21 Schlüsselbuchstaben stimmen alle mit der von Thouless beschriebenen Regel überein. Nach dieser Regel wurde seine Botschaft entschlüsselt."
   },
   {
    "kind": "attr",

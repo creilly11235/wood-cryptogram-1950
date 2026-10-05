@@ -235,7 +235,7 @@ footer p{margin:0 0 .7em}
 
 <section class="chapter" data-ch="2">
   <div class="graphic" data-g="2">
-    <div class="gbar"><span class="ct">II · Why it stayed open</span><span class="progress" aria-hidden="true"></span></div>
+    <div class="gbar"><span class="ct">II · Why it remained unsolved</span><span class="progress" aria-hidden="true"></span></div>
     <div class="gbody">
     <div class="tiles" aria-live="polite" translate="no"></div>
     <div class="sub" aria-hidden="true" translate="no"></div>
@@ -247,14 +247,14 @@ footer p{margin:0 0 .7em}
   </div>
   <div class="text">
 <section class="step" data-s="trap" data-cap="With a free choice of shifts, any key gives any reading, even English. A &ldquo;solution&rdquo; looks like luck." id="why-it-stayed-open">
-<p class="eyebrow">The trap · 1950 to 2026</p>
-<h2>Why it stayed open</h2>
+<p class="eyebrow">1950 to 2026</p>
+<h2>Why it remained unsolved</h2>
 <p>Thouless himself pointed out the problem. With a free choice of key letters, any ciphertext from his system can be turned into any message of the same length. With only 21 letters, a "solution" seemed impossible to tell apart from luck.</p>
 <p>This project believed that too at first. Its notes called Wood's cryptogram "too under-determined for a blind Gutenberg scan", because "any 21-letter key sequence can produce 'plausible' text", and it was not attempted.</p>
 </section>
 
 <section class="step" data-s="shelves" data-cap="But the key is consecutive words of a real book. There are 129 books and 28.6 million starting points, a finite list.">
-<p><strong>That reasoning was wrong, and fixing it is what opened the door.</strong> It holds for a key of random letters, but Wood's key is not random. It is consecutive words of a published book. So the only possible keys are the starting points in real books, a finite list that can be searched. The cloud becomes shelves, with one spine per book and one dot per starting point.</p>
+<p>That argument assumes a key chosen freely, letter by letter. Wood's key came from consecutive words of a published book, so a search could test each starting point in a collection of books. In the graphic, each spine represents a book and each dot a starting point.</p>
 <p class="fig"><b>129 books</b> · 28.6 million starting points<br>Each dot stands for many thousands.</p>
 </section>
 
@@ -286,8 +286,8 @@ footer p{margin:0 0 .7em}
   <div class="text">
 <section class="step" data-s="idea" data-cap="One planted German line, two scorers. In English alone it sinks into the pile; in seven languages it tops it. Wood&#x27;s best is still junk." id="the-idea-that-cracked-it">
 <p class="eyebrow">3 October 2026, evening</p>
-<h2>Taking Wood at his word</h2>
-<p>The breakthrough on the evening of 3 October 2026 came from going back to one of Wood's own clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written "in several different languages". The September search had noted the claim but scored candidates as English only.</p>
+<h2>Searching across languages</h2>
+<p>On the evening of 3 October 2026, we revisited one of Wood's clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written "in several different languages". The September search had noted the claim but scored candidates as English only.</p>
 <p>That matters because of how a search decides what counts as a hit. It decrypts with every possible key and ranks the results by how much they look like language. A message that switches from German to Afrikaans looks like gibberish to an English-only scorer. Scored across seven languages, with the language free to change at any word, a planted German message jumps to the top. The right book also has to be in the collection, and the German Bible was not among the earlier runs' texts.</p>
 <p class="fig">Wood's best over the same 3,847 books, seven languages: <b>−1.313</b> · null ceiling −1.207</p>
 </section>
@@ -295,8 +295,8 @@ footer p{margin:0 0 .7em}
 <section class="step" data-s="church" data-cap="The church wording, Vater unser, gives junk. The Bible's Unser Vater differs in wording and order, so every key letter changes.">
 <p>Two changes followed:</p>
 <ol>
-<li><strong>Scoring across seven languages.</strong> A quick first pass keeps the 3,000 candidates whose letter patterns look most like English, French, German, Latin, Italian, Spanish or Portuguese. Those are then split into dictionary words, with the language allowed to change from word to word.</li>
-<li><strong>Bibles as the key source.</strong> Wood said the key was in "an accessible book" in a foreign language. A Bible is the obvious candidate, so 19 Bibles in Latin-alphabet languages were added.</li>
+<li>A quick first pass keeps the 3,000 candidates whose letter patterns look most like English, French, German, Latin, Italian, Spanish or Portuguese. Those are then split into dictionary words, with the language allowed to change from word to word.</li>
+<li>Wood said the key was in "an accessible book" in a foreign language. A Bible was a plausible source, so 19 Bibles in Latin-alphabet languages were added.</li>
 </ol>
 <p>A first pass had tried famous passages typed in by hand, including the German Lord's Prayer, and found nothing. Both of its German versions began "<span lang="de" translate="no">Vater unser</span>", the familiar church wording, which gives garbage, as the strip shows. The Bible run used the full Bible text, where the prayer begins "<span lang="de" translate="no">Unser Vater in dem Himmel</span>".</p>
 <p>The rules for what would count as a hit in the Bible search were written down and committed before that search was run, so the bar could not quietly move afterwards.</p>
@@ -492,7 +492,7 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="bar" data-cap="The scorer knew no Afrikaans or initials, so it missed its own bar. A human reads it at once.">
-<p><strong>It did not pass our own automatic test.</strong> The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081). The reason is visible in the output. The scorer had no Afrikaans and no idea of initials, so it read the end as "<span translate="no">TOT SIEN STEW</span>". Under the other version of the arithmetic, a nonsense string, <span class="cipher" translate="no">ALENRENDRAYCUTREFUGES</span>, scored slightly higher still. That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.</p>
+<p>It did not pass our own automatic test. The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081). The reason is visible in the output. The scorer had no Afrikaans and no idea of initials, so it read the end as "<span translate="no">TOT SIEN STEW</span>". Under the other version of the arithmetic, a nonsense string, <span class="cipher" translate="no">ALENRENDRAYCUTREFUGES</span>, scored slightly higher still. That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.</p>
 <p class="fig"><b translate="no">HIERBINICHTOTSIENSTEW</b> · −1.270<br>null ceiling −1.273 · plant floor −1.081</p>
 <p>Split the way a person reads it, the message is <b><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</b> In English, "Here I am. Goodbye. T.E.W." Wood meant it to be read only after his death, once a medium had passed on the key, so it is written as a message from the dead. He announces himself, says goodbye, and signs it. The key he would have sent begins "Our Father in heaven".</p>
 </section>
@@ -514,22 +514,22 @@ footer p{margin:0 0 .7em}
   </div>
   <div class="text">
 <section class="step" data-s="checks" data-cap="Rebuilt, reviewed by a second AI, checked against the papers. Change the method or the words and it breaks, as the red letters show." id="how-it-was-checked">
-<p class="eyebrow">Before it went out</p>
+<p class="eyebrow">Verification</p>
 <h2>How it was checked</h2>
-<p>Before anything went to Schmeh, the result was attacked from five directions:</p>
+<p>Before sending the result to Schmeh, we checked the decryption in several ways:</p>
 <ul>
-<li><strong>Rebuilt from scratch.</strong> A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.</li>
-<li><strong>A second AI, working independently.</strong> GPT-6 Astra, run through OpenAI's Codex tool, reviewed the claim and came back "confirmed with reservations". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.</li>
-<li><strong>The original papers.</strong> Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that "A means no shift" comes from Thouless's own text, not from a later guess.</li>
-<li><strong>Near misses fail.</strong> The modern church wording gives <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after "<span class="cipher" translate="no">HIERBINIC</span>". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these were scored and were never candidates.</li>
+<li>A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.</li>
+<li>A second AI, GPT-6 Astra, reviewed the claim independently through OpenAI's Codex tool and returned "confirmed with reservations". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.</li>
+<li>Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that "A means no shift" comes from Thouless's own text, not from a later guess.</li>
+<li>The modern church wording gives <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after "<span class="cipher" translate="no">HIERBINIC</span>". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these were scored and were never candidates.</li>
 </ul>
 </section>
 
 <section class="step" data-s="luck" data-cap="Could it be luck? Of 500 random signatures in place of TEW, 7 match, all word salad. TEW matches once, on this message.">
 <ul>
-<li><strong>Could it be luck?</strong> A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature. With TEW there was exactly one match, and it was this message. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad. TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.</li>
+<li>A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature. With TEW there was exactly one match, and it was this message. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad. TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.</li>
 </ul>
-<p>Finally, priority. Searches of Schmeh's blog and its comments, Reddit's r/codes, and the other 2026 solver logs found no earlier solution of Wood's cryptogram. That is not proof that nobody got there first.</p>
+<p>Searches of Schmeh's blog and its comments, Reddit's r/codes, and the other 2026 solver logs found no earlier solution of Wood's cryptogram. That is not proof that nobody got there first.</p>
 </section>
   </div>
   <div class="beats" aria-hidden="true"><div class="beat" data-s="checks"></div><div class="beat" data-s="luck"></div></div>
@@ -550,7 +550,7 @@ footer p{margin:0 0 .7em}
   <div class="text">
 <section class="step" data-s="slip" data-cap="Thouless mis-added suffer in his own 1948 example. The sum 75 gives W, but he printed U, so his last letter is B, not D. Wood made no such error." id="the-correction">
 <p class="eyebrow">A 78-year-old arithmetic error</p>
-<h2>Thouless got his own example wrong</h2>
+<h2>An error in Thouless's example</h2>
 <p>While checking the method against the 1948 paper, we found an arithmetic slip in Thouless's own worked example. It has been in print for 78 years, and we have not seen it pointed out anywhere.</p>
 <p>To show how his system works, Thouless enciphered <span translate="no">THERE IS NO DEATH</span> with Hamlet's "To be or not to be" speech as the key. He printed the key letters <span class="cipher" translate="no">IGGWW BG PI VNWNU</span> and the ciphertext <span class="cipher" translate="no">BNKNA JYCWY RWGB</span>.</p>
 <p>The first 13 key letters are right. The 14th key word is "suffer":</p>
@@ -561,7 +561,7 @@ footer p{margin:0 0 .7em}
 </ul>
 <p>His printed ciphertext follows the printed U, so this is not a single misprint. The 14th plain letter is the final H of <span translate="no">DEATH</span>. Shifted by U it becomes B, which he printed. Shifted by the correct W it would be <strong>D</strong>. So the last group of his example should read <span class="cipher" translate="no">RWGD</span>, not <span class="cipher" translate="no">RWGB</span>.</p>
 <figure><img src="thouless_1948_suffer_slip.png" alt="Thouless 1948, pp. 259-260, with &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below" loading="lazy"><figcaption>Thouless 1948, pp. 259-260, with &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below</figcaption></figure>
-<p>The man who invented the system mis-added one word in 14 in his showcase example. Wood's 21 key letters, presumably worked out by hand in 1950, contain no error at all. The method that decrypts Wood is Thouless's rule as he wrote it, not the flawed example.</p>
+<p>Wood's 21 key letters all agree with Thouless's written rule, which is the method used to decrypt his message.</p>
 </section>
 
 <section class="step" data-s="next" data-cap="Wood asked that any result, &ldquo;even if negative&rdquo;, be sent to the Society for Psychical Research. That is the next step." id="next">
