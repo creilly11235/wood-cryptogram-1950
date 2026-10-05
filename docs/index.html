@@ -174,7 +174,7 @@ footer p{margin:0 0 .7em}
   <p class="langhint" lang="de" translate="no" hidden><a href="de/" hreflang="de">Diese Seite gibt es auch auf Deutsch →</a></p>
   <p class="kick">Proceedings of the S.P.R., vol. 49 · <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">No. 35 of Klaus Schmeh's Top 50</a></p>
   <h1>Solving the 1950 cipher meant to test life after death</h1>
-  <p class="byline">By Colin Reilly, with assistance from Claude<span>4 October 2026 · <a href="https://github.com/creilly11235/wood-cryptogram-1950">code and data on GitHub</a> · <a class="lang" href="de/" hreflang="de" lang="de">Deutsche Fassung</a></span></p>
+  <p class="byline">By <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a>, with assistance from Claude<span>4 October 2026 · <a href="https://github.com/creilly11235/wood-cryptogram-1950">code and data on GitHub</a> · <a class="lang" href="de/" hreflang="de" lang="de">Deutsche Fassung</a></span></p>
   <figure class="cipher-row" aria-label="Wood's ciphertext, FVAMI NTKFX XWATB OIZVV X">
     <p class="intro">&ldquo;My ciphered passage is:&rdquo;</p>
     <div class="line" translate="no">
@@ -1022,10 +1022,11 @@ function Graphic(el){
          (atop the pile) and once as all seven languages score it (far right); STRIP.idea makes whichever its strip shows glow */
       const x0=-2.62,x1=-0.62;axis={x0,x1,ticks:[-2.5,-2.0,-1.5,-1.0],title:"score per letter  →  more like words"};
       const de=PL[0],en=PL[9];en.ml=CH3_EN.score;self.ch3dots={de,en};const enOn=self.ch3v==="en";
-      const pos=hist(G.concat([de]),"ml",x0,x1,{nb:40});
-      /* the English-only copy sits on top of the pile column at its score, so it is not lost inside the pile */
-      const ex=px(en.ml,x0,x1);let colTop=H-p.b;pos.forEach(q=>{if(Math.abs(q.x-ex)<(W-p.l-p.r)/40)colTop=Math.min(colTop,q.y);});
-      setAll(d=>{if(d===en)return{x:ex,y:colTop-12,a:1,r:enOn?1.9:1.4,delay:300,label:"English: "+CH3_EN.words.join(" ")};
+      const pos=hist(G.concat([de,en]),"ml",x0,x1,{nb:40});
+      /* the English-only copy is stacked in its score's column like any other dot, but as the column's top dot, so it is not lost inside the pile */
+      {const qe=pos.get(en);let top=null,td=null;pos.forEach((q,d)=>{if(q.b===qe.b&&(!top||q.y<top.y||(q.y===top.y&&q.x>top.x))){top=q;td=d;}});
+       if(td!==en){pos.set(td,qe);pos.set(en,top);}}
+      setAll(d=>{if(d===en){const q=pos.get(en);return{x:q.x,y:q.y,a:1,r:enOn?1.9:1.4,delay:300,label:"English: "+CH3_EN.words.join(" ")};}
         const q=pos.get(d);if(!q)return{a:0};
         return{x:q.x,y:q.y,a:1,r:d===de?(enOn?1.4:1.9):1,delay:(q.b*10+q.row*3)*0.4,label:null};});
       /* the seven-language copy is named on a leader line, clear of the pile and of Wood's best below it */
