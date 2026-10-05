@@ -1,13 +1,13 @@
 """Translation units of docs/index.html: exact source slices that the German build replaces.
 
-Units are the inner HTML of leaf text blocks (p, li, h1, h2, td, th, figcaption, button, the graphic bar names)
+Units are the inner HTML of leaf text blocks (p, li, h1, h2, h3, td, th, figcaption, button, the graphic bar names)
 plus the text attributes readers or assistive tech see (data-cap, alt, aria-label) and the page's title and
 description tags. Anything inside an element marked translate="no" is left out.
 """
 import re
 from html.parser import HTMLParser
 
-BLOCKS = {"p", "li", "h1", "h2", "td", "th", "figcaption", "button"}
+BLOCKS = {"p", "li", "h1", "h2", "h3", "td", "th", "figcaption", "button"}
 ATTRS = ("data-cap", "alt", "aria-label")
 VOID = {"br", "img", "meta", "link", "input", "hr", "source"}
 

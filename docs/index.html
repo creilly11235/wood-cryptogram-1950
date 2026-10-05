@@ -49,7 +49,7 @@ a:hover{color:var(--candle)}
 .hero .langhint{font:var(--t-note);margin:-28px 0 22px}
 .hero .langhint a{color:var(--candle)}
 :root[lang="de"] body{-webkit-hyphens:auto;hyphens:auto}
-:root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .gbar .ct{-webkit-hyphens:manual;hyphens:manual}
+:root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3,:root[lang="de"] .gbar .ct{-webkit-hyphens:manual;hyphens:manual}
 .hero .kick{font:var(--t-note);color:var(--bone-3);margin:0 0 26px}
 .hero .kick a{color:var(--bone-2)}
 .hero h1{font:400 clamp(2.3rem,6.4vw,4rem)/1.04 var(--display);margin:0 auto;text-wrap:balance;max-width:15ch}
@@ -62,12 +62,22 @@ a:hover{color:var(--candle)}
 .cipher-row .grp,.cipher-row .tail{display:flex;gap:3px}
 .cipher-row .tail{gap:10px}
 .cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.2);display:grid;place-items:center;padding-top:.14em;background:var(--bone);color:var(--ink);font:700 calc(var(--tw) * .6)/1 var(--mono);border-radius:1px}
-.cipher-row figcaption{font:var(--t-note);color:var(--bone-3);margin-top:14px;max-width:46ch}
-.hero .answer,.hero .lede{max-width:620px;margin-inline:auto;text-align:left}
+.cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:46ch}
+.hero .answer,.hero .lede,.contents{max-width:620px;margin-inline:auto;text-align:left}
 .hero .answer{margin-top:44px;padding-top:28px;border-top:1px solid var(--veil-2);color:var(--bone)}
-.hero .answer b{font-weight:700}
-.hero .answer .sv{font:var(--t-label);letter-spacing:.14em;text-transform:uppercase;color:var(--candle);margin-right:.4em}
-.hero .lede{color:var(--bone-2);margin-top:18px}
+.hero .answer p{margin:0 0 .8em}
+.hero .answer .sv{font:700 12px/1.4 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--candle);margin-bottom:12px}
+.hero .answer .answer-message{font:700 clamp(1.3rem,3vw,1.65rem)/1.4 var(--body);text-wrap:balance;margin-bottom:.5em}
+.hero .answer .answer-meaning{color:var(--bone-2)}
+.hero .answer .answer-status{font:var(--t-note);color:var(--bone-2);margin-top:18px}
+.hero .lede{color:var(--bone-2);margin-top:28px}
+.contents{margin-top:32px;padding-block:20px;border-block:1px solid var(--veil-2)}
+.contents .contents-label{font:700 12px/1.4 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-2);margin:0 0 14px}
+.contents ol{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;margin:0;padding-left:1.4em;font:15px/1.5 var(--body)}
+.contents li::marker{color:var(--candle);font:var(--t-data)}
+.contents a{text-decoration:none}
+.contents a:hover{text-decoration:underline}
+.contents a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
 .scrolly{max-width:1140px;margin:0 auto;padding-inline:20px}
 .chapter{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:0 52px;align-items:start}
@@ -98,23 +108,28 @@ canvas{flex:1;width:100%;min-height:0;display:block}
 /* article column */
 .text{padding-block:10vh 14vh}
 .chapter:first-child .text{padding-top:12vh}
-.step{min-height:58vh;padding:0 0 10vh;opacity:.38;transition:opacity .4s}
-.step.on{opacity:1}
-.eyebrow{font:var(--t-note);color:var(--bone-3);margin:0 0 8px}
+.step{min-height:58vh;padding:0 0 10vh;scroll-margin-top:24px}
+.eyebrow{font:700 11px/1.5 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--bone-2);margin:0 0 12px}
 .step h2{font:400 clamp(1.9rem,4vw,2.5rem)/1.12 var(--display);margin:0 0 .55em;text-wrap:balance}
+.step h3{font:700 19px/1.4 var(--body);color:var(--bone);margin:1.8em 0 .65em;text-wrap:balance}
+.step>h3:first-child{margin-top:0}
 .step p,.step li{margin:0 0 1em}
 .step ul,.step ol{padding-left:1.3em;margin:0 0 1em}
 .step li{margin:0 0 .45em}
 .step li::marker{color:var(--bone-3)}
+.step .check-list{list-style:none;padding:0;margin:1.5em 0 0}
+.step .check-list li{margin:0 0 1.8em}
+.step .check-list h3{margin:0 0 .55em}
+.step .check-list p{margin:0}
 .step strong,.step b{font-weight:700}
 .step em{color:var(--bone-2)}
 .step .fig{font:var(--t-data);color:var(--bone-2);border-top:1px solid var(--veil-2);border-bottom:1px solid var(--veil-2);padding:9px 0;margin:0 0 1.1em}
 .step .fig b{color:var(--bone);font-weight:700}
-.quote{color:var(--bone);margin:1.3em 0 1.3em 1.2em}
-.quote small{display:block;font:var(--t-note);color:var(--bone-3);margin-top:8px}
+.quote{color:var(--bone);margin:1.5em 0;padding-left:1em;border-left:2px solid var(--candle)}
+.quote small{display:block;font:var(--t-note);color:var(--bone-2);margin-top:8px}
 figure{margin:1.4em 0}
 figure img{width:100%;height:auto;border:0;border-radius:1px;background:#fff}
-figcaption{font:var(--t-note);color:var(--bone-3);margin-top:8px}
+figcaption{font:var(--t-note);color:var(--bone-2);margin-top:10px}
 /* image viewer: every figure image opens full size in an overlay, zoomable and draggable */
 figure img[role=button]{cursor:zoom-in}
 figure img[role=button]:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
@@ -134,7 +149,7 @@ html.lb-open{overflow:hidden;scrollbar-gutter:stable}
 .table-wrap{overflow-x:auto;margin:0 0 1.2em}
 table{border-collapse:collapse;width:100%;font:var(--t-data);font-variant-numeric:tabular-nums}
 th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--veil);vertical-align:top}
-th{font:var(--t-note);color:var(--bone-3);border-bottom:1px solid var(--veil-2)}
+th{font:700 12.5px/1.5 var(--body);color:var(--bone-2);border-bottom:1px solid var(--veil-2)}
 /* footer */
 footer{max-width:1140px;margin:0 auto;padding:28px 20px 64px;border-top:1px solid var(--veil);color:var(--bone-2);font:var(--t-note)}
 footer p{margin:0 0 .7em}
@@ -149,7 +164,7 @@ footer p{margin:0 0 .7em}
   .chapter+.chapter{border-top:0}
   .text{order:1;padding-block:3vh 4vh}
   .chapter:first-child .text{padding-top:3vh}
-  .step{min-height:0;opacity:1;padding:0 0 1.2em}
+  .step{min-height:0;padding:0 0 2em}
   th,td{padding:6px 5px}
   th{font-size:12.5px}
   .graphic{order:2;height:100vh;height:100dvh;z-index:2;padding:12px 0 12px;border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
@@ -165,6 +180,7 @@ footer p{margin:0 0 .7em}
   .gcap span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .legend{font-size:12px;min-height:38px;align-content:flex-start}
 }
+@media (max-width:380px){.contents ol{grid-template-columns:1fr;gap:8px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -185,8 +201,25 @@ footer p{margin:0 0 .7em}
     </div>
     <figcaption>T. E. Wood, &ldquo;A Further Test for Survival&rdquo;, <em>Proceedings of the S.P.R.</em> 49 (1950), p.&nbsp;105. Twenty-one letters, no key.</figcaption>
   </figure>
-  <p class="answer"><span class="sv">Solved</span> The key is the opening of the Lord's Prayer in the 1912 Luther Bible, used with Robert Thouless's 1948 word-sum system. The message reads <b><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</b> "Here I am" in German, "goodbye" in Afrikaans, and Wood's initials. He wrote it to be read after his death. Klaus Schmeh <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">confirmed it</a> on 4 October 2026.</p>
+  <div class="answer">
+<p class="sv">Solved</p>
+<p class="answer-message" translate="no"><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</p>
+<p class="answer-meaning">"Here I am" in German, "goodbye" in Afrikaans, and Wood's initials. He wrote it to be read after his death.</p>
+<p>The key is the opening of the Lord's Prayer in the 1912 Luther Bible, used with Robert Thouless's 1948 word-sum system.</p>
+<p class="answer-status">Klaus Schmeh <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">confirmed it</a> on 4 October 2026.</p>
+</div>
   <p class="lede">In 1950 a solicitor named T. E. Wood published 21 letters as a test of life after death. He would die, then try to send the key back through a medium. What follows is how the cipher was decrypted without communicating with the dead.</p>
+<nav class="contents" aria-label="Article sections">
+<p class="contents-label">In this article</p>
+<ol>
+<li><a href="#the-puzzle">The puzzle</a></li>
+<li><a href="#why-it-stayed-open">Searching book keys</a></li>
+<li><a href="#the-idea-that-cracked-it">The language question</a></li>
+<li><a href="#the-hit">The solution</a></li>
+<li><a href="#how-it-was-checked">Checking the result</a></li>
+<li><a href="#the-correction">Further findings</a></li>
+</ol>
+</nav>
 </div>
 
 <div class="scrolly">
@@ -210,7 +243,8 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="method" data-cap="Under Thouless's rule, a word's letters sum to a key letter, which shifts one cipher letter. UNSER gives Y, and F becomes H.">
-<p><strong>Thouless, 1948.</strong> In "A Test of Survival" (<em>Proceedings of the Society for Psychical Research</em> 48), Thouless published enciphered messages whose keys only he knew. One of them used a system meant to be unbreakable without the key:</p>
+<h3>Thouless's method (1948)</h3>
+<p>In "A Test of Survival" (<em>Proceedings of the Society for Psychical Research</em> 48), Thouless published enciphered messages whose keys only he knew. One of them used a system meant to be unbreakable without the key:</p>
 <ol>
 <li>Pick a passage of text as the key, and skip any word that has already appeared.</li>
 <li>Turn each word into one letter. Add up its letters (A=1 to Z=26), divide by 26, and take the remainder (1 is A, 25 is Y, 0 is Z).</li>
@@ -220,7 +254,8 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="wood" data-cap="Wood's clues say the key is in an accessible foreign book and the message is not in any one language. Most book keys read as junk.">
-<p><strong>Wood, 1950.</strong> T. E. Wood, a solicitor born in Yorkshire in 1887 who had practised in Burma, answered with "A Further Test for Survival" (<em>Proceedings</em> 49). He published <span class="cipher" translate="no">FVAMI NTKFX XWATB OIZVV X</span> and left the following clues:</p>
+<h3>Wood's clues (1950)</h3>
+<p>T. E. Wood, a solicitor born in Yorkshire in 1887 who had practised in Burma, answered with "A Further Test for Survival" (<em>Proceedings</em> 49). He published <span class="cipher" translate="no">FVAMI NTKFX XWATB OIZVV X</span> and left the following clues:</p>
 <ul>
 <li>he used Thouless's method, with repeated words omitted</li>
 <li>the key passage "is in an accessible book", in a foreign language</li>
@@ -254,16 +289,19 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="shelves" data-cap="But the key is consecutive words of a real book. There are 129 books and 28.6 million starting points, a finite list.">
+<h3>Searching book keys</h3>
 <p>That argument assumes a key chosen freely, letter by letter. Wood's key came from consecutive words of a published book, so a search could test each starting point in a collection of books. In the graphic, each spine represents a book and each dot a starting point.</p>
 <p class="fig"><b>129 books</b> · 28.6 million starting points<br>Each dot stands for many thousands.</p>
 </section>
 
 <section class="step" data-s="plants" data-cap="In September 2026, messages planted with book keys came back at rank 1 in 97 of 100 tries. The search works.">
+<h3>Testing the search</h3>
 <p>On 17 September 2026, an earlier attempt measured the search space. Decrypt the cipher with every starting point and score each result by how much it looks like English. To test whether this can work at all, encrypt known messages with random book keys and see if the search finds them. Across 28.6 million combinations of starting points and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries, proving the search could work.</p>
 <p class="fig">Planted messages back at rank 1: <b>97 of 100</b></p>
 </section>
 
 <section class="step" data-s="round52" data-cap="Scored as English over 429 million keys, Wood's best is junk, and 12 of 100 random ciphertexts beat it.">
+<h3>The English-only results</h3>
 <p>But Wood's message still came back blank. That held over those 129 books and again over 3,977 texts, which added 3,848 Project Gutenberg books in 14 languages (about 429 million combinations). The best decryption scored worse than what random ciphertexts reach by chance. The bigger run also threw up more convincing false leads, a sign that adding ever more books would not help. The note at the time said the problem needed "a targeted source", not a bigger sweep.</p>
 <p class="fig">Best: <b>−13.94</b> · random ciphertexts reached −13.27<br>12 of 100 random ciphertexts beat Wood's best</p>
 </section>
@@ -293,6 +331,7 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="church" data-cap="The church wording, Vater unser, gives junk. The Bible's Unser Vater differs in wording and order, so every key letter changes.">
+<h3>Adding Bible texts</h3>
 <p>Two changes followed:</p>
 <ol>
 <li>A quick first pass keeps the 3,000 candidates whose letter patterns look most like English, French, German, Latin, Italian, Spanish or Portuguese. Those are then split into dictionary words, with the language allowed to change from word to word.</li>
@@ -328,6 +367,7 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="table" data-cap="Alone at the top, junk in second place. But the scorer knew no Afrikaans or initials, so it missed its own bar.">
+<h3>The key, word by word</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -492,7 +532,10 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="bar" data-cap="The scorer knew no Afrikaans or initials, so it missed its own bar. A human reads it at once.">
-<p>It did not pass our own automatic test. The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081). The reason is visible in the output. The scorer had no Afrikaans and no idea of initials, so it read the end as "<span translate="no">TOT SIEN STEW</span>". Under the other version of the arithmetic, a nonsense string, <span class="cipher" translate="no">ALENRENDRAYCUTREFUGES</span>, scored slightly higher still. That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.</p>
+<h3>Why the score fell short</h3>
+<p>It did not pass our own automatic test. The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081).</p>
+<p>The reason is visible in the output. The scorer had no Afrikaans and no idea of initials, so it read the end as "<span translate="no">TOT SIEN STEW</span>". Under the other version of the arithmetic, a nonsense string, <span class="cipher" translate="no">ALENRENDRAYCUTREFUGES</span>, scored slightly higher still.</p>
+<p>That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.</p>
 <p class="fig"><b translate="no">HIERBINICHTOTSIENSTEW</b> · −1.270<br>null ceiling −1.273 · plant floor −1.081</p>
 <p>Split the way a person reads it, the message is <b><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</b> In English, "Here I am. Goodbye. T.E.W." Wood meant it to be read only after his death, once a medium had passed on the key, so it is written as a message from the dead. He announces himself, says goodbye, and signs it. The key he would have sent begins "Our Father in heaven".</p>
 </section>
@@ -517,18 +560,32 @@ footer p{margin:0 0 .7em}
 <p class="eyebrow">Verification</p>
 <h2>How it was checked</h2>
 <p>Before sending the result to Schmeh, we checked the decryption in several ways:</p>
-<ul>
-<li>A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.</li>
-<li>A second AI, GPT-6 Astra, reviewed the claim independently through OpenAI's Codex tool and returned "confirmed with reservations". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.</li>
-<li>Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that "A means no shift" comes from Thouless's own text, not from a later guess.</li>
-<li>The modern church wording gives <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after "<span class="cipher" translate="no">HIERBINIC</span>". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these were scored and were never candidates.</li>
+<ul class="check-list" role="list">
+<li>
+<h3>Reproducing the decryption</h3>
+<p>A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.</p>
+</li>
+<li>
+<h3>Independent review</h3>
+<p>A second AI, GPT-6 Astra, reviewed the claim independently through OpenAI's Codex tool and returned "confirmed with reservations". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.</p>
+</li>
+<li>
+<h3>Original sources</h3>
+<p>Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that "A means no shift" comes from Thouless's own text, not from a later guess.</p>
+</li>
+<li>
+<h3>Alternative keys</h3>
+<p>The modern church wording gives <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after "<span class="cipher" translate="no">HIERBINIC</span>". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these were scored and were never candidates.</p>
+</li>
 </ul>
 </section>
 
 <section class="step" data-s="luck" data-cap="Could it be luck? Of 500 random signatures in place of TEW, 7 match, all word salad. TEW matches once, on this message.">
-<ul>
-<li>A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature. With TEW there was exactly one match, and it was this message. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad. TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.</li>
-</ul>
+<h3>Testing for chance matches</h3>
+<p>A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature.</p>
+<p>With TEW there was exactly one match, and it was this message. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad.</p>
+<p>TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.</p>
+<h3>Checking for earlier solutions</h3>
 <p>Searches of Schmeh's blog and its comments, Reddit's r/codes, and the other 2026 solver logs found no earlier solution of Wood's cryptogram. That is not proof that nobody got there first.</p>
 </section>
   </div>
@@ -645,8 +702,9 @@ footer p{margin:0 0 .7em}
 </tr>
 </tbody>
 </table></div>
-<p><strong>Credits.</strong> The project was run by Colin Reilly. Robert Thouless designed the method. Richard Bean's 2019 solve of Thouless's Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer. Claude (Anthropic) wrote the search code, including the earlier September searches, and found the key; GPT-6 Astra (OpenAI) checked it independently.</p>
-<p><strong>Sources</strong></p>
+<h3>Credits</h3>
+<p>The project was run by Colin Reilly. Robert Thouless designed the method. Richard Bean's 2019 solve of Thouless's Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer. Claude (Anthropic) wrote the search code, including the earlier September searches, and found the key; GPT-6 Astra (OpenAI) checked it independently.</p>
+<h3>Sources</h3>
 <ul>
 <li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">"Wood's cryptogram from the crypt: Another top 50 crypto mystery solved"</a>, 4 Oct 2026</li>
 <li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">"The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt"</a>, 17 Apr 2017</li>

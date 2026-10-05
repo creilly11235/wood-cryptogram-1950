@@ -50,7 +50,7 @@ a:hover{color:var(--candle)}
 .hero .langhint{font:var(--t-note);margin:-28px 0 22px}
 .hero .langhint a{color:var(--candle)}
 :root[lang="de"] body{-webkit-hyphens:auto;hyphens:auto}
-:root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .gbar .ct{-webkit-hyphens:manual;hyphens:manual}
+:root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3,:root[lang="de"] .gbar .ct{-webkit-hyphens:manual;hyphens:manual}
 .hero .kick{font:var(--t-note);color:var(--bone-3);margin:0 0 26px}
 .hero .kick a{color:var(--bone-2)}
 .hero h1{font:400 clamp(2.3rem,6.4vw,4rem)/1.04 var(--display);margin:0 auto;text-wrap:balance;max-width:15ch}
@@ -63,12 +63,22 @@ a:hover{color:var(--candle)}
 .cipher-row .grp,.cipher-row .tail{display:flex;gap:3px}
 .cipher-row .tail{gap:10px}
 .cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.2);display:grid;place-items:center;padding-top:.14em;background:var(--bone);color:var(--ink);font:700 calc(var(--tw) * .6)/1 var(--mono);border-radius:1px}
-.cipher-row figcaption{font:var(--t-note);color:var(--bone-3);margin-top:14px;max-width:46ch}
-.hero .answer,.hero .lede{max-width:620px;margin-inline:auto;text-align:left}
+.cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:46ch}
+.hero .answer,.hero .lede,.contents{max-width:620px;margin-inline:auto;text-align:left}
 .hero .answer{margin-top:44px;padding-top:28px;border-top:1px solid var(--veil-2);color:var(--bone)}
-.hero .answer b{font-weight:700}
-.hero .answer .sv{font:var(--t-label);letter-spacing:.14em;text-transform:uppercase;color:var(--candle);margin-right:.4em}
-.hero .lede{color:var(--bone-2);margin-top:18px}
+.hero .answer p{margin:0 0 .8em}
+.hero .answer .sv{font:700 12px/1.4 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--candle);margin-bottom:12px}
+.hero .answer .answer-message{font:700 clamp(1.3rem,3vw,1.65rem)/1.4 var(--body);text-wrap:balance;margin-bottom:.5em}
+.hero .answer .answer-meaning{color:var(--bone-2)}
+.hero .answer .answer-status{font:var(--t-note);color:var(--bone-2);margin-top:18px}
+.hero .lede{color:var(--bone-2);margin-top:28px}
+.contents{margin-top:32px;padding-block:20px;border-block:1px solid var(--veil-2)}
+.contents .contents-label{font:700 12px/1.4 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-2);margin:0 0 14px}
+.contents ol{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;margin:0;padding-left:1.4em;font:15px/1.5 var(--body)}
+.contents li::marker{color:var(--candle);font:var(--t-data)}
+.contents a{text-decoration:none}
+.contents a:hover{text-decoration:underline}
+.contents a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
 .scrolly{max-width:1140px;margin:0 auto;padding-inline:20px}
 .chapter{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:0 52px;align-items:start}
@@ -99,23 +109,28 @@ canvas{flex:1;width:100%;min-height:0;display:block}
 /* article column */
 .text{padding-block:10vh 14vh}
 .chapter:first-child .text{padding-top:12vh}
-.step{min-height:58vh;padding:0 0 10vh;opacity:.38;transition:opacity .4s}
-.step.on{opacity:1}
-.eyebrow{font:var(--t-note);color:var(--bone-3);margin:0 0 8px}
+.step{min-height:58vh;padding:0 0 10vh;scroll-margin-top:24px}
+.eyebrow{font:700 11px/1.5 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--bone-2);margin:0 0 12px}
 .step h2{font:400 clamp(1.9rem,4vw,2.5rem)/1.12 var(--display);margin:0 0 .55em;text-wrap:balance}
+.step h3{font:700 19px/1.4 var(--body);color:var(--bone);margin:1.8em 0 .65em;text-wrap:balance}
+.step>h3:first-child{margin-top:0}
 .step p,.step li{margin:0 0 1em}
 .step ul,.step ol{padding-left:1.3em;margin:0 0 1em}
 .step li{margin:0 0 .45em}
 .step li::marker{color:var(--bone-3)}
+.step .check-list{list-style:none;padding:0;margin:1.5em 0 0}
+.step .check-list li{margin:0 0 1.8em}
+.step .check-list h3{margin:0 0 .55em}
+.step .check-list p{margin:0}
 .step strong,.step b{font-weight:700}
 .step em{color:var(--bone-2)}
 .step .fig{font:var(--t-data);color:var(--bone-2);border-top:1px solid var(--veil-2);border-bottom:1px solid var(--veil-2);padding:9px 0;margin:0 0 1.1em}
 .step .fig b{color:var(--bone);font-weight:700}
-.quote{color:var(--bone);margin:1.3em 0 1.3em 1.2em}
-.quote small{display:block;font:var(--t-note);color:var(--bone-3);margin-top:8px}
+.quote{color:var(--bone);margin:1.5em 0;padding-left:1em;border-left:2px solid var(--candle)}
+.quote small{display:block;font:var(--t-note);color:var(--bone-2);margin-top:8px}
 figure{margin:1.4em 0}
 figure img{width:100%;height:auto;border:0;border-radius:1px;background:#fff}
-figcaption{font:var(--t-note);color:var(--bone-3);margin-top:8px}
+figcaption{font:var(--t-note);color:var(--bone-2);margin-top:10px}
 /* image viewer: every figure image opens full size in an overlay, zoomable and draggable */
 figure img[role=button]{cursor:zoom-in}
 figure img[role=button]:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
@@ -135,7 +150,7 @@ html.lb-open{overflow:hidden;scrollbar-gutter:stable}
 .table-wrap{overflow-x:auto;margin:0 0 1.2em}
 table{border-collapse:collapse;width:100%;font:var(--t-data);font-variant-numeric:tabular-nums}
 th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--veil);vertical-align:top}
-th{font:var(--t-note);color:var(--bone-3);border-bottom:1px solid var(--veil-2)}
+th{font:700 12.5px/1.5 var(--body);color:var(--bone-2);border-bottom:1px solid var(--veil-2)}
 /* footer */
 footer{max-width:1140px;margin:0 auto;padding:28px 20px 64px;border-top:1px solid var(--veil);color:var(--bone-2);font:var(--t-note)}
 footer p{margin:0 0 .7em}
@@ -150,7 +165,7 @@ footer p{margin:0 0 .7em}
   .chapter+.chapter{border-top:0}
   .text{order:1;padding-block:3vh 4vh}
   .chapter:first-child .text{padding-top:3vh}
-  .step{min-height:0;opacity:1;padding:0 0 1.2em}
+  .step{min-height:0;padding:0 0 2em}
   th,td{padding:6px 5px}
   th{font-size:12.5px}
   .graphic{order:2;height:100vh;height:100dvh;z-index:2;padding:12px 0 12px;border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
@@ -166,6 +181,7 @@ footer p{margin:0 0 .7em}
   .gcap span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .legend{font-size:12px;min-height:38px;align-content:flex-start}
 }
+@media (max-width:380px){.contents ol{grid-template-columns:1fr;gap:8px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -185,8 +201,25 @@ footer p{margin:0 0 .7em}
     </div>
     <figcaption>T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S.&nbsp;105. Einundzwanzig Buchstaben, kein Schlüssel.</figcaption>
   </figure>
-  <p class="answer"><span class="sv">Gelöst</span> Der Schlüssel ist der Anfang des Vaterunsers in der Lutherbibel von 1912, verwendet nach Robert Thouless’ Wortsummenverfahren von 1948. Die Botschaft lautet <b><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</b> Deutsch, Afrikaans für „auf Wiedersehen“ und Woods Initialen. Sie sollte erst nach seinem Tod gelesen werden. Klaus Schmeh hat das Ergebnis am 4.&nbsp;Oktober 2026 <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">bestätigt</a>.</p>
+  <div class="answer">
+<p class="sv">Gelöst</p>
+<p class="answer-message" translate="no"><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</p>
+<p class="answer-meaning">Deutsch, Afrikaans für „auf Wiedersehen“ und Woods Initialen. Sie sollte erst nach seinem Tod gelesen werden.</p>
+<p>Der Schlüssel ist der Anfang des Vaterunsers in der Lutherbibel von 1912, verwendet nach Robert Thouless’ Wortsummenverfahren von 1948.</p>
+<p class="answer-status">Klaus Schmeh hat das Ergebnis am 4.&nbsp;Oktober 2026 <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">bestätigt</a>.</p>
+</div>
   <p class="lede">1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er versuchen, den Schlüssel über ein Medium zu übermitteln. Im Folgenden geht es darum, wie der Geheimtext entschlüsselt wurde, ohne mit den Toten in Kontakt zu treten.</p>
+<nav class="contents" aria-label="Abschnitte des Artikels">
+<p class="contents-label">In diesem Artikel</p>
+<ol>
+<li><a href="#the-puzzle">Das Rätsel</a></li>
+<li><a href="#why-it-stayed-open">Suche nach Buchschlüsseln</a></li>
+<li><a href="#the-idea-that-cracked-it">Die Sprachenfrage</a></li>
+<li><a href="#the-hit">Die Lösung</a></li>
+<li><a href="#how-it-was-checked">Prüfung des Ergebnisses</a></li>
+<li><a href="#the-correction">Weitere Erkenntnisse</a></li>
+</ol>
+</nav>
 </div>
 
 <div class="scrolly">
@@ -210,7 +243,8 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="method" data-cap="Nach Thouless’ Regel ergibt die Buchstabensumme eines Worts einen Schlüsselbuchstaben, der einen Geheimtextbuchstaben verschiebt. UNSER ergibt Y, aus F wird H.">
-<p><strong>Thouless, 1948.</strong> In „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48) veröffentlichte Thouless verschlüsselte Botschaften, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne Schlüssel unknackbar sein sollte:</p>
+<h3>Thouless’ Verfahren (1948)</h3>
+<p>In „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48) veröffentlichte Thouless verschlüsselte Botschaften, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne Schlüssel unknackbar sein sollte:</p>
 <ol>
 <li>Man wählt eine Textpassage als Schlüssel und überspringt jedes Wort, das schon vorgekommen ist.</li>
 <li>Jedes Wort wird zu einem Buchstaben. Man addiert seine Buchstaben (A=1 bis Z=26), teilt durch 26 und nimmt den Rest (1 ist A, 25 ist Y, 0 ist Z).</li>
@@ -220,7 +254,8 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="wood" data-cap="Laut Woods Hinweisen steht der Schlüssel in einem zugänglichen fremdsprachigen Buch, und die Botschaft ist in mehr als einer Sprache geschrieben. Die meisten Buchschlüssel ergeben Buchstabensalat.">
-<p><strong>Wood, 1950.</strong> T. E. Wood, ein 1887 in Yorkshire geborener Rechtsanwalt (Solicitor), der in Burma praktiziert hatte, antwortete mit „A Further Test for Survival“ (<em>Proceedings</em> 49). Er veröffentlichte <span class="cipher" translate="no">FVAMI NTKFX XWATB OIZVV X</span> und gab folgende Hinweise:</p>
+<h3>Woods Hinweise (1950)</h3>
+<p>T. E. Wood, ein 1887 in Yorkshire geborener Rechtsanwalt (Solicitor), der in Burma praktiziert hatte, antwortete mit „A Further Test for Survival“ (<em>Proceedings</em> 49). Er veröffentlichte <span class="cipher" translate="no">FVAMI NTKFX XWATB OIZVV X</span> und gab folgende Hinweise:</p>
 <ul>
 <li>er habe Thouless’ Verfahren benutzt und wiederholte Wörter ausgelassen</li>
 <li>der Schlüsseltext stehe „in einem zugänglichen Buch“, in einer Fremdsprache</li>
@@ -254,16 +289,19 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="shelves" data-cap="Aber der Schlüssel sind aufeinanderfolgende Wörter eines echten Buchs. Das sind 129 Bücher und 28,6 Mio. Startpunkte, eine endliche Liste.">
+<h3>Buchschlüssel durchsuchen</h3>
 <p>Dieses Argument setzt voraus, dass jeder Schlüsselbuchstabe frei gewählt werden kann. Woods Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs. Eine Suche konnte deshalb jeden Startpunkt in einer Sammlung von Büchern prüfen. In der Grafik steht jeder Buchrücken für ein Buch und jeder Punkt für einen Startpunkt.</p>
 <p class="fig"><b>129 Bücher</b> · 28,6 Millionen Startpunkte<br>Jeder Punkt steht für viele Tausend.</p>
 </section>
 
 <section class="step" data-s="plants" data-cap="Im September 2026 landeten mit Buchschlüsseln eingeschleuste Testbotschaften in 97 von 100 Versuchen auf Rang 1. Die Suche funktioniert.">
+<h3>Die Suche testen</h3>
 <p>Am 17.&nbsp;September 2026 hat ein früherer Versuch den Suchraum vermessen. Man entschlüsselt den Geheimtext mit jedem Startpunkt und bewertet jedes Ergebnis danach, wie sehr es nach Englisch aussieht. Um zu prüfen, ob das überhaupt funktionieren kann, verschlüsselt man bekannte Botschaften mit zufälligen Buchschlüsseln und schaut, ob die Suche sie findet. Bei 28,6 Millionen Kombinationen aus Startpunkten und Umgang mit wiederholten Wörtern in 129 Büchern landeten eingeschleuste Testbotschaften in 97 von 100 Versuchen auf Rang 1; damit war belegt, dass die Suche funktionieren konnte.</p>
 <p class="fig">Testbotschaften auf Rang 1: <b>97 von 100</b></p>
 </section>
 
 <section class="step" data-s="round52" data-cap="Als Englisch bewertet, ist Woods Bestes aus 429 Mio. Schlüsseln Buchstabensalat, und 12 von 100 zufälligen Geheimtexten sind besser.">
+<h3>Ergebnisse der rein englischen Suche</h3>
 <p>Doch die Suche nach Woods Botschaft blieb erfolglos. Das galt für diese 129 Bücher und ebenso für 3.977 Texte, darunter zusätzlich 3.848 Bücher von Project Gutenberg in 14 Sprachen (etwa 429 Millionen Kombinationen). Die beste Entschlüsselung schnitt schlechter ab als das, was zufällige Geheimtexte durch reinen Zufall erreichen. Der größere Durchlauf brachte außerdem überzeugendere falsche Fährten hervor, ein Zeichen, dass immer mehr Bücher nicht helfen würden. Die Notiz von damals hielt fest, das Problem brauche „eine gezielte Quelle“, keine breitere Suche.</p>
 <p class="fig">Bestes Ergebnis: <b>−13,94</b> · zufällige Geheimtexte erreichten −13,27<br>12 von 100 zufälligen Geheimtexten schlagen Woods bestes Ergebnis</p>
 </section>
@@ -293,6 +331,7 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="church" data-cap="Liturgisch Vater unser: Buchstabensalat. Die Bibel sagt Unser Vater: andere Wörter, andere Reihenfolge, jeder Schlüsselbuchstabe ändert sich.">
+<h3>Bibeltexte einbeziehen</h3>
 <p>Daraus folgten zwei Änderungen:</p>
 <ol>
 <li>Ein schneller erster Durchgang behält die 3.000 Kandidaten, deren Buchstabenmuster am meisten nach Englisch, Französisch, Deutsch, Latein, Italienisch, Spanisch oder Portugiesisch aussehen. Diese werden dann in Wörterbuchwörter zerlegt, wobei die Sprache von Wort zu Wort wechseln darf.</li>
@@ -328,6 +367,7 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="table" data-cap="Allein an der Spitze, Buchstabensalat auf Platz zwei. Doch das Programm kannte weder Afrikaans noch Initialen und verfehlte seine eigene Messlatte.">
+<h3>Der Schlüssel, Wort für Wort</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -492,7 +532,10 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="bar" data-cap="Das Programm kannte weder Afrikaans noch Initialen und verfehlte seine eigene Messlatte. Ein Mensch liest es sofort.">
-<p>Unseren eigenen automatischen Test bestand es nicht. Die vorab festgelegte Regel verlangte, dass die Bewertung eine Schwelle übertrifft, die eingeschleuste Testbotschaften vorgeben, und sie blieb darunter (−1,270 gegenüber −1,081). Der Grund ist in der Ausgabe zu sehen. Das Bewertungsprogramm kannte weder Afrikaans noch Initialen und las das Ende daher als „<span translate="no">TOT SIEN STEW</span>“. Unter der anderen Rechenvariante schnitt eine unsinnige Zeichenfolge, <span class="cipher" translate="no">ALENRENDRAYCUTREFUGES</span>, sogar noch etwas besser ab. Dieser Test entschied nur darüber, ob die Suche selbstständig eine Lösung melden durfte. Das Ergebnis war trotzdem das beste von 26,7 Millionen nach Thouless’ Regel, mit Buchstabensalat auf Platz zwei, also lasen wir es, und es war eindeutig Deutsch, dann Afrikaans, dann Woods Initialen.</p>
+<h3>Warum die Bewertung zu niedrig war</h3>
+<p>Unseren eigenen automatischen Test bestand es nicht. Die vorab festgelegte Regel verlangte, dass die Bewertung eine Schwelle übertrifft, die eingeschleuste Testbotschaften vorgeben, und sie blieb darunter (−1,270 gegenüber −1,081).</p>
+<p>Der Grund ist in der Ausgabe zu sehen. Das Bewertungsprogramm kannte weder Afrikaans noch Initialen und las das Ende daher als „<span translate="no">TOT SIEN STEW</span>“. Unter der anderen Rechenvariante schnitt eine unsinnige Zeichenfolge, <span class="cipher" translate="no">ALENRENDRAYCUTREFUGES</span>, sogar noch etwas besser ab.</p>
+<p>Dieser Test entschied nur darüber, ob die Suche selbstständig eine Lösung melden durfte. Das Ergebnis war trotzdem das beste von 26,7 Millionen nach Thouless’ Regel, mit Buchstabensalat auf Platz zwei, also lasen wir es, und es war eindeutig Deutsch, dann Afrikaans, dann Woods Initialen.</p>
 <p class="fig"><b translate="no">HIERBINICHTOTSIENSTEW</b> · −1,270<br>Zufallsgrenze −1,273 · Testschwelle −1,081</p>
 <p>In Wörter zerlegt, wie ein Mensch es liest, lautet die Botschaft <b><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</b> Auf Deutsch heißt das „Hier bin ich. Auf Wiedersehen. T.E.W.“ Wood wollte, dass sie erst nach seinem Tod gelesen wird, wenn ein Medium den Schlüssel übermittelt hat; sie ist also als Botschaft eines Toten geschrieben. Er meldet sich, verabschiedet sich und unterschreibt. Der Schlüssel, den er geschickt hätte, beginnt mit „Unser Vater in dem Himmel“.</p>
 </section>
@@ -517,18 +560,32 @@ footer p{margin:0 0 .7em}
 <p class="eyebrow">Überprüfung</p>
 <h2>Wie es geprüft wurde</h2>
 <p>Bevor wir das Ergebnis an Schmeh schickten, überprüften wir die Entschlüsselung auf mehrere Arten:</p>
-<ul>
-<li>Ein kurzes eigenständiges Skript, das keinen anderen Projektcode verwendet, baut den Schlüssel aus dem Gebetstext auf, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu genau Woods Geheimtext.</li>
-<li>Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig über OpenAIs Werkzeug Codex und kam zu „bestätigt mit Vorbehalten“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Ausgabe der Bibel und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung, die Buchstabe für Buchstabe mit dem Skript übereinstimmte.</li>
-<li>Scans von Woods Artikel von 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie bestätigten auch, dass „A bedeutet keine Verschiebung“ aus Thouless’ eigenem Text stammt und keine spätere Vermutung ist.</li>
-<li>Die heutige liturgische Fassung ergibt <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Behält man die wiederholten Wörter, wird der Text nach „<span class="cipher" translate="no">HIERBINIC</span>“ unlesbar. Verschiebt man um den Rest selbst statt um den Schlüsselbuchstaben (bei dem A keine Verschiebung bedeutet), entsteht Buchstabensalat. Ebenso mit Thouless’ eigenem Schlüssel aus „The Hound of Heaven“. Keine dieser Varianten wurde bewertet, und keine war je ein Kandidat.</li>
+<ul class="check-list" role="list">
+<li>
+<h3>Entschlüsselung nachvollziehen</h3>
+<p>Ein kurzes eigenständiges Skript, das keinen anderen Projektcode verwendet, baut den Schlüssel aus dem Gebetstext auf, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu genau Woods Geheimtext.</p>
+</li>
+<li>
+<h3>Unabhängige Prüfung</h3>
+<p>Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig über OpenAIs Werkzeug Codex und kam zu „bestätigt mit Vorbehalten“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Ausgabe der Bibel und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung, die Buchstabe für Buchstabe mit dem Skript übereinstimmte.</p>
+</li>
+<li>
+<h3>Originalquellen</h3>
+<p>Scans von Woods Artikel von 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie bestätigten auch, dass „A bedeutet keine Verschiebung“ aus Thouless’ eigenem Text stammt und keine spätere Vermutung ist.</p>
+</li>
+<li>
+<h3>Andere Schlüssel</h3>
+<p>Die heutige liturgische Fassung ergibt <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Behält man die wiederholten Wörter, wird der Text nach „<span class="cipher" translate="no">HIERBINIC</span>“ unlesbar. Verschiebt man um den Rest selbst statt um den Schlüsselbuchstaben (bei dem A keine Verschiebung bedeutet), entsteht Buchstabensalat. Ebenso mit Thouless’ eigenem Schlüssel aus „The Hound of Heaven“. Keine dieser Varianten wurde bewertet, und keine war je ein Kandidat.</p>
+</li>
 </ul>
 </section>
 
 <section class="step" data-s="luck" data-cap="Zufall? Von 500 zufälligen Signaturen statt TEW passen 7, alles Wortsalat. TEW passt genau einmal, bei dieser Botschaft.">
-<ul>
-<li>Eine Nachuntersuchung führte rund 854 Millionen Probeentschlüsselungen über 3.847 Gutenberg-Bücher und 19 Bibeln durch, mit beiden Rechenvarianten, mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter von 3 bis 10 Buchstaben aus einer Wortliste zerlegen lassen, gefolgt von einer dreibuchstabigen Signatur. Mit TEW gab es genau einen Treffer, und das war diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW fanden 7 davon (1,4&nbsp;%) ebenfalls einen Treffer, und die Beispiele waren Wortsalat. TOTSIENS kam erst nach der Lösung in die Wortliste, und der Test wurde nach dem Treffer entworfen; er zeigt also, dass solche Treffer selten sind, ist aber kein Beweis.</li>
-</ul>
+<h3>Zufallstreffer prüfen</h3>
+<p>Eine Nachuntersuchung führte rund 854 Millionen Probeentschlüsselungen über 3.847 Gutenberg-Bücher und 19 Bibeln durch, mit beiden Rechenvarianten, mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter von 3 bis 10 Buchstaben aus einer Wortliste zerlegen lassen, gefolgt von einer dreibuchstabigen Signatur.</p>
+<p>Mit TEW gab es genau einen Treffer, und das war diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW fanden 7 davon (1,4&nbsp;%) ebenfalls einen Treffer, und die Beispiele waren Wortsalat.</p>
+<p>TOTSIENS kam erst nach der Lösung in die Wortliste, und der Test wurde nach dem Treffer entworfen; er zeigt also, dass solche Treffer selten sind, ist aber kein Beweis.</p>
+<h3>Nach früheren Lösungen suchen</h3>
 <p>Suchen in Schmehs Blog und dessen Kommentaren, im Reddit-Forum r/codes und in den Protokollen anderer Löser aus dem Jahr 2026 fanden keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand vorher darauf gekommen ist.</p>
 </section>
   </div>
@@ -645,8 +702,9 @@ footer p{margin:0 0 .7em}
 </tr>
 </tbody>
 </table></div>
-<p><strong>Dank.</strong> Geleitet wurde das Projekt von Colin Reilly. Robert Thouless entwarf das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B aus dem Jahr 2019, gefunden durch eine computergestützte Suche in Büchern, zeigte genau, wie es funktioniert, und leistete Pionierarbeit für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung. Claude (Anthropic) schrieb den Suchcode, auch für die früheren Suchen im September, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig.</p>
-<p><strong>Quellen</strong></p>
+<h3>Dank</h3>
+<p>Geleitet wurde das Projekt von Colin Reilly. Robert Thouless entwarf das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B aus dem Jahr 2019, gefunden durch eine computergestützte Suche in Büchern, zeigte genau, wie es funktioniert, und leistete Pionierarbeit für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung. Claude (Anthropic) schrieb den Suchcode, auch für die früheren Suchen im September, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig.</p>
+<h3>Quellen</h3>
 <ul>
 <li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">„Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved“</a>, 4. Okt. 2026</li>
 <li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">„The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt“</a>, 17. Apr. 2017</li>
