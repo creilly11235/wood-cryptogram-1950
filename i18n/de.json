@@ -213,8 +213,8 @@
   },
   {
    "kind": "p",
-   "en": "On 17 September, 2026, attempt 52 measured the search space. Decrypt the cipher with every starting point and score each result by how much it looks like English. To test whether this can work at all, encrypt known messages with random book keys and see if the search finds them. Across 28.6 million combinations of starting points and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries, proving the search could work.",
-   "de": "Am 17.&nbsp;September 2026 hat Versuch 52 den Suchraum vermessen. Man entschlüsselt den Geheimtext mit jedem Startpunkt und bewertet jedes Ergebnis danach, wie sehr es nach Englisch aussieht. Um zu prüfen, ob das überhaupt funktionieren kann, verschlüsselt man bekannte Botschaften mit zufälligen Buchschlüsseln und schaut, ob die Suche sie findet. Bei 28,6 Millionen Kombinationen aus Startpunkten und Umgang mit wiederholten Wörtern in 129 Büchern landeten eingeschleuste Testbotschaften in 97 von 100 Versuchen auf Rang 1; damit war belegt, dass die Suche funktionieren konnte."
+   "en": "On 17 September 2026, an earlier attempt measured the search space. Decrypt the cipher with every starting point and score each result by how much it looks like English. To test whether this can work at all, encrypt known messages with random book keys and see if the search finds them. Across 28.6 million combinations of starting points and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries, proving the search could work.",
+   "de": "Am 17.&nbsp;September 2026 hat ein früherer Versuch den Suchraum vermessen. Man entschlüsselt den Geheimtext mit jedem Startpunkt und bewertet jedes Ergebnis danach, wie sehr es nach Englisch aussieht. Um zu prüfen, ob das überhaupt funktionieren kann, verschlüsselt man bekannte Botschaften mit zufälligen Buchschlüsseln und schaut, ob die Suche sie findet. Bei 28,6 Millionen Kombinationen aus Startpunkten und Umgang mit wiederholten Wörtern in 129 Büchern landeten eingeschleuste Testbotschaften in 97 von 100 Versuchen auf Rang 1; damit war belegt, dass die Suche funktionieren konnte."
   },
   {
    "kind": "p",
@@ -258,8 +258,8 @@
   },
   {
    "kind": "p",
-   "en": "The breakthrough on the evening of 3 October 2026 came from going back to one of Wood's own clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written \"in several different languages\". Round 52 had noted the claim but scored candidates as English only.",
-   "de": "Der Durchbruch am Abend des 3.&nbsp;Oktober 2026 gelang, als wir einen von Woods eigenen Hinweisen erneut aufgriffen. Schmehs Beitrag von 2017 gibt Woods Angabe wieder, der Klartext sei „in mehreren verschiedenen Sprachen“ geschrieben. Runde 52 hatte das notiert, die Kandidaten aber nur als Englisch bewertet."
+   "en": "The breakthrough on the evening of 3 October 2026 came from going back to one of Wood's own clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written \"in several different languages\". The September search had noted the claim but scored candidates as English only.",
+   "de": "Der Durchbruch am Abend des 3.&nbsp;Oktober 2026 gelang, als wir einen von Woods eigenen Hinweisen erneut aufgriffen. Schmehs Beitrag von 2017 gibt Woods Angabe wieder, der Klartext sei „in mehreren verschiedenen Sprachen“ geschrieben. Die Suche im September hatte das notiert, die Kandidaten aber nur als Englisch bewertet."
   },
   {
    "kind": "p",
@@ -528,7 +528,7 @@
   },
   {
    "kind": "p",
-   "en": "I have reached out to the Society and archivist with the solution, I will update if I hear any response.",
+   "en": "I have reached out to the Society and archivist with the solution. I will update if I receive a response.",
    "de": "Ich habe die Society und ihr Archiv über die Lösung informiert und berichte hier, sobald eine Antwort kommt."
   },
   {
@@ -658,8 +658,8 @@
   },
   {
    "kind": "td",
-   "en": "Round 52 corrects the \"too short\" dismissal; English-only searches of 129 and then 3,977 texts come back empty",
-   "de": "Runde 52 korrigiert die Abwertung als „zu kurz“; rein englische Suchen über 129 und dann 3.977 Texte bleiben ohne Treffer"
+   "en": "The project corrects the \"too short\" dismissal; English-only searches of 129 and then 3,977 texts come back empty",
+   "de": "Das Projekt korrigiert die Abwertung als „zu kurz“; rein englische Suchen über 129 und dann 3.977 Texte bleiben ohne Treffer"
   },
   {
    "kind": "td",
@@ -703,8 +703,8 @@
   },
   {
    "kind": "p",
-   "en": "<strong>Credits.</strong> The project was run by Colin Reilly. Robert Thouless designed the method. Richard Bean's 2019 solve of Thouless's Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer. Claude (Anthropic) wrote the search code, including the earlier Round 52 work, and found the key; GPT-6 Astra (OpenAI) checked it independently.",
-   "de": "<strong>Dank.</strong> Geleitet wurde das Projekt von Colin Reilly. Robert Thouless entwarf das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B aus dem Jahr 2019, gefunden durch eine computergestützte Suche in Büchern, zeigte genau, wie es funktioniert, und leistete Pionierarbeit für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung. Claude (Anthropic) schrieb den Suchcode, auch für die frühere Runde 52, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig."
+   "en": "<strong>Credits.</strong> The project was run by Colin Reilly. Robert Thouless designed the method. Richard Bean's 2019 solve of Thouless's Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer. Claude (Anthropic) wrote the search code, including the earlier September searches, and found the key; GPT-6 Astra (OpenAI) checked it independently.",
+   "de": "<strong>Dank.</strong> Geleitet wurde das Projekt von Colin Reilly. Robert Thouless entwarf das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B aus dem Jahr 2019, gefunden durch eine computergestützte Suche in Büchern, zeigte genau, wie es funktioniert, und leistete Pionierarbeit für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung. Claude (Anthropic) schrieb den Suchcode, auch für die früheren Suchen im September, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig."
   },
   {
    "kind": "p",
