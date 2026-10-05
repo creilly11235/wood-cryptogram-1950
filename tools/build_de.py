@@ -50,7 +50,7 @@ for j in sorted(table["js"], key=lambda j: -len(j["en"])):
 head = head.replace('<html lang="en">', '<html lang="de">')
 head = head.replace(f'<link rel="canonical" href="{BASE}">', f'<link rel="canonical" href="{BASE}de/">')
 for a, b in [(f'<meta property="og:url" content="{BASE}">', f'<meta property="og:url" content="{BASE}de/">'),
-             (f'<meta property="og:image" content="{BASE}card.png">', f'<meta property="og:image" content="{BASE}de/card.png">'),
+             (f'<meta property="og:image" content="{BASE}card.png?v=2">', f'<meta property="og:image" content="{BASE}de/card.png?v=2">'),
              ('<meta property="og:locale" content="en_GB">', '<meta property="og:locale" content="de_DE">\n<meta property="og:locale:alternate" content="en_GB">')]:
     head = swap(head, a, b, "head")
 body = re.sub(r'\s*<p class="langhint"[^\n]*</p>', "", body)

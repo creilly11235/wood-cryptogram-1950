@@ -1411,8 +1411,8 @@
    "de": ".toFixed(1).replace(\".\",\",\")"
   },
   {
-   "en": "\"red: as Thouless printed · gold: recomputed\"",
-   "de": "\"rot: Thouless’ Druck · gold: nachgerechnet\""
+   "en": "\"red: as Thouless printed · blue: recomputed\"",
+   "de": "\"rot: Thouless’ Druck · blau: nachgerechnet\""
   },
   {
    "en": "\"planted: 97 of 100 found first\"",

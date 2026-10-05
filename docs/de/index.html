@@ -13,7 +13,7 @@
 <meta property="og:title" content="Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte">
 <meta property="og:description" content="Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch.">
 <meta property="og:url" content="https://creilly11235.github.io/wood-cryptogram-1950/de/">
-<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png">
+<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“">
@@ -26,37 +26,34 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
 /* Layout, after r2d3.us: the article scrolls down a narrow column; one graphic stays pinned beside it, one per chapter.
-   Look, after the page Wood's cipher was printed on: an old-style serif, the title set like a journal article,
-   the passage centred, decoded letters as printed slips on dark umber cloth. Brass is used sparingly. */
+   The journal-style serif and centred passage sit on cool paper, with charcoal text and ink-blue accents.
+   Teal and red distinguish chart results. */
 :root{
-  --room:#17120e; --room-2:#211a14; --veil:#2e261d; --veil-2:#43392c;
-  --bone:#e8dfcb; --bone-2:#b4a78f; --bone-3:#857864; --ink:#1c1611;
-  --candle:#b8873a; --candle-soft:rgba(184,135,58,.14); --ember:#d0583f;
-  --dot-g:#6f6454; --dot-p:#1f9c86; --dot-b:#b8873a; --dot-v:#d0583f; --dot-s:#352c22; --dot-tew:#e8dfcb;
-  --de:#b8873a; --af:#1f9c86; --sig:#e8dfcb; --label-bg:rgba(23,18,14,.88);
+  --room:#f7f8fa; --room-2:#eef1f5; --veil:#e2e7ed; --veil-2:#c9d2dd;
+  --bone:#202a35; --bone-2:#526171; --bone-3:#637486; --ink:#f7f8fa;
+  --candle:#255d88; --candle-soft:rgba(37,93,136,.12); --ember:#b3423c;
+  --dot-g:#8292a5; --dot-p:#197a70; --dot-b:#376d9b; --dot-v:#b3423c; --dot-s:#c5ced8; --dot-tew:#202a35;
+  --de:#255d88; --af:#197a70; --sig:#202a35; --label-bg:rgba(247,248,250,.95);
   /* type scale: two display sizes, body, one note style, one label style, one data style */
   --t-note:400 14.5px/1.5 var(--body); --t-label:400 12px/1.4 var(--body); --t-data:13px/1.5 var(--mono);
   --display:"Libre Caslon Display","Libre Caslon Text",Georgia,serif; --body:"Libre Caslon Text",Georgia,"Times New Roman",serif; --mono:"Courier Prime","Courier New",Courier,monospace;
-  color-scheme:dark;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;background:var(--room)}
 body{margin:0;background:var(--room);color:var(--bone);font:17.5px/1.65 var(--body)}
-a{color:var(--bone);text-decoration-color:var(--candle);text-decoration-thickness:1px;text-underline-offset:.18em}
-a:hover{color:var(--candle)}
+a{color:var(--candle);text-decoration-color:var(--candle);text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{color:#173f64}
 .cipher,code{font-family:var(--mono);font-size:.9em}
 /* hero: set like the opening of a Proceedings article */
 .hero{max-width:760px;margin:0 auto;padding-block:64px 8px;padding-inline:20px;text-align:center}
 .hero .langhint{font:var(--t-note);margin:-28px 0 22px}
-.hero .langhint a{color:var(--candle)}
 :root[lang="de"] body{-webkit-hyphens:auto;hyphens:auto}
 :root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3,:root[lang="de"] .gbar .ct{-webkit-hyphens:manual;hyphens:manual}
 .hero .kick{font:var(--t-note);color:var(--bone-3);margin:0 0 26px}
-.hero .kick a{color:var(--bone-2)}
 .hero h1{font:400 clamp(2.3rem,6.4vw,4rem)/1.04 var(--display);margin:0 auto;text-wrap:balance;max-width:15ch}
 .hero .byline{font:var(--t-label);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2);margin:22px 0 0}
 .hero .byline span{display:block;margin-top:6px;font:var(--t-note);letter-spacing:0;text-transform:none;color:var(--bone-3)}
-.hero .byline a{color:var(--bone-2)}
 .cipher-row{--tw:clamp(16px,calc((100vw - 100px) / 15),30px);margin:40px 0 0;display:flex;flex-direction:column;align-items:center}
 .cipher-row .intro{font:var(--t-note);color:var(--bone-2);margin:0 0 14px}
 .cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 10px}
@@ -135,7 +132,7 @@ figcaption{font:var(--t-note);color:var(--bone-2);margin-top:10px}
 figure img[role=button]{cursor:zoom-in}
 figure img[role=button]:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
 html.lb-open{overflow:hidden;scrollbar-gutter:stable}
-.lb{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#0d0a08;color:var(--bone);overflow:hidden}
+.lb{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:var(--room);color:var(--bone);overflow:hidden}
 .lb::backdrop{background:transparent}
 .lb .stage{position:absolute;inset:0;touch-action:none;cursor:grab;overflow:hidden}
 .lb .stage.drag{cursor:grabbing}
@@ -145,7 +142,7 @@ html.lb-open{overflow:hidden;scrollbar-gutter:stable}
 .lb .bar button:hover{border-color:var(--candle)}
 .lb .bar button:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
 .lb .hint{position:absolute;top:0;left:0;margin:0;padding:22px 16px;font:var(--t-label);color:var(--bone-3);pointer-events:none}
-.lb .cap{position:absolute;left:0;right:0;bottom:0;margin:0;padding:28px 16px calc(12px + env(safe-area-inset-bottom));font:var(--t-note);color:var(--bone-2);text-align:center;background:linear-gradient(transparent,rgba(12,9,7,.92) 40%);pointer-events:none}
+.lb .cap{position:absolute;left:0;right:0;bottom:0;margin:0;padding:28px 16px calc(12px + env(safe-area-inset-bottom));font:var(--t-note);color:var(--bone-2);text-align:center;background:linear-gradient(transparent,rgba(247,248,250,.95) 40%);pointer-events:none}
 @media (max-width:600px){.lb .hint{display:none}}
 .table-wrap{overflow-x:auto;margin:0 0 1.2em}
 table{border-collapse:collapse;width:100%;font:var(--t-data);font-variant-numeric:tabular-nums}
@@ -810,7 +807,7 @@ const PASS5=["neu berechnet, eigenes Skript: 21 von 21","Entschlüsselung der zw
 const LUCK5={ctrl:500,hit:7,share:"1.4%",salad:["PAYNAULADDUCDAEEVA…","BUMTOPSOIWEIIWATAYE…","WANMOSCALMTORNTOUR…"]};
 /* chapter 1: a few dots in the cloud carry the real reading their key gives: [reading, key's book, cloud x, cloud y].
    Round 52's best English-scored decryptions (harness/wood35/out_expanded_r52.jsonl, kind "real"; books' languages from
-   fetch_r52.jsonl) and the Bible run's runner-up (attempts/wood35_solve_2026-10-04/bib_ml.out). The gold dot is the solution. */
+   fetch_r52.jsonl) and the Bible run's runner-up (attempts/wood35_solve_2026-10-04/bib_ml.out). The blue dot is the solution. */
 const CH1_READ=[["UNTONEASACRISTEALSBYR","schwedisches Buch",.04,.10],["DDOESHEBRIEKTOTHATKUX","spanisches Buch",.96,.30],["RASFATAFITEANDAMAPOSE","rumänische Bibel",.06,.74],["TGEHADREEKSSENTEASYBI","niederländisches Buch",.94,.93]];
 const CH1_HIT=[.22,.50];
 /* chapter 1, "method": Thouless's rule worked for the first letter (KEY[0]; same arithmetic as the key table and verify_wood.py) */
@@ -939,14 +936,14 @@ function Graphic(el){
    luck(){drawTiles([...PT],null,i=>i<18?"":"sig lit");subEl.innerHTML=[4,3,3,8].map(n=>`<span style="grid-column:span ${n};border-top:1px solid var(--bone-3)">Wort</span>`).join("")+'<span class="on" style="grid-column:span 3;border-top:1px solid var(--candle)">'+(cellW()<17?"Sig.":"Signatur")+'</span>';cap("Wörter, dann eine dreibuchstabige Signatur","");},
    /* ---- chapter 6: the correction and after ---- */
    slip(){const T=THOU,n=T.plain.length,v=T.sums[n-1];
-     /* three rows of 21 columns: 14 letters, the recomputed 14th letter (gold), then the row's name */
+     /* three rows of 21 columns: 14 letters, the recomputed 14th letter (blue), then the row's name */
      const tile=(c,cls)=>`<div class="t ${cls}">${c}</div>`,blank='<div class="t" style="visibility:hidden"></div>';
      const name=t=>`<div style="grid-column:span ${20-n};align-self:center;padding-left:6px;font:clamp(10px,1.3vw,13px)/1.1 var(--mono);color:var(--bone-2);white-space:nowrap;overflow:hidden">${t}</div>`;
      const row=(str,fix,lab,cls)=>[...str].map((c,i)=>tile(c,i<n-1?cls:(fix?"bad":""))).join("")+(fix?tile(fix,"lit"):blank)+name(lab);
      tilesEl.innerHTML=row(T.plain,null,"Klar","dim")+row(T.printed,T.comp[n-1],"Schl.","")+row(T.cipher,T.fixed[n-1],"Geheim","");
      subEl.innerHTML=Array(21).fill("<span></span>").join("");
      const su=[...T.key[n-1].toUpperCase()].map(c=>c.charCodeAt(0)-64);
-     cap(`<b>${T.key[n-1]}: ${su.join("+")} = ${v}</b>`,"rot: Thouless’ Druck · gold: nachgerechnet");},
+     cap(`<b>${T.key[n-1]}: ${su.join("+")} = ${v}</b>`,"rot: Thouless’ Druck · blau: nachgerechnet");},
    next(){drawTiles([...PT],null,reading);cap("","");},
    confirmed(){drawTiles([...PT],null,i=>reading(i)+" lit");cap("","");}
   };
@@ -1006,7 +1003,7 @@ function Graphic(el){
     /* ---- chapter 1 (cloud) and chapter 2 (cloudLabels, shelves, histEn*) ---- */
     if(mode==="cloud"&&(el.dataset.g==="1"||s==="wood")){
       /* chapter 1 only (other chapters use "summary" as a plain prelude): every dot is a key; a few carry the reading their
-         key gives, and the gold one is the solution. In "method" the gold key unfolds into Thouless's rule for the first letter. */
+         key gives, and the blue one is the solution. In "method" the blue key unfolds into Thouless's rule for the first letter. */
       const G1=G.slice(3,3+CH1_READ.length),S1=dots.filter(d=>d.kind==="s").slice(0,CH1_RULE.length-1);
       if(s==="method"){
         const sm=small(),rh=Math.min(sm?30:36,(h-10)/CH1_RULE.length),x0=p.l+(sm?6:w*0.06),y0=p.t+Math.max(4,(h-(CH1_RULE.length-1)*rh)*0.28);
@@ -1098,7 +1095,7 @@ function Graphic(el){
       lines.push({x:qw.x,y0:lw,y1:qw.y-6,ck:"--bone-3",align:"right",bg:true,text:"Woods Bestes −1,313:"});
       lines.push({x:qw.x,y0:lw+16,y1:lw+16,ck:"--bone-3",align:"right",bg:true,text:"OFERANTREFUSAIDAUTIOR"});
     } else if(mode==="churchOrder"){
-      /* church: the 21 key words of the hand-typed church wording (red, each with the letter it gives) beside the Bible's 21 (gold);
+      /* church: the 21 key words of the hand-typed church wording (red, each with the letter it gives) beside the Bible's 21 (blue);
          the first two rows, Vater unser / Unser Vater, glow. Its dots are made on first use, in this graphic only */
       if(!self.ch3c)self.ch3c={rows:CH3_CHURCH.map(()=>mk("c","--dot-v",{ta:0})),heads:[mk("c","--room",{ta:0}),mk("c","--room",{ta:0})]};
       const C=self.ch3c,n=21,rh=Math.min(26,(H-p.t)/(n+1.2)),top=Math.max(p.t-6,(H-rh*(n+1.2))/2-6),cx=p.l+w/2,dx=Math.min(w*0.3,210),xl=cx-dx,xr=cx+dx;
