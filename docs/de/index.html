@@ -116,6 +116,22 @@ canvas{flex:1;width:100%;min-height:0;display:block}
 figure{margin:1.4em 0}
 figure img{width:100%;height:auto;border:0;border-radius:1px;background:#fff}
 figcaption{font:var(--t-note);color:var(--bone-3);margin-top:8px}
+/* image viewer: every figure image opens full size in an overlay, zoomable and draggable */
+figure img[role=button]{cursor:zoom-in}
+figure img[role=button]:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
+html.lb-open{overflow:hidden;scrollbar-gutter:stable}
+.lb{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#0d0a08;color:var(--bone);overflow:hidden}
+.lb::backdrop{background:transparent}
+.lb .stage{position:absolute;inset:0;touch-action:none;cursor:grab;overflow:hidden}
+.lb .stage.drag{cursor:grabbing}
+.lb .stage img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;background:#fff;user-select:none;-webkit-user-select:none;-webkit-user-drag:none}
+.lb .bar{position:absolute;top:0;right:0;display:flex;gap:6px;padding:12px 16px}
+.lb .bar button{font:15px/1 var(--mono);width:38px;height:38px;border:1px solid var(--veil-2);border-radius:1px;background:var(--room-2);color:var(--bone);cursor:pointer}
+.lb .bar button:hover{border-color:var(--candle)}
+.lb .bar button:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
+.lb .hint{position:absolute;top:0;left:0;margin:0;padding:22px 16px;font:var(--t-label);color:var(--bone-3);pointer-events:none}
+.lb .cap{position:absolute;left:0;right:0;bottom:0;margin:0;padding:28px 16px calc(12px + env(safe-area-inset-bottom));font:var(--t-note);color:var(--bone-2);text-align:center;background:linear-gradient(transparent,rgba(12,9,7,.92) 40%);pointer-events:none}
+@media (max-width:600px){.lb .hint{display:none}}
 .table-wrap{overflow-x:auto;margin:0 0 1.2em}
 table{border-collapse:collapse;width:100%;font:var(--t-data);font-variant-numeric:tabular-nums}
 th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--veil);vertical-align:top}
@@ -1012,12 +1028,16 @@ function Graphic(el){
       const ex=px(en.ml,x0,x1);let colTop=H-p.b;pos.forEach(q=>{if(Math.abs(q.x-ex)<(W-p.l-p.r)/40)colTop=Math.min(colTop,q.y);});
       setAll(d=>{if(d===en)return{x:ex,y:colTop-12,a:1,r:enOn?1.9:1.4,delay:300,label:"Englisch: "+CH3_EN.words.join(" ")};
         const q=pos.get(d);if(!q)return{a:0};
-        return{x:q.x,y:q.y,a:1,r:d===de?(enOn?1.4:1.9):1,delay:(q.b*10+q.row*3)*0.4,label:d===G[0]?"Woods Bestes: OFERANTREFUSAIDAUTIOR":null};});
+        return{x:q.x,y:q.y,a:1,r:d===de?(enOn?1.4:1.9):1,delay:(q.b*10+q.row*3)*0.4,label:null};});
       /* the seven-language copy is named on a leader line, clear of the pile and of Wood's best below it */
       const qd=pos.get(de),xd=qd.x,ly=Math.max(p.t+70,H-p.b-130);
       lines.push({x:xd,y0:ly,y1:qd.y-9,ck:"--dot-p",text:"7 Sprachen:"});
       lines.push({x:xd,y0:ly+16,y1:ly+16,ck:"--dot-p",text:CH3_DE.words.join(" ")});
       lines.push({x:px(-1.207,x0,x1),y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true,text:"Zufallsgrenze −1,207"});
+      /* Wood's best gets its own leader too, so its name sits over its dot, not over the pile */
+      const qw=pos.get(G[0]),lw=ly-96;
+      lines.push({x:qw.x,y0:lw,y1:qw.y-6,ck:"--bone-3",align:"right",bg:true,text:"Woods Bestes −1,313:"});
+      lines.push({x:qw.x,y0:lw+16,y1:lw+16,ck:"--bone-3",align:"right",bg:true,text:"OFERANTREFUSAIDAUTIOR"});
     } else if(mode==="churchOrder"){
       /* church: the 21 key words of the hand-typed church wording (red, each with the letter it gives) beside the Bible's 21 (gold);
          the first two rows, Vater unser / Unser Vater, glow. Its dots are made on first use, in this graphic only */
@@ -1131,9 +1151,13 @@ function Graphic(el){
     if(W<=0)return;
     const dt=now-t0;ctx.clearRect(0,0,W,H);
     const mono=cssv("--mono")||"monospace",ink=cssv("--bone"),ink2=cssv("--bone-2"),ink3=cssv("--bone-3"),lbg=cssv("--label-bg"),bg=cssv("--room"),glow=cssv("--candle");
+    /* a leader's words; one with bg:true sits on a label backing and is drawn after the dots, so a pile cannot cover it */
+    const lineText=l=>{const al=l.align||(l.x>W*0.6?"right":"left"),tx=l.x+(al==="right"?-6:6),ty=l.bottom?l.y1-6:l.y0+12;ctx.textAlign=al;
+      if(l.bg){const tw=ctx.measureText(l.text).width;ctx.fillStyle=lbg;ctx.fillRect(al==="right"?tx-tw-4:tx-4,ty-12,tw+8,16);}
+      ctx.fillStyle=ink2;ctx.fillText(l.text,tx,ty);};
     ctx.save();ctx.font="12px "+mono;
     lines.forEach(l=>{ctx.strokeStyle=cssv(l.ck);ctx.lineWidth=1;ctx.setLineDash(l.dash?[4,4]:[]);ctx.beginPath();if("y0"in l){ctx.moveTo(l.x,l.y0);ctx.lineTo(l.x,l.y1);}else{ctx.moveTo(l.x0,l.y);ctx.lineTo(l.x1,l.y);}ctx.stroke();ctx.setLineDash([]);
-      if(l.text){ctx.fillStyle=ink2;ctx.textAlign=l.x>W*0.6?"right":"left";ctx.fillText(l.text,l.x+(l.x>W*0.6?-6:6),l.bottom?l.y1-6:l.y0+12);}});
+      if(l.text&&!l.bg)lineText(l);});
     if(axis){const p=pad();ctx.strokeStyle=ink3;ctx.beginPath();ctx.moveTo(p.l,H-p.b+4);ctx.lineTo(W-p.r,H-p.b+4);ctx.stroke();ctx.fillStyle=ink2;axis.ticks.forEach(v=>{const x=p.l+(v-axis.x0)/(axis.x1-axis.x0)*(W-p.l-p.r);ctx.textAlign=x<18?"left":(x>W-18?"right":"center");ctx.fillText(v.toFixed(1).replace(".",","),x,H-p.b+20);});ctx.textAlign="left";ctx.fillStyle=ink3;ctx.fillText(axis.title,p.l,H-6);}
     ctx.restore();
     const base=small()?2.4:3.2,k=reduced?1:(small()?0.13:0.085),colors={};
@@ -1148,7 +1172,7 @@ function Graphic(el){
       ctx.globalAlpha=Math.min(1,d.la);const right=d.x>W*0.55,low=d.ty>H-70&&axis&&!["top","vars"].includes(DOTS[step]);ctx.textAlign=right?"right":"left";const m=ctx.measureText(d.label).width,tx=d.x+(right?-9:9);let ty=low?d.y-10:d.y+4;
       let bx=right?tx-m-3:tx-3;if(bx+m+6>W-2)bx=W-2-m-6;if(bx<2)bx=2;for(let k=0;k<6;k++){const hit=placed.some(r=>bx<r.x+r.w&&bx+m+6>r.x&&ty-11<r.y+r.h&&ty+4>r.y);if(!hit)break;ty-=16;}placed.push({x:bx,y:ty-11,w:m+6,h:15});
       ctx.fillStyle=lbg;ctx.fillRect(bx,ty-11,m+6,15);ctx.fillStyle=ink;ctx.textAlign="left";ctx.fillText(d.label,bx+3,ty);}
-    ctx.globalAlpha=1;
+    ctx.globalAlpha=1;ctx.font="12px "+mono;lines.forEach(l=>{if(l.text&&l.bg)lineText(l);});
   };
   let current=null;
   this.go=function(s,instant){if(s===current)return;current=s;stripClear();(STRIP[s]||STRIP.summary)();if(W>0)layout(s,instant);else step=s;};
@@ -1179,6 +1203,63 @@ addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onS
 catchUp();
 document.querySelectorAll(".replay").forEach(b=>b.addEventListener("click",()=>{const ch=b.closest(".chapter"),g=graphics.get(ch);if(mq.matches)g.el.scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});g.replay();}));
 
+})();
+</script>
+<script>
+/* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
+   (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */
+(function(){
+"use strict";
+const thumbs=[...document.querySelectorAll("figure img")];
+if(!thumbs.length||typeof HTMLDialogElement!=="function")return;
+const dlg=document.createElement("dialog");dlg.className="lb";dlg.setAttribute("aria-label","Bildbetrachter");
+dlg.innerHTML='<div class="stage"><img alt="" draggable="false"></div><p class="hint">Scrollen oder mit zwei Fingern zoomen, ziehen zum Verschieben</p><div class="bar"><button type="button" data-z="out" aria-label="Verkleinern">−</button><button type="button" data-z="in" aria-label="Vergrößern">+</button><button type="button" data-z="close" aria-label="Schließen">×</button></div><p class="cap"></p>';
+document.body.append(dlg);
+const stage=dlg.querySelector(".stage"),big=stage.querySelector("img"),cap=dlg.querySelector(".cap");
+let s=1,tx=0,ty=0,fit=1,nw=1,nh=1,opener=null;
+const W=()=>stage.clientWidth,H=()=>stage.clientHeight,maxS=()=>Math.max(4,fit*8);
+function apply(){const w=nw*s,h=nh*s,vw=W(),vh=H();
+  tx=w<=vw?(vw-w)/2:Math.min(0,Math.max(vw-w,tx));ty=h<=vh?(vh-h)/2:Math.min(0,Math.max(vh-h,ty));
+  big.style.transform=`translate(${tx}px,${ty}px) scale(${s})`;}
+function zoomAt(ns,px,py){ns=Math.min(maxS(),Math.max(fit,ns));tx=px-(px-tx)*ns/s;ty=py-(py-ty)*ns/s;s=ns;apply();}
+function reset(){fit=Math.min(1,W()*.94/nw,H()*.82/nh);s=fit;apply();}
+function sized(){nw=big.naturalWidth||1;nh=big.naturalHeight||1;big.style.width=nw+"px";big.style.height=nh+"px";reset();}
+function open(img){opener=img;big.onload=null;big.removeAttribute("style");big.alt=img.alt;
+  const fc=img.closest("figure").querySelector("figcaption");cap.textContent=fc?fc.textContent.replace(/\s+/g," ").trim():"";cap.hidden=!cap.textContent;
+  document.documentElement.classList.add("lb-open");dlg.showModal();
+  big.src=img.currentSrc||img.src;if(big.complete&&big.naturalWidth)sized();else big.onload=sized;}
+dlg.addEventListener("close",()=>{document.documentElement.classList.remove("lb-open");if(opener)opener.focus({preventScroll:true});});
+thumbs.forEach(img=>{img.setAttribute("role","button");img.tabIndex=0;img.title="Zum Vergrößern klicken";img.setAttribute("aria-haspopup","dialog");
+  img.addEventListener("click",()=>open(img));
+  img.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open(img);}});});
+dlg.querySelector(".bar").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const z=b.dataset.z;
+  if(z==="close")dlg.close();else zoomAt(s*(z==="in"?1.5:1/1.5),W()/2,H()/2);});
+dlg.addEventListener("keydown",e=>{if(e.target.closest("button")&&(e.key==="Enter"||e.key===" "))return;
+  const k=e.key,step=60;let hit=true;
+  if(k==="+"||k==="=")zoomAt(s*1.5,W()/2,H()/2);else if(k==="-"||k==="_")zoomAt(s/1.5,W()/2,H()/2);else if(k==="0")reset();
+  else if(k==="ArrowLeft"){tx+=step;apply();}else if(k==="ArrowRight"){tx-=step;apply();}
+  else if(k==="ArrowUp"){ty+=step;apply();}else if(k==="ArrowDown"){ty-=step;apply();}else hit=false;
+  if(hit)e.preventDefault();});
+stage.addEventListener("wheel",e=>{e.preventDefault();const r=stage.getBoundingClientRect(),k=e.deltaMode===1?.05:e.deltaMode===2?1:.0015;
+  zoomAt(s*Math.exp(-e.deltaY*k),e.clientX-r.left,e.clientY-r.top);},{passive:false});
+/* pointers: one drags, two pinch around their midpoint; a tap outside the image closes; a double tap or double click toggles zoom */
+const pts=new Map();let moved=0,lastTap=0,prev=null;
+const pair=()=>{const[a,b]=[...pts.values()],r=stage.getBoundingClientRect();return{d:Math.hypot(a.x-b.x,a.y-b.y),x:(a.x+b.x)/2-r.left,y:(a.y+b.y)/2-r.top};};
+stage.addEventListener("pointerdown",e=>{stage.setPointerCapture(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size===1)moved=0;prev=pts.size===2?pair():null;stage.classList.add("drag");});
+stage.addEventListener("pointermove",e=>{const p=pts.get(e.pointerId);if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;
+  p.x=e.clientX;p.y=e.clientY;moved+=Math.abs(dx)+Math.abs(dy);
+  if(pts.size===1){tx+=dx;ty+=dy;apply();}
+  else if(pts.size===2&&prev){const c=pair();tx+=c.x-prev.x;ty+=c.y-prev.y;zoomAt(s*c.d/prev.d,c.x,c.y);prev=c;}});
+function up(e){if(!pts.has(e.pointerId))return;pts.delete(e.pointerId);prev=pts.size===2?pair():null;if(pts.size)return;
+  stage.classList.remove("drag");if(e.type!=="pointerup"||moved>8)return;
+  const r=stage.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+  const inside=x>=tx&&x<=tx+nw*s&&y>=ty&&y<=ty+nh*s;
+  if(!inside){dlg.close();return;}
+  const now=performance.now();
+  if(now-lastTap<320){lastTap=0;if(s>fit*1.05){s=fit;apply();}else zoomAt(Math.max(1,fit*2.5),x,y);}else lastTap=now;}
+stage.addEventListener("pointerup",up);stage.addEventListener("pointercancel",up);
+addEventListener("resize",()=>{if(dlg.open)reset();});
 })();
 </script>
 <script data-goatcounter="https://creilly11235.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>

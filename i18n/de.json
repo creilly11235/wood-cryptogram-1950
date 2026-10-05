@@ -1097,10 +1097,6 @@
    "de": "\"Englisch: \""
   },
   {
-   "en": "\"Wood's best: OFERANTREFUSAIDAUTIOR\"",
-   "de": "\"Woods Bestes: OFERANTREFUSAIDAUTIOR\""
-  },
-  {
    "en": "\"7 languages:\"",
    "de": "\"7 Sprachen:\""
   },
@@ -1291,6 +1287,34 @@
   {
    "en": "\"a planted message, random book key\"",
    "de": "\"Testbotschaft, zufälliger Buchschlüssel\""
+  },
+  {
+   "en": "aria-label\",\"Image viewer\")",
+   "de": "aria-label\",\"Bildbetrachter\")"
+  },
+  {
+   "en": "<p class=\"hint\">Scroll or pinch to zoom, drag to move</p>",
+   "de": "<p class=\"hint\">Scrollen oder mit zwei Fingern zoomen, ziehen zum Verschieben</p>"
+  },
+  {
+   "en": "aria-label=\"Zoom out\"",
+   "de": "aria-label=\"Verkleinern\""
+  },
+  {
+   "en": "aria-label=\"Zoom in\"",
+   "de": "aria-label=\"Vergrößern\""
+  },
+  {
+   "en": "aria-label=\"Close\"",
+   "de": "aria-label=\"Schließen\""
+  },
+  {
+   "en": "img.title=\"Click to enlarge\"",
+   "de": "img.title=\"Zum Vergrößern klicken\""
+  },
+  {
+   "en": "text:\"Wood's best −1.313:\"",
+   "de": "text:\"Woods Bestes −1,313:\""
   }
  ]
 }
