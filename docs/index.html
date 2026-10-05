@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
 /* Layout, after r2d3.us: the article scrolls down a narrow column; one graphic stays pinned beside it, one per chapter.
-   The journal-style serif and centred passage sit on cool paper, with charcoal text and ink-blue accents.
+   The journal-style serif and centred passage sit on cool paper, with charcoal text and ink-blue chapter accents.
    Teal and red distinguish chart results. */
 :root{
   --room:#f7f8fa; --room-2:#eef1f5; --veil:#e2e7ed; --veil-2:#c9d2dd;
@@ -41,8 +41,8 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;background:var(--room)}
 body{margin:0;background:var(--room);color:var(--bone);font:17.5px/1.65 var(--body)}
-a{color:var(--candle);text-decoration-color:var(--candle);text-decoration-thickness:1px;text-underline-offset:.18em}
-a:hover{color:#173f64}
+a{color:var(--bone);text-decoration-color:var(--bone-3);text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{color:var(--candle);text-decoration-color:var(--candle)}
 .cipher,code{font-family:var(--mono);font-size:.9em}
 /* hero: set like the opening of a Proceedings article */
 .hero{max-width:760px;margin:0 auto;padding-block:64px 8px;padding-inline:20px;text-align:center}
@@ -70,15 +70,15 @@ a:hover{color:#173f64}
 .hero .lede{color:var(--bone-2);margin-top:28px}
 .contents{margin-top:32px;padding-block:20px;border-block:1px solid var(--veil-2)}
 .contents .contents-label{font:700 12px/1.4 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-2);margin:0 0 14px}
-.contents ol{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;margin:0;padding-left:1.4em;font:15px/1.5 var(--body)}
+.contents ol{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;margin:0;padding-left:1.7em;font:15px/1.5 var(--body);list-style-type:upper-roman}
 .contents li::marker{color:var(--candle);font:var(--t-data)}
 .contents a{text-decoration:none}
 .contents a:hover{text-decoration:underline}
 .contents a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
-.scrolly{max-width:1140px;margin:0 auto;padding-inline:20px}
-.chapter{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:0 52px;align-items:start}
-.chapter+.chapter{border-top:1px solid var(--veil)}
+.scrolly{max-width:1140px;margin:0 auto;padding-inline:20px;counter-reset:chapter}
+.chapter{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:0 52px;align-items:start;counter-increment:chapter}
+.chapter+.chapter{border-top:2px solid var(--veil-2)}
 .graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
 .gbody{display:flex;flex-direction:column;flex:1;min-height:0}
 .gbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--veil)}
@@ -106,8 +106,10 @@ canvas{flex:1;width:100%;min-height:0;display:block}
 .text{padding-block:10vh 14vh}
 .chapter:first-child .text{padding-top:12vh}
 .step{min-height:58vh;padding:0 0 10vh;scroll-margin-top:24px}
+.step+.step{border-top:1px solid var(--veil-2);padding-top:clamp(32px,6vh,64px)}
 .eyebrow{font:700 11px/1.5 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--bone-2);margin:0 0 12px}
-.step h2{font:400 clamp(1.9rem,4vw,2.5rem)/1.12 var(--display);margin:0 0 .55em;text-wrap:balance}
+.chapter .text>.step:first-child .eyebrow::before{content:counter(chapter,upper-roman) " \00b7  ";color:var(--candle);font-family:var(--mono);letter-spacing:.04em}
+.step h2{font:400 clamp(1.9rem,4vw,2.5rem)/1.12 var(--display);color:var(--candle);margin:0 0 .55em;text-wrap:balance}
 .step h3{font:700 19px/1.4 var(--body);color:var(--bone);margin:1.8em 0 .65em;text-wrap:balance}
 .step>h3:first-child{margin-top:0}
 .step p,.step li{margin:0 0 1em}
@@ -158,7 +160,7 @@ footer p{margin:0 0 .7em}
   .hero{padding-top:44px}
   .chapter{display:flex;flex-direction:column}
   .chapter>*{width:100%;max-width:100%;min-width:0}
-  .chapter+.chapter{border-top:0}
+  .chapter+.chapter{border-top:2px solid var(--veil-2)}
   .text{order:1;padding-block:3vh 4vh}
   .chapter:first-child .text{padding-top:3vh}
   .step{min-height:0;padding:0 0 2em}
@@ -620,14 +622,14 @@ footer p{margin:0 0 .7em}
 
 <section class="step" data-s="next" data-cap="Wood asked that any result, &ldquo;even if negative&rdquo;, be sent to the Society for Psychical Research. That is the next step." id="next">
 <p class="eyebrow">What Wood asked for</p>
-<h2>Telling the Society for Psychical Research</h2>
+<h3>Telling the Society for Psychical Research</h3>
 <p>The key came from a search of books, not from a medium, so the solve says nothing either way about life after death. What remains is Wood's own request. He asked that anyone who tried to decipher his message "communicate the result (even if negative) to the Society". He promised the Society "fuller particulars" about himself and photographs of him and his home, and said his executors would be asked to tell it "the circumstances" and date of his death. If that file survives, it may say when Wood died, and whether any medium ever claimed to have heard from him.</p>
 <p>I have reached out to the Society and archivist with the solution. I will update if I receive a response.</p>
 </section>
 
 <section class="step" data-s="confirmed" data-cap="Confirmed by Klaus Schmeh, 4 October 2026. Next, as Wood asked, the result goes to the Society for Psychical Research." id="timeline-and-credits">
 <p class="eyebrow">4 October 2026 · confirmed</p>
-<h2>Timeline and credits</h2>
+<h3>Timeline and credits</h3>
 <p>Times are Pacific. Most are commit times, which record when each step was saved.</p>
 <div class="table-wrap"><table>
 <thead>
