@@ -1,6 +1,6 @@
-"""Wood #35 multilingual re-scoring of the Round 52 key class.
+"""Wood #35 multilingual re-scoring of the September English-only search key class.
 
-For every shard (one Gutenberg book, Round 52 tokenisation) and every start offset, under
+For every shard (one Gutenberg book, the book-key tokenisation) and every start offset, under
 variant D (consecutive distinct words) and P (all words), decrypt the 21-letter ciphertext
 with the verified Thouless convention (pt = ct - ((sum-1) mod 26)) and score the plaintext
 with the pooled 7-language 4-gram table.  Keep the global top-T; the caller rescores them

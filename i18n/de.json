@@ -13,11 +13,6 @@
   },
   {
    "kind": "meta",
-   "en": "Solving the 1950 cipher meant to test life after death",
-   "de": "Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte"
-  },
-  {
-   "kind": "meta",
    "en": "Wood's ciphertext FVAMI NTKFX XWATB OIZVV X under the title Solving the 1950 cipher meant to test life after death",
    "de": "Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“"
   },
@@ -25,11 +20,6 @@
    "kind": "p",
    "en": "Proceedings of the S.P.R., vol. 49 · <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">No. 35 of Klaus Schmeh's Top 50</a>",
    "de": "Proceedings of the S.P.R., Bd.&nbsp;49 · <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">Nr.&nbsp;35 auf Klaus Schmehs Top-50-Liste</a>"
-  },
-  {
-   "kind": "h1",
-   "en": "Solving the 1950 cipher meant to test life after death",
-   "de": "Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte"
   },
   {
    "kind": "p",
@@ -48,8 +38,8 @@
   },
   {
    "kind": "figcaption",
-   "en": "T. E. Wood, &ldquo;A Further Test for Survival&rdquo;, <em>Proceedings of the S.P.R.</em> 49 (1950), p.&nbsp;105. Twenty-one letters, no key.",
-   "de": "T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S.&nbsp;105. Einundzwanzig Buchstaben, kein Schlüssel."
+   "en": "T. E. Wood, &ldquo;A Further Test for Survival&rdquo;, <em>Proceedings of the S.P.R.</em> 49 (1950), p.&nbsp;105.",
+   "de": "T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S.&nbsp;105."
   },
   {
    "kind": "p",
@@ -68,8 +58,8 @@
   },
   {
    "kind": "p",
-   "en": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">confirmed it</a> on 4 October 2026.",
-   "de": "Klaus Schmeh hat das Ergebnis am 4.&nbsp;Oktober 2026 <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">bestätigt</a>."
+   "en": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">confirmed it</a> on 4 October 2026; Richard Bean confirmed the reading on 6 October.",
+   "de": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">bestätigte die Lösung</a> am 4. Oktober 2026; Richard Bean bestätigte die Lesart am 6. Oktober."
   },
   {
    "kind": "p",
@@ -303,6 +293,11 @@
   },
   {
    "kind": "p",
+   "en": "The search first compared five-letter patterns, then checked how well the strongest candidates split into English words. It was a way to rank possible readings, with a clear weakness: every reading was being judged as English.",
+   "de": "Die Suche verglich zunächst Muster aus fünf Buchstaben und prüfte dann, wie gut sich die stärksten Kandidaten in englische Wörter zerlegen ließen. So wurden mögliche Lesarten geordnet, allerdings mit einer klaren Schwäche: Jede Lesart wurde als Englisch beurteilt."
+  },
+  {
+   "kind": "p",
    "en": "But Wood's message still came back blank. That held over those 129 books and again over 3,977 texts, which added 3,848 Project Gutenberg books in 14 languages (about 429 million combinations). The best decryption scored worse than what random ciphertexts reach by chance. The bigger run also threw up more convincing false leads, a sign that adding ever more books would not help. The note at the time said the problem needed \"a targeted source\", not a bigger sweep.",
    "de": "Doch die Suche nach Woods Botschaft blieb erfolglos. Das galt für diese 129 Bücher und ebenso für 3.977 Texte, darunter zusätzlich 3.848 Bücher von Project Gutenberg in 14 Sprachen (etwa 429 Millionen Kombinationen). Die beste Entschlüsselung schnitt schlechter ab als das, was zufällige Geheimtexte durch reinen Zufall erreichen. Der größere Durchlauf brachte außerdem überzeugendere falsche Fährten hervor, ein Zeichen, dass immer mehr Bücher nicht helfen würden. Die Notiz von damals hielt fest, das Problem brauche „eine gezielte Quelle“, keine breitere Suche."
   },
@@ -318,8 +313,8 @@
   },
   {
    "kind": "attr",
-   "en": "One planted German line, two scorers. In English alone it sinks into the pile; in seven languages it tops it. Wood&#x27;s best is still junk.",
-   "de": "Eine deutsche Testzeile, zwei Bewertungsprogramme: Nur englisch versinkt sie im Haufen, in sieben Sprachen liegt sie vorn. Woods Bestes bleibt Buchstabensalat."
+   "en": "One planted German line, two scorers. In English alone it sinks into the pile; in seven languages it tops it. The later Gutenberg follow-up still found no reading.",
+   "de": "Ein eingesetzter deutscher Testsatz, zwei Bewertungen: Auf Englisch geht er unter, mit sieben Sprachen steht er oben. Auch die spätere Gutenberg-Kontrolle fand keine Lesart."
   },
   {
    "kind": "p",
@@ -333,6 +328,11 @@
   },
   {
    "kind": "p",
+   "en": "The change was in what the search could recognize. A quick comparison of four-letter patterns now drew on seven languages. The strongest candidates were then split into dictionary words, giving common words more weight and charging a small penalty for every word and language switch.",
+   "de": "Die Änderung betraf das, was die Suche erkennen konnte. Ein schneller Vergleich von Vierbuchstabenmustern berücksichtigte nun sieben Sprachen. Die stärksten Kandidaten wurden anschließend in Wörter zerlegt. Häufige Wörter erhielten mehr Gewicht; jedes Wort und jeder Sprachwechsel kosteten einen kleinen Abzug."
+  },
+  {
+   "kind": "p",
    "en": "On the evening of 3 October 2026, we revisited one of Wood's clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written \"in several different languages\". The September search had noted the claim but scored candidates as English only.",
    "de": "Am Abend des 3.&nbsp;Oktober 2026 griffen wir einen von Woods Hinweisen erneut auf. Schmehs Beitrag von 2017 gibt Woods Angabe wieder, der Klartext sei „in mehreren verschiedenen Sprachen“ geschrieben. Die Suche im September hatte das notiert, die Kandidaten aber nur als Englisch bewertet."
   },
@@ -343,8 +343,18 @@
   },
   {
    "kind": "p",
-   "en": "Wood's best over the same 3,847 books, seven languages: <b>−1.313</b> · null ceiling −1.207",
-   "de": "Woods bestes Ergebnis über dieselben 3.847 Bücher, sieben Sprachen: <b>−1,313</b> · Zufallsgrenze −1,207"
+   "en": "Later Gutenberg follow-up, seven languages: <b>−1.313</b> · null ceiling −1.207",
+   "de": "Spätere Gutenberg-Kontrolle, sieben Sprachen: <b>−1,313</b> · höchste Zufallswertung −1,207"
+  },
+  {
+   "kind": "p",
+   "en": "A pilot on 786 books tested this approach before the Bible run. The full Gutenberg follow-up finished after the hit: one book failed to download again, leaving 3,847 of the earlier 3,848. It still found no readable message. The chart includes that later check.",
+   "de": "Ein Probelauf mit 786 Büchern prüfte diesen Ansatz vor der Bibelsuche. Die vollständige Gutenberg-Kontrolle wurde erst nach dem Treffer abgeschlossen: Ein Buch ließ sich nicht erneut herunterladen, sodass 3.847 der zuvor 3.848 übrig blieben. Auch dabei fand sich keine lesbare Botschaft. Die Grafik zeigt diese spätere Kontrolle mit."
+  },
+  {
+   "kind": "p",
+   "en": "Four-letter patterns were a practical default, not a proven optimum. This search tested complete book keys, rather than gradually repairing a guessed key. The <a href=\"https://github.com/creilly11235/wood-cryptogram-1950#scoring\">repository explains the scoring choices and lists the input texts</a>, including the gaps in the original corpus records.",
+   "de": "Vierbuchstabenmuster waren eine praktische Vorgabe, kein nachgewiesenes Optimum. Die Suche prüfte vollständige Buchschlüssel, statt einen geratenen Schlüssel schrittweise zu verbessern. Das <a href=\"https://github.com/creilly11235/wood-cryptogram-1950#scoring\">Repository erläutert die Bewertungsregeln und nennt die Eingabetexte</a>, einschließlich der Lücken in den ursprünglichen Korpusaufzeichnungen."
   },
   {
    "kind": "attr",
@@ -533,8 +543,8 @@
   },
   {
    "kind": "p",
-   "en": "A second AI, GPT-6 Astra, reviewed the claim independently through OpenAI's Codex tool and returned \"confirmed with reservations\". Its reservations were the failed automatic test, the edition, and priority. As part of that review it wrote its own decryption and matched the script letter for letter.",
-   "de": "Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig über OpenAIs Werkzeug Codex und kam zu „bestätigt mit Vorbehalten“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Ausgabe der Bibel und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung, die Buchstabe für Buchstabe mit dem Skript übereinstimmte."
+   "en": "A second AI, GPT-6 Astra, reviewed the claim independently through OpenAI's Codex tool and returned \"confirmed with reservations\". Its reservations concerned the failed automatic test, the chance estimate, the physical edition and priority. As part of that review it wrote its own decryption and matched the script letter for letter.",
+   "de": "Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig mit OpenAIs Codex-Werkzeug und urteilte „mit Vorbehalten bestätigt“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Zufallsschätzung, die konkrete Ausgabe und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung und reproduzierte das Ergebnis Buchstabe für Buchstabe."
   },
   {
    "kind": "h3",
@@ -560,6 +570,31 @@
    "kind": "attr",
    "en": "Could it be luck? Of 500 random signatures in place of TEW, 7 match, all word salad. TEW matches once, on this message.",
    "de": "Zufall? Von 500 zufälligen Signaturen statt TEW passen 7, alles Wortsalat. TEW passt genau einmal, bei dieser Botschaft."
+  },
+  {
+   "kind": "h3",
+   "en": "What the result establishes",
+   "de": "Was das Ergebnis belegt"
+  },
+  {
+   "kind": "p",
+   "en": "The reading is exact: all 21 letters decrypt and re-encrypt correctly. Astra reproduced it independently, and Schmeh and Bean confirmed it. Three limits belong alongside that result.",
+   "de": "Die Lesart ist exakt: Alle 21 Buchstaben lassen sich korrekt entschlüsseln und wieder verschlüsseln. Astra reproduzierte dies unabhängig; Schmeh und Bean bestätigten die Lesart. Drei Grenzen gehören zu diesem Ergebnis."
+  },
+  {
+   "kind": "li",
+   "en": "The automatic acceptance rule failed. Recognizing Afrikaans and Wood’s initials was a human judgment after the search.",
+   "de": "Die automatische Annahmeregel wurde nicht erfüllt. Afrikaans und Woods Initialen zu erkennen, war ein menschliches Urteil nach der Suche."
+  },
+  {
+   "kind": "li",
+   "en": "The chance calculation gives a bound under particular assumptions, not a measured probability that the reading is wrong.",
+   "de": "Die Zufallsrechnung liefert eine Schranke unter bestimmten Annahmen, keine gemessene Wahrscheinlichkeit dafür, dass die Lesart falsch ist."
+  },
+  {
+   "kind": "li",
+   "en": "The wording matches the 1912 Luther text, but Wood’s physical edition is unknown. No earlier published solution was found; first-ever priority cannot be proved.",
+   "de": "Der Wortlaut entspricht dem Luthertext von 1912, doch Woods konkrete Ausgabe ist unbekannt. Eine frühere veröffentlichte Lösung wurde nicht gefunden; eine erstmalige Lösung lässt sich nicht beweisen."
   },
   {
    "kind": "h3",
@@ -677,14 +712,29 @@
    "de": "Ich habe die Society und ihr Archiv über die Lösung informiert und berichte hier, sobald eine Antwort kommt."
   },
   {
-   "kind": "attr",
-   "en": "Confirmed by Klaus Schmeh, 4 October 2026. Next, as Wood asked, the result goes to the Society for Psychical Research.",
-   "de": "Bestätigt von Klaus Schmeh, 4.&nbsp;Oktober 2026. Als Nächstes geht das Ergebnis, wie von Wood erbeten, an die Society for Psychical Research."
+   "kind": "h3",
+   "en": "Questions still open",
+   "de": "Offene Fragen"
   },
   {
    "kind": "p",
-   "en": "4 October 2026 · confirmed",
-   "de": "4.&nbsp;Oktober 2026 · bestätigt"
+   "en": "Schmeh has offered photographs of the SPR’s Wood file at Cambridge University Library; their retrieval and review are pending. They may help explain Wood’s connection to Afrikaans or identify the Bible he used. Neither is established by the decryption alone.",
+   "de": "Schmeh hat Fotografien der Wood-Akte der SPR in der Universitätsbibliothek Cambridge angeboten; Abruf und Auswertung stehen noch aus. Sie könnten Woods Verbindung zu Afrikaans erklären oder die benutzte Bibelausgabe erkennen lassen. Beides ergibt sich nicht allein aus der Entschlüsselung."
+  },
+  {
+   "kind": "p",
+   "en": "The Berger and Survival Research Foundation cryptograms mentioned in Schmeh’s post are a separate story. The Berger chapter located so far adds no evidence about Wood’s message.",
+   "de": "Die Kryptogramme von Berger und der Survival Research Foundation, die Schmeh in seinem Beitrag erwähnt, sind eine eigene Geschichte. Das bisher gefundene Berger-Kapitel liefert keine weiteren Belege zu Woods Botschaft."
+  },
+  {
+   "kind": "attr",
+   "en": "Confirmed by Klaus Schmeh on 4 October 2026 and Richard Bean on 6 October. The search records and remaining questions are public.",
+   "de": "Bestätigt von Klaus Schmeh am 4. Oktober 2026 und Richard Bean am 6. Oktober. Die Suchaufzeichnungen und offenen Fragen sind öffentlich."
+  },
+  {
+   "kind": "p",
+   "en": "4–6 October 2026 · confirmed",
+   "de": "4.–6. Oktober 2026 · bestätigt"
   },
   {
    "kind": "h3",
@@ -705,6 +755,16 @@
    "kind": "th",
    "en": "What happened",
    "de": "Was geschah"
+  },
+  {
+   "kind": "td",
+   "en": "6 Oct 2026",
+   "de": "6. Okt. 2026"
+  },
+  {
+   "kind": "td",
+   "en": "Richard Bean confirms the reading and asks for fuller documentation of the input texts and scoring",
+   "de": "Richard Bean bestätigt die Lesart und bittet um eine ausführlichere Dokumentation der Eingabetexte und Bewertung"
   },
   {
    "kind": "td",
@@ -765,6 +825,16 @@
    "kind": "td",
    "en": "Astra's review, checks against the 1948 and 1950 papers, and the 854-million-decryption luck test",
    "de": "Astras Gutachten, Abgleich mit den Artikeln von 1948 und 1950 und der Zufallstest mit 854 Millionen Entschlüsselungen"
+  },
+  {
+   "kind": "td",
+   "en": "3 Oct 2026, 10:11 pm",
+   "de": "3. Okt. 2026, 22:11 Uhr"
+  },
+  {
+   "kind": "td",
+   "en": "The full multilingual Gutenberg follow-up is recorded as negative",
+   "de": "Die vollständige mehrsprachige Gutenberg-Kontrolle wird mit negativem Ergebnis dokumentiert"
   },
   {
    "kind": "td",
@@ -853,13 +923,23 @@
   },
   {
    "kind": "p",
-   "en": "The project was run by Colin Reilly. Robert Thouless designed the method. Richard Bean's 2019 solve of Thouless's Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer. Claude (Anthropic) wrote the search code, including the earlier September searches, and found the key; GPT-6 Astra (OpenAI) checked it independently.",
-   "de": "Geleitet wurde das Projekt von Colin Reilly. Robert Thouless entwarf das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B aus dem Jahr 2019, gefunden durch eine computergestützte Suche in Büchern, zeigte genau, wie es funktioniert, und leistete Pionierarbeit für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung. Claude (Anthropic) schrieb den Suchcode, auch für die früheren Suchen im September, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig."
+   "en": "The project was run by Colin Reilly. Robert Thouless designed the method. Richard Bean's 2019 solve of Thouless's Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer; Richard Bean also confirmed the reading and helped improve this account of the search. Claude (Anthropic) wrote the search code, including the earlier September searches, and found the key; GPT-6 Astra (OpenAI) checked it independently.",
+   "de": "Colin Reilly leitete das Projekt. Robert Thouless entwickelte das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B im Jahr 2019, gefunden durch eine Computersuche in Büchern, zeigte genau, wie es funktioniert, und war Vorbild für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung; Richard Bean bestätigte ebenfalls die Lesart und half, diese Darstellung der Suche zu verbessern. Claude (Anthropic) schrieb den Suchcode, einschließlich der früheren September-Suchen, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig."
   },
   {
    "kind": "h3",
    "en": "Sources",
    "de": "Quellen"
+  },
+  {
+   "kind": "li",
+   "en": "Richard Bean, <a href=\"https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf\"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020",
+   "de": "Richard Bean, <a href=\"https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf\"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020"
+  },
+  {
+   "kind": "li",
+   "en": "Richard Bean and Louie Helm, <a href=\"https://richardbean.id.au/papers/playfair_histocrypt2025.pdf\"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025",
+   "de": "Richard Bean und Louie Helm, <a href=\"https://richardbean.id.au/papers/playfair_histocrypt2025.pdf\"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025"
   },
   {
    "kind": "li",
@@ -910,6 +990,16 @@
    "kind": "p",
    "en": "Visits counted by <a href=\"https://www.goatcounter.com/\">GoatCounter</a>, no cookies. The number updates every few hours.",
    "de": "Besuche gezählt mit <a href=\"https://www.goatcounter.com/\">GoatCounter</a>, ohne Cookies. Die Zahl wird alle paar Stunden aktualisiert."
+  },
+  {
+   "kind": "meta",
+   "en": "Solving the 1950 cipher meant to test life after death",
+   "de": "Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte"
+  },
+  {
+   "kind": "h1",
+   "en": "Solving the 1950 cipher meant to test life after death",
+   "de": "Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte"
   }
  ],
  "js": [

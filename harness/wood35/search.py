@@ -1,9 +1,9 @@
-"""Round 52 search engine: rank every registered (file, offset, variant) key
+"""the English-only search (17 September 2026) search engine: rank every registered (file, offset, variant) key
 hypothesis against a 21-letter ciphertext.
 
-Two stages, as registered in PREREG_R52.md section 4: stage 1 ranks all K rows
+Two stages, as registered in PREREG.md section 4: stage 1 ranks all K rows
 by the 5-gram term alone, stage 2 rescores the top FUNNEL under the full
-Round 51 objective.
+English combined objective.
 """
 import os, sys, json, math
 import numpy as np

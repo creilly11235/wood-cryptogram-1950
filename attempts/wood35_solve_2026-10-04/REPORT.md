@@ -1,6 +1,6 @@
 # #35 T. E. Wood's cryptogram (1950): decipherment, 4 October 2026
 
-**Confirmed by Klaus Schmeh on 4 October 2026.**
+**Confirmed by Klaus Schmeh on 4 October 2026 and Richard Bean on 6 October 2026.**
 
 **Status before confirmation, stated precisely (revised after Astra's independent review,
 `notes/astra/REVIEW_WOOD35.md`, verdict CONFIRMED WITH RESERVATIONS):**
@@ -107,9 +107,9 @@ Method: Robert Thouless (1948); its exact convention recovered by Richard Bean (
 Ciphertext and Wood's statements: Klaus Schmeh (Cipherbrain #35; *Nicht zu knacken*).
 The multilingual-plaintext reading of Schmeh's note and the Bible-tier search are this round's.
 
-## Addendum: the pre-registered full-corpus arm (Round 52 key class, multilingual scoring)
+## Addendum: the pre-registered full-corpus arm (the English-only search (17 September 2026) key class, multilingual scoring)
 
-Rebuilt Round 52 amendment-1 corpus: 3,847 of 3,848 books (one fetch failure), 14 languages,
+Rebuilt the English-only search (17 September 2026) amendment-1 corpus: 3,847 of 3,848 books (one fetch failure), 14 languages,
 K = 400,294,934 hypotheses (variants D and P). Gate **40/40** plants recovered at rank 1,
 plant floor -1.081, null ceiling -1.207 (20 nulls). Wood's best decryption here is junk
 ("OFERANTREFUSAIDAUTIOR", -1.313, below the null ceiling); the literal sum-mod-26 row is junk
@@ -162,3 +162,81 @@ random control signatures to measure chance:
   1.4% of signatures over this entire search, but none of those chance hits is grammatical or
   meaningful; the Wood decryption is the unique hit for his own initials and is coherent
   German and Afrikaans, at the most natural passage start in an accessible non-English book.
+
+## Addendum — 6 October 2026: confirmation and documentation review
+
+Richard Bean confirmed the reading on 6 October. His review asked what was
+searched before the Bibles, what trained the English scorer, and why those
+n-gram orders were used. The search is not being reopened. This addendum names
+the available inputs and states the missing provenance rather than filling gaps
+with a later reconstruction.
+
+Checking code and saved outputs corrected three descriptions: the September
+book engine used English **5-grams plus word segmentation**; the full multilingual
+Gutenberg result was recorded **after** the Bible hit; and the one-book refetch
+failure belongs to that October rebuild, not to the September expansion. The
+claim of a verified Gutenberg-and-Wikipedia training mixture is unsupported by
+the retained inputs. The committed passage snapshot contains 173 blocks, while
+the original result's “about 140” was only an estimate.
+
+Lessons for future runs: name and hash every corpus before scoring; justify
+n-gram order against the key class's error model; build lexicons from the
+author's known languages first; decide how initials and signatures will score
+before the run. Keep internal session labels out of public accounts.
+
+The complete scoring description and input-data inventory are in [the README](../../README.md#scoring).
+
+## What was tried, and when
+
+Dates below are UTC. They describe this project's recorded searches, not every
+earlier attempt by other researchers.
+
+1. **17 September 2026 — 129 published texts.** English scoring over 28,602,798
+   valid book/offset/variant keys; 97/100 planted messages recovered, but Wood's
+   best was unreadable and below the null ceiling. Alternative arithmetic and a
+   separate nine-file Tatoeba sentence-key sweep were also negative.
+2. **17 September — expanded Gutenberg search.** Added 3,848 books in 14 languages
+   to those 129 entries: 3,977 file entries and 428,787,544 valid starts. English
+   scoring again gave junk; 12 of 100 random ciphertexts scored higher. The later
+   October rebuild scored **3,847 of the 3,848 listed books**, because one refetch
+   failed. These are different runs, not two counts of the same run.
+3. **4 October, before 04:38 — targeted passages and a multilingual pilot.**
+   Famous non-English passages, including the church wording of the German
+   Lord's Prayer, were negative. The seven-language pipeline recovered all eight
+   plants in a 786-book pilot; Wood was not scored in that pilot.
+4. **4 October, 04:41–04:44 — Bible tier.** The amendment adding 19 Latin-script
+   Bibles was committed at 04:41:37; the saved result is timed 04:44:29. The
+   German Bible's prayer came first in the ordinary-arithmetic row, over a
+   bookkeeping key count of 26,730,018. Manual review recognized the reading.
+5. **4 October, recorded at 05:11 — full multilingual Gutenberg follow-up.**
+   The rebuilt corpus gave junk (best −1.313, null ceiling −1.207; 40/40 plants
+   recovered). Its result was recorded **after the Bible hit**, during review,
+   although that arm had been registered beforehand. It was not a further
+   unsuccessful search completed before trying Bibles.
+
+The September results are in `harness/wood35/RESULT.md`; the targeted,
+pilot and Bible arms in `harness/wood35t/RESULT.md`; the solve and later controls
+in `attempts/wood35_solve_2026-10-04/REPORT.md`. The historical result files retain
+their original verdicts; a negative there is a result for that input and scorer,
+not a claim that Wood remained unsolved after 4 October.
+
+## What this does and does not establish
+
+**The cryptogram is solved:** the prayer decrypts all 21 letters and re-encrypts
+them exactly. Klaus Schmeh confirmed the reading on 4 October 2026, Richard Bean
+on 6 October, and Astra reproduced it independently. The reading is
+“Hier bin ich. Totsiens. T.E.W.”
+
+- **The pre-registered automatic bar was not met.** The result beat the null
+  ceiling but missed the plant floor. The absence of Afrikaans and initials in
+  the scorer explains its awkward split; that explanation and the acceptance of
+  the reading are human judgments made after the hit.
+- **The chance estimate is a bound, not a calibrated p-value.** Astra's bound
+  assumes uniform random letters and a specified dictionary/signature rule,
+  chosen after seeing the message. The later 1.4% control-signature result is
+  also not the probability that this meaningful reading is wrong.
+- **Wording and priority have limits.** The successful wording matches the
+  1912 Luther text, but Wood's physical Bible edition is unknown. No earlier
+  published solution was found; that does not prove first-ever priority.
+
+The full independent assessment is `notes/astra/REVIEW_WOOD35.md`.

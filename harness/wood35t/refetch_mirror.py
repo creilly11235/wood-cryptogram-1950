@@ -1,4 +1,4 @@
-"""Rebuild the Round 52 amendment-1 key corpus (same book list, same tokenisation via
+"""Rebuild the September English-only search amendment-1 key corpus (same book list, same tokenisation via
 harness/wood35/w35.py) into local shards, for multilingual re-scoring."""
 import os, sys, json, threading, queue
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -7,7 +7,7 @@ os.environ.setdefault('W35_SHARDS', '.cache/wood35/w35_shards')
 import fetch_books as fb
 OUT = os.environ['W35_SHARDS']; fb.OUT = OUT
 os.makedirs(OUT, exist_ok=True)
-rows = [json.loads(l) for l in open(os.path.join(HERE, '..', 'wood35', 'fetch_r52.jsonl'))]
+rows = [json.loads(l) for l in open(os.path.join(HERE, '..', 'wood35', 'fetch.jsonl'))]
 todo = []; seen = set()
 import random
 for r in rows:

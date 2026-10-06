@@ -1,4 +1,4 @@
-"""Round 52: #35 T. E. Wood's cryptogram, book-derived word-sum running key.
+"""the English-only search (17 September 2026): #35 T. E. Wood's cryptogram, book-derived word-sum running key.
 
 The mechanism is Wood's own declared one ("same method as Thouless"), already
 reproduced exactly on the solved Thouless Message B by

@@ -13,7 +13,7 @@
 <meta property="og:title" content="Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte">
 <meta property="og:description" content="Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch.">
 <meta property="og:url" content="https://creilly11235.github.io/wood-cryptogram-1950/de/">
-<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=2">
+<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“">
@@ -23,71 +23,76 @@
 <meta property="article:author" content="Colin Reilly">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap">
 <style>
-/* Layout, after r2d3.us: the article scrolls down a narrow column; one graphic stays pinned beside it, one per chapter.
-   The journal-style serif and centred passage sit on cool paper, with charcoal text and ink-blue chapter accents.
-   Teal and red distinguish chart results. */
+/* One serif for the article, one monospace for cipher data. Headings share the
+   article's ink; blue, teal and red retain their meaning in the graphics.
+   Each chapter keeps its own pinned graphic beside the reading column. */
 :root{
-  --room:#f7f8fa; --room-2:#eef1f5; --veil:#e2e7ed; --veil-2:#c9d2dd;
-  --bone:#202a35; --bone-2:#526171; --bone-3:#637486; --ink:#f7f8fa;
-  --candle:#255d88; --candle-soft:rgba(37,93,136,.12); --ember:#b3423c;
-  --dot-g:#8292a5; --dot-p:#197a70; --dot-b:#376d9b; --dot-v:#b3423c; --dot-s:#c5ced8; --dot-tew:#202a35;
-  --de:#255d88; --af:#197a70; --sig:#202a35; --label-bg:rgba(247,248,250,.95);
-  /* type scale: two display sizes, body, one note style, one label style, one data style */
-  --t-note:400 14.5px/1.5 var(--body); --t-label:400 12px/1.4 var(--body); --t-data:13px/1.5 var(--mono);
-  --display:"Libre Caslon Display","Libre Caslon Text",Georgia,serif; --body:"Libre Caslon Text",Georgia,"Times New Roman",serif; --mono:"Courier Prime","Courier New",Courier,monospace;
+  --room:#fafbfc; --room-2:#f0f2f4; --veil:#e3e6e9; --veil-2:#d3d9df;
+  --bone:#282e35; --bone-2:#5b646e; --bone-3:var(--bone-2); --ink:var(--room);
+  --candle:#315f7d; --candle-soft:rgba(49,95,125,.10); --ember:#a64642;
+  --dot-g:#8d9ba8; --dot-p:#26796c; --dot-b:var(--candle); --dot-v:var(--ember); --dot-s:#c6ced6; --dot-tew:var(--bone);
+  --de:var(--candle); --af:var(--dot-p); --sig:var(--bone); --label-bg:rgba(250,251,252,.96);
+  --body:"Libre Caslon Text",Georgia,"Times New Roman",serif; --mono:"Courier Prime","Courier New",Courier,monospace;
+  --t-body:400 1.0625rem/1.75 var(--body);
+  --t-note:400 .875rem/1.6 var(--body); --t-data:400 .8125rem/1.5 var(--mono);
+  --t-heading:400 clamp(1.5rem,2.6vw,2rem)/1.3 var(--body);
   color-scheme:light;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;background:var(--room)}
-body{margin:0;background:var(--room);color:var(--bone);font:17.5px/1.65 var(--body)}
+body{margin:0;background:var(--room);color:var(--bone);font:var(--t-body)}
 a{color:var(--bone);text-decoration-color:var(--bone-3);text-decoration-thickness:1px;text-underline-offset:.18em}
 a:hover{color:var(--candle);text-decoration-color:var(--candle)}
+a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher,code{font-family:var(--mono);font-size:.9em}
 /* hero: set like the opening of a Proceedings article */
-.hero{max-width:760px;margin:0 auto;padding-block:64px 8px;padding-inline:20px;text-align:center}
+.hero{max-width:780px;margin:0 auto;padding-block:64px 16px;padding-inline:24px;text-align:center}
 .hero .langhint{font:var(--t-note);margin:-28px 0 22px}
 :root[lang="de"] body{-webkit-hyphens:auto;hyphens:auto}
 :root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3,:root[lang="de"] .gbar .ct{-webkit-hyphens:manual;hyphens:manual}
-.hero .kick{font:var(--t-note);color:var(--bone-3);margin:0 0 26px}
-.hero h1{font:400 clamp(2.3rem,6.4vw,4rem)/1.04 var(--display);margin:0 auto;text-wrap:balance;max-width:15ch}
-.hero .byline{font:var(--t-label);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2);margin:22px 0 0}
-.hero .byline span{display:block;margin-top:6px;font:var(--t-note);letter-spacing:0;text-transform:none;color:var(--bone-3)}
-.cipher-row{--tw:clamp(16px,calc((100vw - 100px) / 15),30px);margin:40px 0 0;display:flex;flex-direction:column;align-items:center}
+.hero .kick{font:var(--t-note);color:var(--bone-2);margin:0 0 24px}
+.hero h1{font:400 clamp(2rem,4.2vw,3rem)/1.2 var(--body);margin:0 auto;text-wrap:balance;max-width:22ch;letter-spacing:-.025em}
+.hero .byline{font:var(--t-note);color:var(--bone-2);margin:24px 0 0}
+.hero .byline span{display:block;margin-top:6px}
+.cipher-row{--tw:28px;margin:40px 0 0;display:flex;flex-direction:column;align-items:center}
 .cipher-row .intro{font:var(--t-note);color:var(--bone-2);margin:0 0 14px}
-.cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 10px}
+.cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 12px}
 .cipher-row .grp,.cipher-row .tail{display:flex;gap:3px}
-.cipher-row .tail{gap:10px}
-.cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.2);display:grid;place-items:center;padding-top:.14em;background:var(--bone);color:var(--ink);font:700 calc(var(--tw) * .6)/1 var(--mono);border-radius:1px}
-.cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:46ch}
-.hero .answer,.hero .lede,.contents{max-width:620px;margin-inline:auto;text-align:left}
-.hero .answer{margin-top:44px;padding-top:28px;border-top:1px solid var(--veil-2);color:var(--bone)}
+.cipher-row .tail{gap:12px}
+.cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.25);font-size:calc(var(--tw) * .65);background:var(--room-2);color:var(--bone)}
+.cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:58ch;text-wrap:pretty}
+.hero .answer,.hero .lede,.contents{max-width:640px;margin-inline:auto;text-align:left}
+.hero .answer{margin-top:40px;padding-top:28px;border-top:1px solid var(--veil-2)}
 .hero .answer p{margin:0 0 .8em}
-.hero .answer .sv{font:700 12px/1.4 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--candle);margin-bottom:12px}
-.hero .answer .answer-message{font:700 clamp(1.3rem,3vw,1.65rem)/1.4 var(--body);text-wrap:balance;margin-bottom:.5em}
-.hero .answer .answer-meaning{color:var(--bone-2)}
+.hero .answer .sv{font:var(--t-note);color:var(--bone-2);margin-bottom:8px}
+.hero .answer .answer-message{font:var(--t-heading);text-wrap:balance;margin-bottom:16px}
+.hero .answer .answer-meaning{color:var(--bone)}
 .hero .answer .answer-status{font:var(--t-note);color:var(--bone-2);margin-top:18px}
-.hero .lede{color:var(--bone-2);margin-top:28px}
+.hero .lede{margin-top:28px}
 .contents{margin-top:32px;padding-block:20px;border-block:1px solid var(--veil-2)}
-.contents ol{display:grid;grid-template-columns:1fr;gap:8px;margin:0;padding-left:1.7em;font:15px/1.5 var(--body);list-style-type:upper-roman}
-.contents li::marker{color:var(--candle);font:var(--t-data)}
+.contents ol{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;margin:0;padding-left:1.7em;font:var(--t-note);list-style-type:upper-roman}
+.contents li::marker{color:var(--bone-2)}
 .contents a{text-decoration:none}
 .contents a:hover{text-decoration:underline}
 .contents a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
-.scrolly{max-width:1140px;margin:0 auto;padding-inline:20px;counter-reset:chapter}
-.chapter{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:0 52px;align-items:start;counter-increment:chapter}
-.chapter+.chapter{border-top:2px solid var(--veil-2)}
+.scrolly{max-width:1184px;margin:0 auto;padding-inline:24px;counter-reset:chapter}
+.chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start;counter-increment:chapter}
+.chapter+.chapter{border-top:1px solid var(--veil-2)}
 .graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
 .gbody{display:flex;flex-direction:column;flex:1;min-height:0}
 .gbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--veil)}
-.gbar .ct{font:var(--t-label);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.gbar .ct{font:var(--t-note);color:var(--bone-2);min-width:0}
 .replay:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
-.replay{font:var(--t-data);line-height:1;padding:7px 10px;border:1px solid var(--veil-2);background:transparent;color:var(--bone-2);border-radius:1px;cursor:pointer;white-space:nowrap}
+.replay{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin-top:8px;padding:8px 14px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:2px;cursor:pointer;max-width:100%}
 .replay:hover{border-color:var(--candle);color:var(--bone)}
 .tiles{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;max-width:680px}
-.t{position:relative;min-width:0;aspect-ratio:1/1.2;display:grid;place-items:center;padding-top:.14em;background:var(--room-2);border:1px solid var(--veil-2);font:700 clamp(11px,1.7vw,20px)/1 var(--mono);color:var(--bone);border-radius:1px;transition:background .45s,color .45s,border-color .45s,box-shadow .45s}
+.comparison-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:8px;font:var(--t-note);color:var(--bone-2)}
+.comparison-heading:first-child{padding-top:0}
+.comparison-count{font:var(--t-data);white-space:nowrap}
+.t{position:relative;min-width:0;aspect-ratio:1/1.2;display:grid;place-items:center;padding-top:.14em;background:var(--room-2);border:1px solid var(--veil-2);font:400 clamp(11px,1.7vw,20px)/1 var(--mono);color:var(--bone);border-radius:1px;transition:background .45s,color .45s,border-color .45s,box-shadow .45s}
 .t.lit{background:var(--bone);border-color:var(--bone);color:var(--ink)}
 .t.de{border-bottom:3px solid var(--de)} .t.af{border-bottom:3px solid var(--af)} .t.sig{border-bottom:3px solid var(--bone-3)}
 .t.dim{color:var(--bone-3)} .t.junk{color:var(--bone-2);font-weight:400} .t.bad{color:var(--ember);border-color:var(--ember)}
@@ -96,21 +101,21 @@ a:hover{color:var(--candle);text-decoration-color:var(--candle)}
 .sub span{min-width:0;text-align:center;font:clamp(8px,1.1vw,11px)/1.2 var(--mono);color:var(--bone-3);overflow:hidden;white-space:nowrap;transition:color .5s}
 .sub span.on{color:var(--candle)}
 .gcap{display:flex;justify-content:space-between;gap:12px;font:var(--t-note);color:var(--bone-2);margin:10px 0 2px;min-height:1.4em;max-width:680px}
-.gcap b{font:700 13px/1.5 var(--mono);color:var(--bone)}
+.gcap b{font:var(--t-data);color:var(--bone)}
 canvas{flex:1;width:100%;min-height:0;display:block}
-.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font:var(--t-data);color:var(--bone-2);margin-top:4px;min-height:1.4em}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font:var(--t-note);color:var(--bone-2);margin-top:8px;min-height:1.4em}
 .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 .text{min-width:0}
 .beats,.beatcap,.progress{display:none}
 /* article column */
-.text{padding-block:10vh 14vh}
-.chapter:first-child .text{padding-top:12vh}
-.step{min-height:58vh;padding:0 0 10vh;scroll-margin-top:24px}
-.step+.step{border-top:1px solid var(--veil-2);padding-top:clamp(32px,6vh,64px)}
-.eyebrow{font:700 11px/1.5 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--bone-2);margin:0 0 12px}
-.chapter .text>.step:first-child .eyebrow::before{content:counter(chapter,upper-roman) " \00b7  ";color:var(--candle);font-family:var(--mono);letter-spacing:.04em}
-.step h2{font:400 clamp(1.9rem,4vw,2.5rem)/1.12 var(--display);color:var(--candle);margin:0 0 .55em;text-wrap:balance}
-.step h3{font:700 19px/1.4 var(--body);color:var(--bone);margin:1.8em 0 .65em;text-wrap:balance}
+.text{padding-block:80px 96px}
+.chapter:first-child .text{padding-top:80px}
+.step{min-height:52vh;padding:0 0 64px;scroll-margin-top:32px}
+.step+.step{padding-top:24px}
+.eyebrow{font:var(--t-note);color:var(--bone-2);margin:0 0 12px}
+.chapter .text>.step:first-child .eyebrow::before{content:counter(chapter,upper-roman) " \00b7  "}
+.step h2{font:var(--t-heading);color:var(--bone);margin:0 0 20px;text-wrap:balance;letter-spacing:-.015em}
+.step h3{font:700 1em/1.5 var(--body);color:var(--bone);margin:1.8em 0 .75em;text-wrap:balance}
 .step>h3:first-child{margin-top:0}
 .step p,.step li{margin:0 0 1em}
 .step ul,.step ol{padding-left:1.3em;margin:0 0 1em}
@@ -121,10 +126,9 @@ canvas{flex:1;width:100%;min-height:0;display:block}
 .step .check-list h3{margin:0 0 .55em}
 .step .check-list p{margin:0}
 .step strong,.step b{font-weight:700}
-.step em{color:var(--bone-2)}
-.step .fig{font:var(--t-data);color:var(--bone-2);border-top:1px solid var(--veil-2);border-bottom:1px solid var(--veil-2);padding:9px 0;margin:0 0 1.1em}
+.step .fig{font:var(--t-note);color:var(--bone-2);margin:1.5em 0}
 .step .fig b{color:var(--bone);font-weight:700}
-.quote{color:var(--bone);margin:1.5em 0;padding-left:1em;border-left:2px solid var(--candle)}
+.quote{color:var(--bone);margin:1.5em 0;padding-left:1em;border-left:2px solid var(--veil-2)}
 .quote small{display:block;font:var(--t-note);color:var(--bone-2);margin-top:8px}
 figure{margin:1.4em 0}
 figure img{width:100%;height:auto;border:0;border-radius:1px;background:#fff}
@@ -139,33 +143,36 @@ html.lb-open{overflow:hidden;scrollbar-gutter:stable}
 .lb .stage.drag{cursor:grabbing}
 .lb .stage img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;background:#fff;user-select:none;-webkit-user-select:none;-webkit-user-drag:none}
 .lb .bar{position:absolute;top:0;right:0;display:flex;gap:6px;padding:12px 16px}
-.lb .bar button{font:15px/1 var(--mono);width:38px;height:38px;border:1px solid var(--veil-2);border-radius:1px;background:var(--room-2);color:var(--bone);cursor:pointer}
+.lb .bar button{font:20px/1 var(--body);width:44px;height:44px;border:1px solid var(--veil-2);border-radius:2px;background:var(--room-2);color:var(--bone);cursor:pointer}
 .lb .bar button:hover{border-color:var(--candle)}
 .lb .bar button:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
-.lb .hint{position:absolute;top:0;left:0;margin:0;padding:22px 16px;font:var(--t-label);color:var(--bone-3);pointer-events:none}
-.lb .cap{position:absolute;left:0;right:0;bottom:0;margin:0;padding:28px 16px calc(12px + env(safe-area-inset-bottom));font:var(--t-note);color:var(--bone-2);text-align:center;background:linear-gradient(transparent,rgba(247,248,250,.95) 40%);pointer-events:none}
+.lb .hint{position:absolute;top:0;left:0;margin:0;padding:22px 16px;font:var(--t-note);color:var(--bone-3);pointer-events:none}
+.lb .cap{position:absolute;left:0;right:0;bottom:0;margin:0;padding:28px 16px calc(12px + env(safe-area-inset-bottom));font:var(--t-note);color:var(--bone-2);text-align:center;background:linear-gradient(transparent,var(--label-bg) 40%);pointer-events:none}
 @media (max-width:600px){.lb .hint{display:none}}
 .table-wrap{overflow-x:auto;margin:0 0 1.2em}
 table{border-collapse:collapse;width:100%;font:var(--t-data);font-variant-numeric:tabular-nums}
-th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--veil);vertical-align:top}
-th{font:700 12.5px/1.5 var(--body);color:var(--bone-2);border-bottom:1px solid var(--veil-2)}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--veil);vertical-align:top}
+th{font:var(--t-note);color:var(--bone-2);border-bottom:1px solid var(--veil-2)}
 /* footer */
-footer{max-width:1140px;margin:0 auto;padding:28px 20px 64px;border-top:1px solid var(--veil);color:var(--bone-2);font:var(--t-note)}
+footer{max-width:1184px;margin:0 auto;padding:32px 24px 64px;border-top:1px solid var(--veil-2);color:var(--bone-2);font:var(--t-note)}
+footer>p{max-width:72ch}
 footer p{margin:0 0 .7em}
 .counter{display:inline-block;font:var(--t-data);line-height:1;letter-spacing:3px;padding:5px 8px 4px;border:1px solid var(--veil-2);border-radius:1px;background:var(--room-2);color:var(--bone)}
 .small{color:var(--bone-3)}
+@media (min-width:901px) and (max-width:1100px){
+  .chapter{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:0 40px}
+}
 @media (max-width:900px){
   /* phone: the chapter's text first, then the graphic alone, pinned for one screen per beat, then the next chapter */
-  body{font-size:17px}
-  .hero{padding-top:44px}
+  .hero{padding-top:40px}
   .chapter{display:flex;flex-direction:column}
   .chapter>*{width:100%;max-width:100%;min-width:0}
-  .chapter+.chapter{border-top:2px solid var(--veil-2)}
-  .text{order:1;padding-block:3vh 4vh}
-  .chapter:first-child .text{padding-top:3vh}
-  .step{min-height:0;padding:0 0 2em}
-  th,td{padding:6px 5px}
-  th{font-size:12.5px}
+  .chapter>.text{max-width:640px;margin-inline:auto}
+  .text{order:1;padding-block:40px 24px}
+  .chapter:first-child .text{padding-top:40px}
+  .step{min-height:0;padding:0 0 32px}
+  .step+.step{padding-top:16px}
+  th,td{padding:8px 4px}
   .graphic{order:2;height:100vh;height:100dvh;z-index:2;padding:12px 0 12px;border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
   .beats{order:3;display:block}
   html{scroll-snap-type:y proximity}
@@ -173,11 +180,26 @@ footer p{margin:0 0 .7em}
   .progress{display:flex;gap:5px;align-items:center;margin-left:auto}
   .progress i{width:5px;height:5px;border-radius:50%;background:var(--veil-2);transition:background .3s}
   .progress i.on{background:var(--candle)}
-  .beatcap{display:block;margin:10px 0 0;font:inherit;line-height:1.45;color:var(--bone);border-top:1px solid var(--veil);padding-top:10px;min-height:calc(4 * 1.45em + 11px)}
+  .beatcap{display:block;margin:12px 0 0;font:var(--t-note);color:var(--bone);border-top:1px solid var(--veil);padding-top:12px;min-height:calc(4 * 1.6em + 13px)}
   .gbar{margin-bottom:8px}
   .gcap{margin-top:6px;line-height:1.3;flex-wrap:wrap;justify-content:flex-start;gap:2px 14px}
-  .gcap span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .legend{font-size:12px;min-height:38px;align-content:flex-start}
+  .gcap span{max-width:100%;overflow-wrap:anywhere}
+  .legend{min-height:44px;align-content:flex-start}
+  .tiles,.sub{gap:2px}
+}
+@media (max-width:600px){
+  .cipher-row{--tw:clamp(20px,calc((100vw - 104px) / 11),26px)}
+  .cipher-row .line{width:100%;max-width:calc(11 * var(--tw) + 60px)}
+  .contents ol{grid-template-columns:1fr;gap:12px}
+}
+@media (max-width:360px){
+  .hero,.scrolly,footer{padding-inline:20px}
+}
+@media (max-width:900px) and (max-height:740px){
+  /* Dense comparisons need more room on short phones. Keep their text readable
+     and let the panel scroll before the page advances to the next beat. */
+  .gbody{overflow-y:auto;scrollbar-width:thin}
+  .gbody canvas{flex-shrink:0;min-height:180px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -196,14 +218,14 @@ footer p{margin:0 0 .7em}
       <div class="grp"><span class="t">X</span><span class="t">W</span><span class="t">A</span><span class="t">T</span><span class="t">B</span></div>
       <div class="tail"><div class="grp"><span class="t">O</span><span class="t">I</span><span class="t">Z</span><span class="t">V</span><span class="t">V</span></div><div class="grp"><span class="t">X</span></div></div>
     </div>
-    <figcaption>T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S.&nbsp;105. Einundzwanzig Buchstaben, kein Schlüssel.</figcaption>
+    <figcaption>T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S.&nbsp;105.</figcaption>
   </figure>
   <div class="answer">
 <p class="sv">Gelöst</p>
 <p class="answer-message" translate="no"><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</p>
 <p class="answer-meaning">Deutsch, Afrikaans für „auf Wiedersehen“ und Woods Initialen. Sie sollte erst nach seinem Tod gelesen werden.</p>
 <p>Der Schlüssel ist der Anfang des Vaterunsers in der Lutherbibel von 1912, verwendet nach Robert Thouless’ Wortsummenverfahren von 1948.</p>
-<p class="answer-status">Klaus Schmeh hat das Ergebnis am 4.&nbsp;Oktober 2026 <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">bestätigt</a>.</p>
+<p class="answer-status">Klaus Schmeh <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">bestätigte die Lösung</a> am 4. Oktober 2026; Richard Bean bestätigte die Lesart am 6. Oktober.</p>
 </div>
   <p class="lede">1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er versuchen, den Schlüssel über ein Medium zu übermitteln. Im Folgenden geht es darum, wie der Geheimtext entschlüsselt wurde, ohne mit den Toten in Kontakt zu treten.</p>
 <nav class="contents" aria-label="Abschnitte des Artikels">
@@ -296,13 +318,14 @@ footer p{margin:0 0 .7em}
 <p class="fig">Testbotschaften auf Rang 1: <b>97 von 100</b></p>
 </section>
 
-<section class="step" data-s="round52" data-cap="Als Englisch bewertet, ist Woods Bestes aus 429 Mio. Schlüsseln Buchstabensalat, und 12 von 100 zufälligen Geheimtexten sind besser.">
+<section class="step" data-s="englishResults" data-cap="Als Englisch bewertet, ist Woods Bestes aus 429 Mio. Schlüsseln Buchstabensalat, und 12 von 100 zufälligen Geheimtexten sind besser.">
 <h3>Ergebnisse der rein englischen Suche</h3>
+<p>Die Suche verglich zunächst Muster aus fünf Buchstaben und prüfte dann, wie gut sich die stärksten Kandidaten in englische Wörter zerlegen ließen. So wurden mögliche Lesarten geordnet, allerdings mit einer klaren Schwäche: Jede Lesart wurde als Englisch beurteilt.</p>
 <p>Doch die Suche nach Woods Botschaft blieb erfolglos. Das galt für diese 129 Bücher und ebenso für 3.977 Texte, darunter zusätzlich 3.848 Bücher von Project Gutenberg in 14 Sprachen (etwa 429 Millionen Kombinationen). Die beste Entschlüsselung schnitt schlechter ab als das, was zufällige Geheimtexte durch reinen Zufall erreichen. Der größere Durchlauf brachte außerdem überzeugendere falsche Fährten hervor, ein Zeichen, dass immer mehr Bücher nicht helfen würden. Die Notiz von damals hielt fest, das Problem brauche „eine gezielte Quelle“, keine breitere Suche.</p>
 <p class="fig">Bestes Ergebnis: <b>−13,94</b> · zufällige Geheimtexte erreichten −13,27<br>12 von 100 zufälligen Geheimtexten schlagen Woods bestes Ergebnis</p>
 </section>
   </div>
-  <div class="beats" aria-hidden="true"><div class="beat" data-s="trap"></div><div class="beat" data-s="shelves"></div><div class="beat" data-s="plants"></div><div class="beat" data-s="round52"></div></div>
+  <div class="beats" aria-hidden="true"><div class="beat" data-s="trap"></div><div class="beat" data-s="shelves"></div><div class="beat" data-s="plants"></div><div class="beat" data-s="englishResults"></div></div>
 </section>
 
 <section class="chapter" data-ch="3">
@@ -318,12 +341,15 @@ footer p{margin:0 0 .7em}
     </div>
   </div>
   <div class="text">
-<section class="step" data-s="idea" data-cap="Eine deutsche Testzeile, zwei Bewertungsprogramme: Nur englisch versinkt sie im Haufen, in sieben Sprachen liegt sie vorn. Woods Bestes bleibt Buchstabensalat." id="the-idea-that-cracked-it">
+<section class="step" data-s="idea" data-cap="Ein eingesetzter deutscher Testsatz, zwei Bewertungen: Auf Englisch geht er unter, mit sieben Sprachen steht er oben. Auch die spätere Gutenberg-Kontrolle fand keine Lesart." id="the-idea-that-cracked-it">
 <p class="eyebrow">3.&nbsp;Oktober 2026, abends</p>
 <h2>Suche in mehreren Sprachen</h2>
 <p>Am Abend des 3.&nbsp;Oktober 2026 griffen wir einen von Woods Hinweisen erneut auf. Schmehs Beitrag von 2017 gibt Woods Angabe wieder, der Klartext sei „in mehreren verschiedenen Sprachen“ geschrieben. Die Suche im September hatte das notiert, die Kandidaten aber nur als Englisch bewertet.</p>
 <p>Das ist wichtig, denn es kommt darauf an, wie eine Suche entscheidet, was als Treffer gilt. Sie entschlüsselt mit jedem möglichen Schlüssel und ordnet die Ergebnisse danach, wie sehr sie nach Sprache aussehen. Eine Botschaft, die vom Deutschen ins Afrikaans wechselt, wirkt auf ein rein englisches Bewertungsprogramm wie Kauderwelsch. Bewertet über sieben Sprachen, wobei die Sprache bei jedem beliebigen Wort wechseln darf, springt eine eingeschleuste deutsche Botschaft an die Spitze. Außerdem muss das richtige Buch in der Sammlung sein, und die deutsche Bibel gehörte nicht zu den Texten der früheren Durchläufe.</p>
-<p class="fig">Woods bestes Ergebnis über dieselben 3.847 Bücher, sieben Sprachen: <b>−1,313</b> · Zufallsgrenze −1,207</p>
+<p>Die Änderung betraf das, was die Suche erkennen konnte. Ein schneller Vergleich von Vierbuchstabenmustern berücksichtigte nun sieben Sprachen. Die stärksten Kandidaten wurden anschließend in Wörter zerlegt. Häufige Wörter erhielten mehr Gewicht; jedes Wort und jeder Sprachwechsel kosteten einen kleinen Abzug.</p>
+<p class="fig">Spätere Gutenberg-Kontrolle, sieben Sprachen: <b>−1,313</b> · höchste Zufallswertung −1,207</p>
+<p>Ein Probelauf mit 786 Büchern prüfte diesen Ansatz vor der Bibelsuche. Die vollständige Gutenberg-Kontrolle wurde erst nach dem Treffer abgeschlossen: Ein Buch ließ sich nicht erneut herunterladen, sodass 3.847 der zuvor 3.848 übrig blieben. Auch dabei fand sich keine lesbare Botschaft. Die Grafik zeigt diese spätere Kontrolle mit.</p>
+<p>Vierbuchstabenmuster waren eine praktische Vorgabe, kein nachgewiesenes Optimum. Die Suche prüfte vollständige Buchschlüssel, statt einen geratenen Schlüssel schrittweise zu verbessern. Das <a href="https://github.com/creilly11235/wood-cryptogram-1950#scoring">Repository erläutert die Bewertungsregeln und nennt die Eingabetexte</a>, einschließlich der Lücken in den ursprünglichen Korpusaufzeichnungen.</p>
 </section>
 
 <section class="step" data-s="church" data-cap="Liturgisch Vater unser: Buchstabensalat. Die Bibel sagt Unser Vater: andere Wörter, andere Reihenfolge, jeder Schlüsselbuchstabe ändert sich.">
@@ -563,7 +589,7 @@ footer p{margin:0 0 .7em}
 </li>
 <li>
 <h3>Unabhängige Prüfung</h3>
-<p>Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig über OpenAIs Werkzeug Codex und kam zu „bestätigt mit Vorbehalten“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Ausgabe der Bibel und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung, die Buchstabe für Buchstabe mit dem Skript übereinstimmte.</p>
+<p>Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig mit OpenAIs Codex-Werkzeug und urteilte „mit Vorbehalten bestätigt“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Zufallsschätzung, die konkrete Ausgabe und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung und reproduzierte das Ergebnis Buchstabe für Buchstabe.</p>
 </li>
 <li>
 <h3>Originalquellen</h3>
@@ -577,6 +603,9 @@ footer p{margin:0 0 .7em}
 </section>
 
 <section class="step" data-s="luck" data-cap="Zufall? Von 500 zufälligen Signaturen statt TEW passen 7, alles Wortsalat. TEW passt genau einmal, bei dieser Botschaft.">
+<h3>Was das Ergebnis belegt</h3>
+<p>Die Lesart ist exakt: Alle 21 Buchstaben lassen sich korrekt entschlüsseln und wieder verschlüsseln. Astra reproduzierte dies unabhängig; Schmeh und Bean bestätigten die Lesart. Drei Grenzen gehören zu diesem Ergebnis.</p>
+<ul><li>Die automatische Annahmeregel wurde nicht erfüllt. Afrikaans und Woods Initialen zu erkennen, war ein menschliches Urteil nach der Suche.</li><li>Die Zufallsrechnung liefert eine Schranke unter bestimmten Annahmen, keine gemessene Wahrscheinlichkeit dafür, dass die Lesart falsch ist.</li><li>Der Wortlaut entspricht dem Luthertext von 1912, doch Woods konkrete Ausgabe ist unbekannt. Eine frühere veröffentlichte Lösung wurde nicht gefunden; eine erstmalige Lösung lässt sich nicht beweisen.</li></ul>
 <h3>Zufallstreffer prüfen</h3>
 <p>Eine Nachuntersuchung führte rund 854 Millionen Probeentschlüsselungen über 3.847 Gutenberg-Bücher und 19 Bibeln durch, mit beiden Rechenvarianten, mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter von 3 bis 10 Buchstaben aus einer Wortliste zerlegen lassen, gefolgt von einer dreibuchstabigen Signatur.</p>
 <p>Mit TEW gab es genau einen Treffer, und das war diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW fanden 7 davon (1,4&nbsp;%) ebenfalls einen Treffer, und die Beispiele waren Wortsalat.</p>
@@ -622,10 +651,13 @@ footer p{margin:0 0 .7em}
 <h3>Die Society for Psychical Research informieren</h3>
 <p>Der Schlüssel stammt aus einer Suche in Büchern, nicht von einem Medium; über ein Leben nach dem Tod sagt die Lösung deshalb nichts, weder dafür noch dagegen. Was bleibt, ist Woods eigene Bitte. Er bat jeden, der seine Botschaft zu entschlüsseln versuchte, „das Ergebnis (auch ein negatives) der Society mitzuteilen“. Er versprach der Society „ausführlichere Angaben“ über sich sowie Fotografien von sich und seinem Haus und schrieb, seine Testamentsvollstrecker würden gebeten, ihr „die Umstände“ und das Datum seines Todes mitzuteilen. Falls diese Akte erhalten ist, verrät sie vielleicht, wann Wood starb und ob je ein Medium behauptete, von ihm gehört zu haben.</p>
 <p>Ich habe die Society und ihr Archiv über die Lösung informiert und berichte hier, sobald eine Antwort kommt.</p>
+<h3>Offene Fragen</h3>
+<p>Schmeh hat Fotografien der Wood-Akte der SPR in der Universitätsbibliothek Cambridge angeboten; Abruf und Auswertung stehen noch aus. Sie könnten Woods Verbindung zu Afrikaans erklären oder die benutzte Bibelausgabe erkennen lassen. Beides ergibt sich nicht allein aus der Entschlüsselung.</p>
+<p>Die Kryptogramme von Berger und der Survival Research Foundation, die Schmeh in seinem Beitrag erwähnt, sind eine eigene Geschichte. Das bisher gefundene Berger-Kapitel liefert keine weiteren Belege zu Woods Botschaft.</p>
 </section>
 
-<section class="step" data-s="confirmed" data-cap="Bestätigt von Klaus Schmeh, 4.&nbsp;Oktober 2026. Als Nächstes geht das Ergebnis, wie von Wood erbeten, an die Society for Psychical Research." id="timeline-and-credits">
-<p class="eyebrow">4.&nbsp;Oktober 2026 · bestätigt</p>
+<section class="step" data-s="confirmed" data-cap="Bestätigt von Klaus Schmeh am 4. Oktober 2026 und Richard Bean am 6. Oktober. Die Suchaufzeichnungen und offenen Fragen sind öffentlich." id="timeline-and-credits">
+<p class="eyebrow">4.–6. Oktober 2026 · bestätigt</p>
 <h3>Chronologie und Dank</h3>
 <p>Alle Zeiten in Pazifikzeit (PDT). Meist sind es Commit-Zeiten, die festhalten, wann ein Schritt gespeichert wurde.</p>
 <div class="table-wrap"><table>
@@ -636,6 +668,10 @@ footer p{margin:0 0 .7em}
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>6. Okt. 2026</td>
+<td>Richard Bean bestätigt die Lesart und bittet um eine ausführlichere Dokumentation der Eingabetexte und Bewertung</td>
+</tr>
 <tr>
 <td>4. Okt. 2026</td>
 <td>Schmeh verkündet die Lösung in seinem Blog, im Beitrag <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">„Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved“</a></td>
@@ -659,6 +695,10 @@ footer p{margin:0 0 .7em}
 <tr>
 <td>3. Okt. 2026, 22:06–22:43&nbsp;Uhr</td>
 <td>Astras Gutachten, Abgleich mit den Artikeln von 1948 und 1950 und der Zufallstest mit 854 Millionen Entschlüsselungen</td>
+</tr>
+<tr>
+<td>3. Okt. 2026, 22:11 Uhr</td>
+<td>Die vollständige mehrsprachige Gutenberg-Kontrolle wird mit negativem Ergebnis dokumentiert</td>
 </tr>
 <tr>
 <td>3. Okt. 2026, 21:44&nbsp;Uhr</td>
@@ -699,9 +739,11 @@ footer p{margin:0 0 .7em}
 </tbody>
 </table></div>
 <h3>Dank</h3>
-<p>Geleitet wurde das Projekt von Colin Reilly. Robert Thouless entwarf das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B aus dem Jahr 2019, gefunden durch eine computergestützte Suche in Büchern, zeigte genau, wie es funktioniert, und leistete Pionierarbeit für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung. Claude (Anthropic) schrieb den Suchcode, auch für die früheren Suchen im September, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig.</p>
+<p>Colin Reilly leitete das Projekt. Robert Thouless entwickelte das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B im Jahr 2019, gefunden durch eine Computersuche in Büchern, zeigte genau, wie es funktioniert, und war Vorbild für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung; Richard Bean bestätigte ebenfalls die Lesart und half, diese Darstellung der Suche zu verbessern. Claude (Anthropic) schrieb den Suchcode, einschließlich der früheren September-Suchen, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig.</p>
 <h3>Quellen</h3>
 <ul>
+<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020</li>
+<li>Richard Bean und Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025</li>
 <li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">„Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved“</a>, 4. Okt. 2026</li>
 <li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">„The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt“</a>, 17. Apr. 2017</li>
 <li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">„Richard Bean solves another Top 50 crypto mystery“</a>, 16. Aug. 2019</li>
@@ -730,18 +772,18 @@ const CT="FVAMINTKFXXWATBOIZVVX",PT="HIERBINICHTOTSIENSTEW";
 const KEY=[["Unser",77],["Vater",66],["in",23],["dem",22],["Himmel",60],["Dein",32],["Name",33],["werde",55],["geheiligt",82],["Reich",43],["komme",57],["Wille",61],["geschehe",60],["auf",28],["Erden",46],["wie",37],["im",22],["täglich",60],["Brot",55],["gib",18],["uns",54]];
 const L=i=>String.fromCharCode(65+((i%26)+26)%26);
 const KL=KEY.map(k=>L(k[1]-1));
-const JUNK=["UNTONEASACRISTEALSBYR","TGEHADREEKSSENTEASYBI","TSLAVINGWASROSESHBUZZ","DDOESHEBRIEKTOTHATKUX","NGSHALLSVARANINFATABU","EDAORIESHOROUGHMINUNH","VCOURHEMIDWASSORIMIAE"]; /* Round 52, 3,977 texts, English scoring: harness/wood35/out_expanded_r52.jsonl */
-/* ---- chapter 2 constants: Round 52, September 2026, all from harness/wood35 ----
-   R52_TRAP: three English strings (Round 52 plant texts, out_expanded_r52.jsonl) that a free key could equally produce.
-   R52_STARTS: real starting points from the 129-book run (out_real_r52_BE.json): the book and its 21 consecutive distinct key words.
-   R52_PLANT: score as English of each of the 100 planted messages over the 129 books (out_gate_r52.jsonl); R52_MISS the three not found first;
-   R52_PLANT_J the one shown on the strip. R52_NULL129: best score for each of 200 random ciphertexts over the same books (out_null_r52.jsonl).
-   R52_NULLX: the same for 100 random ciphertexts over 3,977 texts (out_expanded_r52.jsonl); R52_WOOD: Wood's best there. */
-const R52_TRAP=["WHATISTHEUSEOFLIVINGA","THEYHADPLANSTOGOTOADA","STRENGTHTOLEAVETHEDAR"];
-const R52_STARTS=[["einem englischen Buch","THE RESIDUE AND BULK OF PROPERTY WAS SETTLED ON ME UNDER TRUST TO MR NIXON UNTIL I AGE WITH A REQUEST"],["einem französischen Buch","FAITS INTIMEMENT CONNEXES LA VIEILLE NOTION DE LA DESTRUCTION COMPLETE DE TOUS LES HABITANTS DU GLOBE A LA SUITE DE CATACLYSMES"],["einem niederländischen Buch","ZYN UITTERMATEN GEMAKKELYK ALS DE KOFFY VOLKOMEN DROOG IS BRENGT MEN ZE IN HET MAGAZYN VAN DE DROOGERYE EEN GEBOUW DOORGAANS"]];
-const R52_PLANT=[-13.70,-13.88,-11.67,-12.51,-11.59,-13.18,-13.33,-13.49,-11.45,-11.96,-10.94,-12.98,-11.58,-12.00,-13.46,-11.21,-12.06,-13.55,-11.35,-12.09,-11.23,-11.22,-12.77,-11.54,-11.57,-11.61,-13.34,-10.87,-11.62,-12.21,-11.83,-11.01,-12.74,-12.56,-12.69,-10.69,-11.66,-16.12,-12.13,-11.05,-12.15,-13.84,-12.18,-12.24,-10.77,-12.22,-11.49,-12.11,-14.29,-14.29,-10.88,-12.83,-10.89,-12.42,-12.14,-20.57,-10.93,-12.11,-12.98,-11.45,-12.25,-12.40,-12.10,-11.51,-11.33,-12.00,-16.04,-11.91,-11.55,-11.02,-11.01,-12.57,-10.36,-11.99,-11.56,-11.74,-10.77,-11.55,-11.38,-11.35,-13.64,-12.25,-13.78,-12.88,-10.29,-12.46,-11.02,-10.89,-13.96,-11.54,-12.36,-12.69,-11.45,-11.00,-12.83,-12.00,-11.28,-11.58,-12.08,-11.07],R52_MISS=[37,55,66],R52_PLANT_J=15,R52_PLANT_MSG="THEFORMOFTHEUNKNOWNMI";
-const R52_NULL129=[-15.00,-14.58,-14.31,-15.85,-16.22,-16.13,-15.88,-15.43,-15.11,-15.45,-15.74,-15.43,-15.56,-15.72,-15.26,-14.91,-15.15,-15.64,-15.70,-15.48,-15.41,-15.05,-15.52,-15.09,-14.53,-14.75,-15.44,-15.84,-15.61,-15.33,-15.69,-14.63,-15.72,-14.95,-15.00,-15.24,-16.01,-15.78,-15.49,-15.17,-15.84,-14.36,-15.93,-15.24,-15.92,-15.21,-15.05,-15.13,-15.19,-15.59,-15.18,-15.65,-14.97,-15.81,-15.34,-15.27,-15.72,-15.03,-15.19,-15.17,-15.72,-15.30,-15.56,-15.84,-15.65,-14.98,-15.85,-15.22,-15.43,-15.61,-15.58,-15.29,-15.73,-15.35,-15.71,-16.05,-15.79,-14.87,-15.03,-15.70,-14.53,-14.64,-15.37,-15.61,-16.12,-15.03,-15.96,-15.90,-15.23,-14.58,-15.49,-15.85,-15.52,-15.55,-15.50,-15.33,-16.18,-14.64,-15.09,-15.56,-15.33,-15.26,-15.91,-15.31,-15.76,-15.31,-15.54,-14.88,-15.11,-15.47,-14.97,-15.75,-15.35,-15.59,-15.49,-15.97,-15.36,-15.84,-15.18,-15.35,-15.23,-14.60,-14.47,-14.97,-15.29,-15.22,-15.36,-15.20,-15.59,-15.55,-15.41,-15.52,-15.05,-15.13,-15.58,-14.62,-14.95,-15.65,-15.60,-15.04,-15.57,-16.11,-15.43,-15.28,-16.10,-15.66,-15.91,-15.60,-15.13,-14.59,-16.03,-15.69,-15.32,-15.44,-14.76,-15.30,-16.15,-15.73,-15.88,-15.91,-15.31,-15.29,-14.66,-15.38,-15.22,-15.82,-15.65,-15.33,-15.44,-15.59,-16.26,-16.32,-15.37,-14.91,-14.86,-15.11,-14.86,-15.64,-15.88,-15.75,-15.57,-15.89,-15.69,-15.58,-15.26,-15.29,-15.70,-16.14,-15.30,-14.64,-15.19,-14.73,-15.06,-15.55,-15.69,-14.83,-16.23,-15.50,-15.35,-14.96];
-const R52_NULLX=[-14.139,-15.037,-14.929,-13.935,-14.719,-14.523,-14.074,-14.242,-14.038,-14.837,-14.746,-13.807,-14.170,-14.659,-14.849,-13.876,-14.538,-13.852,-14.768,-14.133,-14.378,-13.748,-14.271,-14.743,-14.219,-14.419,-14.231,-13.920,-14.479,-14.308,-14.565,-13.407,-14.833,-13.530,-14.705,-14.843,-14.727,-13.267,-14.183,-14.277,-14.649,-14.640,-14.626,-14.612,-14.163,-14.910,-15.121,-14.236,-14.143,-13.868,-14.683,-14.864,-14.595,-13.688,-14.839,-14.050,-13.943,-14.490,-14.219,-14.355,-14.769,-14.512,-14.898,-13.981,-14.990,-14.181,-14.659,-13.968,-14.475,-14.144,-14.694,-14.994,-14.835,-14.094,-14.331,-14.684,-14.316,-14.409,-14.241,-14.820,-14.447,-14.656,-14.180,-14.909,-14.841,-13.826,-14.241,-14.098,-14.484,-14.596,-14.721,-14.840,-14.603,-14.325,-14.641,-14.510,-14.481,-14.783,-14.498,-14.910],R52_WOOD=-13.937;
+const JUNK=["UNTONEASACRISTEALSBYR","TGEHADREEKSSENTEASYBI","TSLAVINGWASROSESHBUZZ","DDOESHEBRIEKTOTHATKUX","NGSHALLSVARANINFATABU","EDAORIESHOROUGHMINUNH","VCOURHEMIDWASSORIMIAE"]; /* the English-only search (17 September 2026), 3,977 texts, English scoring: harness/wood35/out_expanded.jsonl */
+/* ---- chapter 2 constants: the English-only search (17 September 2026), September 2026, all from harness/wood35 ----
+   EN_TRAP: three English strings (the English-only search (17 September 2026) plant texts, out_expanded.jsonl) that a free key could equally produce.
+   EN_STARTS: real starting points from the 129-book run (out_real_BE.json): the book and its 21 consecutive distinct key words.
+   EN_PLANT: score as English of each of the 100 planted messages over the 129 books (out_gate.jsonl); EN_MISS the three not found first;
+   EN_PLANT_J the one shown on the strip. EN_NULL129: best score for each of 200 random ciphertexts over the same books (out_null.jsonl).
+   EN_NULLX: the same for 100 random ciphertexts over 3,977 texts (out_expanded.jsonl); EN_WOOD: Wood's best there. */
+const EN_TRAP=["WHATISTHEUSEOFLIVINGA","THEYHADPLANSTOGOTOADA","STRENGTHTOLEAVETHEDAR"];
+const EN_STARTS=[["einem englischen Buch","THE RESIDUE AND BULK OF PROPERTY WAS SETTLED ON ME UNDER TRUST TO MR NIXON UNTIL I AGE WITH A REQUEST"],["einem französischen Buch","FAITS INTIMEMENT CONNEXES LA VIEILLE NOTION DE LA DESTRUCTION COMPLETE DE TOUS LES HABITANTS DU GLOBE A LA SUITE DE CATACLYSMES"],["einem niederländischen Buch","ZYN UITTERMATEN GEMAKKELYK ALS DE KOFFY VOLKOMEN DROOG IS BRENGT MEN ZE IN HET MAGAZYN VAN DE DROOGERYE EEN GEBOUW DOORGAANS"]];
+const EN_PLANT=[-13.70,-13.88,-11.67,-12.51,-11.59,-13.18,-13.33,-13.49,-11.45,-11.96,-10.94,-12.98,-11.58,-12.00,-13.46,-11.21,-12.06,-13.55,-11.35,-12.09,-11.23,-11.22,-12.77,-11.54,-11.57,-11.61,-13.34,-10.87,-11.62,-12.21,-11.83,-11.01,-12.74,-12.56,-12.69,-10.69,-11.66,-16.12,-12.13,-11.05,-12.15,-13.84,-12.18,-12.24,-10.77,-12.22,-11.49,-12.11,-14.29,-14.29,-10.88,-12.83,-10.89,-12.42,-12.14,-20.57,-10.93,-12.11,-12.98,-11.45,-12.25,-12.40,-12.10,-11.51,-11.33,-12.00,-16.04,-11.91,-11.55,-11.02,-11.01,-12.57,-10.36,-11.99,-11.56,-11.74,-10.77,-11.55,-11.38,-11.35,-13.64,-12.25,-13.78,-12.88,-10.29,-12.46,-11.02,-10.89,-13.96,-11.54,-12.36,-12.69,-11.45,-11.00,-12.83,-12.00,-11.28,-11.58,-12.08,-11.07],EN_MISS=[37,55,66],EN_PLANT_J=15,EN_PLANT_MSG="THEFORMOFTHEUNKNOWNMI";
+const EN_NULL129=[-15.00,-14.58,-14.31,-15.85,-16.22,-16.13,-15.88,-15.43,-15.11,-15.45,-15.74,-15.43,-15.56,-15.72,-15.26,-14.91,-15.15,-15.64,-15.70,-15.48,-15.41,-15.05,-15.52,-15.09,-14.53,-14.75,-15.44,-15.84,-15.61,-15.33,-15.69,-14.63,-15.72,-14.95,-15.00,-15.24,-16.01,-15.78,-15.49,-15.17,-15.84,-14.36,-15.93,-15.24,-15.92,-15.21,-15.05,-15.13,-15.19,-15.59,-15.18,-15.65,-14.97,-15.81,-15.34,-15.27,-15.72,-15.03,-15.19,-15.17,-15.72,-15.30,-15.56,-15.84,-15.65,-14.98,-15.85,-15.22,-15.43,-15.61,-15.58,-15.29,-15.73,-15.35,-15.71,-16.05,-15.79,-14.87,-15.03,-15.70,-14.53,-14.64,-15.37,-15.61,-16.12,-15.03,-15.96,-15.90,-15.23,-14.58,-15.49,-15.85,-15.52,-15.55,-15.50,-15.33,-16.18,-14.64,-15.09,-15.56,-15.33,-15.26,-15.91,-15.31,-15.76,-15.31,-15.54,-14.88,-15.11,-15.47,-14.97,-15.75,-15.35,-15.59,-15.49,-15.97,-15.36,-15.84,-15.18,-15.35,-15.23,-14.60,-14.47,-14.97,-15.29,-15.22,-15.36,-15.20,-15.59,-15.55,-15.41,-15.52,-15.05,-15.13,-15.58,-14.62,-14.95,-15.65,-15.60,-15.04,-15.57,-16.11,-15.43,-15.28,-16.10,-15.66,-15.91,-15.60,-15.13,-14.59,-16.03,-15.69,-15.32,-15.44,-14.76,-15.30,-16.15,-15.73,-15.88,-15.91,-15.31,-15.29,-14.66,-15.38,-15.22,-15.82,-15.65,-15.33,-15.44,-15.59,-16.26,-16.32,-15.37,-14.91,-14.86,-15.11,-14.86,-15.64,-15.88,-15.75,-15.57,-15.89,-15.69,-15.58,-15.26,-15.29,-15.70,-16.14,-15.30,-14.64,-15.19,-14.73,-15.06,-15.55,-15.69,-14.83,-16.23,-15.50,-15.35,-14.96];
+const EN_NULLX=[-14.139,-15.037,-14.929,-13.935,-14.719,-14.523,-14.074,-14.242,-14.038,-14.837,-14.746,-13.807,-14.170,-14.659,-14.849,-13.876,-14.538,-13.852,-14.768,-14.133,-14.378,-13.748,-14.271,-14.743,-14.219,-14.419,-14.231,-13.920,-14.479,-14.308,-14.565,-13.407,-14.833,-13.530,-14.705,-14.843,-14.727,-13.267,-14.183,-14.277,-14.649,-14.640,-14.626,-14.612,-14.163,-14.910,-15.121,-14.236,-14.143,-13.868,-14.683,-14.864,-14.595,-13.688,-14.839,-14.050,-13.943,-14.490,-14.219,-14.355,-14.769,-14.512,-14.898,-13.981,-14.990,-14.181,-14.659,-13.968,-14.475,-14.144,-14.694,-14.994,-14.835,-14.094,-14.331,-14.684,-14.316,-14.409,-14.241,-14.820,-14.447,-14.656,-14.180,-14.909,-14.841,-13.826,-14.241,-14.098,-14.484,-14.596,-14.721,-14.840,-14.603,-14.325,-14.641,-14.510,-14.481,-14.783,-14.498,-14.910],EN_WOOD=-13.937;
 const PLANT_EN="NOTSOMUCHDEPENDUPONEX",PLANT_DE="VERSTEHTGEWISSEMINDER",CHURCH="SXFFFLOEPTPPQMAVDXEUR";
 /* ---- chapter 6: Thouless's worked example, Proc. SPR 48 (1948), pp. 259-260 (harness/wood35t/thouless_example_check.py):
    THERE IS NO DEATH keyed by Hamlet; his printed key letters and ciphertext, and the same recomputed (only letter 14 differs) ---- */
@@ -805,8 +847,8 @@ const PASS5=["neu berechnet, eigenes Skript: 21 von 21","Entschlüsselung der zw
    so their places in the grid are illustrative. */
 const LUCK5={ctrl:500,hit:7,share:"1.4%",salad:["PAYNAULADDUCDAEEVA…","BUMTOPSOIWEIIWATAYE…","WANMOSCALMTORNTOUR…"]};
 /* chapter 1: a few dots in the cloud carry the real reading their key gives: [reading, key's book, cloud x, cloud y].
-   Round 52's best English-scored decryptions (harness/wood35/out_expanded_r52.jsonl, kind "real"; books' languages from
-   fetch_r52.jsonl) and the Bible run's runner-up (attempts/wood35_solve_2026-10-04/bib_ml.out). The blue dot is the solution. */
+   the English-only search (17 September 2026)'s best English-scored decryptions (harness/wood35/out_expanded.jsonl, kind "real"; books' languages from
+   fetch.jsonl) and the Bible run's runner-up (attempts/wood35_solve_2026-10-04/bib_ml.out). The blue dot is the solution. */
 const CH1_READ=[["UNTONEASACRISTEALSBYR","schwedisches Buch",.04,.10],["DDOESHEBRIEKTOTHATKUX","spanisches Buch",.96,.30],["RASFATAFITEANDAMAPOSE","rumänische Bibel",.06,.74],["TGEHADREEKSSENTEASYBI","niederländisches Buch",.94,.93]];
 const CH1_HIT=[.22,.50];
 /* chapter 1, "method": Thouless's rule worked for the first letter (KEY[0]; same arithmetic as the key table and verify_wood.py) */
@@ -815,8 +857,8 @@ const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const randStr=n=>Array.from({length:n},()=>L(Math.random()*26|0)).join("");
 /* which dot layout each step uses, and the state a chapter's graphic shows before its first step is reached */
-const DOTS={summary:"cloud",method:"cloud",wood:"cloud",trap:"cloudLabels",shelves:"shelves",plants:"histEnPlants",round52:"histEn",idea:"mlTwoScorers",church:"churchOrder",prayer:"histBibles",table:"top",bar:"top",checks:"vars",luck:"grid",slip:"thouless",next:"request",confirmed:"solution"};
-const PRELUDE={1:"summary",2:"wood",3:"round52",4:"church",5:"bar",6:"luck"}; /* each graphic opens on the state the previous chapter ended on */
+const DOTS={summary:"cloud",method:"cloud",wood:"cloud",trap:"cloudLabels",shelves:"shelves",plants:"histEnPlants",englishResults:"histEn",idea:"mlTwoScorers",church:"churchOrder",prayer:"histBibles",table:"top",bar:"top",checks:"vars",luck:"grid",slip:"thouless",next:"request",confirmed:"solution"};
+const PRELUDE={1:"summary",2:"wood",3:"englishResults",4:"church",5:"bar",6:"luck"}; /* each graphic opens on the state the previous chapter ended on */
 /* ---- chapter 4 constants: the hit ---- */
 Object.assign(DOTS,{prayer:"ch4pour",table:"ch4top",bar:"ch4top"}); /* chapter 4's own dot modes; histBibles and top are no longer used */
 const SKIP4={9:"Dein",11:"Dein",17:"Himmel, Unser"}; /* repeated words skipped just before key word i (0-based), REPORT.md */
@@ -850,14 +892,14 @@ function Graphic(el){
    trap(){cap("freier Schlüssel (klein) → Lesart (Kacheln)","");
      const keyOf=t=>[...t].map((c,i)=>L(CT.charCodeAt(i)-c.charCodeAt(0)));
      const show=(t,en)=>{drawTiles([...t],keyOf(t),()=>en?"lit":"junk");if(en)[...subEl.children].forEach(x=>x.classList.add("on"));};
-     if(reduced){show(R52_TRAP[0],true);return;}
-     let n=0;show(randStr(21),false);stripTimers.push(setInterval(()=>{n++;const k=n%24;if(k===10)show(R52_TRAP[Math.floor(n/24)%R52_TRAP.length],true);else if(k<10)show(randStr(21),false);},130));},
-   shelves(){const show=j=>{const st=R52_STARTS[j],ws=st[1].split(" "),ks=ws.map(x=>[...x].reduce((t,c)=>t+c.charCodeAt(0)-64,0)-1);
+     if(reduced){show(EN_TRAP[0],true);return;}
+     let n=0;show(randStr(21),false);stripTimers.push(setInterval(()=>{n++;const k=n%24;if(k===10)show(EN_TRAP[Math.floor(n/24)%EN_TRAP.length],true);else if(k<10)show(randStr(21),false);},130));},
+   shelves(){const show=j=>{const st=EN_STARTS[j],ws=st[1].split(" "),ks=ws.map(x=>[...x].reduce((t,c)=>t+c.charCodeAt(0)-64,0)-1);
        drawTiles([...CT].map((c,i)=>L(c.charCodeAt(0)-65-ks[i])),ks.map(L),()=>"junk");[...subEl.children].forEach(x=>x.classList.add("on"));
        cap("<b>"+ws.slice(0,3).join(" ")+" …</b> → Schlüssel → Kacheln","");};
-     show(0);if(!reduced){let j=0;stripTimers.push(setInterval(()=>show(++j%R52_STARTS.length),3200));}},
-   plants(){drawTiles([...R52_PLANT_MSG],null,()=>"lit");cap("Testbotschaft, zufälliger Buchschlüssel","");},
-   round52(){drawTiles([...JUNK[0]],null,()=>"junk");cap("Woods beste Lesart, als Englisch bewertet","");},
+     show(0);if(!reduced){let j=0;stripTimers.push(setInterval(()=>show(++j%EN_STARTS.length),3200));}},
+   plants(){drawTiles([...EN_PLANT_MSG],null,()=>"lit");cap("Testbotschaft, zufälliger Buchschlüssel","");},
+   englishResults(){drawTiles([...JUNK[0]],null,()=>"junk");cap("Woods beste Lesart, als Englisch bewertet","");},
    /* ---- chapter 3: the idea ---- */
    /* idea: the same planted string as each scorer splits it, English words first, then seven languages; the matching dot
       on the canvas glows (self.ch3v is read by the mlTwoScorers layout) */
@@ -925,8 +967,8 @@ function Graphic(el){
    /* checks: the solution, then each changed method decrypted letter by letter under it; a letter that survives stays lit, one that differs turns red */
    checks(){
      const rows=[[PT,"wie gefunden: Wiederholungen übersprungen, A = keine Verschiebung",""]].concat(VARS);
-     const head=(r,n,k)=>`<div style="grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:${k?7:0}px;font:400 clamp(13px,1.25vw,15px)/1.15 var(--display);color:var(--bone-2)"><span>${r[1]}${r[2]?" · "+r[2]:""}</span><b style="font:700 11px/1.15 var(--mono);letter-spacing:.04em;white-space:nowrap;color:var(${n===21?"--candle":"--ember"})">${n} von 21</b></div>`;
-     tilesEl.innerHTML=rows.map((r,k)=>head(r,[...r[0]].filter((c,i)=>c===PT[i]).length,k)+[...r[0]].map((c,i)=>`<div class="t ${k===0?reading(i)+" lit":(reduced?(c===PT[i]?"lit":"bad"):"dim")}">${c}</div>`).join("")).join("");
+     const head=(r,n)=>`<div class="comparison-heading"><span>${r[1]}${r[2]?" · "+r[2]:""}</span><b class="comparison-count" style="color:var(${n===21?"--candle":"--ember"})">${n} von 21</b></div>`;
+     tilesEl.innerHTML=rows.map((r,k)=>head(r,[...r[0]].filter((c,i)=>c===PT[i]).length)+[...r[0]].map((c,i)=>`<div class="t ${k===0?reading(i)+" lit":(reduced?(c===PT[i]?"lit":"bad"):"dim")}">${c}</div>`).join("")).join("");
      subEl.innerHTML="";
      cap("dieselben 21 Buchstaben, fünf Varianten","");
      if(!reduced){const ts=[...tilesEl.querySelectorAll(".t")];rows.forEach((r,k)=>{if(k)[...r[0]].forEach((c,i)=>{const t=ts[k*21+i];stripTimers.push(setTimeout(()=>{t.classList.remove("dim");t.classList.add(c===PT[i]?"lit":"bad");},300+(k-1)*200+i*45));});});}
@@ -962,10 +1004,10 @@ function Graphic(el){
   const HIT=BI[0];
   for(let i=0;i<=500;i++)mk("s","--dot-s",{ta:0,i});
   const lit=new Set();while(lit.size<7)lit.add(1+Math.floor(rnd()*500));
-  /* ---- chapter 2 dots, made last so the shared random sequence above is unchanged: real Round 52 scores, and label anchors ---- */
-  const NUL2=R52_NULL129.map((v,i)=>mk("n2","--dot-g",{en:v,en2:i<R52_NULLX.length?R52_NULLX[i]:null,ta:0}));
-  const PLA2=R52_PLANT.map((v,i)=>mk("p2",R52_MISS.includes(i)?"--dot-v":"--dot-p",{en:v,ta:0}));
-  const WOOD2=mk("w2","--dot-tew",{en2:R52_WOOD,ta:0});
+  /* ---- chapter 2 dots, made last so the shared random sequence above is unchanged: real the English-only search (17 September 2026) scores, and label anchors ---- */
+  const NUL2=EN_NULL129.map((v,i)=>mk("n2","--dot-g",{en:v,en2:i<EN_NULLX.length?EN_NULLX[i]:null,ta:0}));
+  const PLA2=EN_PLANT.map((v,i)=>mk("p2",EN_MISS.includes(i)?"--dot-v":"--dot-p",{en:v,ta:0}));
+  const WOOD2=mk("w2","--dot-tew",{en2:EN_WOOD,ta:0});
   const ANC2=[0,1,2].map(()=>mk("a2","--bone",{ta:0}));
   /* chapter 2 shelves: 129 spines, 81 non-English books then 48 English, the 900 dots split between those two groups by their
      starting points (14,826,428 and 13,776,370 of 28,602,798); the width and height of each single spine are illustrative */
@@ -1026,7 +1068,7 @@ function Graphic(el){
     } else if(mode==="cloudLabels"){
       /* the trap: free keys never run out, so the cloud spills past the frame; a few dots show their reading, English among them */
       const n=small()?4:6,lab=new Map();
-      for(let j=0;j<n;j++){const tx=0.1+((j*0.29)%0.42),ty=0.08+0.84*j/(n-1);let best=null,bd=9;G.forEach(d=>{const e=Math.hypot(d.cx-tx,d.cy-ty);if(e<bd&&!lab.has(d)){bd=e;best=d;}});lab.set(best,j%2?R52_TRAP[(j>>1)%R52_TRAP.length]:randStr(21));}
+      for(let j=0;j<n;j++){const tx=0.1+((j*0.29)%0.42),ty=0.08+0.84*j/(n-1);let best=null,bd=9;G.forEach(d=>{const e=Math.hypot(d.cx-tx,d.cy-ty);if(e<bd&&!lab.has(d)){bd=e;best=d;}});lab.set(best,j%2?EN_TRAP[(j>>1)%EN_TRAP.length]:randStr(21));}
       setAll(d=>d.kind==="g"?{x:p.l+(-0.12+1.24*d.cx)*w,y:p.t+(-0.1+1.2*d.cy)*h,a:lab.has(d)?1:0.75,r:lab.has(d)?1.25:1,delay:0,label:lab.get(d)||null}:{a:0});
     } else if(mode==="shelves"){
       /* the finite list: each book a spine of dots standing on a shelf, one dot for many thousand starting points */
@@ -1041,8 +1083,8 @@ function Graphic(el){
         return{a:0};});
       for(let k=0;k<pl.rows;k++){lines.push({y:boardY(k)+q*0.35,x0:p.l,x1:W-p.r,ck:"--bone-3"});lines.push({y:boardY(k)+q*0.35+2,x0:p.l,x1:W-p.r,ck:"--veil"});}
     } else if(mode==="histEnPlants"||mode==="histEn"){
-      /* real Round 52 scores, same axis in both states. Grey: the best reading found for each random ciphertext, i.e. how far chance reaches.
-         plants: teal, the 100 planted messages over the 129 books. round52: the grey pile moves to the 3,977-text run, Wood's best joins it,
+      /* real the English-only search (17 September 2026) scores, same axis in both states. Grey: the best reading found for each random ciphertext, i.e. how far chance reaches.
+         plants: teal, the 100 planted messages over the 129 books. englishResults: the grey pile moves to the 3,977-text run, Wood's best joins it,
          and the planted messages stay behind, faint, to show where a real message lands */
       const plants=mode==="histEnPlants",x0=-17.3,x1=-10.1,base=H-p.b,nb=small()?34:Math.max(34,Math.round(w/13));
       axis={x0,x1,ticks:[-17,-16,-15,-14,-13,-12,-11],title:small()?"Bewertung als Englisch  →  englischer":"Bewertung der besten Lesart als Englisch  →  englischer"};
@@ -1056,8 +1098,8 @@ function Graphic(el){
       [pos,ghost].forEach(m=>m.forEach(v=>{v.y=base-(base-v.y)*f;}));
       let j=0;grp.concat(plants?[]:PLA2).forEach(d=>{if(d.a<0.05){const g=G[(j++*7)%G.length];d.x=g.x;d.y=g.y;}});
       const top=Math.min(...[...pos.values()].map(v=>v.y)),topOf=f2=>Math.min(...grp.filter(f2).map(d=>pos.get(d).y));
-      N.forEach(d=>{d.ck=(!plants&&d.en2>R52_WOOD)?"--bone-2":"--dot-g";});
-      const PJ=PLA2[R52_PLANT_J],off=PLA2[55],q2=plants?pos.get(PJ):pos.get(WOOD2),tealTop=plants?topOf(x=>x.kind==="p2"&&x.en>-14):0,rr=small()?1.1:1;
+      N.forEach(d=>{d.ck=(!plants&&d.en2>EN_WOOD)?"--bone-2":"--dot-g";});
+      const PJ=PLA2[EN_PLANT_J],off=PLA2[55],q2=plants?pos.get(PJ):pos.get(WOOD2),tealTop=plants?topOf(x=>x.kind==="p2"&&x.en>-14):0,rr=small()?1.1:1;
       setAll(d=>{const q=pos.get(d)||ghost.get(d);
         if(d===ANC2[0]&&plants)return{x:px(-14.1,x0,x1),y:tealTop-46,a:1,r:0.01,label:small()?"Testbotschaften: 97 von 100 auf Rang 1":"Testbotschaften: 97 von 100 auf Rang 1 gefunden"};
         if(d===ANC2[1])return{x:px(-16.6,x0,x1),y:top-(plants?20:46),a:1,r:0.01,label:"zufällige Geheimtexte"};
@@ -1256,7 +1298,7 @@ function prelude(ch,g,offscreen){const sid=PRELUDE[ch.dataset.ch];if(offscreen){
 let ticking=false;const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;catchUp();});};
 addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);mq.addEventListener("change",onScroll);
 catchUp();
-document.querySelectorAll(".replay").forEach(b=>b.addEventListener("click",()=>{const ch=b.closest(".chapter"),g=graphics.get(ch);if(mq.matches)g.el.scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});g.replay();}));
+document.querySelectorAll(".replay").forEach(b=>b.addEventListener("click",()=>{const ch=b.closest(".chapter"),g=graphics.get(ch);if(mq.matches)ch.querySelector('.beat[data-s="prayer"]').scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});g.replay();}));
 
 })();
 </script>

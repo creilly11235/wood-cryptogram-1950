@@ -1,5 +1,5 @@
 """Look-elsewhere test for the #35 Wood decipherment, on Wood's REAL ciphertext and the REAL
-key corpora (Round 52 Gutenberg rebuild + 19 Bibles), both Thouless variants (D/P) and both
+key corpora (the English-only search (17 September 2026) Gutenberg rebuild + 19 Bibles), both Thouless variants (D/P) and both
 arithmetic conventions.
 
 Detector(signature S): plaintext[18:21] == S  and  plaintext[0:10] splits completely into

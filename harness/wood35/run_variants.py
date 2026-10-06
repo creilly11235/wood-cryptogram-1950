@@ -1,4 +1,4 @@
-"""Secondary arms registered in PREREG_R52.md section 3, run because the
+"""Secondary arms registered in PREREG.md section 3, run because the
 primary gate passed.
 
   S     tier S (Tatoeba sentence dumps), primary convention
@@ -38,7 +38,7 @@ def main():
     g = run_real.gate_summary()
     n = run_real.null_summary()
     vals = [json.loads(l)["best_score"] for l in
-            open(os.path.join(HERE, "out_null_r52.jsonl")) if "best_score" in l]
+            open(os.path.join(HERE, "out_null.jsonl")) if "best_score" in l]
     ct_s = re.sub(r"[^A-Z]", "", json.loads(
         open(os.path.join(ROOT, "ciphers/wood_35.json")).read())["text"].upper())
     ct = search.to_ints(ct_s)
@@ -68,7 +68,7 @@ def main():
 
     for v in out.values():
         v["passes_all_three"] = all(v["bar"][k] for k in v["bar"] if k.startswith("cond"))
-    json.dump(out, open(os.path.join(HERE, "out_variants_r52.json"), "w"), indent=1)
+    json.dump(out, open(os.path.join(HERE, "out_variants.json"), "w"), indent=1)
     print(json.dumps({k: {"best_score": v["best_score"],
                           "passes_all_three": v["passes_all_three"]}
                       for k, v in out.items()}, indent=1))

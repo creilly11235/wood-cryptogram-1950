@@ -1,21 +1,21 @@
-# #35 Wood: multilingual-plaintext re-scoring of the Round 52 key class (pre-registration)
+# #35 Wood: multilingual-plaintext re-scoring of the September English-only search key class (pre-registration)
 
 Written 2026-10-04 before Wood's ciphertext is scored against the rebuilt corpus.
 (The ~140 hand-entered famous passages in `passages/` were already scored, see RESULT.md;
 they are a separate, small arm and are not part of this decision.)
 
 ## Why
-Round 52 and its amendment searched 428,787,544 (book, offset, variant) hypotheses but
-decided on an **English-only** plaintext score (PREREG_R52 "Plaintext language: English
+The English-only search (17 September 2026) and its amendment searched 428,787,544 (book, offset, variant) hypotheses but
+decided on an **English-only** plaintext score (harness/wood35/PREREG.md "Plaintext language: English
 only"). Schmeh (Cipherbrain #35, 17 Apr 2017) reports that Wood's cleartext "is allegedly
 authored in several different languages". A correct key with a mixed-language plaintext can
-fail an English bar, so the Round 52 negative does not cover this case.
+fail an English bar, so the September English-only search negative does not cover this case.
 
 ## Mechanism (unchanged, verified)
-Round 52 tokenisation (`harness/wood35/w35.py key_tokens`), one key word per letter,
+the book-key tokenisation (`harness/wood35/w35.py key_tokens`), one key word per letter,
 shift = (sum A=1..Z=26 - 1) mod 26, pt = ct - shift; variant D (consecutive distinct words)
-and P (all words). Key corpus: the Round 52 amendment-1 book list
-(`harness/wood35/fetch_r52.jsonl`, rows with tokens), rebuilt by `refetch.py`.
+and P (all words). Key corpus: the September English-only search amendment-1 book list
+(`harness/wood35/fetch.jsonl`, rows with tokens), rebuilt by `refetch.py`.
 Books that cannot be fetched after retries are listed, not silently dropped.
 
 ## Scoring
@@ -29,7 +29,7 @@ Books that cannot be fetched after retries are listed, not silently dropped.
 40 plants: plaintext = random frequent words from 2-4 random languages of the lexicon,
 concatenated to exactly 21 letters; key = a uniformly random (book, variant, offset) of the
 rebuilt class; full search. Recovery = true plaintext ranked 1. Required: Wilson 95% LB
->= 0.20 (the Round 52 standard). Plant floor = 5th percentile of the true plaintexts'
+>= 0.20 (the September English-only search standard). Plant floor = 5th percentile of the true plaintexts'
 final scores.
 
 ## Nulls
@@ -55,4 +55,4 @@ Separate arm, tier BIB: 19 complete Latin-script Bibles from christos-c/bible-co
 Portuguese, Dutch, Danish, Swedish, Norwegian, Icelandic, Esperanto, Finnish, Hungarian,
 Polish, Czech, Romanian, Afrikaans, Maori), verse order, same tokenisation
 (`bible_shards.py`). Same pipeline, its own 40 plants (keys drawn from this tier) and 20
-nulls, same bar. Reported separately from the Round 52 class.
+nulls, same bar. Reported separately from the September English-only search class.
