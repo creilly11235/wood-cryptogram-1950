@@ -1,4 +1,4 @@
-# #35 Wood, Round 89: targeted and multilingual arms
+# #35 Wood, the multilingual search (4 October 2026): targeted and multilingual arms
 
 ## Arm A: hand-entered famous non-English passages (done, negative)
 `passages/{latin,french,german,other}.txt`: about 140 passages typed from memory
@@ -19,7 +19,7 @@ misremembered text still gives a mostly-correct plaintext, so memory errors cost
   segment in 16/20000 cases, best -2.15. `attempts/wood35t/passages_ml.txt`.
 **Negative for these passages.**
 
-## Arm B: multilingual re-scoring of the Round 52 key class (pre-registered, done, negative)
+## Arm B: multilingual re-scoring of the September English-only search key class (pre-registered, done, negative)
 See PREREG.md. Pilot on the first 786 rebuilt books (K = 79,173,018, plants only, Wood not
 scored): gate 8/8 plants recovered at rank 1, plant floor -1.05, null ceiling -1.37 (4 nulls).
 
@@ -30,3 +30,11 @@ Wood best -1.313 (junk). Negative, as expected (key not in the book list).
 19 Latin-script Bibles, K = 26,730,018; gate 40/40; floor -1.081; null ceiling -1.273.
 Wood's top decryption: German Bible, Matthew 6:9 from "Unser Vater", variant D:
 HIERBINICHTOTSIENSTEW. See attempts/wood35_solve_2026-10-04/REPORT.md.
+
+## Documentation correction — 6 October 2026
+
+The full Gutenberg result was recorded after the Bible hit, during review; only
+the 786-book pilot preceded it. The committed passage files contain 173 labelled
+blocks; “about 140” above was the original approximate report, not an audited
+input count. See the README for the scoring and source inventory, including the
+missing historical hash manifests.

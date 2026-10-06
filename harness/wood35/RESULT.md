@@ -1,6 +1,8 @@
-# Round 52 result: #35, T. E. Wood's cryptogram — powered NEGATIVE over 129 books
+> Historical search record, 17 September 2026. Wood was subsequently solved on 4 October; see the repository README.
 
-Registered in `PREREG_R52.md`, committed on 17 Sep 2026 (07:00 UTC) before any score of
+# English-only search result (17 September 2026): #35, T. E. Wood's cryptogram — powered NEGATIVE over 129 books
+
+Registered in `PREREG.md`, committed on 17 Sep 2026 (07:00 UTC) before any score of
 Wood's ciphertext existed. **#35 is not solved.**
 
 ## 1. Headline
@@ -38,7 +40,7 @@ The dismissal applied the first row's arithmetic to the second row's mechanism.
 At 21 letters a *book-constrained* word-sum key is not merely identifiable in
 principle — the search finds it, first try, 97 times in 100.
 
-This is the Round 51 lesson used in the direction it actually works: a positive
+This is the earlier power-control lesson used in the direction it actually works: a positive
 margin licensed building the gate, and only the gate certified the arm.
 
 ## 3. Known-answer check
@@ -85,7 +87,7 @@ max -14.306   p98 -14.534   p95 -14.627   median -15.429   min -16.315
 ```
 
 The gap between the plaintext floor (−13.976) and the null ceiling (−14.306) is
-only 0.33, which is exactly why Round 50's third condition is in the bar: the
+only 0.33, which is exactly why the registered plant-floor condition is in the bar: the
 window in which a real hit must land is narrow, and conditions 1–2 alone would
 not have policed it.
 
@@ -146,13 +148,13 @@ stays positive up to K ≈ e²⁹·⁹ ≈ 10¹³ hypotheses, thirteen thousand 
 corpus swept here. **#35 is not information-limited; it is corpus-limited.**
 That is a materially different status from the one the repository recorded, and
 it makes expanding the key corpus the highest-value follow-up — see
-`AMEND_R52_1.md`.
+`AMEND_EN_1.md`.
 
 ---
 
 # Amendment 1 result: 3,977 texts, 428,787,544 hypotheses — still NEGATIVE
 
-Registered in `AMEND_R52_1.md` (committed 17 Sep 2026, 07:29 UTC) before a single book was
+Registered in `AMEND_EN_1.md` (committed 17 Sep 2026, 07:29 UTC) before a single book was
 downloaded. **#35 is still not solved.**
 
 ## A1. What was added
@@ -162,7 +164,13 @@ key tokens, joined to the 129 texts of the primary run:
 
 | fr | es | it | nl | hu | de | pt | fi | sv | da | la | eo | ca | pl |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 429 | 419 | 420 | 414 | 422 | 404 | 417 | 411 | 186 | 58 | 81 | 94 | 74 | 27 |
+| 428 | 418 | 419 | 413 | 422 | 403 | 416 | 411 | 186 | 57 | 80 | 94 | 74 | 27 |
+
+**Inventory correction, 6 October 2026:** the language counts above are recomputed
+from unique successful `(lang, id)` entries in the saved fetch log. The previous
+per-language row counted 3,856 success-log entries, including eight duplicate
+entries, rather than 3,848 distinct books; the deduplicated total and token count
+are unchanged.
 
 1,418 catalogued texts failed to download and were skipped; the small languages
 (da, la, ca, eo, pl) are effectively exhausted. **69 of the 3,848 duplicate a
@@ -212,7 +220,7 @@ identifiability dies; the measurement says the *usable* ceiling at 21 letters is
 nearer 10⁹.
 
 So the corrected status of #35 is narrower than "corpus-limited" as
-`RESULT_R52.md` §9 put it, and this supersedes that sentence:
+`RESULT.md` §9 put it, and this supersedes that sentence:
 
 > #35 is attackable and this attack works — the gate proves it — but the key
 > corpus can only grow about one more order of magnitude before 21 letters stops
@@ -222,5 +230,5 @@ So the corrected status of #35 is narrower than "corpus-limited" as
 
 ## A4. Cost
 
-Fetch 53 min; sweep 5,170 s wall on 4 cores. Round 52 total ≈ **6.4 CPU-hours**
+Fetch 53 min; sweep 5,170 s wall on 4 cores. the English-only search (17 September 2026) total ≈ **6.4 CPU-hours**
 against a registered 12-hour cap.

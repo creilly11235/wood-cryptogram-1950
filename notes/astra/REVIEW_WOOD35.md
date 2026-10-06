@@ -1,3 +1,5 @@
+> Editorial note, 6 October 2026: internal session labels and artifact paths have been made descriptive. The review findings and numerical evidence are unchanged. Checksums of documents below refer to the versions reviewed on 4 October, before these editorial changes.
+
 # CONFIRMED WITH RESERVATIONS
 
 **Independent review of T. E. Wood’s cryptogram, 4 October 2026.**
@@ -954,6 +956,6 @@ d6ed76fef39138da45ba5bda8dd3370100bf11fef79eeae8f848c64db52f6ffd attempts/wood35
 1c9f2f19d01c5b93bd6bdbf1e0543a1cd2e846ee56daeec2109fab04582d468f harness/verify_thouless_b.py
 ```
 
-Re-reading with `cat attempts/wood35_solve_2026-10-04/REPORT.md` showed the added section headed `Addendum: the pre-registered full-corpus arm (Round 52 key class, multilingual scoring)`; it reported K=400,294,934 and named the two new result files. Appendix E records my independent inspection of them. I did not write that addition.
+Re-reading with `cat attempts/wood35_solve_2026-10-04/REPORT.md` showed the added section headed `Addendum: the pre-registered full-corpus arm (the English-only search (17 September 2026) key class, multilingual scoring)`; it reported K=400,294,934 and named the two new result files. Appendix E records my independent inspection of them. I did not write that addition.
 
 No `AGENTS.md` was found by the parent-path checks or the repository `rg --files --hidden -g AGENTS.md` inspection. The review destination did not exist before creation.

@@ -1,4 +1,4 @@
-"""Known-answer check: the Round 52 index must recover Thouless Message B.
+"""Known-answer check: the September English-only search index must recover Thouless Message B.
 
 Message B is 74 letters, not 21, so this runs the same machinery at L=74 on the
 one text Bean identified (Francis Thompson, The Hound of Heaven).  It proves the

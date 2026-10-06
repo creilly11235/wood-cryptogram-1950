@@ -318,7 +318,7 @@ def main():
     summ["passes_all_three"] = all(summ[k] for k in
                                    ("cond1_beats_null_max", "cond2_under_2pct",
                                     "cond3_above_plaintext_floor"))
-    with open(os.path.join(HERE, "out_expanded_r52.jsonl"), "w") as f:
+    with open(os.path.join(HERE, "out_expanded.jsonl"), "w") as f:
         for r in out:
             f.write(json.dumps(r) + "\n")
         f.write(json.dumps({"summary": summ}) + "\n")

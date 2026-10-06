@@ -1,4 +1,4 @@
-"""Convert christos-c/bible-corpus XML Bibles (raw.githubusercontent.com) into Round 52-style
+"""Convert christos-c/bible-corpus XML Bibles (raw.githubusercontent.com) into the English-only search (17 September 2026)-style
 key shards (harness/wood35/w35.py tokenisation), one shard per language, verse order."""
 import os, sys, re, glob, html, hashlib, numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'wood35'))

@@ -1,6 +1,6 @@
-"""Arm R: Wood's ciphertext (PREREG_R52.md sections 5 and 7).
+"""Arm R: Wood's ciphertext (PREREG.md sections 5 and 7).
 
-Runs only after the gate in out_gate_r52.jsonl passes Wilson LB >= 0.20.  Any
+Runs only after the gate in out_gate.jsonl passes Wilson LB >= 0.20.  Any
 candidate is re-encrypted from its named (file, token offset, variant) and the
 result compared to the ciphertext byte for byte, which is the acceptance test
 the registration requires.
@@ -17,7 +17,7 @@ TIERS = tuple(os.environ.get("W35_TIERS", "B,E").split(","))
 
 
 def gate_summary():
-    p = os.path.join(HERE, "out_gate_r52.jsonl")
+    p = os.path.join(HERE, "out_gate.jsonl")
     last = None
     for line in open(p):
         d = json.loads(line)
@@ -27,7 +27,7 @@ def gate_summary():
 
 
 def null_summary():
-    p = os.path.join(HERE, "out_null_r52.jsonl")
+    p = os.path.join(HERE, "out_null.jsonl")
     for line in open(p):
         d = json.loads(line)
         if "summary" in d:
@@ -75,7 +75,7 @@ def main():
            "null_max": None if n is None else n["max"],
            "plaintext_floor_p05": g["truth_score_p05"]}
     if n is not None:
-        nn = [json.loads(l) for l in open(os.path.join(HERE, "out_null_r52.jsonl"))]
+        nn = [json.loads(l) for l in open(os.path.join(HERE, "out_null.jsonl"))]
         vals = [d["best_score"] for d in nn if "best_score" in d]
         reach = sum(1 for v in vals if v >= best)
         bar["cond2_under_2pct"] = reach / len(vals) < 0.02
@@ -94,7 +94,7 @@ def main():
            "passes_all_three": all(v is True for k, v in bar.items()
                                    if k.startswith("cond")),
            "top": res}
-    json.dump(out, open(os.path.join(HERE, "out_real_r52_%s.json" %
+    json.dump(out, open(os.path.join(HERE, "out_real_%s.json" %
                                      "".join(TIERS)), "w"), indent=1)
     print(json.dumps({k: out[k] for k in
                       ("tiers", "K", "best_score", "bar", "passes_all_three")}, indent=1))

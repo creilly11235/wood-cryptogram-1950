@@ -1,4 +1,4 @@
-"""Reproducible version of the report's chance simulation (Round 89, #35 Wood).
+"""Reproducible version of the report's chance simulation (the multilingual search (4 October 2026), #35 Wood).
 P(10 uniform random letters split into common German words of >= 3 letters), using the
 top 20,000 German entries of mlseg_lex.pkl (built from Faust, Werther, Wintermaerchen).
 Seed and trial count fixed; prints hits, rate and a 95% Clopper-Pearson interval."""

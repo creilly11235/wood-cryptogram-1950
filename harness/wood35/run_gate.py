@@ -1,4 +1,4 @@
-"""Arm G: the Round 52 power gate (PREREG_R52.md section 6).
+"""Arm G: the September English-only search power gate (PREREG.md section 6).
 
 100 plants.  Each is a held-out 21-letter English plaintext enciphered with a
 uniformly drawn row of the registered keystream matrix, then put through the
@@ -44,7 +44,7 @@ def main():
     plants = plant_texts(NPLANT, search.SEED)
     rows = rng.integers(0, e.K, size=NPLANT)
     recovered = 0
-    out = open(os.path.join(HERE, "out_gate_r52.jsonl"), "w")
+    out = open(os.path.join(HERE, "out_gate.jsonl"), "w")
     truth_scores = []
     for j, p in enumerate(plants):
         key = e.keys[rows[j]].astype(np.int16)

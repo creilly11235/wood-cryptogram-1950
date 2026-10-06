@@ -2,29 +2,30 @@
 <!--
 Link-preview card for the blog post (docs/card.png, docs/de/card.png): 1200x630, in the page's type and colours.
 Open this file in a browser at a 1200x630 viewport with query parameters, wait for the fonts, and screenshot it.
-  kick, title, sv, foot   the four lines of text (sv is the small-caps word before the footer)
+  kick, title, sv, foot   the four lines of text (sv is the status before the footer)
   --size, --measure       title size and maximum width, to fit longer titles
 English: kick=Proceedings of the S.P.R., vol. 49 · No. 35 of Klaus Schmeh's Top 50
          title=Solving the 1950 cipher meant to test life after death  sv=Solved
-         foot=after 76 years · confirmed 4 October 2026  --measure=900px
+         foot=after 76 years · confirmed 4–6 October 2026  --size=64px  --measure=1040px
 German:  kick=Proceedings of the S.P.R., Bd. 49 · Nr. 35 auf Klaus Schmehs Top-50-Liste
          title=Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte  sv=Gelöst
-         foot=nach 76 Jahren · bestätigt am 4. Oktober 2026  --size=68px  --measure=960px
+         foot=nach 76 Jahren · bestätigt am 4.–6. Oktober 2026  --size=58px  --measure=1040px
 -->
 <html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@700&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400&family=Courier+Prime:wght@400&display=block" rel="stylesheet">
 <style>
-:root{--room:#f7f8fa;--bone:#202a35;--bone-2:#526171;--bone-3:#637486;--ink:#f7f8fa;--candle:#255d88;
-  --display:"Libre Caslon Display",Georgia,serif;--body:"Libre Caslon Text",Georgia,serif;--mono:"Courier Prime",monospace}
+:root{--room:#fafbfc;--room-2:#f0f2f4;--bone:#282e35;--bone-2:#5b646e;--veil-2:#d3d9df;
+  --body:"Libre Caslon Text",Georgia,serif;--mono:"Courier Prime",monospace}
 html,body{margin:0;background:var(--room)}
-.card{width:1200px;height:630px;box-sizing:border-box;padding:0 60px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--bone)}
-.kick{font:400 26px/1.3 var(--body);color:var(--bone-3);margin:0}
-h1{font:400 var(--size,76px)/1.08 var(--display);margin:var(--h1-top,25px) 0 0;max-width:var(--measure,700px);text-wrap:balance}
-.tiles{display:flex;gap:16px;margin-top:var(--tiles-top,42px)}
+.card{width:1200px;height:630px;box-sizing:border-box;padding:36px 60px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--bone)}
+.kick{font:400 24px/1.5 var(--body);color:var(--bone-2);margin:0}
+h1{font:400 var(--size,64px)/1.2 var(--body);letter-spacing:-.025em;margin:var(--h1-top,28px) 0 0;max-width:var(--measure,1040px);text-wrap:balance}
+.tiles{display:flex;gap:16px;margin-top:var(--tiles-top,36px)}
 .grp{display:flex;gap:5px}
-.t{width:40px;height:47px;display:grid;place-items:center;padding-top:3px;box-sizing:border-box;background:var(--bone);color:var(--ink);font:700 23px/1 var(--mono);border-radius:1px}
-.foot{margin:var(--foot-top,43px) 0 0;font:400 26px/1.3 var(--body);color:var(--bone-2)}
-.foot .sv{font:700 19px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--candle);margin-right:.35em}
+.t{width:40px;height:50px;display:grid;place-items:center;padding-top:3px;box-sizing:border-box;background:var(--room-2);border:1px solid var(--veil-2);color:var(--bone);font:400 24px/1 var(--mono);border-radius:1px}
+.foot{margin:var(--foot-top,32px) 0 0;font:400 24px/1.5 var(--body);color:var(--bone-2)}
+.foot .sv{color:var(--bone)}
+.foot .sv::after{content:" · ";color:var(--bone-2)}
 </style></head>
 <body><div class="card">
 <p class="kick" id="kick"></p>

@@ -1,6 +1,6 @@
 """Amendment 1 fetcher: stream Gutenberg texts into compact key shards.
 
-Registered order (AMEND_R52_1.md): round-robin across the Latin-script
+Registered order (AMEND_EN_1.md): round-robin across the Latin-script
 non-English languages, ascending Gutenberg ID within each language, until the
 token budget is reached.  Each book is downloaded, tokenised to its shift array
 and word-identity array, saved as a small .npz, and the text deleted.
@@ -76,7 +76,7 @@ def main():
         q.put(t)
     lock = threading.Lock()
     state = {"tokens": 0, "books": 0, "fail": 0, "stop": False}
-    log = open(os.path.join(HERE, "fetch_r52.jsonl"), "a")
+    log = open(os.path.join(HERE, "fetch.jsonl"), "a")
 
     def worker():
         while not state["stop"]:

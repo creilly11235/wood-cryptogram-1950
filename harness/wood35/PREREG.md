@@ -1,4 +1,4 @@
-# Round 52 pre-registration: #35, T. E. Wood's cryptogram
+# English-only search pre-registration (17 September 2026): #35, T. E. Wood's cryptogram
 
 Written and committed **before any score of Wood's ciphertext exists**. Nothing
 in this repository has ever scored it: `attempts/NOTES.md` records the item as
@@ -38,7 +38,7 @@ The class is finite and enumerable, so it is exhaustible in the sense
 `notes/STOPPING_REVIEW_R45.md` requires, and a hit is *verifiable* the way
 Bean's was: by naming the book and the word offset and re-encrypting.
 
-**Margin is not power.** Round 51's central finding. The margin above says the
+**Margin is not power.** The earlier power-control finding. The margin above says the
 answer is identifiable in principle; §6's gate is what decides whether the
 search actually finds it. If the gate fails, this round reports #35 as
 **untested**, never as negative.
@@ -99,7 +99,7 @@ a separate exploratory arm, reported without a decision.)
 
 ## 4. Objective and search (frozen)
 
-Identical to Round 51 so the numbers are comparable:
+Identical to the earlier power-control experiment so the numbers are comparable:
 
 ```
 score(pt) = (5-gram log-probability, nats, per scored character)
@@ -157,7 +157,7 @@ identically and its best full-objective score recorded.
 3. **absolute floor** — real best score **>** the 5th percentile of the 100
    gate plants' scores *under their true keys*.
 
-Condition 3 is the Round 50 repair: conditions 1–2 alone are vacuous when the
+Condition 3 is the plant-floor repair: conditions 1–2 alone are vacuous when the
 null is empty and saturated when it is full.
 
 A **solve** is declared only if all three pass **and** the top row's plaintext

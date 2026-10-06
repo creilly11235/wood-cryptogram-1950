@@ -1,4 +1,4 @@
-"""Arm N: 200 null ciphertexts (PREREG_R52.md section 7).
+"""Arm N: 200 null ciphertexts (PREREG.md section 7).
 
 A null is 21 uniform random letters.  Enciphering a uniform random plaintext
 with a real key gives exactly this distribution, so the constructions are
@@ -18,7 +18,7 @@ NNULL = int(os.environ.get("W35_NNULL", "200"))
 def main():
     e = search.Engine()
     rng = np.random.default_rng(search.SEED + 1)
-    out = open(os.path.join(HERE, "out_null_r52.jsonl"), "w")
+    out = open(os.path.join(HERE, "out_null.jsonl"), "w")
     best = []
     for j in range(NNULL):
         ct = rng.integers(0, 26, size=search.L).astype(np.int16)

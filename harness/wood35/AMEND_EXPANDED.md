@@ -1,7 +1,7 @@
-# Round 52, amendment 1: expand the key corpus
+# English-only search (17 September 2026), amendment 1: expand the key corpus
 
 Written and committed **before any expanded-corpus book is downloaded or
-scored**. The primary round is finished and reported in `RESULT_R52.md`; this
+scored**. The primary round is finished and reported in `RESULT.md`; this
 amendment does not change any number in it.
 
 ## Why
@@ -59,7 +59,7 @@ the gate measures the search that will actually be run.
 ## Kill criterion
 
 - Gate Wilson LB < 0.20 → the expanded sweep is reported **untested**, not negative.
-- The registered 12 CPU-hour cap for Round 52 is unchanged; 0.7 hours are spent.
+- The registered 12 CPU-hour cap for the English-only search (17 September 2026) is unchanged; 0.7 hours are spent.
   If the cap is reached, report on the books indexed so far and say so.
 - Any book that cannot be re-fetched and re-tokenised to the same shift array is
   discarded rather than patched.
