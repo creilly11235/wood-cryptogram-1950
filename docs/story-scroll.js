@@ -10,11 +10,11 @@
 
     const { Graphic } = api;
     const phone = matchMedia('(max-width: 900px)');
-    const shortLandscape = matchMedia('(min-width: 500px) and (max-width: 900px) and (max-height: 450px)');
     const root = document.documentElement;
     const chapters = [];
     let viewportWidth = 0;
     let viewportHeight = 0;
+    let sideBySide = false;
     let framePending = false;
 
     /* Browser toolbar changes resize the visual viewport on phones. Freeze
@@ -26,6 +26,11 @@
       if (!force && phone.matches && Math.abs(width - viewportWidth) < 2) return;
       viewportWidth = width;
       viewportHeight = height;
+      // Keep CSS and activation geometry on the same cached layout. A browser
+      // toolbar crossing 450px must not rearrange the article during a swipe.
+      sideBySide = !phone.matches || (width >= 500 && height <= 450);
+      root.dataset.storyLayout = sideBySide ? 'side' : 'stack';
+      root.dataset.storyShort = String(height <= 450);
       root.style.setProperty('--story-viewport-height', `${height}px`);
       chapters.forEach(record => {
         record.panelHeight = record.el.getBoundingClientRect().height;
@@ -84,7 +89,7 @@
          as its graphic changes. There is no extra blank scrolling distance. */
       const changes = chapters.map(record => {
         const exposed = Math.max(0, viewportHeight - record.panelHeight - record.panelTop);
-        const line = phone.matches && !shortLandscape.matches
+        const line = !sideBySide
           ? record.panelTop + record.panelHeight + Math.min(88, Math.max(48, exposed * .2))
           : viewportHeight * .55;
         let index = 0;
@@ -131,10 +136,6 @@
       schedule();
     }, { passive: true });
     phone.addEventListener('change', () => {
-      measureViewport(true);
-      schedule();
-    });
-    shortLandscape.addEventListener('change', () => {
       measureViewport(true);
       schedule();
     });

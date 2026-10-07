@@ -172,55 +172,55 @@ figure img {
   }
 }
 
-@media (max-width: 900px) and (max-height: 450px) {
-  :root {
+@media (max-width: 900px) {
+  :root[data-story-short="true"] {
     --story-panel-height: calc(var(--story-viewport-height) * .56);
   }
 
-  .chapter > .graphic {
+  :root[data-story-short="true"] .chapter > .graphic {
     padding-block: 4px;
   }
 
-  .gbody canvas {
+  :root[data-story-short="true"] .gbody canvas {
     min-height: 60px;
   }
 }
 
 /* A short landscape screen has enough width for two columns but too little
    height for a chart above the text. Keep both visible beside one another. */
-@media (min-width: 500px) and (max-width: 900px) and (max-height: 450px) {
-  .scrolly {
+@media (min-width: 500px) and (max-width: 900px) {
+  :root[data-story-layout="side"] .scrolly {
     padding-inline: 16px;
   }
 
-  .chapter {
+  :root[data-story-layout="side"] .chapter {
     display: grid;
     grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
     gap: 0 24px;
     align-items: start;
   }
 
-  .chapter > .graphic {
+  :root[data-story-layout="side"] .chapter > .graphic {
     order: 2;
     height: var(--story-viewport-height);
     padding-block: 8px;
   }
 
-  .chapter > .text {
+  :root[data-story-layout="side"] .chapter > .text {
     order: 1;
     padding-block: 24px;
   }
 
-  .step {
+  :root[data-story-layout="side"] .step {
     min-height: calc(var(--story-viewport-height) * .52);
     scroll-margin-top: 24px;
   }
 
-  .chapter > .text > .step:last-child {
+  :root[data-story-layout="side"] .chapter > .text > .step:last-child {
     min-height: calc(var(--story-viewport-height) - 24px);
   }
 
-  .gbody canvas {
+  :root[data-story-layout="side"] .gbody canvas {
     min-height: 110px;
   }
 }
