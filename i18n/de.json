@@ -18,13 +18,13 @@
     },
     {
       "kind": "p",
-      "en": "Proceedings of the S.P.R., vol. 49 · <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">No. 35 of Klaus Schmeh’s Top 50</a>",
-      "de": "Proceedings of the S.P.R., Bd. 49 · <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">Nr. 35 auf Klaus Schmehs Top-50-Liste</a>"
+      "en": "<span class=\"byline-author\">By <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a></span> <time datetime=\"2026-10-04\">October 4, 2026</time>",
+      "de": "<span class=\"byline-author\">Von <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a></span> <time datetime=\"2026-10-04\">4. Oktober 2026</time>"
     },
     {
       "kind": "p",
-      "en": "By <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, with assistance from Claude<span>October 4, 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code and data on GitHub</a> · <a class=\"lang\" href=\"de/\" hreflang=\"de\" lang=\"de\">Deutsche Fassung</a></span>",
-      "de": "Von <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, mit Unterstützung von Claude<span>4. Oktober 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code und Daten auf GitHub</a> · <a class=\"lang\" href=\"../\" hreflang=\"en\" lang=\"en\">English version</a></span>"
+      "en": "<a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code and data</a> <a class=\"lang\" href=\"de/\" hreflang=\"de\" lang=\"de\">Deutsche Fassung</a>",
+      "de": "<a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code und Daten</a> <a class=\"lang\" href=\"../\" hreflang=\"en\" lang=\"en\">English version</a>"
     },
     {
       "kind": "attr",
@@ -58,8 +58,8 @@
     },
     {
       "kind": "p",
-      "en": "Confirmed by <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> on October 4, 2026",
-      "de": "Bestätigt von <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> am 4. Oktober 2026"
+      "en": "Confirmed by <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> on <time datetime=\"2026-10-04\">October 4, 2026</time>",
+      "de": "Bestätigt von <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> am <time datetime=\"2026-10-04\">4. Oktober 2026</time>"
     },
     {
       "kind": "p",

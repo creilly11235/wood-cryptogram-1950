@@ -48,15 +48,16 @@ a{color:var(--bone);text-decoration-color:var(--bone-3);text-decoration-thicknes
 a:hover{color:var(--candle);text-decoration-color:var(--candle)}
 a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher,code{font-family:var(--mono);font-size:.9em}
-/* hero: set like the opening of a Proceedings article */
+/* A compact article opening; sources and detailed credits follow the story. */
 .hero{max-width:780px;margin:0 auto;padding-block:64px 16px;padding-inline:24px;text-align:center}
 .hero .langhint{font:var(--t-note);margin:-28px 0 22px}
 :root[lang="de"] body{-webkit-hyphens:auto;hyphens:auto}
 :root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3,:root[lang="de"] .gbar .ct{-webkit-hyphens:manual;hyphens:manual}
-.hero .kick{font:var(--t-note);color:var(--bone-2);margin:0 0 24px}
 .hero h1{font:400 clamp(2rem,4.2vw,3rem)/1.2 var(--body);margin:0 auto;text-wrap:balance;max-width:22ch;letter-spacing:-.025em}
-.hero .byline{font:var(--t-note);color:var(--bone-2);margin:24px 0 0}
-.hero .byline span{display:block;margin-top:6px}
+.hero .byline{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 16px;font:var(--t-note);color:var(--bone-2);margin:22px 0 0}
+.hero .byline-author,.hero .byline time{white-space:nowrap}
+.hero .hero-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;margin:10px 0 0;font:400 .8125rem/1.5 var(--body)}
+.hero .hero-links a{white-space:nowrap;color:var(--bone-2)}
 .cipher-row{--tw:28px;margin:40px 0 0;display:flex;flex-direction:column;align-items:center}
 .cipher-row .intro{font:var(--t-note);color:var(--bone-2);margin:0 0 14px}
 .cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 12px}
@@ -67,10 +68,12 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero .answer,.hero .lede,.contents{max-width:640px;margin-inline:auto;text-align:left}
 .hero .answer{margin-top:40px;padding-top:28px;border-top:1px solid var(--veil-2)}
 .hero .answer p{margin:0 0 .8em}
-.hero .answer .sv{font:var(--t-note);color:var(--bone-2);margin-bottom:8px}
+.hero .answer-heading{display:grid;gap:4px;margin-bottom:16px}
+.hero .answer .sv{font:var(--t-note);color:var(--bone-2);margin:0}
 .hero .answer .answer-message{font:var(--t-heading);text-wrap:balance;margin-bottom:16px;padding:12px 16px}
 .hero .answer .answer-meaning{color:var(--bone)}
-.hero .answer .answer-status{font:var(--t-note);color:var(--bone-2);margin-top:18px}
+.hero .answer .answer-status{font:400 .8125rem/1.5 var(--body);color:var(--bone-2);margin:0;text-wrap:pretty}
+.hero .answer-status time{white-space:nowrap}
 .hero .lede{margin-top:28px}
 .contents{margin-top:32px;padding-block:20px;border-block:1px solid var(--veil-2)}
 .contents ol{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;margin:0;padding-left:1.7em;font:var(--t-note);list-style-type:upper-roman}
@@ -210,9 +213,9 @@ footer p{margin:0 0 .7em}
 
 <div class="hero">
 <p class="langhint" lang="de" translate="no" hidden><a href="de/" hreflang="de">Diese Seite gibt es auch auf Deutsch →</a></p>
-<p class="kick">Proceedings of the S.P.R., vol. 49 · <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">No. 35 of Klaus Schmeh’s Top 50</a></p>
 <h1>Solving the 1950 cipher meant to test life after death</h1>
-<p class="byline">By <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a>, with assistance from Claude<span>October 4, 2026 · <a href="https://github.com/creilly11235/wood-cryptogram-1950">Code and data on GitHub</a> · <a class="lang" href="de/" hreflang="de" lang="de">Deutsche Fassung</a></span></p>
+<p class="byline"><span class="byline-author">By <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a></span> <time datetime="2026-10-04">October 4, 2026</time></p>
+<p class="hero-links"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code and data</a> <a class="lang" href="de/" hreflang="de" lang="de">Deutsche Fassung</a></p>
   <figure class="cipher-row" aria-label="Wood's ciphertext, FVAMI NTKFX XWATB OIZVV X">
     <p class="intro">“My ciphered passage is:”</p>
     <div class="line" translate="no">
@@ -225,11 +228,13 @@ footer p{margin:0 0 .7em}
   </figure>
 
 <div class="answer">
+<div class="answer-heading">
 <p class="sv">Solved</p>
+<p class="answer-status">Confirmed by <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">Klaus Schmeh</a> on <time datetime="2026-10-04">October 4, 2026</time></p>
+</div>
 <p class="answer-message cipher-token decoded" translate="no"><span lang="de">Hier bin ich</span>. <span lang="af">Totsiens</span>. T.E.W.</p>
 <p class="answer-meaning">“Here I am” in German, “goodbye” in Afrikaans, and Wood’s initials. Written to be read after his death.</p>
 <p>The key is the opening of the Lord’s Prayer in the 1912 Luther Bible, used with Robert Thouless’s 1948 word-sum system.</p>
-<p class="answer-status">Confirmed by <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">Klaus Schmeh</a> on October 4, 2026</p>
 </div>
 <p class="lede">In 1950, a solicitor named T. E. Wood published a 21 letter cipher as a test of life after death. He planned to send the key back through a medium after he died. Seventy-six years later, we decrypted it. No séance required.</p>
 <nav class="contents" aria-label="Article sections"><ol>
