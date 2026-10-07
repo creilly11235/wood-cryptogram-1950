@@ -1,6 +1,6 @@
 /* One compact reading surface: a stable frame keeps the animation, its title,
    and its controls together instead of spreading them over a whole screen. */
-.cipher-walkthrough-host{display:flex;flex:1 1 0;align-items:flex-start;min-width:0;min-height:0}
+.cipher-walkthrough-host{display:flex;flex:1 1 0;align-items:flex-start;min-width:0;min-height:0;container-type:size;container-name:walkthrough-space}
 .cw{
   --cw-encoded-bg:var(--cipher-encoded-bg,#282e35);--cw-encoded-fg:var(--cipher-encoded-fg,#fafbfc);
   --cw-decoded-bg:var(--cipher-decoded-bg,#e4f1ed);--cw-decoded-fg:var(--cipher-decoded-fg,#18584f);--cw-decoded-border:var(--cipher-decoded-border,#26796c);
@@ -87,5 +87,22 @@
   .cw-prayer{font-size:15px;line-height:1.4}.cw-key-note{margin-top:7px;font-size:10px}
   .cw[data-stage="4"] .cw-focus{gap:6px}.cw[data-stage="4"] .cw-focus-pair{gap:2px}.cw[data-stage="4"] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-stage="4"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
   .cw-controls{padding-top:5px}.cw-previous,.cw-next{min-height:32px}
+}
+/* Browser chrome can leave a wide phone with a short reading viewport.
+   Fit all eight scenes to the panel's actual space, preserving room for controls. */
+@media(min-width:361px){
+  @container walkthrough-space (max-height:320px){
+    .cw{padding:8px;gap:6px}
+    .cw-title{font-size:13px;margin-bottom:4px}.cw-legend{font-size:10px}
+    .cw-source-grid,.cw-grid{gap:6px 4px}
+    .cw-source-letter,.cw-card{width:32px;height:31px}.cw-source-letter,.cw-face{font-size:21px}
+    .cw-pair{gap:3px}.cw-word{font-size:10.5px}
+    .cw-prayer{font-size:15px;line-height:1.4}.cw-key-note{margin-top:7px;font-size:10.5px}
+    .cw-single{width:52px;height:60px;font-size:36px}.cw-focus,.cw-result,.cw-shift{gap:10px}
+    .cw[data-stage="4"] .cw-focus{gap:6px}.cw[data-stage="4"] .cw-focus-pair{gap:2px}
+    .cw[data-stage="4"] .cw-single{width:26px;height:28px;font-size:21px}
+    .cw[data-stage="4"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
+    .cw-controls{padding-top:5px}
+  }
 }
 @media(prefers-reduced-motion:reduce){.cw *,.cw *::before,.cw *::after{scroll-behavior:auto}}
