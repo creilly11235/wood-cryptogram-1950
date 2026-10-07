@@ -3,6 +3,7 @@
 :root {
   --story-viewport-height: 100svh;
   --story-panel-height: clamp(240px, calc(var(--story-viewport-height) * .5), 430px);
+  --story-walkthrough-min-height: 330px;
 }
 
 html {
@@ -98,6 +99,16 @@ figure img {
     padding: 8px 0;
     border-block: 1px solid var(--veil);
     background: var(--room);
+  }
+
+  /* Keep the walkthrough readable even with the phone's browser bars open.
+     Its own compact layout handles the contents without covering the buttons. */
+  :root[data-story-layout="stack"] .walkthrough-graphic {
+    min-height: var(--story-walkthrough-min-height);
+  }
+
+  :root[data-story-layout="stack"] .chapter[data-ch="1"] .step {
+    scroll-margin-top: calc(max(var(--story-panel-height), var(--story-walkthrough-min-height)) + env(safe-area-inset-top, 0px) + 24px);
   }
 
   /* List markers can overhang the reading column. Cover the page gutters too,
@@ -203,6 +214,10 @@ figure img {
 @media (max-width: 360px) {
   .scrolly {
     --story-gutter: 20px;
+  }
+
+  :root {
+    --story-walkthrough-min-height: 310px;
   }
 }
 
