@@ -1,0 +1,10 @@
+/* Shared ciphertext and candidate-plaintext identity. The outlined face and
+   bottom rule distinguish decoded text in addition to its teal color. */
+:root{--cipher-card-radius:4px;--cipher-decoded-rule:inset 0 -2px 0 var(--cipher-decoded-border)}
+.t.encoded,.cipher-token.encoded{border:1px solid var(--cipher-encoded-border);background:var(--cipher-encoded-bg);color:var(--cipher-encoded-fg);box-shadow:inset 0 1px 0 rgb(255 255 255 / 8%)}
+.t.decoded,.cipher-token.decoded{border:1px solid var(--cipher-decoded-border);background:var(--cipher-decoded-bg);color:var(--cipher-decoded-fg);box-shadow:var(--cipher-decoded-rule)}
+.t{border-radius:var(--cipher-card-radius);padding-top:.09em}
+.cipher-token{border-radius:var(--cipher-card-radius);padding:.12em .3em .16em}
+td .cipher-token{min-width:1.65em;padding:.12em .18em .16em}
+.hero .answer .answer-message{border-radius:6px;padding:14px 16px 16px;line-height:1.4}
+@media(max-width:900px){.tiles .t{border-radius:2px}}
