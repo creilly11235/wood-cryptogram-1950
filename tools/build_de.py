@@ -20,7 +20,7 @@ for u in units(en):
     if u["en"] not in known:
         problems.append("untranslated unit: " + u["en"][:90])
 
-cut = en.index("<script>")
+cut = en.index("<script")
 head, body, script = en[:en.index("<body>")], en[en.index("<body>"):cut], en[cut:]
 
 def swap(text, a, b, where):
@@ -34,6 +34,9 @@ for u in sorted(table["units"], key=lambda u: -len(u["en"])):
     a, b = u["en"], u["de"]
     if u["kind"] == "title":
         head = swap(head, f"<title>{a}</title>", f"<title>{b}</title>", "title")
+        # Unit extraction deduplicates identical text across title, metadata and H1.
+        head = head.replace(f'content="{a}"', f'content="{b}"')
+        body = body.replace(f"<h1>{a}</h1>", f"<h1>{b}</h1>")
     elif u["kind"] == "meta":
         head = swap(head, f'content="{a}"', f'content="{b}"', "meta")
     else:
@@ -50,14 +53,21 @@ for j in sorted(table["js"], key=lambda j: -len(j["en"])):
 head = head.replace('<html lang="en">', '<html lang="de">')
 head = head.replace(f'<link rel="canonical" href="{BASE}">', f'<link rel="canonical" href="{BASE}de/">')
 for a, b in [(f'<meta property="og:url" content="{BASE}">', f'<meta property="og:url" content="{BASE}de/">'),
-             (f'<meta property="og:image" content="{BASE}card.png?v=3">', f'<meta property="og:image" content="{BASE}de/card.png?v=3">'),
              ('<meta property="og:locale" content="en_GB">', '<meta property="og:locale" content="de_DE">\n<meta property="og:locale:alternate" content="en_GB">')]:
     head = swap(head, a, b, "head")
+card = re.search(r'<meta property="og:image" content="' + re.escape(BASE) + r'(card\.png(?:\?[^\"]*)?)">', head)
+if card:
+    head = swap(head, card.group(0), f'<meta property="og:image" content="{BASE}de/{card.group(1)}">', "head")
+else:
+    problems.append("head: English preview card not found")
 body = re.sub(r'\s*<p class="langhint"[^\n]*</p>', "", body)
 for asset in ("wood_1950_p105.png", "luther_1922_mt6_9-11.jpg", "thouless_1948_suffer_slip.png"):
     body = swap(body, f'src="{asset}"', f'src="../{asset}"', "asset")
 body = swap(body, '<p class="small">Besuche gezählt', '<p class="small">Diese deutsche Fassung wurde mit KI-Unterstützung aus dem Englischen übersetzt und von einem zweiten KI-System gegengelesen, aber noch nicht von einem Muttersprachler geprüft. Hinweise auf Fehler sind willkommen, gern als <a href="https://github.com/creilly11235/wood-cryptogram-1950/issues">Issue auf GitHub</a>.</p>\n<p class="small">Besuche gezählt', "footer")
 de = head + body + script
+# The translated page is one directory deeper; share the layout and scroll code.
+for asset in ("story-layout.css", "story-scroll.js"):
+    de = re.sub(r'((?:src|href)=\")' + re.escape(asset) + r'(?=[?\"])', r'\1../' + asset, de)
 if problems:
     sys.exit("build_de: " + str(len(problems)) + " problem(s)\n" + "\n".join(problems))
 out = ROOT / "docs/de/index.html"

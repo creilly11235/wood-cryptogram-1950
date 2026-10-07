@@ -13,7 +13,7 @@
 <meta property="og:title" content="Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte">
 <meta property="og:description" content="Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch.">
 <meta property="og:url" content="https://creilly11235.github.io/wood-cryptogram-1950/de/">
-<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=3">
+<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=4">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“">
@@ -153,6 +153,8 @@ html.lb-open{overflow:hidden;scrollbar-gutter:stable}
 table{border-collapse:collapse;width:100%;font:var(--t-data);font-variant-numeric:tabular-nums}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--veil);vertical-align:top}
 th{font:var(--t-note);color:var(--bone-2);border-bottom:1px solid var(--veil-2)}
+/* Keep the five-column arithmetic table readable on narrow phones. */
+@media (max-width:600px){th{font-size:.75rem;line-height:1.4;overflow-wrap:normal!important}td{font-size:.75rem}}
 /* footer */
 footer{max-width:1184px;margin:0 auto;padding:32px 24px 64px;border-top:1px solid var(--veil-2);color:var(--bone-2);font:var(--t-note)}
 footer>p{max-width:72ch}
@@ -163,7 +165,7 @@ footer p{margin:0 0 .7em}
   .chapter{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:0 40px}
 }
 @media (max-width:900px){
-  /* phone: the chapter's text first, then the graphic alone, pinned for one screen per beat, then the next chapter */
+  /* Single-column reading layout; sticky panel geometry is in story-layout.css. */
   .hero{padding-top:40px}
   .chapter{display:flex;flex-direction:column}
   .chapter>*{width:100%;max-width:100%;min-width:0}
@@ -174,9 +176,6 @@ footer p{margin:0 0 .7em}
   .step+.step{padding-top:16px}
   th,td{padding:8px 4px}
   .graphic{order:2;height:100vh;height:100dvh;z-index:2;padding:12px 0 12px;border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
-  .beats{order:3;display:block}
-  html{scroll-snap-type:y proximity}
-  .beat{height:100vh;height:100dvh;scroll-snap-align:center}
   .progress{display:flex;gap:5px;align-items:center;margin-left:auto}
   .progress i{width:5px;height:5px;border-radius:50%;background:var(--veil-2);transition:background .3s}
   .progress i.on{background:var(--candle)}
@@ -195,21 +194,19 @@ footer p{margin:0 0 .7em}
 @media (max-width:360px){
   .hero,.scrolly,footer{padding-inline:20px}
 }
-@media (max-width:900px) and (max-height:740px){
-  /* Dense comparisons need more room on short phones. Keep their text readable
-     and let the panel scroll before the page advances to the next beat. */
-  .gbody{overflow-y:auto;scrollbar-width:thin}
-  .gbody canvas{flex-shrink:0;min-height:180px}
-}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Sources conclude the reading without keeping a graphic pinned. */
+.endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
+.endmatter h2{margin-top:0}
 </style>
+<link rel="stylesheet" href="../story-layout.css">
 </head>
 <body>
 
 <div class="hero">
-  <p class="kick">Proceedings of the S.P.R., Bd.&nbsp;49 · <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">Nr.&nbsp;35 auf Klaus Schmehs Top-50-Liste</a></p>
-  <h1>Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte</h1>
-  <p class="byline">Von <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a>, mit Unterstützung von Claude<span>4.&nbsp;Oktober 2026 · <a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten auf GitHub</a> · <a class="lang" href="../" hreflang="en" lang="en">English version</a></span></p>
+<p class="kick">Proceedings of the S.P.R., Bd. 49 · <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">Nr. 35 auf Klaus Schmehs Top-50-Liste</a></p>
+<h1>Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte</h1>
+<p class="byline">Von <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a>, mit Unterstützung von Claude<span>4. Oktober 2026 · <a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten auf GitHub</a> · <a class="lang" href="../" hreflang="en" lang="en">English version</a></span></p>
   <figure class="cipher-row" aria-label="Woods Geheimtext, FVAMI NTKFX XWATB OIZVV X">
     <p class="intro">„Mein verschlüsselter Text lautet:“</p>
     <div class="line" translate="no">
@@ -218,1090 +215,451 @@ footer p{margin:0 0 .7em}
       <div class="grp"><span class="t">X</span><span class="t">W</span><span class="t">A</span><span class="t">T</span><span class="t">B</span></div>
       <div class="tail"><div class="grp"><span class="t">O</span><span class="t">I</span><span class="t">Z</span><span class="t">V</span><span class="t">V</span></div><div class="grp"><span class="t">X</span></div></div>
     </div>
-    <figcaption>T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S.&nbsp;105.</figcaption>
+    <figcaption>T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S. 105.</figcaption>
   </figure>
-  <div class="answer">
+
+<div class="answer">
 <p class="sv">Gelöst</p>
-<p class="answer-message" translate="no"><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</p>
-<p class="answer-meaning">Deutsch, Afrikaans für „auf Wiedersehen“ und Woods Initialen. Sie sollte erst nach seinem Tod gelesen werden.</p>
+<p class="answer-message" translate="no"><span lang="de">Hier bin ich</span>. <span lang="af">Totsiens</span>. T.E.W.</p>
+<p class="answer-meaning">„Hier bin ich“ auf Deutsch, „auf Wiedersehen“ auf Afrikaans und Woods Initialen. Geschrieben, um erst nach seinem Tod gelesen zu werden.</p>
 <p>Der Schlüssel ist der Anfang des Vaterunsers in der Lutherbibel von 1912, verwendet nach Robert Thouless’ Wortsummenverfahren von 1948.</p>
-<p class="answer-status">Klaus Schmeh <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">bestätigte die Lösung</a> am 4. Oktober 2026; Richard Bean bestätigte die Lesart am 6. Oktober.</p>
+<p class="answer-status">Klaus Schmeh <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">bestätigte die Lösung</a> am 4. Oktober 2026.</p>
 </div>
-  <p class="lede">1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er versuchen, den Schlüssel über ein Medium zu übermitteln. Im Folgenden geht es darum, wie der Geheimtext entschlüsselt wurde, ohne mit den Toten in Kontakt zu treten.</p>
-<nav class="contents" aria-label="Abschnitte des Artikels">
-<ol>
+<p class="lede">1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood einen Geheimtext aus 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er den Schlüssel über ein Medium zurücksenden. Sechsundsiebzig Jahre später entschlüsselten wir die Botschaft, ohne mit den Toten in Kontakt zu treten.</p>
+<nav class="contents" aria-label="Abschnitte des Artikels"><ol>
 <li><a href="#the-puzzle">Das Rätsel</a></li>
 <li><a href="#why-it-stayed-open">Suche nach Buchschlüsseln</a></li>
 <li><a href="#the-idea-that-cracked-it">Die Sprachenfrage</a></li>
 <li><a href="#the-hit">Die Lösung</a></li>
 <li><a href="#how-it-was-checked">Prüfung des Ergebnisses</a></li>
 <li><a href="#the-correction">Weitere Erkenntnisse</a></li>
-</ol>
-</nav>
+</ol></nav>
 </div>
-
-<div class="scrolly">
+<main class="scrolly">
 <section class="chapter" data-ch="1">
-  <div class="graphic" data-g="1">
-    <div class="gbar"><span class="ct">I · Der Geheimtext</span><span class="progress" aria-hidden="true"></span></div>
-    <div class="gbody">
-    <div class="tiles" aria-live="polite" translate="no"></div>
-    <div class="sub" aria-hidden="true" translate="no"></div>
-    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
-    <canvas aria-label="Mögliche Schlüssel, ein Punkt je Schlüssel; die Grafik ändert sich mit dem gelesenen Abschnitt"></canvas>
-    <div class="legend"></div>
-    <p class="beatcap"></p>
-    </div>
-  </div>
-  <div class="text">
-<section class="step" data-s="summary" data-cap="1950 veröffentlichte Wood 21 Buchstaben als Test des Fortlebens nach dem Tod. Jeder Punkt ist ein Schlüssel und seine Lesart; eine davon ist die Botschaft." id="the-puzzle">
-<p class="eyebrow">1948 und 1950</p>
+<div class="graphic" data-g="1">
+<div class="gbar"><span class="ct">I · Der Geheimtext</span><span class="progress" aria-hidden="true"></span></div>
+<div class="gbody">
+<div class="tiles" aria-hidden="true" translate="no"></div>
+<div class="sub" aria-hidden="true" translate="no"></div>
+<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
+<canvas></canvas><div class="legend"></div><p class="beatcap"></p>
+</div></div>
+<div class="text">
+<section class="step" data-s="summary" data-cap="Wood veröffentlichte eine Botschaft und hielt ihren Buchschlüssel geheim. Er hoffte, ihn nach seinem Tod zurücksenden zu können." id="the-puzzle">
 <h2>Das Rätsel</h2>
-<p>Woods Kryptogramm war ein Test des Fortlebens nach dem Tod. Er wollte eine Botschaft veröffentlichen, sterben und dann versuchen, den Schlüssel über ein Medium zu übermitteln. Nur er kannte den Schlüssel; hätte ein Medium ihn geliefert, wäre das, so hoffte er, ein Indiz gewesen, dass etwas von ihm den Tod überdauert hatte. Die Idee übernahm er von dem Psychologen Robert Thouless.</p>
+<p>Sein Plan beruhte darauf, den Schlüssel geheim zu halten. Würde ein Medium ihn nach seinem Tod liefern, wäre das, so hoffte er, ein Beleg dafür, dass etwas von ihm den Tod überdauert hatte. Die Idee stammte von dem Psychologen Robert Thouless.</p>
 </section>
-
-<section class="step" data-s="method" data-cap="Nach Thouless’ Regel ergibt die Buchstabensumme eines Worts einen Schlüsselbuchstaben, der einen Geheimtextbuchstaben verschiebt. UNSER ergibt Y, aus F wird H.">
-<h3>Thouless’ Verfahren (1948)</h3>
-<p>In „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48) veröffentlichte Thouless verschlüsselte Botschaften, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne Schlüssel unknackbar sein sollte:</p>
+<section class="step" data-s="method" data-cap="Jedes verschiedene Schlüsselwort liefert eine Verschiebung. UNSER ergibt die Summe 77 und damit den Schlüsselbuchstaben Y; Geheimtext F wird zu H entschlüsselt.">
+<p>In einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) veröffentlichte Thouless verschlüsselte Botschaften, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte:</p>
 <ol>
 <li>Man wählt eine Textpassage als Schlüssel und überspringt jedes Wort, das schon vorgekommen ist.</li>
-<li>Jedes Wort wird zu einem Buchstaben. Man addiert seine Buchstaben (A=1 bis Z=26), teilt durch 26 und nimmt den Rest (1 ist A, 25 ist Y, 0 ist Z).</li>
+<li>Jedes Wort wird zu einem Buchstaben. Man addiert seine Buchstabenwerte (A=1 bis Z=26), teilt durch 26 und nimmt den Rest (1 ist A, 25 ist Y, 0 ist Z).</li>
 <li>Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln verschiebt man in die Gegenrichtung.</li>
 </ol>
-<p>Jedes Schlüsselwort liefert die Verschiebung für einen Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter.</p>
+<p>Jedes Schlüsselwort liefert die Verschiebung für einen Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter. Dieses Verfahren verwendete Wood für seinen Test des Fortlebens nach dem Tod.</p>
 </section>
-
-<section class="step" data-s="wood" data-cap="Laut Woods Hinweisen steht der Schlüssel in einem zugänglichen fremdsprachigen Buch, und die Botschaft ist in mehr als einer Sprache geschrieben. Die meisten Buchschlüssel ergeben Buchstabensalat.">
-<h3>Woods Hinweise (1950)</h3>
-<p>T. E. Wood, ein 1887 in Yorkshire geborener Rechtsanwalt (Solicitor), der in Burma praktiziert hatte, antwortete mit „A Further Test for Survival“ (<em>Proceedings</em> 49). Er veröffentlichte <span class="cipher" translate="no">FVAMI NTKFX XWATB OIZVV X</span> und gab folgende Hinweise:</p>
+<section class="step" data-s="wood" data-cap="Woods Hinweise: ein zugängliches Buch in einer Fremdsprache, ausgelassene Wortwiederholungen und eine Botschaft in mehr als einer Sprache.">
+<h3>Wood und seine Hinweise</h3>
+<p>Als Antwort auf Thouless’ Artikel veröffentlichte T. E. Wood, ein 1887 in Yorkshire geborener Rechtsanwalt, der in Burma praktiziert hatte, seine eigene Botschaft in „A Further Test for Survival“ (<em>Proceedings</em> 49, 1950). Er veröffentlichte <strong>FVAMI NTKFX XWATB OIZVV X</strong> und gab folgende Hinweise:</p>
 <ul>
-<li>er habe Thouless’ Verfahren benutzt und wiederholte Wörter ausgelassen</li>
-<li>der Schlüsseltext stehe „in einem zugänglichen Buch“, in einer Fremdsprache</li>
-<li>die Botschaft werde „nicht in einer einzigen Sprache“ sein (im Original „will not be in any one language“)</li>
+<li>Er verwendete Thouless’ Verfahren und ließ wiederholte Wörter aus.</li>
+<li>Der Schlüsseltext stehe „in einem zugänglichen Buch“, in einer Fremdsprache.</li>
+<li>Die Botschaft werde „nicht in einer einzigen Sprache“ sein.</li>
 </ul>
-<figure><img src="../wood_1950_p105.png" alt="Der Anfang von Woods Artikel von 1950, A Further Test for Survival, von T. E. Wood, der mit seinem verschlüsselten Text FVAMI NTKFX XWATB OIZVV X endet" width="1525" height="617" loading="lazy"><figcaption>Woods Kryptogramm, gedruckt in den <em>Proceedings of the SPR</em> 49 (1950), S.&nbsp;105</figcaption></figure>
-<p>Er wählte bewusst Fremdsprachen, um jeden scheitern zu lassen, der auf häufige englische Wörter tippt. Wood ist laut Schmeh vor Jahrzehnten gestorben, und aus dem Jenseits kam nie ein Schlüssel.</p>
+<figure><img src="../wood_1950_p105.png" width="1525" height="617" alt="Woods Kryptogramm, gedruckt in Proceedings of the SPR 49 (1950), S. 105" loading="lazy"><figcaption><a href="https://creilly11235.github.io/wood-cryptogram-1950/wood_1950_p105.png">Woods Kryptogramm, gedruckt in Proceedings of the SPR 49 (1950), S. 105</a>.</figcaption></figure>
 </section>
-  </div>
-  <div class="beats" aria-hidden="true"><div class="beat" data-s="summary"></div><div class="beat" data-s="method"></div><div class="beat" data-s="wood"></div></div>
-</section>
-
+</div></section>
 <section class="chapter" data-ch="2">
-  <div class="graphic" data-g="2">
-    <div class="gbar"><span class="ct">II · Warum es ungelöst blieb</span><span class="progress" aria-hidden="true"></span></div>
-    <div class="gbody">
-    <div class="tiles" aria-live="polite" translate="no"></div>
-    <div class="sub" aria-hidden="true" translate="no"></div>
-    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
-    <canvas aria-label="Mögliche Schlüssel, ein Punkt je Schlüssel; die Grafik ändert sich mit dem gelesenen Abschnitt"></canvas>
-    <div class="legend"></div>
-    <p class="beatcap"></p>
-    </div>
-  </div>
-  <div class="text">
-<section class="step" data-s="trap" data-cap="Bei freier Wahl der Verschiebungen ergibt jeder Schlüssel jede Lesart, sogar Englisch. Eine „Lösung“ sieht aus wie Zufall." id="why-it-stayed-open">
-<p class="eyebrow">1950 bis 2026</p>
+<div class="graphic" data-g="2">
+<div class="gbar"><span class="ct">II · Die Büchersuche</span><span class="progress" aria-hidden="true"></span></div>
+<div class="gbody">
+<div class="tiles" aria-hidden="true" translate="no"></div>
+<div class="sub" aria-hidden="true" translate="no"></div>
+<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
+<canvas></canvas><div class="legend"></div><p class="beatcap"></p>
+</div></div>
+<div class="text">
+<section class="step" data-s="trap" data-cap="Veranschaulichung: Frei gewählte Schlüssel können aus demselben Geheimtext jede dieser Botschaften mit 21 Buchstaben erzeugen." id="why-it-stayed-open">
 <h2>Warum es ungelöst blieb</h2>
-<p>Thouless selbst wies auf das Problem hin. Bei freier Wahl der Schlüsselbuchstaben lässt sich jeder Geheimtext seines Verfahrens in jede beliebige Botschaft gleicher Länge verwandeln. Bei nur 21 Buchstaben schien eine „Lösung“ nicht von Zufall zu unterscheiden.</p>
-<p>Auch dieses Projekt hielt das anfangs für zutreffend. In seinen Notizen galt Woods Kryptogramm als „zu unterbestimmt für einen blinden Gutenberg-Scan“, weil „jede Schlüsselfolge aus 21 Buchstaben ‚plausiblen‘ Text erzeugen kann“, und es wurde nicht in Angriff genommen.</p>
+<p>Könnte man die Schlüsselbuchstaben frei wählen, ließe sich derselbe Geheimtext in jede beliebige Botschaft gleicher Länge verwandeln. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte — erst recht nicht bei einem so kurzen Text.</p>
 </section>
-
-<section class="step" data-s="shelves" data-cap="Aber der Schlüssel sind aufeinanderfolgende Wörter eines echten Buchs. Das sind 129 Bücher und 28,6 Mio. Startpunkte, eine endliche Liste.">
-<h3>Buchschlüssel durchsuchen</h3>
-<p>Dieses Argument setzt voraus, dass jeder Schlüsselbuchstabe frei gewählt werden kann. Woods Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs. Eine Suche konnte deshalb jeden Startpunkt in einer Sammlung von Büchern prüfen. In der Grafik steht jeder Buchrücken für ein Buch und jeder Punkt für einen Startpunkt.</p>
-<p class="fig"><b>129 Bücher</b> · 28,6 Millionen Startpunkte<br>Jeder Punkt steht für viele Tausend.</p>
+<section class="step" data-s="shelves" data-cap="129 Bücher lieferten 28,6 Millionen mögliche Schlüssel. Jeder Buchrücken steht für ein Buch.">
+<h3>Wo anfangen?</h3>
+<p>Wood hatte noch einen wichtigen Hinweis gegeben: Sein Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs. Damit ließ sich eine Sammlung von Büchern durchsuchen, indem man jedes Wort als möglichen Anfang ausprobierte.</p>
 </section>
-
-<section class="step" data-s="plants" data-cap="Im September 2026 landeten mit Buchschlüsseln eingeschleuste Testbotschaften in 97 von 100 Versuchen auf Rang 1. Die Suche funktioniert.">
-<h3>Die Suche testen</h3>
-<p>Am 17.&nbsp;September 2026 hat ein früherer Versuch den Suchraum vermessen. Man entschlüsselt den Geheimtext mit jedem Startpunkt und bewertet jedes Ergebnis danach, wie sehr es nach Englisch aussieht. Um zu prüfen, ob das überhaupt funktionieren kann, verschlüsselt man bekannte Botschaften mit zufälligen Buchschlüsseln und schaut, ob die Suche sie findet. Bei 28,6 Millionen Kombinationen aus Startpunkten und Umgang mit wiederholten Wörtern in 129 Büchern landeten eingeschleuste Testbotschaften in 97 von 100 Versuchen auf Rang 1; damit war belegt, dass die Suche funktionieren konnte.</p>
-<p class="fig">Testbotschaften auf Rang 1: <b>97 von 100</b></p>
+<section class="step" data-s="plants" data-cap="In 97 von 100 bekannten Testbotschaften erhielt die richtige Botschaft die höchste Bewertung. Jeder Punkt steht für einen Test.">
+<p>Wir bezogen die Bücher aus öffentlich zugänglichen Quellen und prüften mit 100 Testbotschaften, deren Klartext bekannt war, ob unser Code eine echte Botschaft wiederfinden und richtig bewerten konnte. Am 17. September 2026 untersuchte eine erste Suche 28,6 Millionen mögliche Buchschlüssel aus 129 Büchern. Jede Entschlüsselung wurde danach bewertet, wie sehr sie Englisch ähnelte. In 97 von 100 Tests erhielt die richtige Botschaft die höchste Bewertung.</p>
 </section>
-
-<section class="step" data-s="englishResults" data-cap="Als Englisch bewertet, ist Woods Bestes aus 429 Mio. Schlüsseln Buchstabensalat, und 12 von 100 zufälligen Geheimtexten sind besser.">
-<h3>Ergebnisse der rein englischen Suche</h3>
-<p>Die Suche verglich zunächst Muster aus fünf Buchstaben und prüfte dann, wie gut sich die stärksten Kandidaten in englische Wörter zerlegen ließen. So wurden mögliche Lesarten geordnet, allerdings mit einer klaren Schwäche: Jede Lesart wurde als Englisch beurteilt.</p>
-<p>Doch die Suche nach Woods Botschaft blieb erfolglos. Das galt für diese 129 Bücher und ebenso für 3.977 Texte, darunter zusätzlich 3.848 Bücher von Project Gutenberg in 14 Sprachen (etwa 429 Millionen Kombinationen). Die beste Entschlüsselung schnitt schlechter ab als das, was zufällige Geheimtexte durch reinen Zufall erreichen. Der größere Durchlauf brachte außerdem überzeugendere falsche Fährten hervor, ein Zeichen, dass immer mehr Bücher nicht helfen würden. Die Notiz von damals hielt fest, das Problem brauche „eine gezielte Quelle“, keine breitere Suche.</p>
-<p class="fig">Bestes Ergebnis: <b>−13,94</b> · zufällige Geheimtexte erreichten −13,27<br>12 von 100 zufälligen Geheimtexten schlagen Woods bestes Ergebnis</p>
+<section class="step" data-s="englishResults" data-cap="Jeder graue Punkt ist das beste Ergebnis für einen von 100 zufälligen Geheimtexten. Zwölf wurden höher bewertet als Woods bestes Ergebnis, das blau markiert ist.">
+<h3>Die Suche nach Schlüsseln</h3>
+<p>Die Suche verglich zunächst Muster aus fünf Buchstaben und prüfte dann, wie gut sich die stärksten Kandidaten in englische Wörter aufteilen ließen. So ließen sich mögliche Lesarten ordnen, allerdings mit einer klaren Schwäche: Jede Lesart wurde als Englisch beurteilt.</p>
+<p>Woods Botschaft ergab kein lesbares Ergebnis. Die Suche wurde von 129 Büchern auf 3.977 Texte ausgeweitet: Hinzu kamen 3.848 Bücher von Project Gutenberg in 14 Sprachen, insgesamt wurden rund 429 Millionen mögliche Schlüssel geprüft. Noch immer fand sich nichts Überzeugendes.</p>
+<p>Wir ließen dieselbe Suche mit 100 zufälligen Folgen aus je 21 Buchstaben laufen. In 12 dieser Tests fand sie ein Ergebnis mit einer höheren Bewertung als alles, was sie für Woods Botschaft gefunden hatte. Die größere Bibliothek hatte mehr verlockende falsche Fährten geliefert, aber keine lesbare Botschaft.</p>
 </section>
-  </div>
-  <div class="beats" aria-hidden="true"><div class="beat" data-s="trap"></div><div class="beat" data-s="shelves"></div><div class="beat" data-s="plants"></div><div class="beat" data-s="englishResults"></div></div>
-</section>
-
+</div></section>
 <section class="chapter" data-ch="3">
-  <div class="graphic" data-g="3">
-    <div class="gbar"><span class="ct">III · Die Idee</span><span class="progress" aria-hidden="true"></span></div>
-    <div class="gbody">
-    <div class="tiles" aria-live="polite" translate="no"></div>
-    <div class="sub" aria-hidden="true" translate="no"></div>
-    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
-    <canvas aria-label="Mögliche Schlüssel, ein Punkt je Schlüssel; die Grafik ändert sich mit dem gelesenen Abschnitt"></canvas>
-    <div class="legend"></div>
-    <p class="beatcap"></p>
-    </div>
-  </div>
-  <div class="text">
-<section class="step" data-s="idea" data-cap="Ein eingesetzter deutscher Testsatz, zwei Bewertungen: Auf Englisch geht er unter, mit sieben Sprachen steht er oben. Auch die spätere Gutenberg-Kontrolle fand keine Lesart." id="the-idea-that-cracked-it">
-<p class="eyebrow">3.&nbsp;Oktober 2026, abends</p>
-<h2>Suche in mehreren Sprachen</h2>
-<p>Am Abend des 3.&nbsp;Oktober 2026 griffen wir einen von Woods Hinweisen erneut auf. Schmehs Beitrag von 2017 gibt Woods Angabe wieder, der Klartext sei „in mehreren verschiedenen Sprachen“ geschrieben. Die Suche im September hatte das notiert, die Kandidaten aber nur als Englisch bewertet.</p>
-<p>Das ist wichtig, denn es kommt darauf an, wie eine Suche entscheidet, was als Treffer gilt. Sie entschlüsselt mit jedem möglichen Schlüssel und ordnet die Ergebnisse danach, wie sehr sie nach Sprache aussehen. Eine Botschaft, die vom Deutschen ins Afrikaans wechselt, wirkt auf ein rein englisches Bewertungsprogramm wie Kauderwelsch. Bewertet über sieben Sprachen, wobei die Sprache bei jedem beliebigen Wort wechseln darf, springt eine eingeschleuste deutsche Botschaft an die Spitze. Außerdem muss das richtige Buch in der Sammlung sein, und die deutsche Bibel gehörte nicht zu den Texten der früheren Durchläufe.</p>
-<p>Die Änderung betraf das, was die Suche erkennen konnte. Ein schneller Vergleich von Vierbuchstabenmustern berücksichtigte nun sieben Sprachen. Die stärksten Kandidaten wurden anschließend in Wörter zerlegt. Häufige Wörter erhielten mehr Gewicht; jedes Wort und jeder Sprachwechsel kosteten einen kleinen Abzug.</p>
-<p class="fig">Spätere Gutenberg-Kontrolle, sieben Sprachen: <b>−1,313</b> · höchste Zufallswertung −1,207</p>
-<p>Ein Probelauf mit 786 Büchern prüfte diesen Ansatz vor der Bibelsuche. Die vollständige Gutenberg-Kontrolle wurde erst nach dem Treffer abgeschlossen: Ein Buch ließ sich nicht erneut herunterladen, sodass 3.847 der zuvor 3.848 übrig blieben. Auch dabei fand sich keine lesbare Botschaft. Die Grafik zeigt diese spätere Kontrolle mit.</p>
-<p>Vierbuchstabenmuster waren eine praktische Vorgabe, kein nachgewiesenes Optimum. Die Suche prüfte vollständige Buchschlüssel, statt einen geratenen Schlüssel schrittweise zu verbessern. Das <a href="https://github.com/creilly11235/wood-cryptogram-1950#scoring">Repository erläutert die Bewertungsregeln und nennt die Eingabetexte</a>, einschließlich der Lücken in den ursprünglichen Korpusaufzeichnungen.</p>
+<div class="graphic" data-g="3">
+<div class="gbar"><span class="ct">III · Über Sprachgrenzen hinweg</span><span class="progress" aria-hidden="true"></span></div>
+<div class="gbody">
+<div class="tiles" aria-hidden="true" translate="no"></div>
+<div class="sub" aria-hidden="true" translate="no"></div>
+<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
+<canvas></canvas><div class="legend"></div><p class="beatcap"></p>
+</div></div>
+<div class="text">
+<section class="step" data-s="idea" data-cap="Dieselbe deutsche Testbotschaft: Eine englische Wortliste zerlegt sie in Fragmente; Wortlisten in sieben Sprachen erkennen VERSTEHT GEWISSE MINDER." id="the-idea-that-cracked-it">
+<p>Da war noch Woods Hinweis, dass die Botschaft „nicht in einer einzigen Sprache“ sein werde. Die nächste Suche erkannte Wörter in sieben Sprachen und erlaubte einen Sprachwechsel von Wort zu Wort. Ein schneller Vergleich von Buchstabenmustern grenzte die Kandidaten ein, bevor das Programm versuchte, sie in Wörter aufzuteilen. Es bevorzugte häufige Wörter und wertete es ab, wenn eine Zeichenfolge in winzige Fragmente zerlegt wurde oder die Sprache ständig wechselte, nur damit die Teile irgendwie passten.</p>
 </section>
-
-<section class="step" data-s="church" data-cap="Liturgisch Vater unser: Buchstabensalat. Die Bibel sagt Unser Vater: andere Wörter, andere Reihenfolge, jeder Schlüsselbuchstabe ändert sich.">
-<h3>Bibeltexte einbeziehen</h3>
-<p>Daraus folgten zwei Änderungen:</p>
-<ol>
-<li>Ein schneller erster Durchgang behält die 3.000 Kandidaten, deren Buchstabenmuster am meisten nach Englisch, Französisch, Deutsch, Latein, Italienisch, Spanisch oder Portugiesisch aussehen. Diese werden dann in Wörterbuchwörter zerlegt, wobei die Sprache von Wort zu Wort wechseln darf.</li>
-<li>Wood schrieb, der Schlüssel stehe „in einem zugänglichen Buch“ in einer Fremdsprache. Eine Bibel kam als Quelle infrage, also kamen 19 Bibeln in Sprachen mit lateinischer Schrift hinzu.</li>
-</ol>
-<p>Ein erster Durchgang hatte berühmte Passagen ausprobiert, die von Hand eingegeben wurden, darunter das deutsche Vaterunser, und nichts gefunden. Beide deutschen Fassungen begannen mit „<span lang="de" translate="no">Vater unser</span>“, der vertrauten liturgischen Form, die Buchstabensalat ergibt, wie die Leiste zeigt. Der Bibeldurchlauf nutzte den vollständigen Bibeltext, in dem das Gebet mit „<span lang="de" translate="no">Unser Vater in dem Himmel</span>“ beginnt.</p>
-<p>Die Regeln dafür, was in der Bibelsuche als Treffer gelten würde, wurden vor dem Lauf schriftlich festgelegt und eingecheckt, damit die Messlatte hinterher nicht unbemerkt verschoben werden konnte.</p>
+<section class="step" data-s="bibles" data-cap="Die gezielte Suche nahm Bibelübersetzungen in 19 Sprachen hinzu. Jedes Buch steht für eine Übersetzung.">
+<p>Außerdem brauchten wir eine gezielter ausgewählte Quelle. Wood hatte geschrieben, der Schlüssel stehe „in einem zugänglichen Buch“ in einer Fremdsprache. Eine Bibel schien plausibel, also nahmen wir Bibelübersetzungen in 19 Sprachen in die Suche auf.</p>
 </section>
-  </div>
-  <div class="beats" aria-hidden="true"><div class="beat" data-s="idea"></div><div class="beat" data-s="church"></div></div>
-</section>
-
+</div></section>
 <section class="chapter" data-ch="4">
-  <div class="graphic" data-g="4">
-    <div class="gbar"><span class="ct">IV · Der Treffer</span><span class="progress" aria-hidden="true"></span></div>
-    <div class="gbody">
-    <div class="tiles" aria-live="polite" translate="no"></div>
-    <div class="sub" aria-hidden="true" translate="no"></div>
-    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
-    <canvas aria-label="Mögliche Schlüssel, ein Punkt je Schlüssel; die Grafik ändert sich mit dem gelesenen Abschnitt"></canvas>
-    <div class="legend"></div>
-    <p class="beatcap"></p>
-    </div>
-  </div>
-  <div class="text">
-<section class="step" data-s="prayer" data-cap="Neunzehn Bibeln, 26,7 Millionen weitere Schlüssel. Einer liegt deutlich vorn, bei Matthäus 6,9 in der deutschen Bibel." id="the-hit">
-<p class="eyebrow">Matthäus 6,9–11 · Lutherbibel 1912</p>
+<div class="graphic" data-g="4">
+<div class="gbar"><span class="ct">IV · Die Lösung</span><span class="progress" aria-hidden="true"></span></div>
+<div class="gbody">
+<div class="tiles" aria-hidden="true" translate="no"></div>
+<div class="sub" aria-hidden="true" translate="no"></div>
+<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
+<canvas></canvas><div class="legend"></div><p class="beatcap"></p>
+</div></div>
+<div class="text">
+<section class="step" data-s="prayer" data-cap="Die 13 führenden unterschiedlichen Ergebnisse der Bibelsuche nach Thouless’ Regel. Die deutsche Bibel erhält die höchste Bewertung und ergibt HIERBINICHTOTSIENSTEW." id="the-hit">
 <h2>Der Treffer</h2>
-<p>Der Bibeldurchlauf probierte 26,7 Millionen Kombinationen aus Startpunkt und Umgang mit wiederholten Wörtern, für jede der beiden Rechenvarianten; der erste Durchgang dauerte keine drei Minuten. Nach Thouless’ Regel stammte das beste Ergebnis aus der deutschen Bibel, ab dem sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Die Entschlüsselung lautete <span class="cipher" translate="no">HIERBINICHTOTSIENSTEW</span>.</p>
-<figure><img src="../luther_1922_mt6_9-11.jpg" alt="Matthäus 6,9–11 in Fraktur mit dem Text Darum sollt ihr also beten: Unser Vater in dem Himmel. Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns heute." width="1272" height="538" loading="lazy"><figcaption>Der Schlüsseltext, Matthäus 6,9–11, in einem Berliner Druck der Lutherbibel von 1912 aus dem Jahr 1922 (Britische und Ausländische Bibelgesellschaft). Die 21 Schlüsselwörter reichen von „Unser“ bis „uns“. Scan aus dem <a href="https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up">Internet Archive</a></figcaption></figure>
-<p class="quote" lang="de" translate="no">Unser Vater in dem Himmel! Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns …<small lang="en" translate="yes">21 distinct words, from "Unser" to "uns"</small></p>
-<p>The runner-up was <span class="cipher" translate="no">RASFATAFITEANDAMAPOSE</span>, which is junk. Every one of the 21 letters works, using the 21 distinct words from "<span lang="de" translate="no">Unser</span>" to "<span lang="de" translate="no">uns</span>". Four repeats are skipped ("<span lang="de" translate="no">Dein</span>" twice, "<span lang="de" translate="no">Himmel</span>" and "<span lang="de" translate="no">Unser</span>" once each), and the ä in "<span lang="de" translate="no">täglich</span>" is read as a. <button class="replay" type="button">Entschlüsselung erneut abspielen</button></p>
+<p>Die Bibelsuche prüfte 26,7 Millionen Kombinationen aus Startposition und Umgang mit wiederholten Wörtern, jeweils für zwei Varianten der Rechenregel. Der erste Durchlauf dauerte weniger als drei Minuten.</p>
+<p>Nach Thouless’ Regel kam das höchstbewertete Ergebnis aus der deutschen Bibel, beginnend beim sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Die Entschlüsselung ergab <strong>HIERBINICHTOTSIENSTEW</strong>.</p>
+<blockquote class="quote" lang="de" translate="no">Unser Vater in dem Himmel! Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns …</blockquote>
+<button class="replay" type="button">Entschlüsselung erneut abspielen</button>
 </section>
-
-<section class="step" data-s="table" data-cap="Allein an der Spitze, Buchstabensalat auf Platz zwei. Doch das Programm kannte weder Afrikaans noch Initialen und verfehlte seine eigene Messlatte.">
-<h3>Der Schlüssel, Wort für Wort</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>#</th>
-<th>Schlüssel&shy;wort</th>
-<th>Buch&shy;staben&shy;summe</th>
-<th>Schlüssel&shy;buchstabe</th>
-<th>Geheim&shy;text → Klar&shy;text</th>
-</tr>
-</thead>
-<tbody translate="no">
-<tr>
-<td>1</td>
-<td>Unser</td>
-<td>77</td>
-<td>Y</td>
-<td>F → H</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Vater</td>
-<td>66</td>
-<td>N</td>
-<td>V → I</td>
-</tr>
-<tr>
-<td>3</td>
-<td>in</td>
-<td>23</td>
-<td>W</td>
-<td>A → E</td>
-</tr>
-<tr>
-<td>4</td>
-<td>dem</td>
-<td>22</td>
-<td>V</td>
-<td>M → R</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Himmel</td>
-<td>60</td>
-<td>H</td>
-<td>I → B</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Dein</td>
-<td>32</td>
-<td>F</td>
-<td>N → I</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Name</td>
-<td>33</td>
-<td>G</td>
-<td>T → N</td>
-</tr>
-<tr>
-<td>8</td>
-<td>werde</td>
-<td>55</td>
-<td>C</td>
-<td>K → I</td>
-</tr>
-<tr>
-<td>9</td>
-<td>geheiligt</td>
-<td>82</td>
-<td>D</td>
-<td>F → C</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Reich</td>
-<td>43</td>
-<td>Q</td>
-<td>X → H</td>
-</tr>
-<tr>
-<td>11</td>
-<td>komme</td>
-<td>57</td>
-<td>E</td>
-<td>X → T</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Wille</td>
-<td>61</td>
-<td>I</td>
-<td>W → O</td>
-</tr>
-<tr>
-<td>13</td>
-<td>geschehe</td>
-<td>60</td>
-<td>H</td>
-<td>A → T</td>
-</tr>
-<tr>
-<td>14</td>
-<td>auf</td>
-<td>28</td>
-<td>B</td>
-<td>T → S</td>
-</tr>
-<tr>
-<td>15</td>
-<td>Erden</td>
-<td>46</td>
-<td>T</td>
-<td>B → I</td>
-</tr>
-<tr>
-<td>16</td>
-<td>wie</td>
-<td>37</td>
-<td>K</td>
-<td>O → E</td>
-</tr>
-<tr>
-<td>17</td>
-<td>im</td>
-<td>22</td>
-<td>V</td>
-<td>I → N</td>
-</tr>
-<tr>
-<td>18</td>
-<td>täglich</td>
-<td>60</td>
-<td>H</td>
-<td>Z → S</td>
-</tr>
-<tr>
-<td>19</td>
-<td>Brot</td>
-<td>55</td>
-<td>C</td>
-<td>V → T</td>
-</tr>
-<tr>
-<td>20</td>
-<td>gib</td>
-<td>18</td>
-<td>R</td>
-<td>V → E</td>
-</tr>
-<tr>
-<td>21</td>
-<td>uns</td>
-<td>54</td>
-<td>B</td>
-<td>X → W</td>
-</tr>
-</tbody>
-</table></div>
-<p>So liest man eine Zeile, am Beispiel UNSER. Seine Buchstaben ergeben 21+14+19+5+18 = 77; bei Division durch 26 bleibt der Rest 25, also ist der Schlüsselbuchstabe Y. Y verschiebt um 24, also geht das F des Geheimtexts 24 Stellen zurück zum H.</p>
+<section class="step" data-s="church" data-cap="Das vertraute kirchliche Gebet beginnt mit Vater unser; die Lutherbibel mit Unser Vater. Die unterschiedliche Wortfolge ergibt unterschiedliche Schlüssel.">
+<p>Auf den genauen Wortlaut kam es an. Eine frühere Suche hatte das deutsche Vaterunser mit dem vertrauten kirchlichen Anfang „Vater unser“ ausprobiert. Das „Unser Vater in dem Himmel“ der Lutherbibel ergibt schon ab dem ersten Wort einen anderen Schlüssel.</p>
+<p>Der Schlüssel verwendet 21 verschiedene Wörter, von „Unser“ bis „uns“. Vier Wiederholungen werden übersprungen („Dein“ zweimal, „Himmel“ und „Unser“ jeweils einmal), und das ä in „täglich“ wird als a gelesen.</p>
+<figure><img src="../luther_1922_mt6_9-11.jpg" width="1272" height="538" alt="Matthäus 6,9–11 in einem Druck von 1922 der Lutherbibel von 1912" loading="lazy"><figcaption><a href="https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up">Der Schlüsseltext, Matthäus 6,9–11, in einem Berliner Druck von 1922 der Lutherbibel von 1912</a>, herausgegeben von der Britischen und Ausländischen Bibelgesellschaft.</figcaption></figure>
 </section>
-
-<section class="step" data-s="bar" data-cap="Das Programm kannte weder Afrikaans noch Initialen und verfehlte seine eigene Messlatte. Ein Mensch liest es sofort.">
-<h3>Warum die Bewertung zu niedrig war</h3>
-<p>Unseren eigenen automatischen Test bestand es nicht. Die vorab festgelegte Regel verlangte, dass die Bewertung eine Schwelle übertrifft, die eingeschleuste Testbotschaften vorgeben, und sie blieb darunter (−1,270 gegenüber −1,081).</p>
-<p>Der Grund ist in der Ausgabe zu sehen. Das Bewertungsprogramm kannte weder Afrikaans noch Initialen und las das Ende daher als „<span translate="no">TOT SIEN STEW</span>“. Unter der anderen Rechenvariante schnitt eine unsinnige Zeichenfolge, <span class="cipher" translate="no">ALENRENDRAYCUTREFUGES</span>, sogar noch etwas besser ab.</p>
-<p>Dieser Test entschied nur darüber, ob die Suche selbstständig eine Lösung melden durfte. Das Ergebnis war trotzdem das beste von 26,7 Millionen nach Thouless’ Regel, mit Buchstabensalat auf Platz zwei, also lasen wir es, und es war eindeutig Deutsch, dann Afrikaans, dann Woods Initialen.</p>
-<p class="fig"><b translate="no">HIERBINICHTOTSIENSTEW</b> · −1,270<br>Zufallsgrenze −1,273 · Testschwelle −1,081</p>
-<p>In Wörter zerlegt, wie ein Mensch es liest, lautet die Botschaft <b><span lang="de" translate="no">Hier bin ich</span>. <span lang="af" translate="no">Totsiens</span>. T.E.W.</b> Auf Deutsch heißt das „Hier bin ich. Auf Wiedersehen. T.E.W.“ Wood wollte, dass sie erst nach seinem Tod gelesen wird, wenn ein Medium den Schlüssel übermittelt hat; sie ist also als Botschaft eines Toten geschrieben. Er meldet sich, verabschiedet sich und unterschreibt. Der Schlüssel, den er geschickt hätte, beginnt mit „Unser Vater in dem Himmel“.</p>
+<section class="step" data-s="table" data-cap="Die erste Zeile durchgerechnet: UNSER ergibt 77, der Schlüsselbuchstabe Y verschiebt um 24, und F wird zu H entschlüsselt. Alle 21 Buchstaben lassen sich exakt zurückverschlüsseln.">
+<h3>Der Schlüssel Wort für Wort</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">Nr.</th><th scope="col">Wort</th><th scope="col">Sum.</th><th scope="col">Schlüssel</th><th scope="col">Geheimtext → Klartext</th></tr></thead><tbody>
+<tr><td>1</td><td>Unser</td><td>77</td><td>Y</td><td>F → H</td></tr>
+<tr><td>2</td><td>Vater</td><td>66</td><td>N</td><td>V → I</td></tr>
+<tr><td>3</td><td>in</td><td>23</td><td>W</td><td>A → E</td></tr>
+<tr><td>4</td><td>dem</td><td>22</td><td>V</td><td>M → R</td></tr>
+<tr><td>5</td><td>Himmel</td><td>60</td><td>H</td><td>I → B</td></tr>
+<tr><td>6</td><td>Dein</td><td>32</td><td>F</td><td>N → I</td></tr>
+<tr><td>7</td><td>Name</td><td>33</td><td>G</td><td>T → N</td></tr>
+<tr><td>8</td><td>werde</td><td>55</td><td>C</td><td>K → I</td></tr>
+<tr><td>9</td><td>geheiligt</td><td>82</td><td>D</td><td>F → C</td></tr>
+<tr><td>10</td><td>Reich</td><td>43</td><td>Q</td><td>X → H</td></tr>
+<tr><td>11</td><td>komme</td><td>57</td><td>E</td><td>X → T</td></tr>
+<tr><td>12</td><td>Wille</td><td>61</td><td>I</td><td>W → O</td></tr>
+<tr><td>13</td><td>geschehe</td><td>60</td><td>H</td><td>A → T</td></tr>
+<tr><td>14</td><td>auf</td><td>28</td><td>B</td><td>T → S</td></tr>
+<tr><td>15</td><td>Erden</td><td>46</td><td>T</td><td>B → I</td></tr>
+<tr><td>16</td><td>wie</td><td>37</td><td>K</td><td>O → E</td></tr>
+<tr><td>17</td><td>im</td><td>22</td><td>V</td><td>I → N</td></tr>
+<tr><td>18</td><td>täglich</td><td>60</td><td>H</td><td>Z → S</td></tr>
+<tr><td>19</td><td>Brot</td><td>55</td><td>C</td><td>V → T</td></tr>
+<tr><td>20</td><td>gib</td><td>18</td><td>R</td><td>V → E</td></tr>
+<tr><td>21</td><td>uns</td><td>54</td><td>B</td><td>X → W</td></tr>
+</tbody></table></div>
+<p>Am Beispiel UNSER lässt sich eine Zeile nachvollziehen. Die Buchstabenwerte ergeben 21+14+19+5+18 = 77. Bei der Division durch 26 bleibt der Rest 25, also ist der Schlüsselbuchstabe Y. Y verschiebt um 24 Stellen, daher wird der Geheimtextbuchstabe F um 24 Stellen zurück zu H verschoben.</p>
+<p>Alle 21 Buchstaben lassen sich korrekt entschlüsseln und wieder zu Woods ursprünglichem Geheimtext verschlüsseln.</p>
 </section>
-  </div>
-  <div class="beats" aria-hidden="true"><div class="beat" data-s="prayer"></div><div class="beat" data-s="table"></div><div class="beat" data-s="bar"></div></div>
+<section class="step" data-s="reading" data-cap="Hier bin ich: Deutsch. Totsiens: Afrikaans für Auf Wiedersehen. TEW: Woods Initialen.">
+<h3>Die Botschaft lesen</h3>
+<p>Das höchstbewertete Ergebnis nach Thouless’ Regel war sofort verständlich, sobald die Buchstaben in Wörter aufgeteilt waren:</p>
+<p><strong>Hier bin ich. Totsiens. T.E.W.</strong></p>
+<p>„Hier bin ich“ ist Deutsch. „Totsiens“ bedeutet auf Afrikaans „Auf Wiedersehen“. T.E.W. sind Woods Initialen.</p>
+<p>Wood wollte, dass die Botschaft erst nach seinem Tod gelesen würde, sobald ein Medium den Schlüssel übermittelt hätte. Er gibt sich zu erkennen, verabschiedet sich und unterschreibt. Der Schlüssel, den er gesendet hätte, beginnt mit „Unser Vater in dem Himmel“.</p>
 </section>
-
+</div></section>
 <section class="chapter" data-ch="5">
-  <div class="graphic" data-g="5">
-    <div class="gbar"><span class="ct">V · Geprüft</span><span class="progress" aria-hidden="true"></span></div>
-    <div class="gbody">
-    <div class="tiles" aria-live="polite" translate="no"></div>
-    <div class="sub" aria-hidden="true" translate="no"></div>
-    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
-    <canvas aria-label="Mögliche Schlüssel, ein Punkt je Schlüssel; die Grafik ändert sich mit dem gelesenen Abschnitt"></canvas>
-    <div class="legend"></div>
-    <p class="beatcap"></p>
-    </div>
-  </div>
-  <div class="text">
-<section class="step" data-s="checks" data-cap="Nachgerechnet, von einer zweiten KI geprüft, mit den Artikeln abgeglichen. Ändert man Verfahren oder Wörter, wird der Text unlesbar, wie die roten Buchstaben zeigen." id="how-it-was-checked">
-<p class="eyebrow">Überprüfung</p>
-<h2>Wie es geprüft wurde</h2>
-<p>Bevor wir das Ergebnis an Schmeh schickten, überprüften wir die Entschlüsselung auf mehrere Arten:</p>
-<ul class="check-list" role="list">
-<li>
-<h3>Entschlüsselung nachvollziehen</h3>
-<p>Ein kurzes eigenständiges Skript, das keinen anderen Projektcode verwendet, baut den Schlüssel aus dem Gebetstext auf, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu genau Woods Geheimtext.</p>
-</li>
-<li>
-<h3>Unabhängige Prüfung</h3>
-<p>Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig mit OpenAIs Codex-Werkzeug und urteilte „mit Vorbehalten bestätigt“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Zufallsschätzung, die konkrete Ausgabe und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung und reproduzierte das Ergebnis Buchstabe für Buchstabe.</p>
-</li>
-<li>
+<div class="graphic" data-g="5">
+<div class="gbar"><span class="ct">V · Prüfung des Ergebnisses</span><span class="progress" aria-hidden="true"></span></div>
+<div class="gbody">
+<div class="tiles" aria-hidden="true" translate="no"></div>
+<div class="sub" aria-hidden="true" translate="no"></div>
+<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
+<canvas></canvas><div class="legend"></div><p class="beatcap"></p>
+</div></div>
+<div class="text">
+<section class="step" data-s="checks" data-cap="Ein eigenständiges Skript und unabhängig davon Astra reproduzierten alle 21 Buchstaben; die Scans der Originale bestätigten Geheimtext und Verfahren." id="how-it-was-checked">
+<h2>Wie wir das Ergebnis überprüften</h2>
+<p>Bevor wir das Ergebnis an Klaus Schmeh schickten, überprüften wir die Entschlüsselung auf mehreren Wegen.</p>
+<h3>Die Entschlüsselung nachvollziehen</h3>
+<p>Ein kurzes, eigenständiges Skript, das keinen anderen Projektcode verwendet, erzeugt den Schlüssel aus dem Gebetstext, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu Woods exaktem Geheimtext. Ein unabhängiger KI-Agent, Astra von OpenAI, entwickelte die Entschlüsselung nochmals selbst und reproduzierte alle 21 Buchstaben. Sein <a href="https://github.com/creilly11235/wood-cryptogram-1950/blob/main/notes/astra/REVIEW_WOOD35.md">vollständiger Prüfbericht</a> ist im Repository verfügbar.</p>
 <h3>Originalquellen</h3>
-<p>Scans von Woods Artikel von 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie bestätigten auch, dass „A bedeutet keine Verschiebung“ aus Thouless’ eigenem Text stammt und keine spätere Vermutung ist.</p>
-</li>
-<li>
-<h3>Andere Schlüssel</h3>
-<p>Die heutige liturgische Fassung ergibt <span class="cipher" translate="no">SXFFFLOEPTPPQMAVDXEUR</span>. Behält man die wiederholten Wörter, wird der Text nach „<span class="cipher" translate="no">HIERBINIC</span>“ unlesbar. Verschiebt man um den Rest selbst statt um den Schlüsselbuchstaben (bei dem A keine Verschiebung bedeutet), entsteht Buchstabensalat. Ebenso mit Thouless’ eigenem Schlüssel aus „The Hound of Heaven“. Keine dieser Varianten wurde bewertet, und keine war je ein Kandidat.</p>
-</li>
-</ul>
+<p>Scans von Woods Artikel aus dem Jahr 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie bestätigten auch, dass „A bedeutet keine Verschiebung“ aus Thouless’ eigenem Text stammt und keine spätere Vermutung ist.</p>
 </section>
-
-<section class="step" data-s="luck" data-cap="Zufall? Von 500 zufälligen Signaturen statt TEW passen 7, alles Wortsalat. TEW passt genau einmal, bei dieser Botschaft.">
-<h3>Was das Ergebnis belegt</h3>
-<p>Die Lesart ist exakt: Alle 21 Buchstaben lassen sich korrekt entschlüsseln und wieder verschlüsseln. Astra reproduzierte dies unabhängig; Schmeh und Bean bestätigten die Lesart. Drei Grenzen gehören zu diesem Ergebnis.</p>
-<ul><li>Die automatische Annahmeregel wurde nicht erfüllt. Afrikaans und Woods Initialen zu erkennen, war ein menschliches Urteil nach der Suche.</li><li>Die Zufallsrechnung liefert eine Schranke unter bestimmten Annahmen, keine gemessene Wahrscheinlichkeit dafür, dass die Lesart falsch ist.</li><li>Der Wortlaut entspricht dem Luthertext von 1912, doch Woods konkrete Ausgabe ist unbekannt. Eine frühere veröffentlichte Lösung wurde nicht gefunden; eine erstmalige Lösung lässt sich nicht beweisen.</li></ul>
+<section class="step" data-s="luck" data-cap="TEW ergab einen Treffer: Woods Botschaft. Sieben von 500 zufälligen Signaturen ergaben ebenfalls Treffer. Die Positionen der Markierungen dienen der Veranschaulichung; die Anzahl stammt aus dem gespeicherten Test.">
 <h3>Zufallstreffer prüfen</h3>
-<p>Eine Nachuntersuchung führte rund 854 Millionen Probeentschlüsselungen über 3.847 Gutenberg-Bücher und 19 Bibeln durch, mit beiden Rechenvarianten, mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter von 3 bis 10 Buchstaben aus einer Wortliste zerlegen lassen, gefolgt von einer dreibuchstabigen Signatur.</p>
-<p>Mit TEW gab es genau einen Treffer, und das war diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW fanden 7 davon (1,4&nbsp;%) ebenfalls einen Treffer, und die Beispiele waren Wortsalat.</p>
-<p>TOTSIENS kam erst nach der Lösung in die Wortliste, und der Test wurde nach dem Treffer entworfen; er zeigt also, dass solche Treffer selten sind, ist aber kein Beweis.</p>
-<h3>Nach früheren Lösungen suchen</h3>
-<p>Suchen in Schmehs Blog und dessen Kommentaren, im Reddit-Forum r/codes und in den Protokollen anderer Löser aus dem Jahr 2026 fanden keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand vorher darauf gekommen ist.</p>
+<p>Eine nachträgliche Prüfung führte rund 854 Millionen Probeentschlüsselungen mit 3.847 Gutenberg-Büchern und 19 Bibeln durch. Sie umfasste beide Rechenvarianten, jeweils mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter einer Wortliste mit 3 bis 10 Buchstaben aufteilen ließen, gefolgt von einer Signatur aus drei Buchstaben.</p>
+<p>Mit TEW gab es genau einen Treffer: diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW ergaben 7 davon (1,4 %) ebenfalls einen Treffer; die Beispiele waren Wortsalat.</p>
+<p>TOTSIENS wurde erst nach der Entschlüsselung in die Wortliste aufgenommen, und der Test wurde erst nach dem Treffer entworfen. Er zeigt daher Seltenheit, liefert aber keinen Beweis.</p>
+<h3>Suche nach früheren Lösungen</h3>
+<p>Suchen in Schmehs Blog und dessen Kommentaren, in Reddits r/codes und in den anderen Lösungsprotokollen von 2026 ergaben keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand zuvor darauf gekommen ist.</p>
 </section>
-  </div>
-  <div class="beats" aria-hidden="true"><div class="beat" data-s="checks"></div><div class="beat" data-s="luck"></div></div>
-</section>
-
+</div></section>
 <section class="chapter" data-ch="6">
-  <div class="graphic" data-g="6">
-    <div class="gbar"><span class="ct">VI · Die Korrektur</span><span class="progress" aria-hidden="true"></span></div>
-    <div class="gbody">
-    <div class="tiles" aria-live="polite" translate="no"></div>
-    <div class="sub" aria-hidden="true" translate="no"></div>
-    <div class="gcap"><span class="capL"><b>FVAMI NTKFX XWATB OIZVV X</b></span><span class="capR">T. E. Wood, 1950</span></div>
-    <canvas aria-label="Mögliche Schlüssel, ein Punkt je Schlüssel; die Grafik ändert sich mit dem gelesenen Abschnitt"></canvas>
-    <div class="legend"></div>
-    <p class="beatcap"></p>
-    </div>
-  </div>
-  <div class="text">
-<section class="step" data-s="slip" data-cap="Thouless verrechnete sich 1948 bei suffer. Die Summe 75 ergibt W, aber er druckte U, also endet sein Beispiel auf B statt D. Wood unterlief kein solcher Fehler." id="the-correction">
-<p class="eyebrow">Ein 78 Jahre alter Rechenfehler</p>
-<h2>Ein Fehler in Thouless’ Beispiel</h2>
-<p>Beim Abgleich des Verfahrens mit dem Artikel von 1948 fanden wir einen Rechenfehler in Thouless’ eigenem Rechenbeispiel. Er ist seit 78 Jahren gedruckt nachzulesen, und wir haben nirgends einen Hinweis darauf gesehen.</p>
-<p>Um sein Verfahren vorzuführen, verschlüsselte Thouless <span translate="no">THERE IS NO DEATH</span> („Es gibt keinen Tod“) mit Hamlets Monolog „To be or not to be“ als Schlüssel. Er druckte die Schlüsselbuchstaben <span class="cipher" translate="no">IGGWW BG PI VNWNU</span> und den Geheimtext <span class="cipher" translate="no">BNKNA JYCWY RWGB</span>.</p>
+<div class="graphic" data-g="6">
+<div class="gbar"><span class="ct">VI · Weitere Erkenntnisse</span><span class="progress" aria-hidden="true"></span></div>
+<div class="gbody">
+<div class="tiles" aria-hidden="true" translate="no"></div>
+<div class="sub" aria-hidden="true" translate="no"></div>
+<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
+<canvas></canvas><div class="legend"></div><p class="beatcap"></p>
+</div></div>
+<div class="text">
+<section class="step" data-s="slip" data-cap="Thouless’ 14. Beispielwort SUFFER ergibt die Summe 75 und damit W, nicht das gedruckte U. Der letzte Geheimtextbuchstabe müsste D statt B sein." id="the-correction">
+<h2>Ein Fehler im ursprünglichen Beispiel</h2>
+<p>Beim Abgleich des Verfahrens mit dem Artikel von 1948 fanden wir einen Rechenfehler in Thouless’ eigenem Beispiel. Er steht seit 78 Jahren so im Druck, und wir haben nirgends einen Hinweis darauf gefunden.</p>
+<p>Um sein Verfahren zu erklären, verschlüsselte Thouless <strong>THERE IS NO DEATH</strong> mit Hamlets „To be or not to be“-Monolog als Schlüssel. Er druckte die Schlüsselbuchstaben <strong>IGGWW BG PI VNWNU</strong> und den Geheimtext <strong>BNKNA JYCWY RWGB</strong>.</p>
 <p>Die ersten 13 Schlüsselbuchstaben stimmen. Das 14. Schlüsselwort ist „suffer“:</p>
 <ul>
 <li>S+U+F+F+E+R = 19+21+6+6+5+18 = <strong>75</strong></li>
-<li>75 = 2 × 26 + 23, also müsste der Schlüsselbuchstabe <strong>W</strong> sein, der 23. Buchstabe</li>
+<li>75 = 2 × 26 + 23, also müsste der Schlüsselbuchstabe <strong>W</strong> sein, der 23. Buchstabe.</li>
 <li>Thouless druckte <strong>U</strong>, den 21.</li>
 </ul>
-<p>Sein gedruckter Geheimtext folgt dem gedruckten U, es handelt sich also nicht um einen einzelnen Druckfehler. Der 14. Klartextbuchstabe ist das letzte H von <span translate="no">DEATH</span>. Um U verschoben wird daraus B, wie gedruckt. Um das richtige W verschoben wäre es <strong>D</strong>. Die letzte Gruppe seines Beispiels müsste also <span class="cipher" translate="no">RWGD</span> lauten, nicht <span class="cipher" translate="no">RWGB</span>.</p>
-<figure><img src="../thouless_1948_suffer_slip.png" alt="Thouless 1948, S.&nbsp;259–260, mit „suffer“ blau umrandet, dem gedruckten U und B rot umrandet und der nachgerechneten Tabelle darunter" loading="lazy"><figcaption>Thouless 1948, S.&nbsp;259–260, mit „suffer“ blau umrandet, dem gedruckten U und B rot umrandet und der nachgerechneten Tabelle darunter</figcaption></figure>
-<p>Woods 21 Schlüsselbuchstaben stimmen alle mit der von Thouless beschriebenen Regel überein. Nach dieser Regel wurde seine Botschaft entschlüsselt.</p>
+<p>Sein gedruckter Geheimtext folgt dem gedruckten U; es handelt sich also nicht um einen einzelnen Druckfehler. Der 14. Klartextbuchstabe ist das letzte H von <strong>DEATH</strong>. Mit U verschoben wird daraus B, das er auch druckte. Mit dem richtigen W verschoben würde daraus <strong>D</strong>. Die letzte Gruppe seines Beispiels müsste daher <strong>RWGD</strong> lauten, nicht <strong>RWGB</strong>.</p>
+<figure><img src="../thouless_1948_suffer_slip.png" width="1568" height="1966" alt="Thouless’ Rechenbeispiel mit Markierungen beim falschen U und B" loading="lazy"><figcaption><a href="https://creilly11235.github.io/wood-cryptogram-1950/thouless_1948_suffer_slip.png">Thouless’ Beispiel von 1948 mit Markierungen bei „suffer“, dem gedruckten U und B sowie der nachgerechneten Tabelle</a>.</figcaption></figure>
+<p>Woods 21 Schlüsselbuchstaben stimmen sämtlich mit Thouless’ schriftlicher Regel überein. Nach diesem Verfahren wurde seine Botschaft entschlüsselt.</p>
 </section>
-
-<section class="step" data-s="next" data-cap="Wood bat darum, jedes Ergebnis, „auch ein negatives“, der Society for Psychical Research mitzuteilen. Das ist der nächste Schritt." id="next">
-<p class="eyebrow">Worum Wood bat</p>
-<h3>Die Society for Psychical Research informieren</h3>
-<p>Der Schlüssel stammt aus einer Suche in Büchern, nicht von einem Medium; über ein Leben nach dem Tod sagt die Lösung deshalb nichts, weder dafür noch dagegen. Was bleibt, ist Woods eigene Bitte. Er bat jeden, der seine Botschaft zu entschlüsseln versuchte, „das Ergebnis (auch ein negatives) der Society mitzuteilen“. Er versprach der Society „ausführlichere Angaben“ über sich sowie Fotografien von sich und seinem Haus und schrieb, seine Testamentsvollstrecker würden gebeten, ihr „die Umstände“ und das Datum seines Todes mitzuteilen. Falls diese Akte erhalten ist, verrät sie vielleicht, wann Wood starb und ob je ein Medium behauptete, von ihm gehört zu haben.</p>
-<p>Ich habe die Society und ihr Archiv über die Lösung informiert und berichte hier, sobald eine Antwort kommt.</p>
-<h3>Offene Fragen</h3>
-<p>Schmeh hat Fotografien der Wood-Akte der SPR in der Universitätsbibliothek Cambridge angeboten; Abruf und Auswertung stehen noch aus. Sie könnten Woods Verbindung zu Afrikaans erklären oder die benutzte Bibelausgabe erkennen lassen. Beides ergibt sich nicht allein aus der Entschlüsselung.</p>
-<p>Die Kryptogramme von Berger und der Survival Research Foundation, die Schmeh in seinem Beitrag erwähnt, sind eine eigene Geschichte. Das bisher gefundene Berger-Kapitel liefert keine weiteren Belege zu Woods Botschaft.</p>
+<section class="step" data-s="next" data-cap="Die SPR antwortete am 5. Oktober: Woods Akte liegt in der Cambridge University Library. Die Society bot an, das Ergebnis in einen Artikel der Psi Encyclopedia aufzunehmen.">
+<h2>Die Society for Psychical Research informieren</h2>
+<p>Der Schlüssel kam aus einer Büchersuche, nicht von einem Medium. Was man daraus macht, bleibt jedem selbst überlassen. Es bleibt Woods eigene Bitte: Wer versuche, seine Botschaft zu entschlüsseln, solle „das Ergebnis (auch wenn es negativ ist) der Society mitteilen“.</p>
+<p>Er versprach der Society „nähere Angaben“ zu seiner Person sowie Fotos von sich und seinem Haus. Außerdem sollten seine Testamentsvollstrecker gebeten werden, ihr „die Umstände“ und das Datum seines Todes mitzuteilen.</p>
+<p>Die Archivleitung der Society antwortete am 5. Oktober auf meine E-Mail. Sie bestätigte, dass Woods Akte in der Cambridge University Library liegt, und bot an, das Ergebnis in einen Artikel über Chiffren in der Psi Encyclopedia aufzunehmen. Ich habe mich auch bei der Bibliothek nach der Akte und nach Kopiermöglichkeiten erkundigt.</p>
 </section>
-
-<section class="step" data-s="confirmed" data-cap="Bestätigt von Klaus Schmeh am 4. Oktober 2026 und Richard Bean am 6. Oktober. Die Suchaufzeichnungen und offenen Fragen sind öffentlich." id="timeline-and-credits">
-<p class="eyebrow">4.–6. Oktober 2026 · bestätigt</p>
-<h3>Chronologie und Dank</h3>
-<p>Alle Zeiten in Pazifikzeit (PDT). Meist sind es Commit-Zeiten, die festhalten, wann ein Schritt gespeichert wurde.</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Datum (Pazifikzeit)</th>
-<th>Was geschah</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>6. Okt. 2026</td>
-<td>Richard Bean bestätigt die Lesart und bittet um eine ausführlichere Dokumentation der Eingabetexte und Bewertung</td>
-</tr>
-<tr>
-<td>4. Okt. 2026</td>
-<td>Schmeh verkündet die Lösung in seinem Blog, im Beitrag <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">„Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved“</a></td>
-</tr>
-<tr>
-<td>4. Okt. 2026, 0:56&nbsp;Uhr</td>
-<td>Schmeh bestätigt die Lösung per E-Mail</td>
-</tr>
-<tr>
-<td>3. Okt. 2026, 23:28&nbsp;Uhr</td>
-<td>Die Lösung geht an Schmeh</td>
-</tr>
-<tr>
-<td>3. Okt. 2026, etwa 23:10–23:35&nbsp;Uhr</td>
-<td>Suchen in Schmehs Blog und Kommentaren, in r/codes auf Reddit und in anderen Lösungsprotokollen von 2026 finden keine frühere Lösung</td>
-</tr>
-<tr>
-<td>3. Okt. 2026, 22:43&nbsp;Uhr</td>
-<td>Die Prüfung von Thouless’ Rechenbeispiel deckt seinen Rechenfehler von 1948 auf</td>
-</tr>
-<tr>
-<td>3. Okt. 2026, 22:06–22:43&nbsp;Uhr</td>
-<td>Astras Gutachten, Abgleich mit den Artikeln von 1948 und 1950 und der Zufallstest mit 854 Millionen Entschlüsselungen</td>
-</tr>
-<tr>
-<td>3. Okt. 2026, 22:11 Uhr</td>
-<td>Die vollständige mehrsprachige Gutenberg-Kontrolle wird mit negativem Ergebnis dokumentiert</td>
-</tr>
-<tr>
-<td>3. Okt. 2026, 21:44&nbsp;Uhr</td>
-<td>Der Bibeldurchlauf findet den Schlüssel im Vaterunser</td>
-</tr>
-<tr>
-<td>3. Okt. 2026, 21:37&nbsp;Uhr</td>
-<td>Von Hand eingegebene berühmte Passagen, darunter zwei deutsche Vaterunser, die mit „<span lang="de" translate="no">Vater unser</span>“ beginnen, bleiben ohne Treffer</td>
-</tr>
-<tr>
-<td>3. Okt. 2026, 21:33&nbsp;Uhr</td>
-<td>Die Regeln für die mehrsprachige Suche werden eingecheckt; die Bibelsuche kommt um 21:41&nbsp;Uhr hinzu</td>
-</tr>
-<tr>
-<td>17. Sep. 2026</td>
-<td>Das Projekt korrigiert die Abwertung als „zu kurz“; rein englische Suchen über 129 und dann 3.977 Texte bleiben ohne Treffer</td>
-</tr>
-<tr>
-<td>2. Sep. 2026</td>
-<td>Erster Commit des Projekts</td>
-</tr>
-<tr>
-<td>Aug. 2019</td>
-<td>Richard Bean löst Thouless’ Botschaft B durch eine computergestützte Suche in Büchern und klärt damit genau, wie das Verfahren funktioniert</td>
-</tr>
-<tr>
-<td>17. Apr. 2017</td>
-<td>Schmeh führt Woods Kryptogramm als Nr.&nbsp;35 seiner Top 50</td>
-</tr>
-<tr>
-<td>1950</td>
-<td>Wood veröffentlicht sein Kryptogramm</td>
-</tr>
-<tr>
-<td>1948</td>
-<td>Thouless veröffentlicht „A Test of Survival“</td>
-</tr>
-</tbody>
-</table></div>
-<h3>Dank</h3>
-<p>Colin Reilly leitete das Projekt. Robert Thouless entwickelte das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B im Jahr 2019, gefunden durch eine Computersuche in Büchern, zeigte genau, wie es funktioniert, und war Vorbild für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung; Richard Bean bestätigte ebenfalls die Lesart und half, diese Darstellung der Suche zu verbessern. Claude (Anthropic) schrieb den Suchcode, einschließlich der früheren September-Suchen, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig.</p>
+</div></section>
+<section class="endmatter step" id="credits">
+<h2>Mitwirkende</h2>
+<p>Colin Reilly leitete das Projekt. Robert Thouless entwickelte das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B im Jahr 2019, gefunden durch eine computergestützte Büchersuche, zeigte genau, wie es funktioniert, und bereitete dem hier verwendeten Ansatz den Weg. Klaus Schmeh hielt das Rätsel im Gespräch und bestätigte die Lösung; auch Richard Bean bestätigte die Lesart und half, diese Darstellung der Suche zu verbessern. Und den Star der Vorstellung dürfen wir nicht vergessen: Claude (Anthropic), das den Suchcode schrieb und den Schlüssel fand. GPT-6 Astra (OpenAI) prüfte das Ergebnis unabhängig.</p>
 <h3>Quellen</h3>
 <ul>
-<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020</li>
-<li>Richard Bean und Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025</li>
-<li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">„Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved“</a>, 4. Okt. 2026</li>
-<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">„The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt“</a>, 17. Apr. 2017</li>
-<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">„Richard Bean solves another Top 50 crypto mystery“</a>, 16. Aug. 2019</li>
-<li>T. E. Wood, „A Further Test for Survival“, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, S.&nbsp;105–106</li>
-<li>R. H. Thouless, „A Test of Survival“, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the SPR</em> 48</a>, S.&nbsp;258–260</li>
-<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Lutherbibel 1912, Matthäus 6</a></li>
+<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020.</li>
+<li>Richard Bean und Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025.</li>
+<li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, 4. Oktober 2026.</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, 17. April 2017.</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">“Richard Bean solves another Top 50 crypto mystery”</a>, 16. August 2019.</li>
+<li>T. E. Wood, „A Further Test for Survival“, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, S. 105–106.</li>
+<li>R. H. Thouless, „A Test of Survival“, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the Society for Psychical Research</em> 48, Teil 175</a>, Juli 1948, S. 253–263.</li>
+<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Lutherbibel 1912, Matthäus 6</a>.</li>
 </ul>
-<p class="small">Die Lage der Punkte innerhalb der Haufen dient der Veranschaulichung, ebenso die Position der 7 passenden Kontrollsignaturen im Zufallsraster (die Treffer wurden nicht gespeichert). Alle anderen beschrifteten Punkte, Bewertungen, Zahlen und Referenzlinien stammen aus den gespeicherten Durchläufen.</p>
-</section>
-  </div>
-  <div class="beats" aria-hidden="true"><div class="beat" data-s="slip"></div><div class="beat" data-s="next"></div><div class="beat" data-s="confirmed"></div></div>
-</section>
-</div>
-
+</section></main>
 <footer>
-<p>Wer die Entschlüsselung selbst prüfen will, führt <code>python3 harness/wood35t/verify_wood.py</code> im <a href="https://github.com/creilly11235/wood-cryptogram-1950">Repository</a> aus. Code unter MIT-Lizenz.</p>
+<p>Um die Entschlüsselung selbst zu prüfen, führen Sie <code>python3 harness/wood35t/verify_wood.py</code> aus <a href="https://github.com/creilly11235/wood-cryptogram-1950">dem Repository</a> aus. Der Code steht unter der MIT-Lizenz.</p>
 <p>Sie sind Besucher Nr.&nbsp;<span class="counter" id="visits">------</span></p>
 <p class="small">Diese deutsche Fassung wurde mit KI-Unterstützung aus dem Englischen übersetzt und von einem zweiten KI-System gegengelesen, aber noch nicht von einem Muttersprachler geprüft. Hinweise auf Fehler sind willkommen, gern als <a href="https://github.com/creilly11235/wood-cryptogram-1950/issues">Issue auf GitHub</a>.</p>
 <p class="small">Besuche gezählt mit <a href="https://www.goatcounter.com/">GoatCounter</a>, ohne Cookies. Die Zahl wird alle paar Stunden aktualisiert.</p>
 </footer>
 
+
 <script>
 (function(){
 "use strict";
 const CT="FVAMINTKFXXWATBOIZVVX",PT="HIERBINICHTOTSIENSTEW";
-const KEY=[["Unser",77],["Vater",66],["in",23],["dem",22],["Himmel",60],["Dein",32],["Name",33],["werde",55],["geheiligt",82],["Reich",43],["komme",57],["Wille",61],["geschehe",60],["auf",28],["Erden",46],["wie",37],["im",22],["täglich",60],["Brot",55],["gib",18],["uns",54]];
-const L=i=>String.fromCharCode(65+((i%26)+26)%26);
-const KL=KEY.map(k=>L(k[1]-1));
-const JUNK=["UNTONEASACRISTEALSBYR","TGEHADREEKSSENTEASYBI","TSLAVINGWASROSESHBUZZ","DDOESHEBRIEKTOTHATKUX","NGSHALLSVARANINFATABU","EDAORIESHOROUGHMINUNH","VCOURHEMIDWASSORIMIAE"]; /* the English-only search (17 September 2026), 3,977 texts, English scoring: harness/wood35/out_expanded.jsonl */
-/* ---- chapter 2 constants: the English-only search (17 September 2026), September 2026, all from harness/wood35 ----
-   EN_TRAP: three English strings (the English-only search (17 September 2026) plant texts, out_expanded.jsonl) that a free key could equally produce.
-   EN_STARTS: real starting points from the 129-book run (out_real_BE.json): the book and its 21 consecutive distinct key words.
-   EN_PLANT: score as English of each of the 100 planted messages over the 129 books (out_gate.jsonl); EN_MISS the three not found first;
-   EN_PLANT_J the one shown on the strip. EN_NULL129: best score for each of 200 random ciphertexts over the same books (out_null.jsonl).
-   EN_NULLX: the same for 100 random ciphertexts over 3,977 texts (out_expanded.jsonl); EN_WOOD: Wood's best there. */
-const EN_TRAP=["WHATISTHEUSEOFLIVINGA","THEYHADPLANSTOGOTOADA","STRENGTHTOLEAVETHEDAR"];
-const EN_STARTS=[["einem englischen Buch","THE RESIDUE AND BULK OF PROPERTY WAS SETTLED ON ME UNDER TRUST TO MR NIXON UNTIL I AGE WITH A REQUEST"],["einem französischen Buch","FAITS INTIMEMENT CONNEXES LA VIEILLE NOTION DE LA DESTRUCTION COMPLETE DE TOUS LES HABITANTS DU GLOBE A LA SUITE DE CATACLYSMES"],["einem niederländischen Buch","ZYN UITTERMATEN GEMAKKELYK ALS DE KOFFY VOLKOMEN DROOG IS BRENGT MEN ZE IN HET MAGAZYN VAN DE DROOGERYE EEN GEBOUW DOORGAANS"]];
-const EN_PLANT=[-13.70,-13.88,-11.67,-12.51,-11.59,-13.18,-13.33,-13.49,-11.45,-11.96,-10.94,-12.98,-11.58,-12.00,-13.46,-11.21,-12.06,-13.55,-11.35,-12.09,-11.23,-11.22,-12.77,-11.54,-11.57,-11.61,-13.34,-10.87,-11.62,-12.21,-11.83,-11.01,-12.74,-12.56,-12.69,-10.69,-11.66,-16.12,-12.13,-11.05,-12.15,-13.84,-12.18,-12.24,-10.77,-12.22,-11.49,-12.11,-14.29,-14.29,-10.88,-12.83,-10.89,-12.42,-12.14,-20.57,-10.93,-12.11,-12.98,-11.45,-12.25,-12.40,-12.10,-11.51,-11.33,-12.00,-16.04,-11.91,-11.55,-11.02,-11.01,-12.57,-10.36,-11.99,-11.56,-11.74,-10.77,-11.55,-11.38,-11.35,-13.64,-12.25,-13.78,-12.88,-10.29,-12.46,-11.02,-10.89,-13.96,-11.54,-12.36,-12.69,-11.45,-11.00,-12.83,-12.00,-11.28,-11.58,-12.08,-11.07],EN_MISS=[37,55,66],EN_PLANT_J=15,EN_PLANT_MSG="THEFORMOFTHEUNKNOWNMI";
-const EN_NULL129=[-15.00,-14.58,-14.31,-15.85,-16.22,-16.13,-15.88,-15.43,-15.11,-15.45,-15.74,-15.43,-15.56,-15.72,-15.26,-14.91,-15.15,-15.64,-15.70,-15.48,-15.41,-15.05,-15.52,-15.09,-14.53,-14.75,-15.44,-15.84,-15.61,-15.33,-15.69,-14.63,-15.72,-14.95,-15.00,-15.24,-16.01,-15.78,-15.49,-15.17,-15.84,-14.36,-15.93,-15.24,-15.92,-15.21,-15.05,-15.13,-15.19,-15.59,-15.18,-15.65,-14.97,-15.81,-15.34,-15.27,-15.72,-15.03,-15.19,-15.17,-15.72,-15.30,-15.56,-15.84,-15.65,-14.98,-15.85,-15.22,-15.43,-15.61,-15.58,-15.29,-15.73,-15.35,-15.71,-16.05,-15.79,-14.87,-15.03,-15.70,-14.53,-14.64,-15.37,-15.61,-16.12,-15.03,-15.96,-15.90,-15.23,-14.58,-15.49,-15.85,-15.52,-15.55,-15.50,-15.33,-16.18,-14.64,-15.09,-15.56,-15.33,-15.26,-15.91,-15.31,-15.76,-15.31,-15.54,-14.88,-15.11,-15.47,-14.97,-15.75,-15.35,-15.59,-15.49,-15.97,-15.36,-15.84,-15.18,-15.35,-15.23,-14.60,-14.47,-14.97,-15.29,-15.22,-15.36,-15.20,-15.59,-15.55,-15.41,-15.52,-15.05,-15.13,-15.58,-14.62,-14.95,-15.65,-15.60,-15.04,-15.57,-16.11,-15.43,-15.28,-16.10,-15.66,-15.91,-15.60,-15.13,-14.59,-16.03,-15.69,-15.32,-15.44,-14.76,-15.30,-16.15,-15.73,-15.88,-15.91,-15.31,-15.29,-14.66,-15.38,-15.22,-15.82,-15.65,-15.33,-15.44,-15.59,-16.26,-16.32,-15.37,-14.91,-14.86,-15.11,-14.86,-15.64,-15.88,-15.75,-15.57,-15.89,-15.69,-15.58,-15.26,-15.29,-15.70,-16.14,-15.30,-14.64,-15.19,-14.73,-15.06,-15.55,-15.69,-14.83,-16.23,-15.50,-15.35,-14.96];
+/* Source: harness/wood35/out_gate.jsonl, the 129-book planted-message check.
+   The three zero-based indexes are the tests whose known reading was not first. */
+const EN_MISS=[37,55,66],EN_PLANT_MSG="THEFORMOFTHEUNKNOWNMI";
+const JUNK=["UNTONEASACRISTEALSBYR"];
+/* Source: harness/wood35/out_expanded.jsonl, 3,977 texts. Each EN_NULLX value
+   is the best score from one of 100 random ciphertexts; EN_WOOD is Wood's best.
+   Values are rounded to three decimals, with 12 random results above Wood. */
 const EN_NULLX=[-14.139,-15.037,-14.929,-13.935,-14.719,-14.523,-14.074,-14.242,-14.038,-14.837,-14.746,-13.807,-14.170,-14.659,-14.849,-13.876,-14.538,-13.852,-14.768,-14.133,-14.378,-13.748,-14.271,-14.743,-14.219,-14.419,-14.231,-13.920,-14.479,-14.308,-14.565,-13.407,-14.833,-13.530,-14.705,-14.843,-14.727,-13.267,-14.183,-14.277,-14.649,-14.640,-14.626,-14.612,-14.163,-14.910,-15.121,-14.236,-14.143,-13.868,-14.683,-14.864,-14.595,-13.688,-14.839,-14.050,-13.943,-14.490,-14.219,-14.355,-14.769,-14.512,-14.898,-13.981,-14.990,-14.181,-14.659,-13.968,-14.475,-14.144,-14.694,-14.994,-14.835,-14.094,-14.331,-14.684,-14.316,-14.409,-14.241,-14.820,-14.447,-14.656,-14.180,-14.909,-14.841,-13.826,-14.241,-14.098,-14.484,-14.596,-14.721,-14.840,-14.603,-14.325,-14.641,-14.510,-14.481,-14.783,-14.498,-14.910],EN_WOOD=-13.937;
-const PLANT_EN="NOTSOMUCHDEPENDUPONEX",PLANT_DE="VERSTEHTGEWISSEMINDER",CHURCH="SXFFFLOEPTPPQMAVDXEUR";
-/* ---- chapter 6: Thouless's worked example, Proc. SPR 48 (1948), pp. 259-260 (harness/wood35t/thouless_example_check.py):
-   THERE IS NO DEATH keyed by Hamlet; his printed key letters and ciphertext, and the same recomputed (only letter 14 differs) ---- */
-const THOU={key:["to","be","or","not","that","is","the","question","whether","tis","nobler","in","mind","suffer"],sums:[35,7,33,49,49,28,33,120,87,48,66,23,40,75],printed:"IGGWWBGPIVNWNU",comp:"IGGWWBGPIVNWNW",plain:"THEREISNODEATH",cipher:"BNKNAJYCWYRWGB",fixed:"BNKNAJYCWYRWGD"};
-/* ---- chapter 6: what each chapter-6 canvas mode writes, one label per line, built only from THOU, KEY, CT and PT.
-   cols: side-by-side columns of lines; foot: lines under them. A line is {t:text, ck:dot colour, r:dot size, 0 = text only},
-   {rule:1} (a thin line) or {gap:1}. ---- */
-const CH6={
-  ord:n=>n+((n%100>10&&n%100<14)?"th":(["th","st","nd","rd"][n%10]||"th")),
-  mod:s=>`${Math.floor(s/26)}×26+${s%26}`,
-  thouless(compact){ /* compact: a short canvas folds the 13 right rows into one line */
-    const T=THOU,n=T.key.length-1,su=[...T.key[n].toUpperCase()],s=T.sums[n],H=T.plain[n];
-    const sh=(p,k)=>L(p.charCodeAt(0)+k.charCodeAt(0)-130);
-    const row=(w,v,i)=>{const k=L(v-1),ok=k===T.printed[i];return{t:`${w.padEnd(9)}${String(v).padStart(3)} = ${CH6.mod(v).padEnd(7)} → ${k}`+(ok?"":`  gedruckt ${T.printed[i]}`),ck:ok?"--bone-3":"--ember",r:ok?1:1.5};};
-    return{cols:[[
-      {t:"Schlüsselwortsumme = n×26+r  → Schl.",r:0},
-      ...(compact?[{t:`${T.key[0]} … ${T.key[n-1]}: ${n} Schlüsselbuchstaben richtig`,ck:"--bone-3",r:1},row(T.key[n],s,n)]:T.key.map((w,i)=>row(w,T.sums[i],i))),
-      {rule:1},
-      {t:`${su.join("+")} = ${su.map(c=>c.charCodeAt(0)-64).join("+")} = ${s}`,r:0},
-      {t:`${s} = ${CH6.mod(s).replace("+"," + ")} → ${T.comp[n]}, der ${s%26}. Buchstabe`,ck:"--candle",r:1.2},
-      {t:`Thouless druckte ${T.printed[n]}, den ${T.printed.charCodeAt(n)-64}.`,ck:"--ember",r:1.2},
-      {t:`${H} um ${T.printed[n]} verschoben → ${sh(H,T.printed[n])}, gedruckt ${T.cipher.slice(10)}`,ck:"--ember",r:1.2},
-      {t:`${H} um ${T.comp[n]} verschoben → ${sh(H,T.comp[n])}, richtig wäre ${T.fixed.slice(10)}`,ck:"--candle",r:1.2}]]};
-  },
-  request(){
-    return{cols:[[
-      {t:"„das Ergebnis (auch ein negatives)",ck:"--candle",r:1.4},
-      {t:" der Society mitteilen“",r:0},
-      {t:"T. E. Wood, Proceedings of the SPR 49 (1950)",r:0},
-      {rule:1},
-      {t:"er versprach ihr „ausführlichere Angaben“",ck:"--bone-3",r:1},
-      {t:" und Fotografien von sich und seinem Haus",r:0},
-      {t:"seine Testamentsvollstrecker sollten ihr",ck:"--bone-3",r:1},
-      {t:" „die Umstände“ und sein Todesdatum nennen",r:0}]]};
-  },
-  solution(){
-    const ck=i=>i<10?"--de":(i<18?"--af":"--sig");
-    const row=i=>({t:`${KEY[i][0].padEnd(9)} ${String(KEY[i][1]).padStart(2)}  ${KL[i]}  ${CT[i]}→${PT[i]}`,ck:ck(i),r:1});
-    const rows=(a,b)=>KEY.slice(a,b).map((_,j)=>row(a+j));
-    return{cols:[
-      [{t:"Hier bin ich",ck:"--de",r:1.5},{t:"Deutsch: hier bin ich",r:0},...rows(0,10)],
-      [{t:"Totsiens",ck:"--af",r:1.5},{t:"Afrikaans: auf Wiedersehen",r:0},...rows(10,18),{gap:1},{t:"T. E. W.",ck:"--sig",r:1.5},{t:"Woods Initialen",r:0},...rows(18,21)]],
-      foot:[{t:"21 Wörter aus Matthäus 6,9b–11, Lutherbibel 1912",r:0}]};
-  }
-};
-/* chapter 3: one planted German line, two scorers. harness/wood35t/mlseg.py splits it VERSTEHT/de GEWISSE/de MINDER/de at
-   −0.731 (its score in bib_ml.json plants, recovered at rank 1); the same scorer given only its English word list splits it
-   VERS TE HT GE WIS SEM IN DER at −2.137. The church wording's first 21 distinct words are the ones verify_wood.py uses for
-   its "liturgical wording" control (→ CHURCH); no key letter of theirs matches the Bible key's letter at the same position. */
-const CH3_DE={words:["VERSTEHT","GEWISSE","MINDER"],lang:"de",score:-0.731},CH3_EN={words:["VERS","TE","HT","GE","WIS","SEM","IN","DER"],lang:"en",score:-2.137};
-const CH3_CHURCH=["Vater","unser","im","Himmel","geheiligt","werde","dein","Name","Reich","komme","Wille","geschehe","wie","so","auf","Erden","tägliches","Brot","gib","uns","heute"];
+const PLANT_DE="VERSTEHTGEWISSEMINDER",CHURCH="SXFFFLOEPTPPQMAVDXEUR";
+/* Source: attempts/wood35_solve_2026-10-04/bib_ml.out, the Bible pass using
+   Thouless's arithmetic. These 13 distinct readings deduplicate 15 printed rows. */
 const TOP=[["HIERBINICHTOTSIENSTEW",-1.270],["RASFATAFITEANDAMAPOSE",-1.493],["TUTANUMTOCAOANDEERSEL",-1.545],["BATAOSUESPITKINMENQUI",-1.577],["NOMRAMOPOCHARILSGENCH",-1.588],["AVEAYESCROURAQUEAAPON",-1.639],["AABORGTUTOALEESVACOSA",-1.663],["OVEGENOVOPTAFOREIBIAS",-1.681],["IOQUEOLAIALTANREGTOCF",-1.686],["ELATAFIMFEPOTETAINEXL",-1.689],["JECFITSOSNAVISEEDUREV",-1.694],["ETJENTTANGAAPLAGAOVAL",-1.712],["VEFURSESOIFURCHEREUDC",-1.719]];
-/* chapter 5: the four changed methods, as printed by harness/wood35t/verify_wood.py (verify_output.txt); none was ever scored.
-   [decryption, what was changed, what happens]; the first nine letters of the first survive, then the tenth key word is a second "Dein" */
-const VARS=[["HIERBINICSHSVLUNPPAOZ","wiederholte Wörter behalten","richtig bis zum 2. Dein"],["GHDQAHMHBGSNSRHDMRSDV","um die ungekürzte Summe verschieben","jeder Buchstabe um eins daneben"],["SXFFFLOEPTPPQMAVDXEUR","liturgische Fassung, Vater unser","keine Lesart"],["XVXJCPBOEDIQLICBMRLBY","Thouless’ Schlüssel aus The Hound of Heaven","keine Lesart"]];
-/* chapter 5: the three rebuilds that reproduce all 21 letters (REPORT.md; the page's own "How it was checked") */
-const PASS5=["neu berechnet, eigenes Skript: 21 von 21","Entschlüsselung der zweiten KI: 21 von 21","Scan 1950: alle 21 Buchstaben wie gedruckt"];
-/* chapter 5: the luck test (lookelsewhere.json, tew_hits.json, REPORT.md addendum 2): 854,049,904 decryptions, 3,866 shards;
-   TEW matched once (the solution); 7 of 500 random control signatures (1.4%) also matched, all word salad. The control
-   hits were not saved in full; these are the report's own truncated examples. Which 7 signatures matched was not saved either,
-   so their places in the grid are illustrative. */
-const LUCK5={ctrl:500,hit:7,share:"1.4%",salad:["PAYNAULADDUCDAEEVA…","BUMTOPSOIWEIIWATAYE…","WANMOSCALMTORNTOUR…"]};
-/* chapter 1: a few dots in the cloud carry the real reading their key gives: [reading, key's book, cloud x, cloud y].
-   the English-only search (17 September 2026)'s best English-scored decryptions (harness/wood35/out_expanded.jsonl, kind "real"; books' languages from
-   fetch.jsonl) and the Bible run's runner-up (attempts/wood35_solve_2026-10-04/bib_ml.out). The blue dot is the solution. */
-const CH1_READ=[["UNTONEASACRISTEALSBYR","schwedisches Buch",.04,.10],["DDOESHEBRIEKTOTHATKUX","spanisches Buch",.96,.30],["RASFATAFITEANDAMAPOSE","rumänische Bibel",.06,.74],["TGEHADREEKSSENTEASYBI","niederländisches Buch",.94,.93]];
-const CH1_HIT=[.22,.50];
-/* chapter 1, "method": Thouless's rule worked for the first letter (KEY[0]; same arithmetic as the key table and verify_wood.py) */
-const CH1_RULE=["UNSER, das erste Schlüsselwort","U+N+S+E+R = 21+14+19+5+18 = 77","77 = 2×26 + 25 → Y, der 25. Buchstabe","Y bedeutet Verschiebung um 24 (A = keine)","Geheimtext F, 24 Stellen zurück → H","dann VATER, IN, DEM …, ein Wort je Buchstabe"];
+const THOU={fixed:"BNKNAJYCWYRWGD"};
+/* The luck grid uses lookelsewhere.json and tew_hits.json: 7 of 500 random
+   signatures yielded at least one matching decryption (8 decryptions total).
+   The identities of the seven signatures were not saved; grid positions are
+   illustrative. The Thouless correction follows thouless_example_check.py. */
 const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-const randStr=n=>Array.from({length:n},()=>L(Math.random()*26|0)).join("");
-/* which dot layout each step uses, and the state a chapter's graphic shows before its first step is reached */
-const DOTS={summary:"cloud",method:"cloud",wood:"cloud",trap:"cloudLabels",shelves:"shelves",plants:"histEnPlants",englishResults:"histEn",idea:"mlTwoScorers",church:"churchOrder",prayer:"histBibles",table:"top",bar:"top",checks:"vars",luck:"grid",slip:"thouless",next:"request",confirmed:"solution"};
-const PRELUDE={1:"summary",2:"wood",3:"englishResults",4:"church",5:"bar",6:"luck"}; /* each graphic opens on the state the previous chapter ended on */
-/* ---- chapter 4 constants: the hit ---- */
-Object.assign(DOTS,{prayer:"ch4pour",table:"ch4top",bar:"ch4top"}); /* chapter 4's own dot modes; histBibles and top are no longer used */
-const SKIP4={9:"Dein",11:"Dein",17:"Himmel, Unser"}; /* repeated words skipped just before key word i (0-based), REPORT.md */
-const SCORER4=[["HIER","de"],["BIN","de"],["ICH","de"],["TOT","de"],["SIEN","fr"],["STEW","en"]]; /* the scorer's segmentation, bib_ml.out */
-const NULL4=-1.273,FLOOR4=-1.081,DROP4=1100; /* Bible-tier null ceiling and plant floor (bib_ml.out); ms before the hit drops */
-const PHONE4=matchMedia("(max-width:900px)");
-const f4=v=>"−"+Math.abs(v).toFixed(3).replace(".",",");
+/* Small, responsive charts use the recorded results directly. Dot positions in
+   the recovery and signature grids show counts, not a chronological ordering. */
+/* Source: harness/wood35t/PREREG.md, one full Bible per language (Latin Vulgate). */
+const BIBLE_LANGUAGES=["Latein","Französisch","Deutsch","Italienisch","Spanisch","Portugiesisch","Niederländisch","Dänisch","Schwedisch","Norwegisch","Isländisch","Esperanto","Finnisch","Ungarisch","Polnisch","Tschechisch","Rumänisch","Afrikaans","Maori"];
 
 function Graphic(el){
-  const self=this;this.el=el;
-  const tilesEl=el.querySelector(".tiles"),subEl=el.querySelector(".sub"),capL=el.querySelector(".capL"),capR=el.querySelector(".capR"),legendEl=el.querySelector(".legend"),cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
-  let stripTimers=[];const stripClear=()=>{stripTimers.forEach(t=>{clearTimeout(t);clearInterval(t);});stripTimers=[];};
-  const cellW=()=>tilesEl.clientWidth/21,wide=()=>cellW()>=30;
-  function drawTiles(letters,subs,cls){
-    const ts=[...tilesEl.children];
-    if(ts.length===letters.length&&ts.every(t=>t.classList.contains("t")&&!t.style.visibility)){letters.forEach((c,i)=>{const t=ts[i],k="t "+(cls?cls(i):"");if(t.textContent!==c)t.textContent=c;if(t.className!==k.trim())t.className=k.trim();t.style.boxShadow="";t.style.borderColor="";});}
-    else tilesEl.innerHTML=letters.map((c,i)=>`<div class="t ${cls?cls(i):""}">${c}</div>`).join("");
-    subEl.innerHTML=(subs||letters.map(()=>"")).map(s=>`<span>${s}</span>`).join("");}
-  const noTr=e=>e.querySelectorAll("b").forEach(b=>b.setAttribute("translate","no"));
-  function cap(l,r){capL.innerHTML=l;capR.textContent=r;noTr(capL);}
-  const reading=i=>i<10?"de":(i<18?"af":"sig");
-  const STRIP={
-   /* ---- chapter 1: the cipher ---- */
-   summary(){drawTiles([...CT],null,()=>"lit");cap("","");},
-   /* method: the first tile is worked by its key word (UNSER = 77 → Y, F back 24 → H) as the canvas spells it out; the other 20 wait for theirs */
-   method(){drawTiles([...CT],[...CT].map((c,i)=>i?"?":""),i=>i?"dim":"lit");cap("Buchwort → Schlüsselbuchstabe → Klartext","");
-     const t=tilesEl.children[0],u=subEl.children[0],done=()=>{t.textContent=PT[0];u.textContent=wide()?KEY[0][1]+"→"+KL[0]:KL[0];u.classList.add("on");};
-     if(reduced)done();else stripTimers.push(setTimeout(done,wide()?1900:1100));},
-   wood(){drawTiles([...CT],null,()=>"lit");cap("","");},
-   /* ---- chapter 2: why it stayed open ---- */
-   trap(){cap("freier Schlüssel (klein) → Lesart (Kacheln)","");
-     const keyOf=t=>[...t].map((c,i)=>L(CT.charCodeAt(i)-c.charCodeAt(0)));
-     const show=(t,en)=>{drawTiles([...t],keyOf(t),()=>en?"lit":"junk");if(en)[...subEl.children].forEach(x=>x.classList.add("on"));};
-     if(reduced){show(EN_TRAP[0],true);return;}
-     let n=0;show(randStr(21),false);stripTimers.push(setInterval(()=>{n++;const k=n%24;if(k===10)show(EN_TRAP[Math.floor(n/24)%EN_TRAP.length],true);else if(k<10)show(randStr(21),false);},130));},
-   shelves(){const show=j=>{const st=EN_STARTS[j],ws=st[1].split(" "),ks=ws.map(x=>[...x].reduce((t,c)=>t+c.charCodeAt(0)-64,0)-1);
-       drawTiles([...CT].map((c,i)=>L(c.charCodeAt(0)-65-ks[i])),ks.map(L),()=>"junk");[...subEl.children].forEach(x=>x.classList.add("on"));
-       cap("<b>"+ws.slice(0,3).join(" ")+" …</b> → Schlüssel → Kacheln","");};
-     show(0);if(!reduced){let j=0;stripTimers.push(setInterval(()=>show(++j%EN_STARTS.length),3200));}},
-   plants(){drawTiles([...EN_PLANT_MSG],null,()=>"lit");cap("Testbotschaft, zufälliger Buchschlüssel","");},
-   englishResults(){drawTiles([...JUNK[0]],null,()=>"junk");cap("Woods beste Lesart, als Englisch bewertet","");},
-   /* ---- chapter 3: the idea ---- */
-   /* idea: the same planted string as each scorer splits it, English words first, then seven languages; the matching dot
-      on the canvas glows (self.ch3v is read by the mlTwoScorers layout) */
-   idea(){const view=v=>{const en=v==="en",S=en?CH3_EN:CH3_DE,starts=new Set();let at=0;S.words.forEach(w=>{starts.add(at);at+=w.length;});self.ch3v=v;
-       drawTiles([...PLANT_DE],[...PLANT_DE].map((c,i)=>starts.has(i)?S.lang:""),i=>en?"junk":"lit de");if(!en)[...subEl.children].forEach(s=>s.classList.add("on"));
-       /* captions say what the tiles mean; the splits themselves are labelled on the canvas */
-       cap(en?"<b>Nur Englisch</b>: eine deutsche Testzeile zerfällt":"<b>7 Sprachen</b>: dieselbe Zeile: Deutsch","");
-       const c=self.ch3dots;if(c){c.en.tr=en?1.9:1.4;c.de.tr=en?1.4:1.9;}};
-     if(reduced){view("de");return;}view("en");stripTimers.push(setTimeout(()=>view("de"),wide()?1800:1100));},
-   /* church: the hand-typed church wording's decryption; the canvas sets its words against the Bible's (churchOrder) */
-   church(){self.ch3v=null;drawTiles([...CHURCH],null,()=>"junk");cap("liturgisch, <b>Vater unser</b>: Buchstabensalat","");},
-   /* ---- chapter 4: the hit ---- */
-   /* captions here say what just happened or what the tiles mean, never the letters the tiles already show */
-   ch4cap(l,r){capL.innerHTML=l;capR.innerHTML=r;noTr(capL);noTr(capR);},
-   /* phones without a "bar" beat end the chapter on "table", so there it also carries bar's contrast */
-   ch4merged(){return PHONE4.matches&&!el.closest(".chapter").querySelector('.beat[data-s="bar"]');},
-   prayer(){
-     self.ch4Pour=true;
-     const W4=wide(),C=STRIP.ch4cap;
-     drawTiles([...CT],null,()=>"dim");
-     subEl.innerHTML=KEY.map(()=>`<span${W4?"":' style="font-size:10px"'}></span>`).join("");
-     const subs=[...subEl.children],ts=[...tilesEl.children];
-     C("","");
-     const show=i=>{
-       if(i>0){ts[i-1].style.boxShadow="";ts[i-1].style.borderColor="";}
-       ts[i].textContent=PT[i];ts[i].classList.remove("dim");ts[i].classList.add("lit");
-       if(!reduced&&i<20){ts[i].style.boxShadow="0 0 0 2px var(--candle)";ts[i].style.borderColor="var(--bone)";}
-       subs[i].textContent=W4?`${KEY[i][1]}→${KL[i]}`:KL[i];subs[i].classList.add("on");
-       const sk=SKIP4[i];
-       C(`<b>${KEY[i][0]}</b> = ${KEY[i][1]} → Schlüsselbuchstabe <b>${KL[i]}</b>`,`Wort ${i+1}`+(sk?` · überspringt wiederholtes ${sk}`:` von 21 · Verschiebung ${(KEY[i][1]-1)%26}`)+(i===17?" · ä als a gelesen":""));
-     };
-     const finish=()=>{
-       ts.forEach(t=>{t.style.borderColor="";t.style.boxShadow=reduced?"":"0 0 0 1px var(--candle)";});
-       C("lautet <b>Hier bin ich · Totsiens · T. E. W.</b>","");
-       if(!reduced)HIT.tr=2.7;
-     };
-     if(reduced){KEY.forEach((k,i)=>show(i));finish();return;}
-     /* after layout has run: wait for the hit to land unless the dots were placed instantly */
-     stripTimers.push(setTimeout(()=>{
-       const snapped=Math.abs(HIT.x-HIT.tx)+Math.abs(HIT.y-HIT.ty)<2,sm=small();
-       const t0=snapped?250:DROP4*(sm?.5:1)+(sm?650:850),dt=sm?90:125,slow=sm?210:300;
-       if(!snapped)stripTimers.push(setTimeout(()=>C("einer liegt deutlich vorn: <b>die deutsche Bibel</b>, Matthäus 6,9",""),t0-200));
-       let t=t0;KEY.forEach((k,i)=>{stripTimers.push(setTimeout(()=>show(i),t));t+=i>=17?slow:dt;});
-       stripTimers.push(setTimeout(finish,t+100));
-       stripTimers.push(setTimeout(()=>{ts.forEach(x=>x.style.boxShadow="");HIT.tr=1.8;},t+1000));
-     },0));
-   },
-   table(){
-     if(STRIP.ch4merged()){STRIP.ch4read();return;}
-     const W4=wide();drawTiles([...PT],null,()=>"lit");
-     subEl.innerHTML=KEY.map((k,i)=>`<span class="on"${W4?"":' style="font-size:10px"'}>${W4?k[1]+"→"+KL[i]:KL[i]}</span>`).join("");
-     STRIP.ch4cap("<b>Unser</b> = 21+14+19+5+18 = 77 → <b>Y</b>, Versch. 24",W4?"unter jeder Kachel: Buchstabensumme ihres Worts → Schlüsselbuchstabe":"unter jeder Kachel: ihr Schlüsselbuchstabe");
-   },
-   bar(){STRIP.ch4read();},
-   /* tile underlines: a human's reading (German, Afrikaans, initials); brackets below: the scorer's words, wrong ones in ember */
-   ch4read(){
-     drawTiles([...PT],null,reading);
-     const W4=wide();let a=0;
-     subEl.innerHTML=SCORER4.map(([wd,lang])=>{const b=a+wd.length,c=a>=10?"var(--ember)":"var(--bone-3)",mid=a+((wd.length-1)>>1),out=[];
-       for(let i=a;i<b;i++){let st=`height:${W4?15:6}px;margin:2px -2px 0;border:0 solid ${c};border-bottom-width:2px;color:${c};`;if(i===a)st+="margin-left:1px;border-left-width:2px;";if(i===b-1)st+="margin-right:1px;border-right-width:2px;";out.push(`<span style="${st}">${W4&&i===mid?lang:""}</span>`);}
-       a=b;return out.join("");}).join("");
-     STRIP.ch4cap(`Mensch: <b style="color:var(--de)">Hier bin ich</b>&ensp;·&ensp;<b style="color:var(--af)">Totsiens</b>&ensp;·&ensp;<b style="color:var(--sig)">T. E. W.</b>`,`Programm: <b style="color:var(--ember);line-height:1">TOT/de SIEN/fr STEW/en</b>`);
-   },
-   /* ---- chapter 5: checked ---- */
-   /* checks: the solution, then each changed method decrypted letter by letter under it; a letter that survives stays lit, one that differs turns red */
-   checks(){
-     const rows=[[PT,"wie gefunden: Wiederholungen übersprungen, A = keine Verschiebung",""]].concat(VARS);
-     const head=(r,n)=>`<div class="comparison-heading"><span>${r[1]}${r[2]?" · "+r[2]:""}</span><b class="comparison-count" style="color:var(${n===21?"--candle":"--ember"})">${n} von 21</b></div>`;
-     tilesEl.innerHTML=rows.map((r,k)=>head(r,[...r[0]].filter((c,i)=>c===PT[i]).length)+[...r[0]].map((c,i)=>`<div class="t ${k===0?reading(i)+" lit":(reduced?(c===PT[i]?"lit":"bad"):"dim")}">${c}</div>`).join("")).join("");
-     subEl.innerHTML="";
-     cap("dieselben 21 Buchstaben, fünf Varianten","");
-     if(!reduced){const ts=[...tilesEl.querySelectorAll(".t")];rows.forEach((r,k)=>{if(k)[...r[0]].forEach((c,i)=>{const t=ts[k*21+i];stripTimers.push(setTimeout(()=>{t.classList.remove("dim");t.classList.add(c===PT[i]?"lit":"bad");},300+(k-1)*200+i*45));});});}
-   },
-   /* luck: the test's shape on the real message: 18 letters that split into words, then the signature */
-   luck(){drawTiles([...PT],null,i=>i<18?"":"sig lit");subEl.innerHTML=[4,3,3,8].map(n=>`<span style="grid-column:span ${n};border-top:1px solid var(--bone-3)">Wort</span>`).join("")+'<span class="on" style="grid-column:span 3;border-top:1px solid var(--candle)">'+(cellW()<17?"Sig.":"Signatur")+'</span>';cap("Wörter, dann eine dreibuchstabige Signatur","");},
-   /* ---- chapter 6: the correction and after ---- */
-   slip(){const T=THOU,n=T.plain.length,v=T.sums[n-1];
-     /* three rows of 21 columns: 14 letters, the recomputed 14th letter (blue), then the row's name */
-     const tile=(c,cls)=>`<div class="t ${cls}">${c}</div>`,blank='<div class="t" style="visibility:hidden"></div>';
-     const name=t=>`<div style="grid-column:span ${20-n};align-self:center;padding-left:6px;font:clamp(10px,1.3vw,13px)/1.1 var(--mono);color:var(--bone-2);white-space:nowrap;overflow:hidden">${t}</div>`;
-     const row=(str,fix,lab,cls)=>[...str].map((c,i)=>tile(c,i<n-1?cls:(fix?"bad":""))).join("")+(fix?tile(fix,"lit"):blank)+name(lab);
-     tilesEl.innerHTML=row(T.plain,null,"Klar","dim")+row(T.printed,T.comp[n-1],"Schl.","")+row(T.cipher,T.fixed[n-1],"Geheim","");
-     subEl.innerHTML=Array(21).fill("<span></span>").join("");
-     const su=[...T.key[n-1].toUpperCase()].map(c=>c.charCodeAt(0)-64);
-     cap(`<b>${T.key[n-1]}: ${su.join("+")} = ${v}</b>`,"rot: Thouless’ Druck · blau: nachgerechnet");},
-   next(){drawTiles([...PT],null,reading);cap("","");},
-   confirmed(){drawTiles([...PT],null,i=>reading(i)+" lit");cap("","");}
-  };
-  /* dots */
-  let seed=35;const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;};
-  const gauss=()=>{let u=0,v=0;while(!u)u=rnd();while(!v)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);};
-  const dots=[];
-  const mk=(kind,ck,extra)=>{const d={kind,ck,x:rnd(),y:rnd(),tx:rnd(),ty:rnd(),a:0,ta:1,r:1,tr:1,delay:0,label:null,cx:rnd(),cy:rnd(),...extra};dots.push(d);return d;};
-  const NG=900;
-  for(let i=0;i<NG;i++)mk("g","--dot-g",{en:Math.min(-14.25,-15.9+gauss()*0.75),ml:Math.min(-1.72,-2.1+gauss()*0.17)});
-  dots[0].en=-13.94;dots[0].label_en="−13.94  UNTONEASACRISTEALSBYR";dots[0].ml=-1.313;dots[0].label_ml="−1.313  OFERANTREFUSAIDAUTIOR";
-  dots[1].en=-14.1;dots[2].en=-14.2;dots[1].ml=-1.36;dots[2].ml=-1.40;
-  const PL=[];for(let i=0;i<10;i++)PL.push(mk("p","--dot-p",{en:-13.0-rnd()*0.55,ml:-0.95-rnd()*0.12,ta:0}));
-  PL[0].ml=-0.731;PL[0].label_ml="VERSTEHTGEWISSEMINDER  deutsche Testbotschaft";PL[1].en=-12.9;PL[1].label_en="Testbotschaften";
-  const BI=[];for(let i=0;i<220;i++)BI.push(mk("b","--dot-b",{ml:Math.min(-1.74,-2.05+gauss()*0.15),ta:0,rank:i}));
-  TOP.forEach((t,i)=>{BI[i].ml=t[1];BI[i].name=t[0];});
-  const HIT=BI[0];
-  for(let i=0;i<=500;i++)mk("s","--dot-s",{ta:0,i});
-  const lit=new Set();while(lit.size<7)lit.add(1+Math.floor(rnd()*500));
-  /* ---- chapter 2 dots, made last so the shared random sequence above is unchanged: real the English-only search (17 September 2026) scores, and label anchors ---- */
-  const NUL2=EN_NULL129.map((v,i)=>mk("n2","--dot-g",{en:v,en2:i<EN_NULLX.length?EN_NULLX[i]:null,ta:0}));
-  const PLA2=EN_PLANT.map((v,i)=>mk("p2",EN_MISS.includes(i)?"--dot-v":"--dot-p",{en:v,ta:0}));
-  const WOOD2=mk("w2","--dot-tew",{en2:EN_WOOD,ta:0});
-  const ANC2=[0,1,2].map(()=>mk("a2","--bone",{ta:0}));
-  /* chapter 2 shelves: 129 spines, 81 non-English books then 48 English, the 900 dots split between those two groups by their
-     starting points (14,826,428 and 13,776,370 of 28,602,798); the width and height of each single spine are illustrative */
-  const SHELF2=(()=>{let z=52;const r=()=>(z=(z*16807)%2147483647)/2147483647,out=[];const nB=Math.round(NG*14826428/28602798);
-    [[81,nB,0.12],[48,NG-nB,0.45]].forEach(([n,tot,wide2])=>{
-      const bk=[];for(let i=0;i<n;i++)bk.push({c:r()<wide2?2:1,h:4+Math.floor(r()*5),tone:r()});
-      const sum=()=>bk.reduce((t,b)=>t+b.c*b.h,0);let guard=0;
-      while(sum()!==tot&&guard++<5000){const b=bk[Math.floor(r()*n)],d=tot-sum();if(d>0&&b.h<9&&(b.c===1||d>1))b.h++;else if(d<0&&b.h>4&&(b.c===1||d<-1))b.h--;}
-      out.push(...bk);});
-    return out;})();
-  /* chapter 4: invisible anchors whose labels name the null ceiling, the plant floor and the shortfall (boxed, so they stay legible over the lines) */
-  const A4=[0,1,2].map(()=>mk("k4","--bone-3",{ta:0}));
-  let W=0,H=0,DPR=1,step=null,prevMode=null,lines=[],axis=null,t0=performance.now();
-  const small=()=>W<520;
-  const pad=()=>({l:small()?10:24,r:small()?10:24,t:30,b:38});
-  function resize(){const r=cv.getBoundingClientRect();if(r.width<10||r.height<10)return;const snap=Math.abs(r.width-W)>0.5;W=r.width;H=r.height;DPR=Math.min(2,devicePixelRatio||1);cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);if(step){const keep=t0;layout(step,snap);if(!snap)t0=keep;}}
-  new ResizeObserver(resize).observe(cv);
-  function setAll(fn){dots.forEach((d,i)=>{const o=fn(d,i)||{};if("x"in o)d.tx=o.x;if("y"in o)d.ty=o.y;d.ta=("a"in o)?o.a:d.ta;d.tr=("r"in o)?o.r:1;d.delay=o.delay||0;d.label=o.label||null;});}
-  function hist(group,key,x0,x1,opts){
-    const p=pad(),w=W-p.l-p.r,h=H-p.t-p.b,nb=opts.nb||34,bw=w/nb;let sp=small()?5:6.5,k=Math.max(1,Math.floor((bw-2)/sp));
-    const binOf=d=>Math.max(0,Math.min(nb-1,Math.floor((d[key]-x0)/(x1-x0)*nb)));
-    const pre=new Array(nb).fill(0);group.forEach(d=>pre[binOf(d)]++);const mx=Math.max(...pre);
-    for(let it=0;it<3;it++){const rows=Math.ceil(mx/k);if(rows*sp>h-36){sp=Math.max(2.6,(h-36)/rows);k=Math.max(1,Math.floor((bw-2)/sp));}}
-    const cnt=new Array(nb).fill(0),pos=new Map();
-    group.slice().sort((a,b)=>a[key]-b[key]).forEach(d=>{const b=binOf(d),n=cnt[b]++,col=n%k,row=Math.floor(n/k);pos.set(d,{x:p.l+b*bw+2+col*sp+sp/2,y:H-p.b-row*sp-sp/2,b,row});});
-    return pos;
+  const self=this,cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
+  const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
+  const capL=el.querySelector(".capL"),capR=el.querySelector(".capR"),legend=el.querySelector(".legend");
+  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1;
+  let W=1,H=1,DPR=1;
+  const color=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  let ink,muted,blue,teal,pale,background,gridGray;
+  const serif='"Libre Caslon Text", Georgia, serif',mono='"Courier Prime", monospace';
+  const font=(size,code=false)=>`${size}px ${code?mono:serif}`;
+  function text(s,x,y,size=14,c=ink,align="left",code=false){
+    ctx.font=font(size,code);ctx.fillStyle=c;ctx.textAlign=align;ctx.textBaseline="middle";ctx.fillText(s,x,y);
   }
-  function layout(s,instant){
-    step=s;lines=[];axis=null;
-    const p=pad(),w=W-p.l-p.r,h=H-p.t-p.b,mode=DOTS[s]||"cloud";
-    const G=dots.filter(d=>d.kind==="g"),B=dots.filter(d=>d.kind==="b");
-    const cloud=(d,i)=>({x:p.l+(0.04+0.92*d.cx)*w,y:p.t+(0.04+0.92*d.cy)*h,a:1,delay:0});
-    const px=(v,x0,x1)=>p.l+(v-x0)/(x1-x0)*w;
-    /* ---- chapter 1 (cloud) and chapter 2 (cloudLabels, shelves, histEn*) ---- */
-    if(mode==="cloud"&&(el.dataset.g==="1"||s==="wood")){
-      /* chapter 1 only (other chapters use "summary" as a plain prelude): every dot is a key; a few carry the reading their
-         key gives, and the blue one is the solution. In "method" the blue key unfolds into Thouless's rule for the first letter. */
-      const G1=G.slice(3,3+CH1_READ.length),S1=dots.filter(d=>d.kind==="s").slice(0,CH1_RULE.length-1);
-      if(s==="method"){
-        const sm=small(),rh=Math.min(sm?30:36,(h-10)/CH1_RULE.length),x0=p.l+(sm?6:w*0.06),y0=p.t+Math.max(4,(h-(CH1_RULE.length-1)*rh)*0.28);
-        lines.push({x:x0,y0,y1:y0+(CH1_RULE.length-1)*rh,ck:"--veil"});
-        setAll((d,i)=>{
-          if(d===HIT)return{x:x0,y:y0,a:1,r:1.6,label:CH1_RULE[0]};
-          const k=S1.indexOf(d);
-          if(k>=0){if(d.a<0.05){d.x=x0;d.y=y0;}d.ck="--bone-3";return{x:x0,y:y0+(k+1)*rh,a:1,r:.7,delay:250+k*300,label:CH1_RULE[k+1]};}
-          return d.kind==="g"?{...cloud(d,i),a:.14}:{a:0};});
-      } else {
-        const wood=s==="wood",at=(fx,fy)=>({x:p.l+fx*w,y:p.t+fy*h});
-        setAll((d,i)=>{
-          if(d===HIT)return{...at(...CH1_HIT),a:1,r:1.6,label:PT+(wood?" · deutsche Bibel":"")};
-          const k=G1.indexOf(d);
-          if(k>=0)return{...at(CH1_READ[k][2],CH1_READ[k][3]),a:1,label:CH1_READ[k][0]+(wood?" · "+CH1_READ[k][1]:"")};
-          return d.kind==="g"?cloud(d,i):{a:0};});
+  function fit(s,max,size=14,code=false){ctx.font=font(size,code);while(size>10&&ctx.measureText(s).width>max){size-=.5;ctx.font=font(size,code);}return size;}
+  function label(s,x,y,max,size=14,c=ink,align="left",code=false){text(s,x,y,fit(s,max,size,code),c,align,code);}
+  function line(x1,y1,x2,y2,c=pale,width=1){ctx.strokeStyle=c;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+  function dot(x,y,r,c=muted){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();}
+  function outlineDot(x,y,r,c=blue){ctx.fillStyle=background;ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.stroke();}
+  function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
+  function panel(){const h=Math.min(H,350);return{x:12,y:(H-h)/2,w:W-24,h};}
+  function rows(items){
+    const p=panel(),gap=p.h/items.length;
+    if(p.h<110&&p.w>570){
+      const width=p.w/items.length;
+      items.forEach((item,i)=>{const x=p.x+i*width+4;label(item[0],x,p.y+p.h*.3,width-12,13,item[2]||ink,"left",/^[A-Z0-9\s+→×=\/.…]+$/.test(item[0]));label(item[1],x,p.y+p.h*.7,width-12,12,muted,"left",!!item[3]);});return;
+    }
+    items.forEach((item,i)=>{const y=p.y+gap*(i+.5);dot(p.x+5,y,3.5,item[2]||blue);label(item[0],p.x+19,y-9,p.w-20,14,item[2]||ink,"left",/^[A-Z0-9\s+→×=\/.…]+$/.test(item[0]));label(item[1],p.x+19,y+12,p.w-20,13,muted,"left",!!item[3]);});
+  }
+  function caption(left,right="") {capL.textContent=left;capR.textContent=right;}
+  function legendItems(items){
+    legend.replaceChildren();items.forEach(([s,c])=>{const item=document.createElement("span"),mark=document.createElement("i");mark.style.background=c;item.append(mark,document.createTextNode(s));legend.append(item);});
+  }
+  function strip(s,kind="cipher"){
+    const letters=[...s];tiles.style.gridTemplateColumns=`repeat(${letters.length},minmax(0,1fr))`;
+    if(tiles.children.length!==letters.length){tiles.replaceChildren(...letters.map(()=>{const t=document.createElement("div");t.className="t";return t;}));}
+    letters.forEach((c,i)=>{const t=tiles.children[i];t.textContent=c;t.className="t "+(kind==="reading"?(i<10?"de":i<18?"af":"sig"):kind==="junk"?"junk":"lit");});
+    sub.replaceChildren();
+  }
+  function configure(){
+    legend.replaceChildren();strip(CT);lastLetter=-1;
+    switch(state){
+      case "summary":caption("Woods Geheimtext aus 21 Buchstaben");break;
+      case "method":strip("H"+CT.slice(1));caption("Ein Schlüsselwort für jeden Buchstaben der Botschaft");break;
+      case "wood":caption("Drei Hinweise grenzten die Suche ein");break;
+      case "trap":strip("THEANSWERISNOTHEREYET");caption("Veranschaulichung: Ein freier Schlüssel passt zu jeder Botschaft");break;
+      case "shelves":caption("129 Bücher · 28,6 Millionen mögliche Schlüssel");break;
+      case "plants":strip(EN_PLANT_MSG);caption("Eine bekannte Botschaft, mit einem Buchschlüssel verschlüsselt");legendItems([["97 an erster Stelle",blue],["3 nicht an erster Stelle",gridGray]]);break;
+      case "englishResults":strip(JUNK[0],"junk");caption("Woods bestes Ergebnis und 100 zufällige Geheimtexte");legendItems([["Zufällige Geheimtexte",muted],["Woods bestes Ergebnis",blue]]);break;
+      case "idea":strip(PLANT_DE);caption("Dieselbe deutsche Testbotschaft, auf zwei Arten gelesen");break;
+      case "bibles":caption("Bibelübersetzungen in 19 Sprachen");break;
+      case "prayer":strip(instant?PT:CT,instant?"reading":"cipher");caption("13 führende unterschiedliche Ergebnisse · Thouless’ Regel");break;
+      case "church":strip(PT,"reading");caption("Die Anfangswörter ändern den gesamten Schlüssel");break;
+      case "table":strip(PT,"reading");caption("21 verschiedene Wörter → 21 Schlüsselbuchstaben → 21 Klartextbuchstaben");break;
+      case "reading":strip(PT,"reading");caption("Zwei Sprachen, gefolgt von Woods Initialen");break;
+      case "checks":strip(PT,"reading");caption("Alle 21 Buchstaben lassen sich exakt entschlüsseln und zurückverschlüsseln");break;
+      case "luck":strip(PT,"reading");caption("7 von 500 zufälligen Signaturen ergaben ebenfalls Wortfolgen");legendItems([["Ein Treffer",blue],["Kein Treffer",gridGray]]);break;
+      case "slip":strip(THOU.fixed);caption("Thouless’ Beispiel: Der letzte Geheimtextbuchstabe müsste D sein");break;
+      case "next":strip(PT,"reading");caption("Das Ergebnis wurde der Society mitgeteilt");break;
+    }
+  }
+  function grid(count,highlight,p,columns,maxRadius=4){
+    const rows=Math.ceil(count/columns),dx=p.w/columns,dy=p.h/rows,r=Math.min(maxRadius,dx*.32,dy*.32);
+    for(let i=0;i<count;i++)dot(p.x+dx*((i%columns)+.5),p.y+dy*(Math.floor(i/columns)+.5),r,highlight(i)?blue:gridGray);
+  }
+  function draw(){
+    dirty=false;ctx.clearRect(0,0,W,H);
+    const p=panel(),cx=W/2,compact=p.h<190,fs=W<360?13:15;
+    switch(state){
+      case "summary":{
+        rows([["Eine Passage in einem Buch","Liefert die Schlüsselwörter"],["Ein in den Wörtern verborgener Schlüssel","Eine Zahl für jeden Buchstaben"],["Eine Botschaft, verborgen in 21 Buchstaben","Veröffentlicht 1950"]]);break;
       }
-    } else if(mode==="cloud"){
-      setAll((d,i)=>d.kind==="g"?cloud(d,i):{a:0});
-    /* ---- chapter 2 (cloudLabels, shelves, histEnPlants, histEn) ---- */
-    } else if(mode==="cloudLabels"){
-      /* the trap: free keys never run out, so the cloud spills past the frame; a few dots show their reading, English among them */
-      const n=small()?4:6,lab=new Map();
-      for(let j=0;j<n;j++){const tx=0.1+((j*0.29)%0.42),ty=0.08+0.84*j/(n-1);let best=null,bd=9;G.forEach(d=>{const e=Math.hypot(d.cx-tx,d.cy-ty);if(e<bd&&!lab.has(d)){bd=e;best=d;}});lab.set(best,j%2?EN_TRAP[(j>>1)%EN_TRAP.length]:randStr(21));}
-      setAll(d=>d.kind==="g"?{x:p.l+(-0.12+1.24*d.cx)*w,y:p.t+(-0.1+1.2*d.cy)*h,a:lab.has(d)?1:0.75,r:lab.has(d)?1.25:1,delay:0,label:lab.get(d)||null}:{a:0});
-    } else if(mode==="shelves"){
-      /* the finite list: each book a spine of dots standing on a shelf, one dot for many thousand starting points */
-      const gapF=0.8,shelfH=q=>9*q+2.2*q;let top=p.t+22;
-      const place=q=>{const out=[];let x=0,row=0;SHELF2.forEach(b=>{const bw=b.c*q;if(x>0&&x+bw>w){x=0;row++;}out.push({x,row});x+=bw+gapF*q;});return{out,rows:row+1};};
-      let q=small()?9:11,pl=place(q);while(q>3&&top+pl.rows*shelfH(q)>p.t+h){q-=0.25;pl=place(q);}
-      top+=Math.max(0,(p.t+h-top-pl.rows*shelfH(q))*0.4);
-      const base=small()?2.4:3.2,rr=Math.min(1.25,q*0.52/base),boardY=k=>top+(k+1)*shelfH(q)-1.6*q;
-      const slot=[];SHELF2.forEach((b,bi)=>{const o=pl.out[bi];for(let c=0;c<b.c;c++)for(let k=0;k<b.h;k++)slot.push({x:p.l+o.x+c*q+q/2,y:boardY(o.row)-k*q-q/2,a:b.tone<0.33?0.62:(b.tone<0.66?0.82:1),delay:bi*9+k*14});});
-      setAll((d,i)=>{if(d.kind==="g"){const t=slot[i];return t?{x:t.x,y:t.y,a:t.a,r:rr,delay:t.delay}:{a:0};}
-        if(d===ANC2[0]){d.x=p.l-9;d.y=top-20;return{x:p.l-9,y:top-20,a:1,r:0.01,label:"129 Bücher · 28.602.798 Startpunkte"};}
-        return{a:0};});
-      for(let k=0;k<pl.rows;k++){lines.push({y:boardY(k)+q*0.35,x0:p.l,x1:W-p.r,ck:"--bone-3"});lines.push({y:boardY(k)+q*0.35+2,x0:p.l,x1:W-p.r,ck:"--veil"});}
-    } else if(mode==="histEnPlants"||mode==="histEn"){
-      /* real the English-only search (17 September 2026) scores, same axis in both states. Grey: the best reading found for each random ciphertext, i.e. how far chance reaches.
-         plants: teal, the 100 planted messages over the 129 books. englishResults: the grey pile moves to the 3,977-text run, Wood's best joins it,
-         and the planted messages stay behind, faint, to show where a real message lands */
-      const plants=mode==="histEnPlants",x0=-17.3,x1=-10.1,base=H-p.b,nb=small()?34:Math.max(34,Math.round(w/13));
-      axis={x0,x1,ticks:[-17,-16,-15,-14,-13,-12,-11],title:small()?"Bewertung als Englisch  →  englischer":"Bewertung der besten Lesart als Englisch  →  englischer"};
-      const N=plants?NUL2:NUL2.filter(d=>d.en2!=null),grp=plants?N.concat(PLA2):N.concat([WOOD2]);
-      const pos=hist(grp,plants?"en":"en2",x0,x1,{nb}),ghost=plants?new Map():hist(PLA2,"en",x0,x1,{nb});
-      /* the faint planted messages stack on top of the grey pile in shared bins; then stretch the piles upward to use the frame,
-         never spacing dots further apart vertically than the bins are wide */
-      const v0=pos.values().next().value,sp=(base-v0.y)/(v0.row+0.5),used=[];pos.forEach(v=>{used[v.b]=Math.max(used[v.b]||0,v.row+1);});
-      ghost.forEach(v=>{v.y-=(used[v.b]||0)*sp;});
-      const tall=Math.max(...[...pos.values(),...ghost.values()].map(v=>base-v.y)),f=Math.max(1,Math.min(w/nb/sp,h*0.6/tall));
-      [pos,ghost].forEach(m=>m.forEach(v=>{v.y=base-(base-v.y)*f;}));
-      let j=0;grp.concat(plants?[]:PLA2).forEach(d=>{if(d.a<0.05){const g=G[(j++*7)%G.length];d.x=g.x;d.y=g.y;}});
-      const top=Math.min(...[...pos.values()].map(v=>v.y)),topOf=f2=>Math.min(...grp.filter(f2).map(d=>pos.get(d).y));
-      N.forEach(d=>{d.ck=(!plants&&d.en2>EN_WOOD)?"--bone-2":"--dot-g";});
-      const PJ=PLA2[EN_PLANT_J],off=PLA2[55],q2=plants?pos.get(PJ):pos.get(WOOD2),tealTop=plants?topOf(x=>x.kind==="p2"&&x.en>-14):0,rr=small()?1.1:1;
-      setAll(d=>{const q=pos.get(d)||ghost.get(d);
-        if(d===ANC2[0]&&plants)return{x:px(-14.1,x0,x1),y:tealTop-46,a:1,r:0.01,label:small()?"Testbotschaften: 97 von 100 auf Rang 1":"Testbotschaften: 97 von 100 auf Rang 1 gefunden"};
-        if(d===ANC2[1])return{x:px(-16.6,x0,x1),y:top-(plants?20:46),a:1,r:0.01,label:"zufällige Geheimtexte"};
-        if(d===ANC2[2])return{x:q2.x,y:(plants?tealTop:top)-22,a:1,r:0.01,label:plants?"die Botschaft oben  −11,21":"Woods Bestes  −13,94"};
-        if(!q)return{a:0};
-        const o={x:q.x,y:q.y,a:1,r:rr,delay:(q.b*18+q.row*6)*0.5};
-        if(ghost.has(d))return{...o,a:0.38,delay:0};
-        if(d===WOOD2)return{...o,r:1.9,delay:700};
-        if(d===PJ)return{...o,r:1.6};
-        if(d===off)return{...o,label:"← −20.57"};
-        return o;});
-      lines.push({x:q2.x,y0:(plants?tealTop:top)-18,y1:q2.y-8,ck:plants?"--dot-p":"--dot-tew"});
-      lines.push({x:px(plants?-14.306:-13.267,x0,x1),y0:top-74,y1:base,ck:"--bone-3",dash:true,text:plants?"Zufall erreicht −14,31":"Zufall erreicht −13,27"});
-    /* ---- chapter 3 (mlTwoScorers, churchOrder) ---- */
-    } else if(mode==="mlTwoScorers"){
-      /* idea: the seven-language pile with the planted German line on it twice, once as the English word list alone scores it
-         (atop the pile) and once as all seven languages score it (far right); STRIP.idea makes whichever its strip shows glow */
-      const x0=-2.62,x1=-0.62;axis={x0,x1,ticks:[-2.5,-2.0,-1.5,-1.0],title:"Bewertung je Buchstabe  →  wortähnlicher"};
-      const de=PL[0],en=PL[9];en.ml=CH3_EN.score;self.ch3dots={de,en};const enOn=self.ch3v==="en";
-      const pos=hist(G.concat([de,en]),"ml",x0,x1,{nb:40});
-      /* the English-only copy is stacked in its score's column like any other dot, but as the column's top dot, so it is not lost inside the pile */
-      {const qe=pos.get(en);let top=null,td=null;pos.forEach((q,d)=>{if(q.b===qe.b&&(!top||q.y<top.y||(q.y===top.y&&q.x>top.x))){top=q;td=d;}});
-       if(td!==en){pos.set(td,qe);pos.set(en,top);}}
-      setAll(d=>{if(d===en){const q=pos.get(en);return{x:q.x,y:q.y,a:1,r:enOn?1.9:1.4,delay:300,label:"Englisch: "+CH3_EN.words.join(" ")};}
-        const q=pos.get(d);if(!q)return{a:0};
-        return{x:q.x,y:q.y,a:1,r:d===de?(enOn?1.4:1.9):1,delay:(q.b*10+q.row*3)*0.4,label:null};});
-      /* the seven-language copy is named on a leader line, clear of the pile and of Wood's best below it */
-      const qd=pos.get(de),xd=qd.x,ly=Math.max(p.t+70,H-p.b-130);
-      lines.push({x:xd,y0:ly,y1:qd.y-9,ck:"--dot-p",text:"7 Sprachen:"});
-      lines.push({x:xd,y0:ly+16,y1:ly+16,ck:"--dot-p",text:CH3_DE.words.join(" ")});
-      lines.push({x:px(-1.207,x0,x1),y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true,text:"Zufallsgrenze −1,207"});
-      /* Wood's best gets its own leader too, so its name sits over its dot, not over the pile */
-      const qw=pos.get(G[0]),lw=ly-96;
-      lines.push({x:qw.x,y0:lw,y1:qw.y-6,ck:"--bone-3",align:"right",bg:true,text:"Woods Bestes −1,313:"});
-      lines.push({x:qw.x,y0:lw+16,y1:lw+16,ck:"--bone-3",align:"right",bg:true,text:"OFERANTREFUSAIDAUTIOR"});
-    } else if(mode==="churchOrder"){
-      /* church: the 21 key words of the hand-typed church wording (red, each with the letter it gives) beside the Bible's 21 (blue);
-         the first two rows, Vater unser / Unser Vater, glow. Its dots are made on first use, in this graphic only */
-      if(!self.ch3c)self.ch3c={rows:CH3_CHURCH.map(()=>mk("c","--dot-v",{ta:0})),heads:[mk("c","--room",{ta:0}),mk("c","--room",{ta:0})]};
-      const C=self.ch3c,n=21,rh=Math.min(26,(H-p.t)/(n+1.2)),top=Math.max(p.t-6,(H-rh*(n+1.2))/2-6),cx=p.l+w/2,dx=Math.min(w*0.3,210),xl=cx-dx,xr=cx+dx;
-      C.rows.concat(C.heads,B.slice(0,n)).forEach(d=>{if(d.a<0.05){d.x=cx;d.y=top+rh*(n+1)/2;}});
-      setAll(d=>{let i=C.rows.indexOf(d);
-        if(i>=0)return{x:xl,y:top+rh*(i+1.7),a:1,r:i<2?1.7:1,delay:i*45,label:CH3_CHURCH[i]+" → "+CHURCH[i]};
-        if(d.kind==="b"&&d.rank<n){i=d.rank;return{x:xr,y:top+rh*(i+1.7),a:1,r:i<2?1.7:1,delay:i*45+20,label:KEY[i][0]};}
-        i=C.heads.indexOf(d);if(i>=0)return{x:i?xr:xl,y:top+rh*0.5,a:1,r:0.01,label:i?"LUTHER 1912":"LITURGISCH"};
-        return{a:0};});
-    /* ---- chapter 5 (vars): three rebuilds, one dot per letter under its tile; the changed methods are on the strip, never on a score axis ---- */
-    } else if(mode==="vars"){
-      const cr=cv.getBoundingClientRect(),ts=[...tilesEl.querySelectorAll(".t")].slice(0,21).map(t=>t.getBoundingClientRect());
-      const xs=ts.length===21&&ts[0].width>0?ts.map(r=>r.left+r.width/2-cr.left):Array.from({length:21},(_,j)=>p.l+(j+.5)*w/21),xL=ts.length===21&&ts[0].width>0?ts[0].left-cr.left:p.l;
-      const lh=small()?16:18,step5=Math.max(lh+20,Math.min(lh+34,(H-24)/3.4)),y00=small()?14:24,y0=y00+Math.max(0,Math.min(40,(H-y00-3*step5)*0.3));
-      setAll((d,i)=>{
-        if(d.kind==="s"&&d.i<63){const k=Math.floor(d.i/21),j=d.i%21;d.ck="--candle";return{x:xs[j],y:y0+k*step5+lh+4,a:1,r:1,delay:150+k*260+j*22};}
-        if(d.kind==="g"&&i<3){const x=xL-9,y=y0+i*step5+lh-12;if(d.a<0.05){d.x=x;d.y=y;}return{x,y,a:1,r:0.001,delay:i*260,label:PASS5[i]};}
-        return{a:0};});
-    /* ---- chapter 4 (ch4pour): the Bibles pour onto the dimmed Gutenberg pile; the hit drops last ---- */
-    } else if(mode==="ch4pour"){
-      const x0=-2.62,x1=-0.62,nb=40;axis={x0,x1,ticks:[-2.5,-2.0,-1.5,-1.0],title:"Bewertung über sieben Sprachen  →"};
-      /* same bins as the score, but each bin stacks Gutenberg dots first and Bible dots on top */
-      G.concat(B).forEach(d=>{const u=(d.ml-x0)/(x1-x0)*nb,b=Math.max(0,Math.min(nb-1,Math.floor(u)));d.ml4=x0+(b+(d.kind==="b"?0.5:0.02)+0.46*Math.max(0,Math.min(1,u-b)))*(x1-x0)/nb;});
-      const pos=hist(G.concat(B),"ml4",x0,x1,{nb});
-      const pour=self.ch4Pour||prevMode!=="ch4pour";self.ch4Pour=false;
-      if(pour)B.forEach(d=>{d.x=p.l+rnd()*w;d.y=-10;});
-      const xc=px(NULL4,x0,x1),xf=px(FLOOR4,x0,x1);
-      setAll(d=>{
-        if(d===A4[0])return{x:xc,y:p.t+6,a:1,r:.01,label:"Zufallsgrenze "+f4(NULL4)};
-        if(d===A4[1])return{x:xf,y:p.t+26,a:1,r:.01,label:"Testschwelle "+f4(FLOOR4)};
-        const q=pos.get(d);if(!q)return{a:0};
-        if(d===HIT)return{x:q.x,y:q.y,a:1,r:1.8,delay:DROP4,label:"deutsche Bibel, Matthäus 6,9  "+f4(HIT.ml)};
-        return{x:q.x,y:q.y,a:d.kind==="g"?.3:1,delay:d.kind==="b"?(q.b*10+q.row*4):0};});
-      if(pour)HIT.x=HIT.tx; /* the hit falls straight down its own column */
-      lines.push({x:xc,y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true},{x:xf,y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true});
-      A4.forEach(d=>{d.x=d.tx;d.y=d.ty;d.r=d.tr;});
-    /* ---- chapter 4 (ch4top): the Bible run's real top 13, zoomed so the gap after the hit shows ---- */
-    } else if(mode==="ch4top"){
-      const x0=-1.8,x1=-1.0;axis={x0,x1,ticks:[-1.8,-1.6,-1.4,-1.2,-1.0],title:"Bewertung, Spitze des Bibeldurchlaufs  →"};
-      const xc=px(NULL4,x0,x1),xf=px(FLOOR4,x0,x1),xh=px(HIT.ml,x0,x1),top0=p.t+70,gap=0.9;
-      const rh=Math.min(34,(H-74-top0)/(TOP.length-1+gap)) /* last row stays above the shared label code's low zone (H-70) */,rowY=r=>top0+(r?(r+gap)*rh:0);
-      const short=s==="bar"||(s==="table"&&STRIP.ch4merged());
-      setAll(d=>{
-        if(d===A4[0])return{x:xc,y:p.t+6,a:1,r:.01,label:"Zufallsgrenze "+f4(NULL4)};
-        if(d===A4[1])return{x:xf,y:p.t+26,a:1,r:.01,label:"Testschwelle "+f4(FLOOR4)};
-        if(d===A4[2])return short?{x:xf+6,y:top0-16,a:1,r:.01,label:(FLOOR4-HIT.ml).toFixed(3).replace(".",",")+" zu wenig"}:{a:0};
-        if(d.kind==="b"&&d.rank<TOP.length){const hit=d===HIT;return{x:px(d.ml,x0,x1),y:rowY(d.rank),a:hit?1:.55,r:hit?1.8:1,delay:d.rank*40,label:d.name+(hit||d.rank===1?"  "+f4(d.ml):"")};}
-        return{a:0};});
-      lines.push({x:xc,y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true},{x:xf,y0:p.t,y1:H-p.b,ck:"--bone-3",dash:true});
-      if(short)[0,1].forEach(o=>lines.push({y:top0+o,x0:xh+8,x1:xf,ck:"--ember"}));
-      A4.forEach(d=>{d.x=d.tx;d.y=d.ty;d.r=d.tr;});
-    /* ---- chapter 5 (grid) ---- */
-    } else if(mode==="grid"){
-      /* chapter 5: TEW on its own line, then the 500 random signatures that stood in for it, 7 of them red (matched, word salad) */
-      const cr=cv.getBoundingClientRect(),t0r=tilesEl.querySelector(".t"),tr0=t0r?t0r.getBoundingClientRect():null,tw=tilesEl.getBoundingClientRect().width;
-      const cols=25,rows=LUCK5.ctrl/cols,lh=small()?17:19,ox=tr0&&tr0.width>0?tr0.left-cr.left:p.l,below=lh*4+14;
-      const cs0=Math.max(6,Math.min((tw>0?tw:w)/cols,22,(H-lh*2-24-below-6)/rows)),spare=H-(lh*2+12+cs0*rows+below),top=(small()?10:18)+Math.max(0,Math.min(40,spare*0.25));
-      const cs=cs0,gy=top+lh*2+12,gb=gy+cs*rows;
-      const text=[[gy-lh+2,"500 zufällige Signaturen anstelle von TEW:",120],[gb+lh+4,LUCK5.hit+" passten zufällig ("+LUCK5.share+"), alles Wortsalat:",900],[gb+lh*2+6,LUCK5.salad[0],1000],[gb+lh*3+6,LUCK5.salad[1],1080],[gb+lh*4+6,LUCK5.salad[2],1160]];
-      setAll((d,i)=>{
-        if(d.kind==="g"&&i<text.length){const t=text[i],x=ox-9,y=t[0]-4;if(d.a<0.05){d.x=x;d.y=y;}return{x,y,a:1,r:0.001,delay:t[2],label:t[1]};}
-        if(d.kind!=="s")return{a:0};
-        if(d.i===0){d.ck="--dot-tew";return{x:ox+cs/2,y:top+lh/2,a:1,r:1.8,delay:0,label:"TEW, Woods Initialen: 1 Treffer, diese Botschaft"};}
-        const j=d.i-1,c=j%cols,r=Math.floor(j/cols),hit=lit.has(d.i);d.ck=hit?"--dot-v":"--dot-s";return{x:ox+c*cs+cs/2,y:gy+r*cs+cs/2,a:1,r:hit?1.25:0.9,delay:d.i*1.5,label:null};});
-    /* ---- chapter 6 (thouless, request, solution; anything else: off) ----
-       the canvas writes out lines of text from CH6: each line is one dot (r 0 = no dot) carrying the line as its label */
-    } else if(mode==="thouless"||mode==="request"||mode==="solution"){
-      const sm=small(),units=a=>a.reduce((u,l)=>u+(l.rule?0.7:(l.gap?0.6:1)),0),need=sp=>Math.max(...sp.cols.map(units))+(sp.foot?0.8+units(sp.foot):0);
-      let spec=CH6[mode](false);if(need(spec)*16>h+16)spec=CH6[mode](true);
-      const cols=spec.cols,foot=spec.foot||[];ctx.font=(sm?"11px ":"12px ")+(cssv("--mono")||"monospace");
-      const colW=cols.map(c=>Math.max(...c.filter(l=>l.t).map(l=>13+ctx.measureText(l.t).width)));
-      const gx=sm?10:36,tot=colW.reduce((a,b)=>a+b,0)+gx*(cols.length-1);
-      const nU=need(spec),rh=Math.max(16,Math.min(sm?21:23,(h+16)/(nU+0.4)));
-      const xs=[];cols.forEach((c,j)=>xs.push(j?xs[j-1]+colW[j-1]+gx:p.l+4+Math.max(0,(w-tot)/2)));
-      const over=Math.min(xs[xs.length-1]-(W*0.55-2),xs[0]-(p.l+4));if(over>0)xs.forEach((x,j)=>xs[j]=x-over); /* labels flip left past 0.55W */
-      const y0=p.t-8+rh/2+Math.max(0,(h+16-nU*rh)/2),items=[];let q=0;
-      const put=(a,x,y,wd)=>{a.forEach(l=>{if(l.rule){lines.push({y:y-rh*0.15,x0:x-4,x1:x+wd-4,ck:"--veil"});y+=rh*0.7;}else if(l.gap)y+=rh*0.6;else{items.push({x,y,t:l.t,ck:l.ck||"--bone-3",r:("r"in l)?l.r:1,delay:q++*(mode==="solution"?40:70)});y+=rh;}});return y;};
-      const yEnd=Math.max(...cols.map((c,j)=>put(c,xs[j],y0,colW[j])));
-      if(foot.length)put(foot,xs[0],yEnd+rh*0.8,tot);
-      const off={thouless:0,request:60,solution:120}[mode],pool=new Map();items.forEach((it,j)=>pool.set(G[off+j],it));
-      setAll(d=>{const it=pool.get(d);if(!it)return{a:0};d.ck=it.ck;if(d.a<0.05){d.x=it.x;d.y=it.y;d.r=it.r;}return{x:it.x,y:it.y,a:1,r:it.r,delay:it.delay,label:it.t};});
-    } else {
-      setAll(()=>({a:0}));
+      case "method":{
+        rows([["UNSER","21 + 14 + 19 + 5 + 18 = 77",blue,true],["77 → Y → Verschiebung 24","Y ist Buchstabe 25; A bedeutet keine Verschiebung",ink,false],["F → H","F um 24 Stellen zurück → H",blue,false]]);break;
+      }
+      case "wood":{
+        rows([["Ein veröffentlichtes Buch","Eine zugängliche Quelle für den Schlüssel"],["Fremdsprachen","Schlüssel und Botschaft müssen nicht Englisch sein"],["Wiederholte Wörter ausgelassen","Jedes Schlüsselwort nur einmal verwenden"]]);break;
+      }
+      case "trap":{
+        rows([["THE ANSWER IS NOT HERE YET","Mit frei gewähltem Schlüssel",ink,true],["WE WILL MEET AT DAWN TODAY","Mit einem anderen Schlüssel",ink,true],["PLEASE KEEP THIS KEY SAFE","Lesbar heißt noch nicht richtig",ink,true]]);break;
+      }
+      case "shelves":{
+        const top=p.y+17,bottom=p.y+p.h-22,cols=43,dx=p.w/cols,dy=(bottom-top)/3;
+        for(let i=0;i<129;i++){const x=p.x+(i%cols)*dx+1,y=top+Math.floor(i/cols)*dy;rect(x,y,Math.max(2,dx-2),dy*.69,pale);line(x,y+2,x,y+dy*.69,muted);}
+        label("Jeder Buchrücken steht für ein Buch",cx,p.y+10,p.w,fs,ink,"center");
+        label("Jede mögliche Startposition wurde ausprobiert",cx,p.y+p.h-9,p.w,13,muted,"center");break;
+      }
+      case "plants":{
+        const numberY=p.y+13;label("Bestes Ergebnis in 97 von 100 Tests",cx,numberY,p.w,fs,ink,"center");
+        grid(100,i=>!EN_MISS.includes(i),{x:p.x,y:p.y+31,w:p.w,h:p.h-49},20,5);
+        label("Ein Punkt = ein Test",cx,p.y+p.h-9,p.w,12,muted,"center");break;
+      }
+      case "englishResults":{
+        const left=p.x+9,right=p.x+p.w-9,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
+        const plotHeight=Math.min(p.h,230),plotY=p.y+(p.h-plotHeight)/2;
+        const bottom=plotY+plotHeight-45,top=plotY+48,bins=27,counts=Array(bins).fill(0),points=[];
+        EN_NULLX.forEach(value=>{const bin=Math.max(0,Math.min(bins-1,Math.floor((value-min)/(max-min)*bins)));points.push({value,row:counts[bin]++});});
+        const dy=Math.min(10,(bottom-top)/Math.max(...counts)),r=Math.min(3.8,dy*.39,(right-left)/bins*.34);
+        points.forEach(pt=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted));
+        line(left,bottom+3,right,bottom+3,pale);
+        const wx=map(EN_WOOD);line(wx,top-7,wx,bottom+3,blue,1.5);outlineDot(wx,bottom+3,4.5,blue);
+        const woodLabel="Wood −13,937",woodSide=wx>cx?"right":"left",woodX=woodSide==="right"?wx-7:wx+7;
+        label(woodLabel,woodX,plotY+33,p.w*.64,13,blue,woodSide,true);
+        label("12 zufällige Geheimtexte wurden höher bewertet",cx,plotY+10,p.w,12,ink,"center");
+        text("−15.0",map(-15),bottom+18,12,muted,"center",true);text("−14.0",map(-14),bottom+18,12,muted,"center",true);text("−13.25",map(-13.25),bottom+18,12,muted,"center",true);
+        label("Ähnlichkeit mit Englisch →",cx,plotY+plotHeight-8,p.w,12,muted,"center");
+        break;
+      }
+      case "idea":{
+        const y1=p.y+p.h*.28,y2=p.y+p.h*.72;
+        label("Englische Wortliste",p.x,y1-15,p.w,fs,muted);
+        label("VERS TE HT GE WIS SEM IN DER",p.x,y1+9,p.w,fs,ink,"left",true);
+        line(p.x,p.y+p.h*.5,p.x+p.w,p.y+p.h*.5,pale);
+        label("Wortlisten in sieben Sprachen",p.x,y2-15,p.w,fs,blue);
+        label("VERSTEHT GEWISSE MINDER",p.x,y2+9,p.w,fs,blue,"left",true);break;
+      }
+      case "bibles":{
+        const cols=W<360?3:W<450?4:5,rows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/rows;
+        BIBLE_LANGUAGES.forEach((name,i)=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;rect(x+2,y+3,dx-5,dy-6,pale);line(x+4,y+3,x+4,y+dy-3,muted,2);label(name,x+10,y+dy/2,dx-16,12,ink);});break;
+      }
+      case "prayer":{
+        const nameWidth=W<400?94:130,scoreWidth=47,left=p.x+nameWidth,right=p.x+p.w-scoreWidth;
+        const min=-1.75,max=-1.2,map=v=>left+(v-min)/(max-min)*(right-left),bottom=p.y+p.h-43,dy=(p.h-55)/3;
+        [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,p.y+6,x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+16,11,muted,"center",true);});
+        line(left,bottom,right,bottom,muted);
+        [["Deutsche Bibel",TOP[0][1],blue],["Rumänische Bibel",TOP[1][1],muted]].forEach(([name,value,c],i)=>{const y=p.y+dy*(i+.5)+3;label(name,p.x,y,nameWidth-9,fs,c);dot(map(value),y,4,c);text(value.toFixed(3),p.x+p.w,y,12,c,"right",true);});
+        const y=p.y+dy*2.5+3;label("Übrige 11",p.x,y,nameWidth-9,13,muted);TOP.slice(2).forEach(([,score],i)=>dot(map(score),y+(i%2?3:-3),2.8,muted));
+        label("Höhere Wortbewertung →",cx,p.y+p.h-8,p.w,12,muted,"center");
+        break;
+      }
+      case "church":{
+        const y1=p.y+p.h*.27,y2=p.y+p.h*.73;
+        label("Kirchlicher Wortlaut: Vater unser",p.x,y1-15,p.w,fs,muted);
+        label(CHURCH,p.x,y1+9,p.w,fs,muted,"left",true);
+        line(p.x,p.y+p.h*.5,p.x+p.w,p.y+p.h*.5,pale);
+        label("Lutherbibel: Unser Vater",p.x,y2-15,p.w,fs,blue);
+        label(PT,p.x,y2+9,p.w,fs,blue,"left",true);break;
+      }
+      case "table":{
+        rows([["UNSER → 77 → Y","Geheimtext F → Klartext H",blue,false],["VATER → 66 → N","Geheimtext V → Klartext I",blue,false],["IN → 23 → W","Geheimtext A → Klartext E",blue,false]]);break;
+      }
+      case "reading":{
+        rows([["Hier bin ich","Deutsch · Hier bin ich",blue],["Totsiens","Afrikaans · Auf Wiedersehen",teal],["T. E. W.","Woods Initialen",ink]]);break;
+      }
+      case "checks":{
+        rows([["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert",blue],["21 / 21 Buchstaben","Von Astra unabhängig reproduziert",blue],["21 / 21 Buchstaben","Mit dem ursprünglichen Geheimtext abgeglichen",blue]]);break;
+      }
+      case "luck":{
+        label("500 zufällige Signaturen aus drei Buchstaben",cx,p.y+10,p.w,fs,ink,"center");
+        grid(500,i=>i<7,{x:p.x,y:p.y+28,w:p.w,h:p.h-47},50,3.4);
+        label("7 Signaturen mit Treffern · ein Punkt je Signatur",cx,p.y+p.h-9,p.w,12,muted,"center");break;
+      }
+      case "slip":{
+        rows([["SUFFER = 19 + 21 + 6 + 6 + 5 + 18","Summe: 75",ink,true],["75 = 2 × 26 + 23 → W","Thouless druckte stattdessen U",blue,false],["Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B",blue,false]]);break;
+      }
+      case "next":{
+        rows([["Ergebnis an die Society übermittelt","Wie Wood es 1950 erbeten hatte",blue],["Die Society antwortete am 5. Oktober","Woods Akte: Cambridge University Library",blue],["Ein Ergebnis für das Archiv","Eintrag in der Psi Encyclopedia angeboten",ink]]);break;
+      }
     }
-    prevMode=mode;legendFor(mode);
-    if(instant||reduced)dots.forEach(d=>{d.x=d.tx;d.y=d.ty;d.a=d.ta;d.r=d.tr;d.delay=0;});
-    t0=performance.now();
   }
-  function legendFor(m){const Lg=[];
-    /* chapter 5 */
-    if(m==="vars"||m==="grid"){(m==="vars"?[["--candle","Buchstabe wie gefunden"],["--ember","Buchstabe weicht ab"]]:[["--dot-tew","TEW"],["--dot-v","zufällige Signatur, passt"],["--dot-s","zufällige Signatur, passt nicht"]]).forEach(x=>Lg.push(x));legendEl.innerHTML=Lg.map(x=>`<span><i style="background:var(${x[0]})"></i>${x[1]}</span>`).join("");return;}
-    if(m==="cloud"&&(el.dataset.g==="1"||step==="wood")){Lg.push(["--dot-g",step==="method"?"alle anderen Schlüssel":"ein Schlüssel und die Lesart, die er ergibt"]);Lg.push(["--dot-b",step==="method"?"der richtige Schlüssel, Wort 1":"der richtige Schlüssel"]);} /* chapter 1 */
-    /* chapter 3 */
-    if(m==="mlTwoScorers")Lg.push(["--dot-g","Gutenberg-Bücher"],["--dot-p","eine deutsche Testzeile, zweifach bewertet"]);
-    if(m==="churchOrder")Lg.push(["--dot-v","liturgische Fassung: Buchstabensalat"],["--dot-b","Bibelfassung, im Bibeldurchlauf"]);
-    /* chapter 2 */
-    if(m==="cloudLabels")Lg.push(["--dot-g","ein freier Schlüssel, eine Lesart"]);
-    if(m==="shelves")Lg.push(["--dot-g","ein Buchrücken ist ein Buch; ein Punkt, viele Tausend Startpunkte"]);
-    if(m==="histEnPlants"){Lg.push(["--dot-p","Testbotschaft"]);Lg.push(["--dot-v","3 nicht auf Rang 1"]);Lg.push(["--dot-g","zufälliger Geheimtext, seine beste Lesart"]);}
-    if(m==="histEn"){Lg.push(["--dot-tew","Woods Bestes"]);Lg.push(["--bone-2","12 von 100 zufälligen Geheimtexten schlagen es"]);Lg.push(["--dot-g","die übrigen 88"]);Lg.push(["--dot-p","Testbotschaften, zum Vergleich"]);}
-    /* other chapters */
-    /* chapter 6 */
-    if(m==="thouless"){Lg.push(["--bone-3","richtig gedruckt"]);Lg.push(["--ember","falsch gedruckt"]);Lg.push(["--candle","nachgerechnet"]);}
-    if(m==="solution"){Lg.push(["--de","Deutsch"]);Lg.push(["--af","Afrikaans"]);Lg.push(["--sig","Woods Initialen"]);}
-    if(m==="ch4pour")Lg.push(["--dot-g","Gutenberg-Bücher"],["--dot-b","19 Bibeln"]); /* chapter 4 */
-    if(m==="ch4top")Lg.push(["--dot-b","die besten 13 von 26,7 Millionen im Bibeldurchlauf"]); /* chapter 4 */
-    legendEl.innerHTML=Lg.map(x=>`<span><i style="background:var(${x[0]})"></i>${x[1]}</span>`).join("");}
+  function resize(){
+    const box=cv.getBoundingClientRect();W=Math.max(1,box.width);H=Math.max(1,box.height);DPR=Math.min(devicePixelRatio||1,2);
+    cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);
+    ink=color("--bone")||"#242a2c";muted=color("--bone-3")||"#919a9f";blue=color("--candle")||"#276b86";teal=color("--af")||"#568b82";pale=color("--veil")||"#dce2e4";background=color("--room")||"#f8fafb";gridGray=color("--dot-s")||"#c6ced6";dirty=true;
+  }
+  this.go=function(next,immediate=false){if(state===next&&this.state===next)return;state=next;this.state=next;instant=immediate||reduced;started=performance.now();pausedAt=0;configure();dirty=true;};
+  this.pause=function(){if(!pausedAt)pausedAt=performance.now();};
+  this.resume=function(){if(pausedAt){started+=performance.now()-pausedAt;pausedAt=0;}dirty=true;};
+  this.replay=function(){if(state!=="prayer")return;instant=reduced;started=performance.now();pausedAt=0;lastLetter=-1;strip(instant?PT:CT,instant?"reading":"cipher");dirty=true;};
   this.frame=function(now){
-    if(W<=0)return;
-    const dt=now-t0;ctx.clearRect(0,0,W,H);
-    const mono=cssv("--mono")||"monospace",ink=cssv("--bone"),ink2=cssv("--bone-2"),ink3=cssv("--bone-3"),lbg=cssv("--label-bg"),bg=cssv("--room"),glow=cssv("--candle");
-    /* a leader's words; one with bg:true sits on a label backing and is drawn after the dots, so a pile cannot cover it */
-    const lineText=l=>{const al=l.align||(l.x>W*0.6?"right":"left"),tx=l.x+(al==="right"?-6:6),ty=l.bottom?l.y1-6:l.y0+12;ctx.textAlign=al;
-      if(l.bg){const tw=ctx.measureText(l.text).width;ctx.fillStyle=lbg;ctx.fillRect(al==="right"?tx-tw-4:tx-4,ty-12,tw+8,16);}
-      ctx.fillStyle=ink2;ctx.fillText(l.text,tx,ty);};
-    ctx.save();ctx.font="12px "+mono;
-    lines.forEach(l=>{ctx.strokeStyle=cssv(l.ck);ctx.lineWidth=1;ctx.setLineDash(l.dash?[4,4]:[]);ctx.beginPath();if("y0"in l){ctx.moveTo(l.x,l.y0);ctx.lineTo(l.x,l.y1);}else{ctx.moveTo(l.x0,l.y);ctx.lineTo(l.x1,l.y);}ctx.stroke();ctx.setLineDash([]);
-      if(l.text&&!l.bg)lineText(l);});
-    if(axis){const p=pad();ctx.strokeStyle=ink3;ctx.beginPath();ctx.moveTo(p.l,H-p.b+4);ctx.lineTo(W-p.r,H-p.b+4);ctx.stroke();ctx.fillStyle=ink2;axis.ticks.forEach(v=>{const x=p.l+(v-axis.x0)/(axis.x1-axis.x0)*(W-p.l-p.r);ctx.textAlign=x<18?"left":(x>W-18?"right":"center");ctx.fillText(v.toFixed(1).replace(".",","),x,H-p.b+20);});ctx.textAlign="left";ctx.fillStyle=ink3;ctx.fillText(axis.title,p.l,H-6);}
-    ctx.restore();
-    const base=small()?2.4:3.2,k=reduced?1:(small()?0.13:0.085),colors={};
-    for(const d of dots){
-      if(dt>=d.delay*(small()?0.5:1)){d.x+=(d.tx-d.x)*k;d.y+=(d.ty-d.y)*k;d.a+=(d.ta-d.a)*k;d.r+=(d.tr-d.r)*k;}
-      if(d.a<0.01)continue;
-      ctx.globalAlpha=d.a;ctx.fillStyle=colors[d.ck]||(colors[d.ck]=cssv(d.ck));ctx.beginPath();ctx.arc(d.x,d.y,base*d.r,0,6.283);ctx.fill();
-      if(d.r>1.3){ctx.shadowColor=glow;ctx.shadowBlur=7;ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle=bg;ctx.lineWidth=2;ctx.stroke();}
-    }
-    ctx.globalAlpha=1;ctx.font=(small()?"11px ":"12px ")+mono;const placed=[];
-    for(const d of dots){const want=d.label&&d.a>=0.5&&Math.abs(d.x-d.tx)+Math.abs(d.y-d.ty)<=3;d.la=reduced?(want?1:0):(d.la||0)+((want?1:0)-(d.la||0))*0.12;if(!want&&d.la<0.03){d.la=0;continue;}if(!d.label)continue;
-      ctx.globalAlpha=Math.min(1,d.la);const right=d.x>W*0.55,low=d.ty>H-70&&axis&&!["top","vars"].includes(DOTS[step]);ctx.textAlign=right?"right":"left";const m=ctx.measureText(d.label).width,tx=d.x+(right?-9:9);let ty=low?d.y-10:d.y+4;
-      let bx=right?tx-m-3:tx-3;if(bx+m+6>W-2)bx=W-2-m-6;if(bx<2)bx=2;for(let k=0;k<6;k++){const hit=placed.some(r=>bx<r.x+r.w&&bx+m+6>r.x&&ty-11<r.y+r.h&&ty+4>r.y);if(!hit)break;ty-=16;}placed.push({x:bx,y:ty-11,w:m+6,h:15});
-      ctx.fillStyle=lbg;ctx.fillRect(bx,ty-11,m+6,15);ctx.fillStyle=ink;ctx.textAlign="left";ctx.fillText(d.label,bx+3,ty);}
-    ctx.globalAlpha=1;ctx.font="12px "+mono;lines.forEach(l=>{if(l.text&&l.bg)lineText(l);});
+    if(state==="prayer"&&!instant){const n=Math.min(21,Math.floor(Math.max(0,now-started)/45));if(n!==lastLetter){lastLetter=n;strip(PT.slice(0,n)+CT.slice(n));[...tiles.children].forEach((t,i)=>t.className="t "+(i<n?(i<10?"de":i<18?"af":"sig"):"dim"));}}
+    if(dirty)draw();
   };
-  let current=null;
-  this.go=function(s,instant){if(s===current)return;current=s;stripClear();(STRIP[s]||STRIP.summary)();if(W>0)layout(s,instant);else step=s;};
-  this.replay=function(){current=null;this.go("prayer");};
-  this.pause=function(){stripClear();};
-  this.resume=function(){if(current){const c=current;current=null;this.go(c,true);}};
-  this.visible=true;
+  new ResizeObserver(resize).observe(cv);document.fonts?.ready.then(()=>{dirty=true;});resize();
 }
 
-/* one graphic per chapter; each starts, at rest, in the state the previous chapter ended on */
-const graphics=new Map();
-document.querySelectorAll(".chapter").forEach(ch=>{const g=new Graphic(ch.querySelector(".graphic"));graphics.set(ch,g);g.go(PRELUDE[ch.dataset.ch],true);const pre=document.querySelector(`.step[data-s="${PRELUDE[ch.dataset.ch]}"]`);g.el.querySelector(".beatcap").textContent=pre?pre.dataset.cap||"":"";});
-const vis=new IntersectionObserver(es=>{es.forEach(e=>{const g=graphics.get(e.target.closest(".chapter"));g.visible=e.isIntersecting;if(e.isIntersecting)g.resume();else g.pause();});},{threshold:0});
-graphics.forEach(g=>vis.observe(g.el));
-(function loop(now){graphics.forEach(g=>{if(g.visible)g.frame(now);});requestAnimationFrame(loop);})(performance.now());
-const secs=[...document.querySelectorAll(".step")];
-const mq=matchMedia("(max-width:900px)");
-function activate(el,offscreen){const ch=el.closest(".chapter"),g=graphics.get(ch),sid=el.dataset.s,st=ch.querySelector(`.step[data-s="${sid}"]`);if(offscreen){g.go(sid,true);g.pause();}else g.go(sid);g.el.querySelector(".beatcap").textContent=st?st.dataset.cap||"":"";
-  const beats=[...ch.querySelectorAll(".beat")],k=beats.findIndex(b=>b.dataset.s===sid);g.el.querySelectorAll(".progress i").forEach((dot,i)=>dot.classList.toggle("on",i<=k));}
-graphics.forEach((g,ch)=>{g.el.querySelector(".progress").innerHTML=[...ch.querySelectorAll(".beat")].map(()=>"<i></i>").join("");});
-/* the active beat (phone) or step (desktop) is the last one whose top has passed the trigger line, so scrolling down
-   always ends on the chapter's end state and only scrolling back up reverses it; no event can be skipped */
-function catchUp(){const mobile=mq.matches,line=innerHeight*(mobile?0.5:0.55);graphics.forEach((g,ch)=>{const els=[...ch.querySelectorAll(mobile?".beat":".step")];let cur=null;els.forEach(e=>{if(e.getBoundingClientRect().top<=line)cur=e;});if(cur)activate(cur,!g.visible);else prelude(ch,g,!g.visible);});
-  const lit=secs.filter(e=>e.getBoundingClientRect().top<=line).pop()||secs[0];secs.forEach(x=>x.classList.toggle("on",x===lit));}
-function prelude(ch,g,offscreen){const sid=PRELUDE[ch.dataset.ch];if(offscreen){g.go(sid,true);g.pause();}else g.go(sid);const pre=document.querySelector(`.step[data-s="${sid}"]`);g.el.querySelector(".beatcap").textContent=pre?pre.dataset.cap||"":"";g.el.querySelectorAll(".progress i").forEach(d=>d.classList.remove("on"));}
-let ticking=false;const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;catchUp();});};
-addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);mq.addEventListener("change",onScroll);
-catchUp();
-document.querySelectorAll(".replay").forEach(b=>b.addEventListener("click",()=>{const ch=b.closest(".chapter"),g=graphics.get(ch);if(mq.matches)ch.querySelector('.beat[data-s="prayer"]').scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"});g.replay();}));
-
+window.WoodStory={Graphic,reduced};
 })();
 </script>
+<script src="../story-scroll.js"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */

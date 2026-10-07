@@ -1,1555 +1,1169 @@
 {
- "note": "German translation of docs/index.html. Built by tools/build_de.py into docs/de/index.html. 'units' are exact HTML slices of the English page; 'js' are exact source strings in its script. Translated with AI assistance and reviewed by a second AI; corrections welcome.",
- "units": [
-  {
-   "kind": "title",
-   "en": "Solving the 1950 cipher meant to test life after death",
-   "de": "Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte"
-  },
-  {
-   "kind": "meta",
-   "en": "How T. E. Wood's 1950 survival-test cryptogram, #35 on Klaus Schmeh's Top 50 unsolved list, was solved. The key is the Lord's Prayer in German.",
-   "de": "Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch."
-  },
-  {
-   "kind": "meta",
-   "en": "Wood's ciphertext FVAMI NTKFX XWATB OIZVV X under the title Solving the 1950 cipher meant to test life after death",
-   "de": "Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“"
-  },
-  {
-   "kind": "p",
-   "en": "Proceedings of the S.P.R., vol. 49 · <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">No. 35 of Klaus Schmeh's Top 50</a>",
-   "de": "Proceedings of the S.P.R., Bd.&nbsp;49 · <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">Nr.&nbsp;35 auf Klaus Schmehs Top-50-Liste</a>"
-  },
-  {
-   "kind": "p",
-   "en": "By <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, with assistance from Claude<span>4 October 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">code and data on GitHub</a> · <a class=\"lang\" href=\"de/\" hreflang=\"de\" lang=\"de\">Deutsche Fassung</a></span>",
-   "de": "Von <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, mit Unterstützung von Claude<span>4.&nbsp;Oktober 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code und Daten auf GitHub</a> · <a class=\"lang\" href=\"../\" hreflang=\"en\" lang=\"en\">English version</a></span>"
-  },
-  {
-   "kind": "attr",
-   "en": "Wood's ciphertext, FVAMI NTKFX XWATB OIZVV X",
-   "de": "Woods Geheimtext, FVAMI NTKFX XWATB OIZVV X"
-  },
-  {
-   "kind": "p",
-   "en": "&ldquo;My ciphered passage is:&rdquo;",
-   "de": "„Mein verschlüsselter Text lautet:“"
-  },
-  {
-   "kind": "figcaption",
-   "en": "T. E. Wood, &ldquo;A Further Test for Survival&rdquo;, <em>Proceedings of the S.P.R.</em> 49 (1950), p.&nbsp;105.",
-   "de": "T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S.&nbsp;105."
-  },
-  {
-   "kind": "p",
-   "en": "Solved",
-   "de": "Gelöst"
-  },
-  {
-   "kind": "p",
-   "en": "\"Here I am\" in German, \"goodbye\" in Afrikaans, and Wood's initials. He wrote it to be read after his death.",
-   "de": "Deutsch, Afrikaans für „auf Wiedersehen“ und Woods Initialen. Sie sollte erst nach seinem Tod gelesen werden."
-  },
-  {
-   "kind": "p",
-   "en": "The key is the opening of the Lord's Prayer in the 1912 Luther Bible, used with Robert Thouless's 1948 word-sum system.",
-   "de": "Der Schlüssel ist der Anfang des Vaterunsers in der Lutherbibel von 1912, verwendet nach Robert Thouless’ Wortsummenverfahren von 1948."
-  },
-  {
-   "kind": "p",
-   "en": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">confirmed it</a> on 4 October 2026; Richard Bean confirmed the reading on 6 October.",
-   "de": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">bestätigte die Lösung</a> am 4. Oktober 2026; Richard Bean bestätigte die Lesart am 6. Oktober."
-  },
-  {
-   "kind": "p",
-   "en": "In 1950 a solicitor named T. E. Wood published 21 letters as a test of life after death. He would die, then try to send the key back through a medium. What follows is how the cipher was decrypted without communicating with the dead.",
-   "de": "1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er versuchen, den Schlüssel über ein Medium zu übermitteln. Im Folgenden geht es darum, wie der Geheimtext entschlüsselt wurde, ohne mit den Toten in Kontakt zu treten."
-  },
-  {
-   "kind": "attr",
-   "en": "Article sections",
-   "de": "Abschnitte des Artikels"
-  },
-  {
-   "kind": "li",
-   "en": "<a href=\"#the-puzzle\">The puzzle</a>",
-   "de": "<a href=\"#the-puzzle\">Das Rätsel</a>"
-  },
-  {
-   "kind": "li",
-   "en": "<a href=\"#why-it-stayed-open\">Searching book keys</a>",
-   "de": "<a href=\"#why-it-stayed-open\">Suche nach Buchschlüsseln</a>"
-  },
-  {
-   "kind": "li",
-   "en": "<a href=\"#the-idea-that-cracked-it\">The language question</a>",
-   "de": "<a href=\"#the-idea-that-cracked-it\">Die Sprachenfrage</a>"
-  },
-  {
-   "kind": "li",
-   "en": "<a href=\"#the-hit\">The solution</a>",
-   "de": "<a href=\"#the-hit\">Die Lösung</a>"
-  },
-  {
-   "kind": "li",
-   "en": "<a href=\"#how-it-was-checked\">Checking the result</a>",
-   "de": "<a href=\"#how-it-was-checked\">Prüfung des Ergebnisses</a>"
-  },
-  {
-   "kind": "li",
-   "en": "<a href=\"#the-correction\">Further findings</a>",
-   "de": "<a href=\"#the-correction\">Weitere Erkenntnisse</a>"
-  },
-  {
-   "kind": "span",
-   "en": "I · The cipher",
-   "de": "I · Der Geheimtext"
-  },
-  {
-   "kind": "attr",
-   "en": "Candidate keys, one dot each; the chart changes with the section being read",
-   "de": "Mögliche Schlüssel, ein Punkt je Schlüssel; die Grafik ändert sich mit dem gelesenen Abschnitt"
-  },
-  {
-   "kind": "attr",
-   "en": "In 1950 Wood published 21 letters as a test of life after death. Each dot is a key and the reading it gives; one reading is the message.",
-   "de": "1950 veröffentlichte Wood 21 Buchstaben als Test des Fortlebens nach dem Tod. Jeder Punkt ist ein Schlüssel und seine Lesart; eine davon ist die Botschaft."
-  },
-  {
-   "kind": "p",
-   "en": "1948 and 1950",
-   "de": "1948 und 1950"
-  },
-  {
-   "kind": "h2",
-   "en": "The puzzle",
-   "de": "Das Rätsel"
-  },
-  {
-   "kind": "p",
-   "en": "Wood's cryptogram was a test of life after death. He would publish a message, die, and then try to send the key back through a medium. Only he knew the key, so a medium who produced it would, he hoped, be evidence that something of him had survived. He was copying an idea from the psychologist Robert Thouless.",
-   "de": "Woods Kryptogramm war ein Test des Fortlebens nach dem Tod. Er wollte eine Botschaft veröffentlichen, sterben und dann versuchen, den Schlüssel über ein Medium zu übermitteln. Nur er kannte den Schlüssel; hätte ein Medium ihn geliefert, wäre das, so hoffte er, ein Indiz gewesen, dass etwas von ihm den Tod überdauert hatte. Die Idee übernahm er von dem Psychologen Robert Thouless."
-  },
-  {
-   "kind": "attr",
-   "en": "Under Thouless's rule, a word's letters sum to a key letter, which shifts one cipher letter. UNSER gives Y, and F becomes H.",
-   "de": "Nach Thouless’ Regel ergibt die Buchstabensumme eines Worts einen Schlüsselbuchstaben, der einen Geheimtextbuchstaben verschiebt. UNSER ergibt Y, aus F wird H."
-  },
-  {
-   "kind": "h3",
-   "en": "Thouless's method (1948)",
-   "de": "Thouless’ Verfahren (1948)"
-  },
-  {
-   "kind": "p",
-   "en": "In \"A Test of Survival\" (<em>Proceedings of the Society for Psychical Research</em> 48), Thouless published enciphered messages whose keys only he knew. One of them used a system meant to be unbreakable without the key:",
-   "de": "In „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48) veröffentlichte Thouless verschlüsselte Botschaften, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne Schlüssel unknackbar sein sollte:"
-  },
-  {
-   "kind": "li",
-   "en": "Pick a passage of text as the key, and skip any word that has already appeared.",
-   "de": "Man wählt eine Textpassage als Schlüssel und überspringt jedes Wort, das schon vorgekommen ist."
-  },
-  {
-   "kind": "li",
-   "en": "Turn each word into one letter. Add up its letters (A=1 to Z=26), divide by 26, and take the remainder (1 is A, 25 is Y, 0 is Z).",
-   "de": "Jedes Wort wird zu einem Buchstaben. Man addiert seine Buchstaben (A=1 bis Z=26), teilt durch 26 und nimmt den Rest (1 ist A, 25 ist Y, 0 ist Z)."
-  },
-  {
-   "kind": "li",
-   "en": "Use that key letter to shift one message letter along the alphabet. A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way.",
-   "de": "Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln verschiebt man in die Gegenrichtung."
-  },
-  {
-   "kind": "p",
-   "en": "Each key word supplies the shift for one message letter. So a 21-letter message needs 21 distinct key words.",
-   "de": "Jedes Schlüsselwort liefert die Verschiebung für einen Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter."
-  },
-  {
-   "kind": "attr",
-   "en": "Wood's clues say the key is in an accessible foreign book and the message is not in any one language. Most book keys read as junk.",
-   "de": "Laut Woods Hinweisen steht der Schlüssel in einem zugänglichen fremdsprachigen Buch, und die Botschaft ist in mehr als einer Sprache geschrieben. Die meisten Buchschlüssel ergeben Buchstabensalat."
-  },
-  {
-   "kind": "h3",
-   "en": "Wood's clues (1950)",
-   "de": "Woods Hinweise (1950)"
-  },
-  {
-   "kind": "p",
-   "en": "T. E. Wood, a solicitor born in Yorkshire in 1887 who had practised in Burma, answered with \"A Further Test for Survival\" (<em>Proceedings</em> 49). He published <span class=\"cipher\" translate=\"no\">FVAMI NTKFX XWATB OIZVV X</span> and left the following clues:",
-   "de": "T. E. Wood, ein 1887 in Yorkshire geborener Rechtsanwalt (Solicitor), der in Burma praktiziert hatte, antwortete mit „A Further Test for Survival“ (<em>Proceedings</em> 49). Er veröffentlichte <span class=\"cipher\" translate=\"no\">FVAMI NTKFX XWATB OIZVV X</span> und gab folgende Hinweise:"
-  },
-  {
-   "kind": "li",
-   "en": "he used Thouless's method, with repeated words omitted",
-   "de": "er habe Thouless’ Verfahren benutzt und wiederholte Wörter ausgelassen"
-  },
-  {
-   "kind": "li",
-   "en": "the key passage \"is in an accessible book\", in a foreign language",
-   "de": "der Schlüsseltext stehe „in einem zugänglichen Buch“, in einer Fremdsprache"
-  },
-  {
-   "kind": "li",
-   "en": "the message \"will not be in any one language\"",
-   "de": "die Botschaft werde „nicht in einer einzigen Sprache“ sein (im Original „will not be in any one language“)"
-  },
-  {
-   "kind": "attr",
-   "en": "The top of Wood's 1950 article, A Further Test for Survival, by T. E. Wood, ending with his ciphered passage FVAMI NTKFX XWATB OIZVV X",
-   "de": "Der Anfang von Woods Artikel von 1950, A Further Test for Survival, von T. E. Wood, der mit seinem verschlüsselten Text FVAMI NTKFX XWATB OIZVV X endet"
-  },
-  {
-   "kind": "figcaption",
-   "en": "Wood's cryptogram as printed in <em>Proceedings of the SPR</em> 49 (1950), p. 105",
-   "de": "Woods Kryptogramm, gedruckt in den <em>Proceedings of the SPR</em> 49 (1950), S.&nbsp;105"
-  },
-  {
-   "kind": "p",
-   "en": "He chose foreign languages on purpose, to defeat anyone guessing common English words. Wood died decades ago, according to Schmeh, and no key ever arrived from the other side.",
-   "de": "Er wählte bewusst Fremdsprachen, um jeden scheitern zu lassen, der auf häufige englische Wörter tippt. Wood ist laut Schmeh vor Jahrzehnten gestorben, und aus dem Jenseits kam nie ein Schlüssel."
-  },
-  {
-   "kind": "span",
-   "en": "II · Why it remained unsolved",
-   "de": "II · Warum es ungelöst blieb"
-  },
-  {
-   "kind": "attr",
-   "en": "With a free choice of shifts, any key gives any reading, even English. A &ldquo;solution&rdquo; looks like luck.",
-   "de": "Bei freier Wahl der Verschiebungen ergibt jeder Schlüssel jede Lesart, sogar Englisch. Eine „Lösung“ sieht aus wie Zufall."
-  },
-  {
-   "kind": "p",
-   "en": "1950 to 2026",
-   "de": "1950 bis 2026"
-  },
-  {
-   "kind": "h2",
-   "en": "Why it remained unsolved",
-   "de": "Warum es ungelöst blieb"
-  },
-  {
-   "kind": "p",
-   "en": "Thouless himself pointed out the problem. With a free choice of key letters, any ciphertext from his system can be turned into any message of the same length. With only 21 letters, a \"solution\" seemed impossible to tell apart from luck.",
-   "de": "Thouless selbst wies auf das Problem hin. Bei freier Wahl der Schlüsselbuchstaben lässt sich jeder Geheimtext seines Verfahrens in jede beliebige Botschaft gleicher Länge verwandeln. Bei nur 21 Buchstaben schien eine „Lösung“ nicht von Zufall zu unterscheiden."
-  },
-  {
-   "kind": "p",
-   "en": "This project believed that too at first. Its notes called Wood's cryptogram \"too under-determined for a blind Gutenberg scan\", because \"any 21-letter key sequence can produce 'plausible' text\", and it was not attempted.",
-   "de": "Auch dieses Projekt hielt das anfangs für zutreffend. In seinen Notizen galt Woods Kryptogramm als „zu unterbestimmt für einen blinden Gutenberg-Scan“, weil „jede Schlüsselfolge aus 21 Buchstaben ‚plausiblen‘ Text erzeugen kann“, und es wurde nicht in Angriff genommen."
-  },
-  {
-   "kind": "attr",
-   "en": "But the key is consecutive words of a real book. There are 129 books and 28.6 million starting points, a finite list.",
-   "de": "Aber der Schlüssel sind aufeinanderfolgende Wörter eines echten Buchs. Das sind 129 Bücher und 28,6 Mio. Startpunkte, eine endliche Liste."
-  },
-  {
-   "kind": "h3",
-   "en": "Searching book keys",
-   "de": "Buchschlüssel durchsuchen"
-  },
-  {
-   "kind": "p",
-   "en": "That argument assumes a key chosen freely, letter by letter. Wood's key came from consecutive words of a published book, so a search could test each starting point in a collection of books. In the graphic, each spine represents a book and each dot a starting point.",
-   "de": "Dieses Argument setzt voraus, dass jeder Schlüsselbuchstabe frei gewählt werden kann. Woods Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs. Eine Suche konnte deshalb jeden Startpunkt in einer Sammlung von Büchern prüfen. In der Grafik steht jeder Buchrücken für ein Buch und jeder Punkt für einen Startpunkt."
-  },
-  {
-   "kind": "p",
-   "en": "<b>129 books</b> · 28.6 million starting points<br>Each dot stands for many thousands.",
-   "de": "<b>129 Bücher</b> · 28,6 Millionen Startpunkte<br>Jeder Punkt steht für viele Tausend."
-  },
-  {
-   "kind": "attr",
-   "en": "In September 2026, messages planted with book keys came back at rank 1 in 97 of 100 tries. The search works.",
-   "de": "Im September 2026 landeten mit Buchschlüsseln eingeschleuste Testbotschaften in 97 von 100 Versuchen auf Rang 1. Die Suche funktioniert."
-  },
-  {
-   "kind": "h3",
-   "en": "Testing the search",
-   "de": "Die Suche testen"
-  },
-  {
-   "kind": "p",
-   "en": "On 17 September 2026, an earlier attempt measured the search space. Decrypt the cipher with every starting point and score each result by how much it looks like English. To test whether this can work at all, encrypt known messages with random book keys and see if the search finds them. Across 28.6 million combinations of starting points and treatment of repeated words in 129 books, planted test messages came back at rank 1 in 97 of 100 tries, proving the search could work.",
-   "de": "Am 17.&nbsp;September 2026 hat ein früherer Versuch den Suchraum vermessen. Man entschlüsselt den Geheimtext mit jedem Startpunkt und bewertet jedes Ergebnis danach, wie sehr es nach Englisch aussieht. Um zu prüfen, ob das überhaupt funktionieren kann, verschlüsselt man bekannte Botschaften mit zufälligen Buchschlüsseln und schaut, ob die Suche sie findet. Bei 28,6 Millionen Kombinationen aus Startpunkten und Umgang mit wiederholten Wörtern in 129 Büchern landeten eingeschleuste Testbotschaften in 97 von 100 Versuchen auf Rang 1; damit war belegt, dass die Suche funktionieren konnte."
-  },
-  {
-   "kind": "p",
-   "en": "Planted messages back at rank 1: <b>97 of 100</b>",
-   "de": "Testbotschaften auf Rang 1: <b>97 von 100</b>"
-  },
-  {
-   "kind": "attr",
-   "en": "Scored as English over 429 million keys, Wood's best is junk, and 12 of 100 random ciphertexts beat it.",
-   "de": "Als Englisch bewertet, ist Woods Bestes aus 429 Mio. Schlüsseln Buchstabensalat, und 12 von 100 zufälligen Geheimtexten sind besser."
-  },
-  {
-   "kind": "h3",
-   "en": "The English-only results",
-   "de": "Ergebnisse der rein englischen Suche"
-  },
-  {
-   "kind": "p",
-   "en": "The search first compared five-letter patterns, then checked how well the strongest candidates split into English words. It was a way to rank possible readings, with a clear weakness: every reading was being judged as English.",
-   "de": "Die Suche verglich zunächst Muster aus fünf Buchstaben und prüfte dann, wie gut sich die stärksten Kandidaten in englische Wörter zerlegen ließen. So wurden mögliche Lesarten geordnet, allerdings mit einer klaren Schwäche: Jede Lesart wurde als Englisch beurteilt."
-  },
-  {
-   "kind": "p",
-   "en": "But Wood's message still came back blank. That held over those 129 books and again over 3,977 texts, which added 3,848 Project Gutenberg books in 14 languages (about 429 million combinations). The best decryption scored worse than what random ciphertexts reach by chance. The bigger run also threw up more convincing false leads, a sign that adding ever more books would not help. The note at the time said the problem needed \"a targeted source\", not a bigger sweep.",
-   "de": "Doch die Suche nach Woods Botschaft blieb erfolglos. Das galt für diese 129 Bücher und ebenso für 3.977 Texte, darunter zusätzlich 3.848 Bücher von Project Gutenberg in 14 Sprachen (etwa 429 Millionen Kombinationen). Die beste Entschlüsselung schnitt schlechter ab als das, was zufällige Geheimtexte durch reinen Zufall erreichen. Der größere Durchlauf brachte außerdem überzeugendere falsche Fährten hervor, ein Zeichen, dass immer mehr Bücher nicht helfen würden. Die Notiz von damals hielt fest, das Problem brauche „eine gezielte Quelle“, keine breitere Suche."
-  },
-  {
-   "kind": "p",
-   "en": "Best: <b>−13.94</b> · random ciphertexts reached −13.27<br>12 of 100 random ciphertexts beat Wood's best",
-   "de": "Bestes Ergebnis: <b>−13,94</b> · zufällige Geheimtexte erreichten −13,27<br>12 von 100 zufälligen Geheimtexten schlagen Woods bestes Ergebnis"
-  },
-  {
-   "kind": "span",
-   "en": "III · The idea",
-   "de": "III · Die Idee"
-  },
-  {
-   "kind": "attr",
-   "en": "One planted German line, two scorers. In English alone it sinks into the pile; in seven languages it tops it. The later Gutenberg follow-up still found no reading.",
-   "de": "Ein eingesetzter deutscher Testsatz, zwei Bewertungen: Auf Englisch geht er unter, mit sieben Sprachen steht er oben. Auch die spätere Gutenberg-Kontrolle fand keine Lesart."
-  },
-  {
-   "kind": "p",
-   "en": "3 October 2026, evening",
-   "de": "3.&nbsp;Oktober 2026, abends"
-  },
-  {
-   "kind": "h2",
-   "en": "Searching across languages",
-   "de": "Suche in mehreren Sprachen"
-  },
-  {
-   "kind": "p",
-   "en": "The change was in what the search could recognize. A quick comparison of four-letter patterns now drew on seven languages. The strongest candidates were then split into dictionary words, giving common words more weight and charging a small penalty for every word and language switch.",
-   "de": "Die Änderung betraf das, was die Suche erkennen konnte. Ein schneller Vergleich von Vierbuchstabenmustern berücksichtigte nun sieben Sprachen. Die stärksten Kandidaten wurden anschließend in Wörter zerlegt. Häufige Wörter erhielten mehr Gewicht; jedes Wort und jeder Sprachwechsel kosteten einen kleinen Abzug."
-  },
-  {
-   "kind": "p",
-   "en": "On the evening of 3 October 2026, we revisited one of Wood's clues. Schmeh's 2017 write-up passes on Wood's claim that the plaintext was written \"in several different languages\". The September search had noted the claim but scored candidates as English only.",
-   "de": "Am Abend des 3.&nbsp;Oktober 2026 griffen wir einen von Woods Hinweisen erneut auf. Schmehs Beitrag von 2017 gibt Woods Angabe wieder, der Klartext sei „in mehreren verschiedenen Sprachen“ geschrieben. Die Suche im September hatte das notiert, die Kandidaten aber nur als Englisch bewertet."
-  },
-  {
-   "kind": "p",
-   "en": "That matters because of how a search decides what counts as a hit. It decrypts with every possible key and ranks the results by how much they look like language. A message that switches from German to Afrikaans looks like gibberish to an English-only scorer. Scored across seven languages, with the language free to change at any word, a planted German message jumps to the top. The right book also has to be in the collection, and the German Bible was not among the earlier runs' texts.",
-   "de": "Das ist wichtig, denn es kommt darauf an, wie eine Suche entscheidet, was als Treffer gilt. Sie entschlüsselt mit jedem möglichen Schlüssel und ordnet die Ergebnisse danach, wie sehr sie nach Sprache aussehen. Eine Botschaft, die vom Deutschen ins Afrikaans wechselt, wirkt auf ein rein englisches Bewertungsprogramm wie Kauderwelsch. Bewertet über sieben Sprachen, wobei die Sprache bei jedem beliebigen Wort wechseln darf, springt eine eingeschleuste deutsche Botschaft an die Spitze. Außerdem muss das richtige Buch in der Sammlung sein, und die deutsche Bibel gehörte nicht zu den Texten der früheren Durchläufe."
-  },
-  {
-   "kind": "p",
-   "en": "Later Gutenberg follow-up, seven languages: <b>−1.313</b> · null ceiling −1.207",
-   "de": "Spätere Gutenberg-Kontrolle, sieben Sprachen: <b>−1,313</b> · höchste Zufallswertung −1,207"
-  },
-  {
-   "kind": "p",
-   "en": "A pilot on 786 books tested this approach before the Bible run. The full Gutenberg follow-up finished after the hit: one book failed to download again, leaving 3,847 of the earlier 3,848. It still found no readable message. The chart includes that later check.",
-   "de": "Ein Probelauf mit 786 Büchern prüfte diesen Ansatz vor der Bibelsuche. Die vollständige Gutenberg-Kontrolle wurde erst nach dem Treffer abgeschlossen: Ein Buch ließ sich nicht erneut herunterladen, sodass 3.847 der zuvor 3.848 übrig blieben. Auch dabei fand sich keine lesbare Botschaft. Die Grafik zeigt diese spätere Kontrolle mit."
-  },
-  {
-   "kind": "p",
-   "en": "Four-letter patterns were a practical default, not a proven optimum. This search tested complete book keys, rather than gradually repairing a guessed key. The <a href=\"https://github.com/creilly11235/wood-cryptogram-1950#scoring\">repository explains the scoring choices and lists the input texts</a>, including the gaps in the original corpus records.",
-   "de": "Vierbuchstabenmuster waren eine praktische Vorgabe, kein nachgewiesenes Optimum. Die Suche prüfte vollständige Buchschlüssel, statt einen geratenen Schlüssel schrittweise zu verbessern. Das <a href=\"https://github.com/creilly11235/wood-cryptogram-1950#scoring\">Repository erläutert die Bewertungsregeln und nennt die Eingabetexte</a>, einschließlich der Lücken in den ursprünglichen Korpusaufzeichnungen."
-  },
-  {
-   "kind": "attr",
-   "en": "The church wording, Vater unser, gives junk. The Bible's Unser Vater differs in wording and order, so every key letter changes.",
-   "de": "Liturgisch Vater unser: Buchstabensalat. Die Bibel sagt Unser Vater: andere Wörter, andere Reihenfolge, jeder Schlüsselbuchstabe ändert sich."
-  },
-  {
-   "kind": "h3",
-   "en": "Adding Bible texts",
-   "de": "Bibeltexte einbeziehen"
-  },
-  {
-   "kind": "p",
-   "en": "Two changes followed:",
-   "de": "Daraus folgten zwei Änderungen:"
-  },
-  {
-   "kind": "li",
-   "en": "A quick first pass keeps the 3,000 candidates whose letter patterns look most like English, French, German, Latin, Italian, Spanish or Portuguese. Those are then split into dictionary words, with the language allowed to change from word to word.",
-   "de": "Ein schneller erster Durchgang behält die 3.000 Kandidaten, deren Buchstabenmuster am meisten nach Englisch, Französisch, Deutsch, Latein, Italienisch, Spanisch oder Portugiesisch aussehen. Diese werden dann in Wörterbuchwörter zerlegt, wobei die Sprache von Wort zu Wort wechseln darf."
-  },
-  {
-   "kind": "li",
-   "en": "Wood said the key was in \"an accessible book\" in a foreign language. A Bible was a plausible source, so 19 Bibles in Latin-alphabet languages were added.",
-   "de": "Wood schrieb, der Schlüssel stehe „in einem zugänglichen Buch“ in einer Fremdsprache. Eine Bibel kam als Quelle infrage, also kamen 19 Bibeln in Sprachen mit lateinischer Schrift hinzu."
-  },
-  {
-   "kind": "p",
-   "en": "A first pass had tried famous passages typed in by hand, including the German Lord's Prayer, and found nothing. Both of its German versions began \"<span lang=\"de\" translate=\"no\">Vater unser</span>\", the familiar church wording, which gives garbage, as the strip shows. The Bible run used the full Bible text, where the prayer begins \"<span lang=\"de\" translate=\"no\">Unser Vater in dem Himmel</span>\".",
-   "de": "Ein erster Durchgang hatte berühmte Passagen ausprobiert, die von Hand eingegeben wurden, darunter das deutsche Vaterunser, und nichts gefunden. Beide deutschen Fassungen begannen mit „<span lang=\"de\" translate=\"no\">Vater unser</span>“, der vertrauten liturgischen Form, die Buchstabensalat ergibt, wie die Leiste zeigt. Der Bibeldurchlauf nutzte den vollständigen Bibeltext, in dem das Gebet mit „<span lang=\"de\" translate=\"no\">Unser Vater in dem Himmel</span>“ beginnt."
-  },
-  {
-   "kind": "p",
-   "en": "The rules for what would count as a hit in the Bible search were written down and committed before that search was run, so the bar could not quietly move afterwards.",
-   "de": "Die Regeln dafür, was in der Bibelsuche als Treffer gelten würde, wurden vor dem Lauf schriftlich festgelegt und eingecheckt, damit die Messlatte hinterher nicht unbemerkt verschoben werden konnte."
-  },
-  {
-   "kind": "span",
-   "en": "IV · The hit",
-   "de": "IV · Der Treffer"
-  },
-  {
-   "kind": "attr",
-   "en": "Nineteen Bibles, 26.7 million more keys. One lands clear of the rest, at Matthew 6:9 in the German Bible.",
-   "de": "Neunzehn Bibeln, 26,7 Millionen weitere Schlüssel. Einer liegt deutlich vorn, bei Matthäus 6,9 in der deutschen Bibel."
-  },
-  {
-   "kind": "p",
-   "en": "Matthew 6:9–11 · Luther Bible 1912",
-   "de": "Matthäus 6,9–11 · Lutherbibel 1912"
-  },
-  {
-   "kind": "h2",
-   "en": "The hit",
-   "de": "Der Treffer"
-  },
-  {
-   "kind": "p",
-   "en": "The Bible run tried 26.7 million combinations of starting point and treatment of repeated words, for each of two versions of the arithmetic; the first pass took under three minutes. Under Thouless's rule, the top result came from the German Bible, starting at the sixth word of Matthew 6:9, the opening of the Lord's Prayer. It decrypted to <span class=\"cipher\" translate=\"no\">HIERBINICHTOTSIENSTEW</span>.",
-   "de": "Der Bibeldurchlauf probierte 26,7 Millionen Kombinationen aus Startpunkt und Umgang mit wiederholten Wörtern, für jede der beiden Rechenvarianten; der erste Durchgang dauerte keine drei Minuten. Nach Thouless’ Regel stammte das beste Ergebnis aus der deutschen Bibel, ab dem sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Die Entschlüsselung lautete <span class=\"cipher\" translate=\"no\">HIERBINICHTOTSIENSTEW</span>."
-  },
-  {
-   "kind": "attr",
-   "en": "Matthew 6:9-11 in Fraktur type, reading Darum sollt ihr also beten: Unser Vater in dem Himmel. Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns heute.",
-   "de": "Matthäus 6,9–11 in Fraktur mit dem Text Darum sollt ihr also beten: Unser Vater in dem Himmel. Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns heute."
-  },
-  {
-   "kind": "figcaption",
-   "en": "The key passage, Matthew 6:9&ndash;11, in a 1922 Berlin printing of the 1912 Luther Bible (British and Foreign Bible Society). The 21 key words run from &ldquo;Unser&rdquo; to &ldquo;uns&rdquo;. Scan from the <a href=\"https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up\">Internet Archive</a>",
-   "de": "Der Schlüsseltext, Matthäus 6,9–11, in einem Berliner Druck der Lutherbibel von 1912 aus dem Jahr 1922 (Britische und Ausländische Bibelgesellschaft). Die 21 Schlüsselwörter reichen von „Unser“ bis „uns“. Scan aus dem <a href=\"https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up\">Internet Archive</a>"
-  },
-  {
-   "kind": "button",
-   "en": "Replay the decryption",
-   "de": "Entschlüsselung erneut abspielen"
-  },
-  {
-   "kind": "attr",
-   "en": "Alone at the top, junk in second place. But the scorer knew no Afrikaans or initials, so it missed its own bar.",
-   "de": "Allein an der Spitze, Buchstabensalat auf Platz zwei. Doch das Programm kannte weder Afrikaans noch Initialen und verfehlte seine eigene Messlatte."
-  },
-  {
-   "kind": "h3",
-   "en": "The key, word by word",
-   "de": "Der Schlüssel, Wort für Wort"
-  },
-  {
-   "kind": "th",
-   "en": "Key word",
-   "de": "Schlüssel&shy;wort"
-  },
-  {
-   "kind": "th",
-   "en": "Letter sum",
-   "de": "Buch&shy;staben&shy;summe"
-  },
-  {
-   "kind": "th",
-   "en": "Key letter",
-   "de": "Schlüssel&shy;buchstabe"
-  },
-  {
-   "kind": "th",
-   "en": "Cipher → plain",
-   "de": "Geheim&shy;text → Klar&shy;text"
-  },
-  {
-   "kind": "p",
-   "en": "To read a row, take UNSER. Its letters sum to 21+14+19+5+18 = 77, which leaves 25 after dividing by 26, so the key letter is Y. Y shifts by 24, so cipher F goes back 24 places to H.",
-   "de": "So liest man eine Zeile, am Beispiel UNSER. Seine Buchstaben ergeben 21+14+19+5+18 = 77; bei Division durch 26 bleibt der Rest 25, also ist der Schlüsselbuchstabe Y. Y verschiebt um 24, also geht das F des Geheimtexts 24 Stellen zurück zum H."
-  },
-  {
-   "kind": "attr",
-   "en": "The scorer knew no Afrikaans or initials, so it missed its own bar. A human reads it at once.",
-   "de": "Das Programm kannte weder Afrikaans noch Initialen und verfehlte seine eigene Messlatte. Ein Mensch liest es sofort."
-  },
-  {
-   "kind": "h3",
-   "en": "Why the score fell short",
-   "de": "Warum die Bewertung zu niedrig war"
-  },
-  {
-   "kind": "p",
-   "en": "It did not pass our own automatic test. The pre-set rule required the score to beat a threshold set by planted test messages, and it fell short (−1.270 against −1.081).",
-   "de": "Unseren eigenen automatischen Test bestand es nicht. Die vorab festgelegte Regel verlangte, dass die Bewertung eine Schwelle übertrifft, die eingeschleuste Testbotschaften vorgeben, und sie blieb darunter (−1,270 gegenüber −1,081)."
-  },
-  {
-   "kind": "p",
-   "en": "The reason is visible in the output. The scorer had no Afrikaans and no idea of initials, so it read the end as \"<span translate=\"no\">TOT SIEN STEW</span>\". Under the other version of the arithmetic, a nonsense string, <span class=\"cipher\" translate=\"no\">ALENRENDRAYCUTREFUGES</span>, scored slightly higher still.",
-   "de": "Der Grund ist in der Ausgabe zu sehen. Das Bewertungsprogramm kannte weder Afrikaans noch Initialen und las das Ende daher als „<span translate=\"no\">TOT SIEN STEW</span>“. Unter der anderen Rechenvariante schnitt eine unsinnige Zeichenfolge, <span class=\"cipher\" translate=\"no\">ALENRENDRAYCUTREFUGES</span>, sogar noch etwas besser ab."
-  },
-  {
-   "kind": "p",
-   "en": "That test only decided whether the search could declare a solve on its own. The result was still the best of 26.7 million under Thouless's rule, with junk in second place, so we read it, and it was plainly German, then Afrikaans, then Wood's initials.",
-   "de": "Dieser Test entschied nur darüber, ob die Suche selbstständig eine Lösung melden durfte. Das Ergebnis war trotzdem das beste von 26,7 Millionen nach Thouless’ Regel, mit Buchstabensalat auf Platz zwei, also lasen wir es, und es war eindeutig Deutsch, dann Afrikaans, dann Woods Initialen."
-  },
-  {
-   "kind": "p",
-   "en": "<b translate=\"no\">HIERBINICHTOTSIENSTEW</b> · −1.270<br>null ceiling −1.273 · plant floor −1.081",
-   "de": "<b translate=\"no\">HIERBINICHTOTSIENSTEW</b> · −1,270<br>Zufallsgrenze −1,273 · Testschwelle −1,081"
-  },
-  {
-   "kind": "p",
-   "en": "Split the way a person reads it, the message is <b><span lang=\"de\" translate=\"no\">Hier bin ich</span>. <span lang=\"af\" translate=\"no\">Totsiens</span>. T.E.W.</b> In English, \"Here I am. Goodbye. T.E.W.\" Wood meant it to be read only after his death, once a medium had passed on the key, so it is written as a message from the dead. He announces himself, says goodbye, and signs it. The key he would have sent begins \"Our Father in heaven\".",
-   "de": "In Wörter zerlegt, wie ein Mensch es liest, lautet die Botschaft <b><span lang=\"de\" translate=\"no\">Hier bin ich</span>. <span lang=\"af\" translate=\"no\">Totsiens</span>. T.E.W.</b> Auf Deutsch heißt das „Hier bin ich. Auf Wiedersehen. T.E.W.“ Wood wollte, dass sie erst nach seinem Tod gelesen wird, wenn ein Medium den Schlüssel übermittelt hat; sie ist also als Botschaft eines Toten geschrieben. Er meldet sich, verabschiedet sich und unterschreibt. Der Schlüssel, den er geschickt hätte, beginnt mit „Unser Vater in dem Himmel“."
-  },
-  {
-   "kind": "span",
-   "en": "V · Checked",
-   "de": "V · Geprüft"
-  },
-  {
-   "kind": "attr",
-   "en": "Rebuilt, reviewed by a second AI, checked against the papers. Change the method or the words and it breaks, as the red letters show.",
-   "de": "Nachgerechnet, von einer zweiten KI geprüft, mit den Artikeln abgeglichen. Ändert man Verfahren oder Wörter, wird der Text unlesbar, wie die roten Buchstaben zeigen."
-  },
-  {
-   "kind": "p",
-   "en": "Verification",
-   "de": "Überprüfung"
-  },
-  {
-   "kind": "h2",
-   "en": "How it was checked",
-   "de": "Wie es geprüft wurde"
-  },
-  {
-   "kind": "p",
-   "en": "Before sending the result to Schmeh, we checked the decryption in several ways:",
-   "de": "Bevor wir das Ergebnis an Schmeh schickten, überprüften wir die Entschlüsselung auf mehrere Arten:"
-  },
-  {
-   "kind": "h3",
-   "en": "Reproducing the decryption",
-   "de": "Entschlüsselung nachvollziehen"
-  },
-  {
-   "kind": "p",
-   "en": "A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood's exact ciphertext.",
-   "de": "Ein kurzes eigenständiges Skript, das keinen anderen Projektcode verwendet, baut den Schlüssel aus dem Gebetstext auf, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu genau Woods Geheimtext."
-  },
-  {
-   "kind": "h3",
-   "en": "Independent review",
-   "de": "Unabhängige Prüfung"
-  },
-  {
-   "kind": "p",
-   "en": "A second AI, GPT-6 Astra, reviewed the claim independently through OpenAI's Codex tool and returned \"confirmed with reservations\". Its reservations concerned the failed automatic test, the chance estimate, the physical edition and priority. As part of that review it wrote its own decryption and matched the script letter for letter.",
-   "de": "Eine zweite KI, GPT-6 Astra, prüfte die Behauptung unabhängig mit OpenAIs Codex-Werkzeug und urteilte „mit Vorbehalten bestätigt“. Die Vorbehalte betrafen den nicht bestandenen automatischen Test, die Zufallsschätzung, die konkrete Ausgabe und die Priorität. Im Rahmen dieser Prüfung schrieb sie eine eigene Entschlüsselung und reproduzierte das Ergebnis Buchstabe für Buchstabe."
-  },
-  {
-   "kind": "h3",
-   "en": "Original sources",
-   "de": "Originalquellen"
-  },
-  {
-   "kind": "p",
-   "en": "Scans of Wood's 1950 article and Thouless's 1948 article confirmed the ciphertext, the method, and Wood's clues word for word. They also confirmed that \"A means no shift\" comes from Thouless's own text, not from a later guess.",
-   "de": "Scans von Woods Artikel von 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie bestätigten auch, dass „A bedeutet keine Verschiebung“ aus Thouless’ eigenem Text stammt und keine spätere Vermutung ist."
-  },
-  {
-   "kind": "h3",
-   "en": "Alternative keys",
-   "de": "Andere Schlüssel"
-  },
-  {
-   "kind": "p",
-   "en": "The modern church wording gives <span class=\"cipher\" translate=\"no\">SXFFFLOEPTPPQMAVDXEUR</span>. Keeping the repeated words breaks the text after \"<span class=\"cipher\" translate=\"no\">HIERBINIC</span>\". Shifting by the remainder itself, instead of by the key letter (where A means no shift), gives junk. So does Thouless's own Hound of Heaven key. None of these were scored and were never candidates.",
-   "de": "Die heutige liturgische Fassung ergibt <span class=\"cipher\" translate=\"no\">SXFFFLOEPTPPQMAVDXEUR</span>. Behält man die wiederholten Wörter, wird der Text nach „<span class=\"cipher\" translate=\"no\">HIERBINIC</span>“ unlesbar. Verschiebt man um den Rest selbst statt um den Schlüsselbuchstaben (bei dem A keine Verschiebung bedeutet), entsteht Buchstabensalat. Ebenso mit Thouless’ eigenem Schlüssel aus „The Hound of Heaven“. Keine dieser Varianten wurde bewertet, und keine war je ein Kandidat."
-  },
-  {
-   "kind": "attr",
-   "en": "Could it be luck? Of 500 random signatures in place of TEW, 7 match, all word salad. TEW matches once, on this message.",
-   "de": "Zufall? Von 500 zufälligen Signaturen statt TEW passen 7, alles Wortsalat. TEW passt genau einmal, bei dieser Botschaft."
-  },
-  {
-   "kind": "h3",
-   "en": "What the result establishes",
-   "de": "Was das Ergebnis belegt"
-  },
-  {
-   "kind": "p",
-   "en": "The reading is exact: all 21 letters decrypt and re-encrypt correctly. Astra reproduced it independently, and Schmeh and Bean confirmed it. Three limits belong alongside that result.",
-   "de": "Die Lesart ist exakt: Alle 21 Buchstaben lassen sich korrekt entschlüsseln und wieder verschlüsseln. Astra reproduzierte dies unabhängig; Schmeh und Bean bestätigten die Lesart. Drei Grenzen gehören zu diesem Ergebnis."
-  },
-  {
-   "kind": "li",
-   "en": "The automatic acceptance rule failed. Recognizing Afrikaans and Wood’s initials was a human judgment after the search.",
-   "de": "Die automatische Annahmeregel wurde nicht erfüllt. Afrikaans und Woods Initialen zu erkennen, war ein menschliches Urteil nach der Suche."
-  },
-  {
-   "kind": "li",
-   "en": "The chance calculation gives a bound under particular assumptions, not a measured probability that the reading is wrong.",
-   "de": "Die Zufallsrechnung liefert eine Schranke unter bestimmten Annahmen, keine gemessene Wahrscheinlichkeit dafür, dass die Lesart falsch ist."
-  },
-  {
-   "kind": "li",
-   "en": "The wording matches the 1912 Luther text, but Wood’s physical edition is unknown. No earlier published solution was found; first-ever priority cannot be proved.",
-   "de": "Der Wortlaut entspricht dem Luthertext von 1912, doch Woods konkrete Ausgabe ist unbekannt. Eine frühere veröffentlichte Lösung wurde nicht gefunden; eine erstmalige Lösung lässt sich nicht beweisen."
-  },
-  {
-   "kind": "h3",
-   "en": "Testing for chance matches",
-   "de": "Zufallstreffer prüfen"
-  },
-  {
-   "kind": "p",
-   "en": "A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature.",
-   "de": "Eine Nachuntersuchung führte rund 854 Millionen Probeentschlüsselungen über 3.847 Gutenberg-Bücher und 19 Bibeln durch, mit beiden Rechenvarianten, mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter von 3 bis 10 Buchstaben aus einer Wortliste zerlegen lassen, gefolgt von einer dreibuchstabigen Signatur."
-  },
-  {
-   "kind": "p",
-   "en": "With TEW there was exactly one match, and it was this message. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad.",
-   "de": "Mit TEW gab es genau einen Treffer, und das war diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW fanden 7 davon (1,4&nbsp;%) ebenfalls einen Treffer, und die Beispiele waren Wortsalat."
-  },
-  {
-   "kind": "p",
-   "en": "TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.",
-   "de": "TOTSIENS kam erst nach der Lösung in die Wortliste, und der Test wurde nach dem Treffer entworfen; er zeigt also, dass solche Treffer selten sind, ist aber kein Beweis."
-  },
-  {
-   "kind": "h3",
-   "en": "Checking for earlier solutions",
-   "de": "Nach früheren Lösungen suchen"
-  },
-  {
-   "kind": "p",
-   "en": "Searches of Schmeh's blog and its comments, Reddit's r/codes, and the other 2026 solver logs found no earlier solution of Wood's cryptogram. That is not proof that nobody got there first.",
-   "de": "Suchen in Schmehs Blog und dessen Kommentaren, im Reddit-Forum r/codes und in den Protokollen anderer Löser aus dem Jahr 2026 fanden keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand vorher darauf gekommen ist."
-  },
-  {
-   "kind": "span",
-   "en": "VI · The correction",
-   "de": "VI · Die Korrektur"
-  },
-  {
-   "kind": "attr",
-   "en": "Thouless mis-added suffer in his own 1948 example. The sum 75 gives W, but he printed U, so his last letter is B, not D. Wood made no such error.",
-   "de": "Thouless verrechnete sich 1948 bei suffer. Die Summe 75 ergibt W, aber er druckte U, also endet sein Beispiel auf B statt D. Wood unterlief kein solcher Fehler."
-  },
-  {
-   "kind": "p",
-   "en": "A 78-year-old arithmetic error",
-   "de": "Ein 78 Jahre alter Rechenfehler"
-  },
-  {
-   "kind": "h2",
-   "en": "An error in Thouless's example",
-   "de": "Ein Fehler in Thouless’ Beispiel"
-  },
-  {
-   "kind": "p",
-   "en": "While checking the method against the 1948 paper, we found an arithmetic slip in Thouless's own worked example. It has been in print for 78 years, and we have not seen it pointed out anywhere.",
-   "de": "Beim Abgleich des Verfahrens mit dem Artikel von 1948 fanden wir einen Rechenfehler in Thouless’ eigenem Rechenbeispiel. Er ist seit 78 Jahren gedruckt nachzulesen, und wir haben nirgends einen Hinweis darauf gesehen."
-  },
-  {
-   "kind": "p",
-   "en": "To show how his system works, Thouless enciphered <span translate=\"no\">THERE IS NO DEATH</span> with Hamlet's \"To be or not to be\" speech as the key. He printed the key letters <span class=\"cipher\" translate=\"no\">IGGWW BG PI VNWNU</span> and the ciphertext <span class=\"cipher\" translate=\"no\">BNKNA JYCWY RWGB</span>.",
-   "de": "Um sein Verfahren vorzuführen, verschlüsselte Thouless <span translate=\"no\">THERE IS NO DEATH</span> („Es gibt keinen Tod“) mit Hamlets Monolog „To be or not to be“ als Schlüssel. Er druckte die Schlüsselbuchstaben <span class=\"cipher\" translate=\"no\">IGGWW BG PI VNWNU</span> und den Geheimtext <span class=\"cipher\" translate=\"no\">BNKNA JYCWY RWGB</span>."
-  },
-  {
-   "kind": "p",
-   "en": "The first 13 key letters are right. The 14th key word is \"suffer\":",
-   "de": "Die ersten 13 Schlüsselbuchstaben stimmen. Das 14. Schlüsselwort ist „suffer“:"
-  },
-  {
-   "kind": "li",
-   "en": "75 = 2 × 26 + 23, so the key letter should be <strong>W</strong>, the 23rd letter",
-   "de": "75 = 2 × 26 + 23, also müsste der Schlüsselbuchstabe <strong>W</strong> sein, der 23. Buchstabe"
-  },
-  {
-   "kind": "li",
-   "en": "Thouless printed <strong>U</strong>, the 21st",
-   "de": "Thouless druckte <strong>U</strong>, den 21."
-  },
-  {
-   "kind": "p",
-   "en": "His printed ciphertext follows the printed U, so this is not a single misprint. The 14th plain letter is the final H of <span translate=\"no\">DEATH</span>. Shifted by U it becomes B, which he printed. Shifted by the correct W it would be <strong>D</strong>. So the last group of his example should read <span class=\"cipher\" translate=\"no\">RWGD</span>, not <span class=\"cipher\" translate=\"no\">RWGB</span>.",
-   "de": "Sein gedruckter Geheimtext folgt dem gedruckten U, es handelt sich also nicht um einen einzelnen Druckfehler. Der 14. Klartextbuchstabe ist das letzte H von <span translate=\"no\">DEATH</span>. Um U verschoben wird daraus B, wie gedruckt. Um das richtige W verschoben wäre es <strong>D</strong>. Die letzte Gruppe seines Beispiels müsste also <span class=\"cipher\" translate=\"no\">RWGD</span> lauten, nicht <span class=\"cipher\" translate=\"no\">RWGB</span>."
-  },
-  {
-   "kind": "attr",
-   "en": "Thouless 1948, pp. 259-260, with &quot;suffer&quot; boxed in blue, the printed U and B boxed in red, and the recomputed table below",
-   "de": "Thouless 1948, S.&nbsp;259–260, mit „suffer“ blau umrandet, dem gedruckten U und B rot umrandet und der nachgerechneten Tabelle darunter"
-  },
-  {
-   "kind": "p",
-   "en": "Wood's 21 key letters all agree with Thouless's written rule, which is the method used to decrypt his message.",
-   "de": "Woods 21 Schlüsselbuchstaben stimmen alle mit der von Thouless beschriebenen Regel überein. Nach dieser Regel wurde seine Botschaft entschlüsselt."
-  },
-  {
-   "kind": "attr",
-   "en": "Wood asked that any result, &ldquo;even if negative&rdquo;, be sent to the Society for Psychical Research. That is the next step.",
-   "de": "Wood bat darum, jedes Ergebnis, „auch ein negatives“, der Society for Psychical Research mitzuteilen. Das ist der nächste Schritt."
-  },
-  {
-   "kind": "p",
-   "en": "What Wood asked for",
-   "de": "Worum Wood bat"
-  },
-  {
-   "kind": "h3",
-   "en": "Telling the Society for Psychical Research",
-   "de": "Die Society for Psychical Research informieren"
-  },
-  {
-   "kind": "p",
-   "en": "The key came from a search of books, not from a medium, so the solve says nothing either way about life after death. What remains is Wood's own request. He asked that anyone who tried to decipher his message \"communicate the result (even if negative) to the Society\". He promised the Society \"fuller particulars\" about himself and photographs of him and his home, and said his executors would be asked to tell it \"the circumstances\" and date of his death. If that file survives, it may say when Wood died, and whether any medium ever claimed to have heard from him.",
-   "de": "Der Schlüssel stammt aus einer Suche in Büchern, nicht von einem Medium; über ein Leben nach dem Tod sagt die Lösung deshalb nichts, weder dafür noch dagegen. Was bleibt, ist Woods eigene Bitte. Er bat jeden, der seine Botschaft zu entschlüsseln versuchte, „das Ergebnis (auch ein negatives) der Society mitzuteilen“. Er versprach der Society „ausführlichere Angaben“ über sich sowie Fotografien von sich und seinem Haus und schrieb, seine Testamentsvollstrecker würden gebeten, ihr „die Umstände“ und das Datum seines Todes mitzuteilen. Falls diese Akte erhalten ist, verrät sie vielleicht, wann Wood starb und ob je ein Medium behauptete, von ihm gehört zu haben."
-  },
-  {
-   "kind": "p",
-   "en": "I have reached out to the Society and archivist with the solution. I will update if I receive a response.",
-   "de": "Ich habe die Society und ihr Archiv über die Lösung informiert und berichte hier, sobald eine Antwort kommt."
-  },
-  {
-   "kind": "h3",
-   "en": "Questions still open",
-   "de": "Offene Fragen"
-  },
-  {
-   "kind": "p",
-   "en": "Schmeh has offered photographs of the SPR’s Wood file at Cambridge University Library; their retrieval and review are pending. They may help explain Wood’s connection to Afrikaans or identify the Bible he used. Neither is established by the decryption alone.",
-   "de": "Schmeh hat Fotografien der Wood-Akte der SPR in der Universitätsbibliothek Cambridge angeboten; Abruf und Auswertung stehen noch aus. Sie könnten Woods Verbindung zu Afrikaans erklären oder die benutzte Bibelausgabe erkennen lassen. Beides ergibt sich nicht allein aus der Entschlüsselung."
-  },
-  {
-   "kind": "p",
-   "en": "The Berger and Survival Research Foundation cryptograms mentioned in Schmeh’s post are a separate story. The Berger chapter located so far adds no evidence about Wood’s message.",
-   "de": "Die Kryptogramme von Berger und der Survival Research Foundation, die Schmeh in seinem Beitrag erwähnt, sind eine eigene Geschichte. Das bisher gefundene Berger-Kapitel liefert keine weiteren Belege zu Woods Botschaft."
-  },
-  {
-   "kind": "attr",
-   "en": "Confirmed by Klaus Schmeh on 4 October 2026 and Richard Bean on 6 October. The search records and remaining questions are public.",
-   "de": "Bestätigt von Klaus Schmeh am 4. Oktober 2026 und Richard Bean am 6. Oktober. Die Suchaufzeichnungen und offenen Fragen sind öffentlich."
-  },
-  {
-   "kind": "p",
-   "en": "4–6 October 2026 · confirmed",
-   "de": "4.–6. Oktober 2026 · bestätigt"
-  },
-  {
-   "kind": "h3",
-   "en": "Timeline and credits",
-   "de": "Chronologie und Dank"
-  },
-  {
-   "kind": "p",
-   "en": "Times are Pacific. Most are commit times, which record when each step was saved.",
-   "de": "Alle Zeiten in Pazifikzeit (PDT). Meist sind es Commit-Zeiten, die festhalten, wann ein Schritt gespeichert wurde."
-  },
-  {
-   "kind": "th",
-   "en": "Date (Pacific time)",
-   "de": "Datum (Pazifikzeit)"
-  },
-  {
-   "kind": "th",
-   "en": "What happened",
-   "de": "Was geschah"
-  },
-  {
-   "kind": "td",
-   "en": "6 Oct 2026",
-   "de": "6. Okt. 2026"
-  },
-  {
-   "kind": "td",
-   "en": "Richard Bean confirms the reading and asks for fuller documentation of the input texts and scoring",
-   "de": "Richard Bean bestätigt die Lesart und bittet um eine ausführlichere Dokumentation der Eingabetexte und Bewertung"
-  },
-  {
-   "kind": "td",
-   "en": "4 Oct 2026",
-   "de": "4. Okt. 2026"
-  },
-  {
-   "kind": "td",
-   "en": "Schmeh announces the solution on his blog, in <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">&ldquo;Wood&rsquo;s cryptogram from the crypt: Another top 50 crypto mystery solved&rdquo;</a>",
-   "de": "Schmeh verkündet die Lösung in seinem Blog, im Beitrag <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">„Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved“</a>"
-  },
-  {
-   "kind": "td",
-   "en": "4 Oct 2026, 12:56 am",
-   "de": "4. Okt. 2026, 0:56&nbsp;Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "Schmeh confirms the solution by email",
-   "de": "Schmeh bestätigt die Lösung per E-Mail"
-  },
-  {
-   "kind": "td",
-   "en": "3 Oct 2026, 11:28 pm",
-   "de": "3. Okt. 2026, 23:28&nbsp;Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "The solution is sent to Schmeh",
-   "de": "Die Lösung geht an Schmeh"
-  },
-  {
-   "kind": "td",
-   "en": "3 Oct 2026, about 11:10–11:35 pm",
-   "de": "3. Okt. 2026, etwa 23:10–23:35&nbsp;Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "Checks of Schmeh's blog and comments, Reddit's r/codes and other 2026 solver logs find no earlier solution",
-   "de": "Suchen in Schmehs Blog und Kommentaren, in r/codes auf Reddit und in anderen Lösungsprotokollen von 2026 finden keine frühere Lösung"
-  },
-  {
-   "kind": "td",
-   "en": "3 Oct 2026, 10:43 pm",
-   "de": "3. Okt. 2026, 22:43&nbsp;Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "Checking Thouless's worked example turns up his 1948 arithmetic slip",
-   "de": "Die Prüfung von Thouless’ Rechenbeispiel deckt seinen Rechenfehler von 1948 auf"
-  },
-  {
-   "kind": "td",
-   "en": "3 Oct 2026, 10:06–10:43 pm",
-   "de": "3. Okt. 2026, 22:06–22:43&nbsp;Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "Astra's review, checks against the 1948 and 1950 papers, and the 854-million-decryption luck test",
-   "de": "Astras Gutachten, Abgleich mit den Artikeln von 1948 und 1950 und der Zufallstest mit 854 Millionen Entschlüsselungen"
-  },
-  {
-   "kind": "td",
-   "en": "3 Oct 2026, 10:11 pm",
-   "de": "3. Okt. 2026, 22:11 Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "The full multilingual Gutenberg follow-up is recorded as negative",
-   "de": "Die vollständige mehrsprachige Gutenberg-Kontrolle wird mit negativem Ergebnis dokumentiert"
-  },
-  {
-   "kind": "td",
-   "en": "3 Oct 2026, 9:44 pm",
-   "de": "3. Okt. 2026, 21:44&nbsp;Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "The Bible run finds the Lord's Prayer key",
-   "de": "Der Bibeldurchlauf findet den Schlüssel im Vaterunser"
-  },
-  {
-   "kind": "td",
-   "en": "3 Oct 2026, 9:37 pm",
-   "de": "3. Okt. 2026, 21:37&nbsp;Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "Famous passages typed in by hand, including two German Lord's Prayers that begin \"<span lang=\"de\" translate=\"no\">Vater unser</span>\", come back empty",
-   "de": "Von Hand eingegebene berühmte Passagen, darunter zwei deutsche Vaterunser, die mit „<span lang=\"de\" translate=\"no\">Vater unser</span>“ beginnen, bleiben ohne Treffer"
-  },
-  {
-   "kind": "td",
-   "en": "3 Oct 2026, 9:33 pm",
-   "de": "3. Okt. 2026, 21:33&nbsp;Uhr"
-  },
-  {
-   "kind": "td",
-   "en": "The multilingual search rules are committed; the Bible search is added at 9:41 pm",
-   "de": "Die Regeln für die mehrsprachige Suche werden eingecheckt; die Bibelsuche kommt um 21:41&nbsp;Uhr hinzu"
-  },
-  {
-   "kind": "td",
-   "en": "17 Sep 2026",
-   "de": "17. Sep. 2026"
-  },
-  {
-   "kind": "td",
-   "en": "The project corrects the \"too short\" dismissal; English-only searches of 129 and then 3,977 texts come back empty",
-   "de": "Das Projekt korrigiert die Abwertung als „zu kurz“; rein englische Suchen über 129 und dann 3.977 Texte bleiben ohne Treffer"
-  },
-  {
-   "kind": "td",
-   "en": "2 Sep 2026",
-   "de": "2. Sep. 2026"
-  },
-  {
-   "kind": "td",
-   "en": "First project commit",
-   "de": "Erster Commit des Projekts"
-  },
-  {
-   "kind": "td",
-   "en": "Aug 2019",
-   "de": "Aug. 2019"
-  },
-  {
-   "kind": "td",
-   "en": "Richard Bean solves Thouless's Message B by searching books by computer, pinning down exactly how the method works",
-   "de": "Richard Bean löst Thouless’ Botschaft B durch eine computergestützte Suche in Büchern und klärt damit genau, wie das Verfahren funktioniert"
-  },
-  {
-   "kind": "td",
-   "en": "17 Apr 2017",
-   "de": "17. Apr. 2017"
-  },
-  {
-   "kind": "td",
-   "en": "Schmeh lists Wood's cryptogram as #35 of his Top 50",
-   "de": "Schmeh führt Woods Kryptogramm als Nr.&nbsp;35 seiner Top 50"
-  },
-  {
-   "kind": "td",
-   "en": "Wood publishes his cryptogram",
-   "de": "Wood veröffentlicht sein Kryptogramm"
-  },
-  {
-   "kind": "td",
-   "en": "Thouless publishes \"A Test of Survival\"",
-   "de": "Thouless veröffentlicht „A Test of Survival“"
-  },
-  {
-   "kind": "h3",
-   "en": "Credits",
-   "de": "Dank"
-  },
-  {
-   "kind": "p",
-   "en": "The project was run by Colin Reilly. Robert Thouless designed the method. Richard Bean's 2019 solve of Thouless's Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer; Richard Bean also confirmed the reading and helped improve this account of the search. Claude (Anthropic) wrote the search code, including the earlier September searches, and found the key; GPT-6 Astra (OpenAI) checked it independently.",
-   "de": "Colin Reilly leitete das Projekt. Robert Thouless entwickelte das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B im Jahr 2019, gefunden durch eine Computersuche in Büchern, zeigte genau, wie es funktioniert, und war Vorbild für den hier verwendeten Ansatz. Klaus Schmeh hielt das Rätsel im Blick und bestätigte die Lösung; Richard Bean bestätigte ebenfalls die Lesart und half, diese Darstellung der Suche zu verbessern. Claude (Anthropic) schrieb den Suchcode, einschließlich der früheren September-Suchen, und fand den Schlüssel; GPT-6 Astra (OpenAI) prüfte ihn unabhängig."
-  },
-  {
-   "kind": "h3",
-   "en": "Sources",
-   "de": "Quellen"
-  },
-  {
-   "kind": "li",
-   "en": "Richard Bean, <a href=\"https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf\"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020",
-   "de": "Richard Bean, <a href=\"https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf\"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020"
-  },
-  {
-   "kind": "li",
-   "en": "Richard Bean and Louie Helm, <a href=\"https://richardbean.id.au/papers/playfair_histocrypt2025.pdf\"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025",
-   "de": "Richard Bean und Louie Helm, <a href=\"https://richardbean.id.au/papers/playfair_histocrypt2025.pdf\"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025"
-  },
-  {
-   "kind": "li",
-   "en": "Klaus Schmeh, <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">\"Wood's cryptogram from the crypt: Another top 50 crypto mystery solved\"</a>, 4 Oct 2026",
-   "de": "Klaus Schmeh, <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">„Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved“</a>, 4. Okt. 2026"
-  },
-  {
-   "kind": "li",
-   "en": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">\"The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt\"</a>, 17 Apr 2017",
-   "de": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">„The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt“</a>, 17. Apr. 2017"
-  },
-  {
-   "kind": "li",
-   "en": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/\">\"Richard Bean solves another Top 50 crypto mystery\"</a>, 16 Aug 2019",
-   "de": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/\">„Richard Bean solves another Top 50 crypto mystery“</a>, 16. Aug. 2019"
-  },
-  {
-   "kind": "li",
-   "en": "T. E. Wood, \"A Further Test for Survival\", <a href=\"http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf\"><em>Proceedings of the SPR</em> 49</a>, pp. 105-106",
-   "de": "T. E. Wood, „A Further Test for Survival“, <a href=\"http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf\"><em>Proceedings of the SPR</em> 49</a>, S.&nbsp;105–106"
-  },
-  {
-   "kind": "li",
-   "en": "R. H. Thouless, \"A Test of Survival\", <a href=\"http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf\"><em>Proceedings of the SPR</em> 48</a>, pp. 258-260",
-   "de": "R. H. Thouless, „A Test of Survival“, <a href=\"http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf\"><em>Proceedings of the SPR</em> 48</a>, S.&nbsp;258–260"
-  },
-  {
-   "kind": "li",
-   "en": "<a href=\"https://www.bibel-online.net/text/luther_1912/matthaeus/6/\">Luther Bible 1912, Matthew 6</a>",
-   "de": "<a href=\"https://www.bibel-online.net/text/luther_1912/matthaeus/6/\">Lutherbibel 1912, Matthäus 6</a>"
-  },
-  {
-   "kind": "p",
-   "en": "Dot positions inside the piles are illustrative, as are the places of the 7 matched control signatures in the luck grid (matches were not saved). Every other labelled dot, score, count and reference line is from the saved runs.",
-   "de": "Die Lage der Punkte innerhalb der Haufen dient der Veranschaulichung, ebenso die Position der 7 passenden Kontrollsignaturen im Zufallsraster (die Treffer wurden nicht gespeichert). Alle anderen beschrifteten Punkte, Bewertungen, Zahlen und Referenzlinien stammen aus den gespeicherten Durchläufen."
-  },
-  {
-   "kind": "p",
-   "en": "To check the decryption yourself, run <code>python3 harness/wood35t/verify_wood.py</code> from <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">the repository</a>. Code under the MIT License.",
-   "de": "Wer die Entschlüsselung selbst prüfen will, führt <code>python3 harness/wood35t/verify_wood.py</code> im <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Repository</a> aus. Code unter MIT-Lizenz."
-  },
-  {
-   "kind": "p",
-   "en": "You are visitor no. <span class=\"counter\" id=\"visits\">------</span>",
-   "de": "Sie sind Besucher Nr.&nbsp;<span class=\"counter\" id=\"visits\">------</span>"
-  },
-  {
-   "kind": "p",
-   "en": "Visits counted by <a href=\"https://www.goatcounter.com/\">GoatCounter</a>, no cookies. The number updates every few hours.",
-   "de": "Besuche gezählt mit <a href=\"https://www.goatcounter.com/\">GoatCounter</a>, ohne Cookies. Die Zahl wird alle paar Stunden aktualisiert."
-  },
-  {
-   "kind": "meta",
-   "en": "Solving the 1950 cipher meant to test life after death",
-   "de": "Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte"
-  },
-  {
-   "kind": "h1",
-   "en": "Solving the 1950 cipher meant to test life after death",
-   "de": "Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte"
-  }
- ],
- "js": [
-  {
-   "en": "\"an English book\"",
-   "de": "\"einem englischen Buch\""
-  },
-  {
-   "en": "\"a French book\"",
-   "de": "\"einem französischen Buch\""
-  },
-  {
-   "en": "\"a Dutch book\"",
-   "de": "\"einem niederländischen Buch\""
-  },
-  {
-   "en": "\"key word sum = n×26+r  → key\"",
-   "de": "\"Schlüsselwortsumme = n×26+r  → Schl.\""
-  },
-  {
-   "en": "`${T.key[0]} … ${T.key[n-1]}: ${n} key letters, right`",
-   "de": "`${T.key[0]} … ${T.key[n-1]}: ${n} Schlüsselbuchstaben richtig`"
-  },
-  {
-   "en": "`  printed ${T.printed[i]}`",
-   "de": "`  gedruckt ${T.printed[i]}`"
-  },
-  {
-   "en": "`${s} = ${CH6.mod(s).replace(\"+\",\" + \")} → ${T.comp[n]}, the ${CH6.ord(s%26)} letter`",
-   "de": "`${s} = ${CH6.mod(s).replace(\"+\",\" + \")} → ${T.comp[n]}, der ${s%26}. Buchstabe`"
-  },
-  {
-   "en": "`Thouless printed ${T.printed[n]}, the ${CH6.ord(T.printed.charCodeAt(n)-64)}`",
-   "de": "`Thouless druckte ${T.printed[n]}, den ${T.printed.charCodeAt(n)-64}.`"
-  },
-  {
-   "en": "`${H} shifted by ${T.printed[n]} → ${sh(H,T.printed[n])}, printed ${T.cipher.slice(10)}`",
-   "de": "`${H} um ${T.printed[n]} verschoben → ${sh(H,T.printed[n])}, gedruckt ${T.cipher.slice(10)}`"
-  },
-  {
-   "en": "`${H} shifted by ${T.comp[n]} → ${sh(H,T.comp[n])}, should be ${T.fixed.slice(10)}`",
-   "de": "`${H} um ${T.comp[n]} verschoben → ${sh(H,T.comp[n])}, richtig wäre ${T.fixed.slice(10)}`"
-  },
-  {
-   "en": "\"“communicate the result (even if negative)\"",
-   "de": "\"„das Ergebnis (auch ein negatives)\""
-  },
-  {
-   "en": "\" to the Society”\"",
-   "de": "\" der Society mitteilen“\""
-  },
-  {
-   "en": "\"T. E. Wood, Proceedings of the SPR 49 (1950)\"",
-   "de": "\"T. E. Wood, Proceedings of the SPR 49 (1950)\""
-  },
-  {
-   "en": "\"he promised the Society “fuller particulars”\"",
-   "de": "\"er versprach ihr „ausführlichere Angaben“\""
-  },
-  {
-   "en": "\" and photographs of him and his home\"",
-   "de": "\" und Fotografien von sich und seinem Haus\""
-  },
-  {
-   "en": "\"his executors would tell it “the circumstances”\"",
-   "de": "\"seine Testamentsvollstrecker sollten ihr\""
-  },
-  {
-   "en": "\" and the date of his death\"",
-   "de": "\" „die Umstände“ und sein Todesdatum nennen\""
-  },
-  {
-   "en": "\"German: here I am\"",
-   "de": "\"Deutsch: hier bin ich\""
-  },
-  {
-   "en": "\"Afrikaans: goodbye\"",
-   "de": "\"Afrikaans: auf Wiedersehen\""
-  },
-  {
-   "en": "\"Wood's initials\"",
-   "de": "\"Woods Initialen\""
-  },
-  {
-   "en": "\"21 words of Matthew 6:9b–11, Luther Bible 1912\"",
-   "de": "\"21 Wörter aus Matthäus 6,9b–11, Lutherbibel 1912\""
-  },
-  {
-   "en": "\"keep the repeated words\"",
-   "de": "\"wiederholte Wörter behalten\""
-  },
-  {
-   "en": "\"right until the 2nd Dein\"",
-   "de": "\"richtig bis zum 2. Dein\""
-  },
-  {
-   "en": "\"shift by the raw sum\"",
-   "de": "\"um die ungekürzte Summe verschieben\""
-  },
-  {
-   "en": "\"every letter one off\"",
-   "de": "\"jeder Buchstabe um eins daneben\""
-  },
-  {
-   "en": "\"church wording, Vater unser\"",
-   "de": "\"liturgische Fassung, Vater unser\""
-  },
-  {
-   "en": "\"no reading\"",
-   "de": "\"keine Lesart\""
-  },
-  {
-   "en": "\"Thouless's Hound of Heaven key\"",
-   "de": "\"Thouless’ Schlüssel aus The Hound of Heaven\""
-  },
-  {
-   "en": "\"rebuilt by a standalone script: 21 of 21\"",
-   "de": "\"neu berechnet, eigenes Skript: 21 von 21\""
-  },
-  {
-   "en": "\"a second AI's own decryption: 21 of 21\"",
-   "de": "\"Entschlüsselung der zweiten KI: 21 von 21\""
-  },
-  {
-   "en": "\"1950 scan: all 21 cipher letters as printed\"",
-   "de": "\"Scan 1950: alle 21 Buchstaben wie gedruckt\""
-  },
-  {
-   "en": "\"Swedish book\"",
-   "de": "\"schwedisches Buch\""
-  },
-  {
-   "en": "\"Spanish book\"",
-   "de": "\"spanisches Buch\""
-  },
-  {
-   "en": "\"Romanian Bible\"",
-   "de": "\"rumänische Bibel\""
-  },
-  {
-   "en": "\"Dutch book\"",
-   "de": "\"niederländisches Buch\""
-  },
-  {
-   "en": "\"UNSER, the first key word\"",
-   "de": "\"UNSER, das erste Schlüsselwort\""
-  },
-  {
-   "en": "\"77 = 2×26 + 25 → Y, the 25th letter\"",
-   "de": "\"77 = 2×26 + 25 → Y, der 25. Buchstabe\""
-  },
-  {
-   "en": "\"Y means a shift of 24 (A = none)\"",
-   "de": "\"Y bedeutet Verschiebung um 24 (A = keine)\""
-  },
-  {
-   "en": "\"cipher F, back 24 places → H\"",
-   "de": "\"Geheimtext F, 24 Stellen zurück → H\""
-  },
-  {
-   "en": "\"then VATER, IN, DEM …, one word a letter\"",
-   "de": "\"dann VATER, IN, DEM …, ein Wort je Buchstabe\""
-  },
-  {
-   "en": "\"book word → key letter → message letter\"",
-   "de": "\"Buchwort → Schlüsselbuchstabe → Klartext\""
-  },
-  {
-   "en": "\"a free key (small letters) → a reading (tiles)\"",
-   "de": "\"freier Schlüssel (klein) → Lesart (Kacheln)\""
-  },
-  {
-   "en": "\"Wood's best reading, scored as English\"",
-   "de": "\"Woods beste Lesart, als Englisch bewertet\""
-  },
-  {
-   "en": "\"<b>English only</b>: a planted German line falls apart\"",
-   "de": "\"<b>Nur Englisch</b>: eine deutsche Testzeile zerfällt\""
-  },
-  {
-   "en": "\"<b>7 languages</b>: the same line reads as German\"",
-   "de": "\"<b>7 Sprachen</b>: dieselbe Zeile: Deutsch\""
-  },
-  {
-   "en": "\"church wording, <b>Vater unser</b>: junk\"",
-   "de": "\"liturgisch, <b>Vater unser</b>: Buchstabensalat\""
-  },
-  {
-   "en": "` · skips repeated ${sk}`",
-   "de": "` · überspringt wiederholtes ${sk}`"
-  },
-  {
-   "en": "\" · ä read as a\"",
-   "de": "\" · ä als a gelesen\""
-  },
-  {
-   "en": "\"reads <b>Hier bin ich · Totsiens · T. E. W.</b>\"",
-   "de": "\"lautet <b>Hier bin ich · Totsiens · T. E. W.</b>\""
-  },
-  {
-   "en": "\"one lands clear: <b>the German Bible</b>, Matthew 6:9\"",
-   "de": "\"einer liegt deutlich vorn: <b>die deutsche Bibel</b>, Matthäus 6,9\""
-  },
-  {
-   "en": "`<b>${KEY[i][0]}</b> = ${KEY[i][1]} → key <b>${KL[i]}</b>`",
-   "de": "`<b>${KEY[i][0]}</b> = ${KEY[i][1]} → Schlüsselbuchstabe <b>${KL[i]}</b>`"
-  },
-  {
-   "en": "`word ${i+1}`",
-   "de": "`Wort ${i+1}`"
-  },
-  {
-   "en": "` of 21 · shift ${(KEY[i][1]-1)%26}`",
-   "de": "` von 21 · Verschiebung ${(KEY[i][1]-1)%26}`"
-  },
-  {
-   "en": "\"<b>Unser</b> = 21+14+19+5+18 = 77 → key <b>Y</b>, shift 24\"",
-   "de": "\"<b>Unser</b> = 21+14+19+5+18 = 77 → <b>Y</b>, Versch. 24\""
-  },
-  {
-   "en": "\"under each tile: its word's letter sum → key letter\"",
-   "de": "\"unter jeder Kachel: Buchstabensumme ihres Worts → Schlüsselbuchstabe\""
-  },
-  {
-   "en": "\"under each tile: its key letter\"",
-   "de": "\"unter jeder Kachel: ihr Schlüsselbuchstabe\""
-  },
-  {
-   "en": "`human: <b style=\"color:var(--de)\">",
-   "de": "`Mensch: <b style=\"color:var(--de)\">"
-  },
-  {
-   "en": "`the scorer: <b style=\"color:var(--ember);line-height:1\">",
-   "de": "`Programm: <b style=\"color:var(--ember);line-height:1\">"
-  },
-  {
-   "en": "\"as found: repeats skipped, A = no shift\"",
-   "de": "\"wie gefunden: Wiederholungen übersprungen, A = keine Verschiebung\""
-  },
-  {
-   "en": "${n} of 21</b>",
-   "de": "${n} von 21</b>"
-  },
-  {
-   "en": "\"the same 21 cipher letters, five ways\"",
-   "de": "\"dieselben 21 Buchstaben, fünf Varianten\""
-  },
-  {
-   "en": "border-top:1px solid var(--bone-3)\">word</span>",
-   "de": "border-top:1px solid var(--bone-3)\">Wort</span>"
-  },
-  {
-   "en": "\"sig.\"",
-   "de": "\"Sig.\""
-  },
-  {
-   "en": "\"signature\"",
-   "de": "\"Signatur\""
-  },
-  {
-   "en": "\"words, then a three-letter signature\"",
-   "de": "\"Wörter, dann eine dreibuchstabige Signatur\""
-  },
-  {
-   "en": "\"plain\"",
-   "de": "\"Klar\""
-  },
-  {
-   "en": "\"key\"",
-   "de": "\"Schl.\""
-  },
-  {
-   "en": "\"cipher\"",
-   "de": "\"Geheim\""
-  },
-  {
-   "en": "\"VERSTEHTGEWISSEMINDER  planted German\"",
-   "de": "\"VERSTEHTGEWISSEMINDER  deutsche Testbotschaft\""
-  },
-  {
-   "en": "\"planted messages\"",
-   "de": "\"Testbotschaften\""
-  },
-  {
-   "en": "\" · German Bible\"",
-   "de": "\" · deutsche Bibel\""
-  },
-  {
-   "en": "\"129 books · 28,602,798 starting points\"",
-   "de": "\"129 Bücher · 28.602.798 Startpunkte\""
-  },
-  {
-   "en": "\"score as English  →  more like English\"",
-   "de": "\"Bewertung als Englisch  →  englischer\""
-  },
-  {
-   "en": "\"score of the best reading as English  →  more like English\"",
-   "de": "\"Bewertung der besten Lesart als Englisch  →  englischer\""
-  },
-  {
-   "en": "\"planted messages: 97 of 100 found at rank 1\"",
-   "de": "\"Testbotschaften: 97 von 100 auf Rang 1 gefunden\""
-  },
-  {
-   "en": "\"random ciphertexts\"",
-   "de": "\"zufällige Geheimtexte\""
-  },
-  {
-   "en": "\"the message above  −11.21\"",
-   "de": "\"die Botschaft oben  −11,21\""
-  },
-  {
-   "en": "\"Wood's best  −13.94\"",
-   "de": "\"Woods Bestes  −13,94\""
-  },
-  {
-   "en": "\"chance reaches −14.31\"",
-   "de": "\"Zufall erreicht −14,31\""
-  },
-  {
-   "en": "\"chance reaches −13.27\"",
-   "de": "\"Zufall erreicht −13,27\""
-  },
-  {
-   "en": "\"score per letter  →  more like words\"",
-   "de": "\"Bewertung je Buchstabe  →  wortähnlicher\""
-  },
-  {
-   "en": "\"English: \"",
-   "de": "\"Englisch: \""
-  },
-  {
-   "en": "\"7 languages:\"",
-   "de": "\"7 Sprachen:\""
-  },
-  {
-   "en": "\"null ceiling −1.207\"",
-   "de": "\"Zufallsgrenze −1,207\""
-  },
-  {
-   "en": "\"score across seven languages  →\"",
-   "de": "\"Bewertung über sieben Sprachen  →\""
-  },
-  {
-   "en": "\"null ceiling \"",
-   "de": "\"Zufallsgrenze \""
-  },
-  {
-   "en": "\"plant floor \"",
-   "de": "\"Testschwelle \""
-  },
-  {
-   "en": "\"German Bible, Matthew 6:9  \"",
-   "de": "\"deutsche Bibel, Matthäus 6,9  \""
-  },
-  {
-   "en": "\"score, top of the Bible run  →\"",
-   "de": "\"Bewertung, Spitze des Bibeldurchlaufs  →\""
-  },
-  {
-   "en": "\" short\"",
-   "de": "\" zu wenig\""
-  },
-  {
-   "en": "\"500 random signatures in place of TEW:\"",
-   "de": "\"500 zufällige Signaturen anstelle von TEW:\""
-  },
-  {
-   "en": "\" matched by chance (\"",
-   "de": "\" passten zufällig (\""
-  },
-  {
-   "en": "\"), all word salad:\"",
-   "de": "\"), alles Wortsalat:\""
-  },
-  {
-   "en": "\"TEW, Wood's initials: 1 match, this message\"",
-   "de": "\"TEW, Woods Initialen: 1 Treffer, diese Botschaft\""
-  },
-  {
-   "en": "\"letter as found\"",
-   "de": "\"Buchstabe wie gefunden\""
-  },
-  {
-   "en": "\"letter differs\"",
-   "de": "\"Buchstabe weicht ab\""
-  },
-  {
-   "en": "\"random signature, matched\"",
-   "de": "\"zufällige Signatur, passt\""
-  },
-  {
-   "en": "\"random signature, no match\"",
-   "de": "\"zufällige Signatur, passt nicht\""
-  },
-  {
-   "en": "\"every other key\"",
-   "de": "\"alle anderen Schlüssel\""
-  },
-  {
-   "en": "\"one key, and the reading it gives\"",
-   "de": "\"ein Schlüssel und die Lesart, die er ergibt\""
-  },
-  {
-   "en": "\"the key that worked, word 1\"",
-   "de": "\"der richtige Schlüssel, Wort 1\""
-  },
-  {
-   "en": "\"the key that worked\"",
-   "de": "\"der richtige Schlüssel\""
-  },
-  {
-   "en": "\"Gutenberg books\"",
-   "de": "\"Gutenberg-Bücher\""
-  },
-  {
-   "en": "\"one planted German line, scored two ways\"",
-   "de": "\"eine deutsche Testzeile, zweifach bewertet\""
-  },
-  {
-   "en": "\"church wording: junk\"",
-   "de": "\"liturgische Fassung: Buchstabensalat\""
-  },
-  {
-   "en": "\"Bible wording, in the Bible run\"",
-   "de": "\"Bibelfassung, im Bibeldurchlauf\""
-  },
-  {
-   "en": "\"one free key, one reading\"",
-   "de": "\"ein freier Schlüssel, eine Lesart\""
-  },
-  {
-   "en": "\"a spine is a book; a dot, many thousand starting points\"",
-   "de": "\"ein Buchrücken ist ein Buch; ein Punkt, viele Tausend Startpunkte\""
-  },
-  {
-   "en": "\"planted message\"",
-   "de": "\"Testbotschaft\""
-  },
-  {
-   "en": "\"3 not recovered first\"",
-   "de": "\"3 nicht auf Rang 1\""
-  },
-  {
-   "en": "\"random ciphertext, its best reading\"",
-   "de": "\"zufälliger Geheimtext, seine beste Lesart\""
-  },
-  {
-   "en": "\"Wood's best\"",
-   "de": "\"Woods Bestes\""
-  },
-  {
-   "en": "\"12 of 100 random ciphertexts beat it\"",
-   "de": "\"12 von 100 zufälligen Geheimtexten schlagen es\""
-  },
-  {
-   "en": "\"the other 88\"",
-   "de": "\"die übrigen 88\""
-  },
-  {
-   "en": "\"planted messages, for comparison\"",
-   "de": "\"Testbotschaften, zum Vergleich\""
-  },
-  {
-   "en": "\"printed right\"",
-   "de": "\"richtig gedruckt\""
-  },
-  {
-   "en": "\"printed wrong\"",
-   "de": "\"falsch gedruckt\""
-  },
-  {
-   "en": "\"recomputed\"",
-   "de": "\"nachgerechnet\""
-  },
-  {
-   "en": "\"German\"",
-   "de": "\"Deutsch\""
-  },
-  {
-   "en": "\"19 Bibles\"",
-   "de": "\"19 Bibeln\""
-  },
-  {
-   "en": "\"the Bible run's top 13 of 26.7 million\"",
-   "de": "\"die besten 13 von 26,7 Millionen im Bibeldurchlauf\""
-  },
-  {
-   "en": "const f4=v=>\"−\"+Math.abs(v).toFixed(3)",
-   "de": "const f4=v=>\"−\"+Math.abs(v).toFixed(3).replace(\".\",\",\")"
-  },
-  {
-   "en": ".toFixed(1)",
-   "de": ".toFixed(1).replace(\".\",\",\")"
-  },
-  {
-   "en": "\"red: as Thouless printed · blue: recomputed\"",
-   "de": "\"rot: Thouless’ Druck · blau: nachgerechnet\""
-  },
-  {
-   "en": "\"planted: 97 of 100 found first\"",
-   "de": "\"Testbotschaften: 97 von 100 auf Rang 1\""
-  },
-  {
-   "en": "\"LUTHER 1912\"",
-   "de": "\"LUTHER 1912\""
-  },
-  {
-   "en": "\"CHURCH WORDING\"",
-   "de": "\"LITURGISCH\""
-  },
-  {
-   "en": "(FLOOR4-HIT.ml).toFixed(3)",
-   "de": "(FLOOR4-HIT.ml).toFixed(3).replace(\".\",\",\")"
-  },
-  {
-   "en": "\" …</b> → key letters → tiles\"",
-   "de": "\" …</b> → Schlüssel → Kacheln\""
-  },
-  {
-   "en": "\"a planted message, random book key\"",
-   "de": "\"Testbotschaft, zufälliger Buchschlüssel\""
-  },
-  {
-   "en": "aria-label\",\"Image viewer\")",
-   "de": "aria-label\",\"Bildbetrachter\")"
-  },
-  {
-   "en": "<p class=\"hint\">Scroll or pinch to zoom, drag to move</p>",
-   "de": "<p class=\"hint\">Scrollen oder mit zwei Fingern zoomen, ziehen zum Verschieben</p>"
-  },
-  {
-   "en": "aria-label=\"Zoom out\"",
-   "de": "aria-label=\"Verkleinern\""
-  },
-  {
-   "en": "aria-label=\"Zoom in\"",
-   "de": "aria-label=\"Vergrößern\""
-  },
-  {
-   "en": "aria-label=\"Close\"",
-   "de": "aria-label=\"Schließen\""
-  },
-  {
-   "en": "img.title=\"Click to enlarge\"",
-   "de": "img.title=\"Zum Vergrößern klicken\""
-  },
-  {
-   "en": "text:\"Wood's best −1.313:\"",
-   "de": "text:\"Woods Bestes −1,313:\""
-  }
- ]
+  "note": "German translation of docs/index.html. Built by tools/build_de.py into docs/de/index.html. 'units' are exact HTML slices of the English page; 'js' are exact source strings in its script. Translated with AI assistance and reviewed by a second AI; corrections welcome.",
+  "units": [
+    {
+      "kind": "title",
+      "en": "Solving the 1950 cipher meant to test life after death",
+      "de": "Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte"
+    },
+    {
+      "kind": "meta",
+      "en": "How T. E. Wood's 1950 survival-test cryptogram, #35 on Klaus Schmeh's Top 50 unsolved list, was solved. The key is the Lord's Prayer in German.",
+      "de": "Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch."
+    },
+    {
+      "kind": "meta",
+      "en": "Wood's ciphertext FVAMI NTKFX XWATB OIZVV X under the title Solving the 1950 cipher meant to test life after death",
+      "de": "Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“"
+    },
+    {
+      "kind": "p",
+      "en": "Proceedings of the S.P.R., vol. 49 · <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">No. 35 of Klaus Schmeh’s Top 50</a>",
+      "de": "Proceedings of the S.P.R., Bd. 49 · <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">Nr. 35 auf Klaus Schmehs Top-50-Liste</a>"
+    },
+    {
+      "kind": "p",
+      "en": "By <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, with assistance from Claude<span>4 October 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code and data on GitHub</a> · <a class=\"lang\" href=\"de/\" hreflang=\"de\" lang=\"de\">Deutsche Fassung</a></span>",
+      "de": "Von <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, mit Unterstützung von Claude<span>4. Oktober 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code und Daten auf GitHub</a> · <a class=\"lang\" href=\"../\" hreflang=\"en\" lang=\"en\">English version</a></span>"
+    },
+    {
+      "kind": "attr",
+      "en": "Wood's ciphertext, FVAMI NTKFX XWATB OIZVV X",
+      "de": "Woods Geheimtext, FVAMI NTKFX XWATB OIZVV X"
+    },
+    {
+      "kind": "p",
+      "en": "“My ciphered passage is:”",
+      "de": "„Mein verschlüsselter Text lautet:“"
+    },
+    {
+      "kind": "figcaption",
+      "en": "T. E. Wood, “A Further Test for Survival”, <em>Proceedings of the S.P.R.</em> 49 (1950), p. 105.",
+      "de": "T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S. 105."
+    },
+    {
+      "kind": "p",
+      "en": "Solved",
+      "de": "Gelöst"
+    },
+    {
+      "kind": "p",
+      "en": "“Here I am” in German, “goodbye” in Afrikaans, and Wood’s initials. Written to be read after his death.",
+      "de": "„Hier bin ich“ auf Deutsch, „auf Wiedersehen“ auf Afrikaans und Woods Initialen. Geschrieben, um erst nach seinem Tod gelesen zu werden."
+    },
+    {
+      "kind": "p",
+      "en": "The key is the opening of the Lord’s Prayer in the 1912 Luther Bible, used with Robert Thouless’s 1948 word-sum system.",
+      "de": "Der Schlüssel ist der Anfang des Vaterunsers in der Lutherbibel von 1912, verwendet nach Robert Thouless’ Wortsummenverfahren von 1948."
+    },
+    {
+      "kind": "p",
+      "en": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">confirmed it</a> on 4 October 2026.",
+      "de": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">bestätigte die Lösung</a> am 4. Oktober 2026."
+    },
+    {
+      "kind": "p",
+      "en": "In 1950, a solicitor named T. E. Wood published a 21 letter cipher as a test of life after death. He planned to send the key back through a medium after he died. Seventy-six years later, we decrypted it without communicating with the dead.",
+      "de": "1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood einen Geheimtext aus 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er den Schlüssel über ein Medium zurücksenden. Sechsundsiebzig Jahre später entschlüsselten wir die Botschaft, ohne mit den Toten in Kontakt zu treten."
+    },
+    {
+      "kind": "attr",
+      "en": "Article sections",
+      "de": "Abschnitte des Artikels"
+    },
+    {
+      "kind": "li",
+      "en": "<a href=\"#the-puzzle\">The puzzle</a>",
+      "de": "<a href=\"#the-puzzle\">Das Rätsel</a>"
+    },
+    {
+      "kind": "li",
+      "en": "<a href=\"#why-it-stayed-open\">Searching book keys</a>",
+      "de": "<a href=\"#why-it-stayed-open\">Suche nach Buchschlüsseln</a>"
+    },
+    {
+      "kind": "li",
+      "en": "<a href=\"#the-idea-that-cracked-it\">The language question</a>",
+      "de": "<a href=\"#the-idea-that-cracked-it\">Die Sprachenfrage</a>"
+    },
+    {
+      "kind": "li",
+      "en": "<a href=\"#the-hit\">The solution</a>",
+      "de": "<a href=\"#the-hit\">Die Lösung</a>"
+    },
+    {
+      "kind": "li",
+      "en": "<a href=\"#how-it-was-checked\">Checking the result</a>",
+      "de": "<a href=\"#how-it-was-checked\">Prüfung des Ergebnisses</a>"
+    },
+    {
+      "kind": "li",
+      "en": "<a href=\"#the-correction\">Further findings</a>",
+      "de": "<a href=\"#the-correction\">Weitere Erkenntnisse</a>"
+    },
+    {
+      "kind": "span",
+      "en": "I · The cipher",
+      "de": "I · Der Geheimtext"
+    },
+    {
+      "kind": "attr",
+      "en": "Wood published a message and kept its book key secret, hoping to send the key back after his death.",
+      "de": "Wood veröffentlichte eine Botschaft und hielt ihren Buchschlüssel geheim. Er hoffte, ihn nach seinem Tod zurücksenden zu können."
+    },
+    {
+      "kind": "h2",
+      "en": "The puzzle",
+      "de": "Das Rätsel"
+    },
+    {
+      "kind": "p",
+      "en": "His plan depended on keeping the key secret. If a medium supplied it after his death, he hoped that would show that something of him had survived. The idea came from the psychologist Robert Thouless.",
+      "de": "Sein Plan beruhte darauf, den Schlüssel geheim zu halten. Würde ein Medium ihn nach seinem Tod liefern, wäre das, so hoffte er, ein Beleg dafür, dass etwas von ihm den Tod überdauert hatte. Die Idee stammte von dem Psychologen Robert Thouless."
+    },
+    {
+      "kind": "attr",
+      "en": "Each distinct key word supplies one shift. UNSER sums to 77, giving key letter Y; cipher F decrypts to H.",
+      "de": "Jedes verschiedene Schlüsselwort liefert eine Verschiebung. UNSER ergibt die Summe 77 und damit den Schlüsselbuchstaben Y; Geheimtext F wird zu H entschlüsselt."
+    },
+    {
+      "kind": "p",
+      "en": "In an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948), Thouless published enciphered messages whose keys only he knew. One of them used a system meant to be unbreakable without the key:",
+      "de": "In einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) veröffentlichte Thouless verschlüsselte Botschaften, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte:"
+    },
+    {
+      "kind": "li",
+      "en": "Pick a passage of text as the key, and skip any word that has already appeared.",
+      "de": "Man wählt eine Textpassage als Schlüssel und überspringt jedes Wort, das schon vorgekommen ist."
+    },
+    {
+      "kind": "li",
+      "en": "Turn each word into one letter. Add up its letters (A=1 to Z=26), divide by 26, and take the remainder (1 is A, 25 is Y, 0 is Z).",
+      "de": "Jedes Wort wird zu einem Buchstaben. Man addiert seine Buchstabenwerte (A=1 bis Z=26), teilt durch 26 und nimmt den Rest (1 ist A, 25 ist Y, 0 ist Z)."
+    },
+    {
+      "kind": "li",
+      "en": "Use that key letter to shift one message letter along the alphabet. A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way.",
+      "de": "Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln verschiebt man in die Gegenrichtung."
+    },
+    {
+      "kind": "p",
+      "en": "Each key word supplies the shift for one message letter, so a 21-letter message needs 21 distinct key words. This was the method Wood used for his test of the afterlife.",
+      "de": "Jedes Schlüsselwort liefert die Verschiebung für einen Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter. Dieses Verfahren verwendete Wood für seinen Test des Fortlebens nach dem Tod."
+    },
+    {
+      "kind": "attr",
+      "en": "Wood’s clues: an accessible book in a foreign language, repeated words omitted, and a message in more than one language.",
+      "de": "Woods Hinweise: ein zugängliches Buch in einer Fremdsprache, ausgelassene Wortwiederholungen und eine Botschaft in mehr als einer Sprache."
+    },
+    {
+      "kind": "h3",
+      "en": "Wood and his clues",
+      "de": "Wood und seine Hinweise"
+    },
+    {
+      "kind": "p",
+      "en": "In response to Thouless’s article, T. E. Wood, a solicitor born in Yorkshire in 1887 who had practiced in Burma, answered with his own message in “A Further Test for Survival” (<em>Proceedings</em> 49, 1950). He published <strong>FVAMI NTKFX XWATB OIZVV X</strong> and left the following clues:",
+      "de": "Als Antwort auf Thouless’ Artikel veröffentlichte T. E. Wood, ein 1887 in Yorkshire geborener Rechtsanwalt, der in Burma praktiziert hatte, seine eigene Botschaft in „A Further Test for Survival“ (<em>Proceedings</em> 49, 1950). Er veröffentlichte <strong>FVAMI NTKFX XWATB OIZVV X</strong> und gab folgende Hinweise:"
+    },
+    {
+      "kind": "li",
+      "en": "He used Thouless’s method, with repeated words omitted.",
+      "de": "Er verwendete Thouless’ Verfahren und ließ wiederholte Wörter aus."
+    },
+    {
+      "kind": "li",
+      "en": "The key passage “is in an accessible book”, in a foreign language.",
+      "de": "Der Schlüsseltext stehe „in einem zugänglichen Buch“, in einer Fremdsprache."
+    },
+    {
+      "kind": "li",
+      "en": "The message “will not be in any one language”.",
+      "de": "Die Botschaft werde „nicht in einer einzigen Sprache“ sein."
+    },
+    {
+      "kind": "attr",
+      "en": "Wood’s cryptogram as printed in Proceedings of the SPR 49 (1950), p. 105",
+      "de": "Woods Kryptogramm, gedruckt in Proceedings of the SPR 49 (1950), S. 105"
+    },
+    {
+      "kind": "figcaption",
+      "en": "<a href=\"https://creilly11235.github.io/wood-cryptogram-1950/wood_1950_p105.png\">Wood’s cryptogram as printed in Proceedings of the SPR 49 (1950), p. 105</a>.",
+      "de": "<a href=\"https://creilly11235.github.io/wood-cryptogram-1950/wood_1950_p105.png\">Woods Kryptogramm, gedruckt in Proceedings of the SPR 49 (1950), S. 105</a>."
+    },
+    {
+      "kind": "span",
+      "en": "II · Searching books",
+      "de": "II · Die Büchersuche"
+    },
+    {
+      "kind": "attr",
+      "en": "Illustration: freely chosen keys can make the same ciphertext produce any of these 21-letter messages.",
+      "de": "Veranschaulichung: Frei gewählte Schlüssel können aus demselben Geheimtext jede dieser Botschaften mit 21 Buchstaben erzeugen."
+    },
+    {
+      "kind": "h2",
+      "en": "Why it remained unsolved",
+      "de": "Warum es ungelöst blieb"
+    },
+    {
+      "kind": "p",
+      "en": "If the key letters could be chosen freely, the same ciphertext could be made to say any message of the same length. A readable sentence alone would not tell you whether it was Wood’s, particularly one so short.",
+      "de": "Könnte man die Schlüsselbuchstaben frei wählen, ließe sich derselbe Geheimtext in jede beliebige Botschaft gleicher Länge verwandeln. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte — erst recht nicht bei einem so kurzen Text."
+    },
+    {
+      "kind": "attr",
+      "en": "129 books supplied 28.6 million candidate keys. Each book spine represents one book.",
+      "de": "129 Bücher lieferten 28,6 Millionen mögliche Schlüssel. Jeder Buchrücken steht für ein Buch."
+    },
+    {
+      "kind": "h3",
+      "en": "Where to begin",
+      "de": "Wo anfangen?"
+    },
+    {
+      "kind": "p",
+      "en": "Wood had given another important clue: his key came from consecutive words in a published book. This made it possible to search a collection of books, trying each word as a starting point.",
+      "de": "Wood hatte noch einen wichtigen Hinweis gegeben: Sein Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs. Damit ließ sich eine Sammlung von Büchern durchsuchen, indem man jedes Wort als möglichen Anfang ausprobierte."
+    },
+    {
+      "kind": "attr",
+      "en": "The correct message ranked first in 97 of 100 known test ciphers. Each dot is one test.",
+      "de": "In 97 von 100 bekannten Testbotschaften erhielt die richtige Botschaft die höchste Bewertung. Jeder Punkt steht für einen Test."
+    },
+    {
+      "kind": "p",
+      "en": "We used publicly available sources for the books and ran 100 known test ciphers to determine whether our code could recover a real message and correctly score it. On 17 September 2026, an initial search tested 28.6 million candidate book keys drawn from 129 books. Each decryption was scored by how much it resembled English. The correct message was the top-scoring result in 97 of 100 tests.",
+      "de": "Wir bezogen die Bücher aus öffentlich zugänglichen Quellen und prüften mit 100 Testbotschaften, deren Klartext bekannt war, ob unser Code eine echte Botschaft wiederfinden und richtig bewerten konnte. Am 17. September 2026 untersuchte eine erste Suche 28,6 Millionen mögliche Buchschlüssel aus 129 Büchern. Jede Entschlüsselung wurde danach bewertet, wie sehr sie Englisch ähnelte. In 97 von 100 Tests erhielt die richtige Botschaft die höchste Bewertung."
+    },
+    {
+      "kind": "attr",
+      "en": "Each grey dot is the best result for one of 100 random ciphertexts. Twelve scored higher than Wood’s best result, marked in blue.",
+      "de": "Jeder graue Punkt ist das beste Ergebnis für einen von 100 zufälligen Geheimtexten. Zwölf wurden höher bewertet als Woods bestes Ergebnis, das blau markiert ist."
+    },
+    {
+      "kind": "h3",
+      "en": "Finding the keys",
+      "de": "Die Suche nach Schlüsseln"
+    },
+    {
+      "kind": "p",
+      "en": "The search first compared five-letter patterns, then checked how well the strongest candidates split into English words. It was a way to rank possible readings, with a clear weakness. Every reading was being judged as English.",
+      "de": "Die Suche verglich zunächst Muster aus fünf Buchstaben und prüfte dann, wie gut sich die stärksten Kandidaten in englische Wörter aufteilen ließen. So ließen sich mögliche Lesarten ordnen, allerdings mit einer klaren Schwäche: Jede Lesart wurde als Englisch beurteilt."
+    },
+    {
+      "kind": "p",
+      "en": "Wood’s message produced no readable result. The search expanded from 129 books to 3,977 texts, adding 3,848 Project Gutenberg books in 14 languages and testing about 429 million candidate keys. It still found nothing convincing.",
+      "de": "Woods Botschaft ergab kein lesbares Ergebnis. Die Suche wurde von 129 Büchern auf 3.977 Texte ausgeweitet: Hinzu kamen 3.848 Bücher von Project Gutenberg in 14 Sprachen, insgesamt wurden rund 429 Millionen mögliche Schlüssel geprüft. Noch immer fand sich nichts Überzeugendes."
+    },
+    {
+      "kind": "p",
+      "en": "We ran the same search on 100 random strings of 21 letters. In 12 of those tests, it found a result that scored higher than anything it had found for Wood’s message. A bigger library had produced more tempting false leads, but no readable message.",
+      "de": "Wir ließen dieselbe Suche mit 100 zufälligen Folgen aus je 21 Buchstaben laufen. In 12 dieser Tests fand sie ein Ergebnis mit einer höheren Bewertung als alles, was sie für Woods Botschaft gefunden hatte. Die größere Bibliothek hatte mehr verlockende falsche Fährten geliefert, aber keine lesbare Botschaft."
+    },
+    {
+      "kind": "span",
+      "en": "III · Across languages",
+      "de": "III · Über Sprachgrenzen hinweg"
+    },
+    {
+      "kind": "attr",
+      "en": "The same German test message: an English word list breaks it into fragments; seven-language word lists recover VERSTEHT GEWISSE MINDER.",
+      "de": "Dieselbe deutsche Testbotschaft: Eine englische Wortliste zerlegt sie in Fragmente; Wortlisten in sieben Sprachen erkennen VERSTEHT GEWISSE MINDER."
+    },
+    {
+      "kind": "p",
+      "en": "There was still Wood’s clue that the message “will not be in any one language”. The next search looked for words in seven languages and allowed the language to change from one word to the next. A quick check of letter patterns narrowed the candidates before the program tried splitting them into words. It favored common words and discouraged chopping a string into tiny fragments or switching languages repeatedly just to make the pieces fit.",
+      "de": "Da war noch Woods Hinweis, dass die Botschaft „nicht in einer einzigen Sprache“ sein werde. Die nächste Suche erkannte Wörter in sieben Sprachen und erlaubte einen Sprachwechsel von Wort zu Wort. Ein schneller Vergleich von Buchstabenmustern grenzte die Kandidaten ein, bevor das Programm versuchte, sie in Wörter aufzuteilen. Es bevorzugte häufige Wörter und wertete es ab, wenn eine Zeichenfolge in winzige Fragmente zerlegt wurde oder die Sprache ständig wechselte, nur damit die Teile irgendwie passten."
+    },
+    {
+      "kind": "attr",
+      "en": "The targeted search added Bible translations in 19 languages. Each book represents one translation.",
+      "de": "Die gezielte Suche nahm Bibelübersetzungen in 19 Sprachen hinzu. Jedes Buch steht für eine Übersetzung."
+    },
+    {
+      "kind": "p",
+      "en": "We also needed a more targeted source. Wood said the key came from “an accessible book” in a foreign language. A Bible seemed plausible, so we added Bible translations in 19 languages to the search.",
+      "de": "Außerdem brauchten wir eine gezielter ausgewählte Quelle. Wood hatte geschrieben, der Schlüssel stehe „in einem zugänglichen Buch“ in einer Fremdsprache. Eine Bibel schien plausibel, also nahmen wir Bibelübersetzungen in 19 Sprachen in die Suche auf."
+    },
+    {
+      "kind": "span",
+      "en": "IV · The solution",
+      "de": "IV · Die Lösung"
+    },
+    {
+      "kind": "attr",
+      "en": "The 13 leading distinct Bible readings under Thouless’s rule. The German Bible scores highest and gives HIERBINICHTOTSIENSTEW.",
+      "de": "Die 13 führenden unterschiedlichen Ergebnisse der Bibelsuche nach Thouless’ Regel. Die deutsche Bibel erhält die höchste Bewertung und ergibt HIERBINICHTOTSIENSTEW."
+    },
+    {
+      "kind": "h2",
+      "en": "The hit",
+      "de": "Der Treffer"
+    },
+    {
+      "kind": "p",
+      "en": "The Bible run tried 26.7 million combinations of starting point and treatment of repeated words, for each of two versions of the arithmetic. The first pass took under three minutes.",
+      "de": "Die Bibelsuche prüfte 26,7 Millionen Kombinationen aus Startposition und Umgang mit wiederholten Wörtern, jeweils für zwei Varianten der Rechenregel. Der erste Durchlauf dauerte weniger als drei Minuten."
+    },
+    {
+      "kind": "p",
+      "en": "Under Thouless’s rule, the top result came from the German Bible, starting at the sixth word of Matthew 6:9, the opening of the Lord’s Prayer. It decrypted to <strong>HIERBINICHTOTSIENSTEW</strong>.",
+      "de": "Nach Thouless’ Regel kam das höchstbewertete Ergebnis aus der deutschen Bibel, beginnend beim sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Die Entschlüsselung ergab <strong>HIERBINICHTOTSIENSTEW</strong>."
+    },
+    {
+      "kind": "button",
+      "en": "Replay the decryption",
+      "de": "Entschlüsselung erneut abspielen"
+    },
+    {
+      "kind": "attr",
+      "en": "The familiar church prayer begins Vater unser; the Luther Bible begins Unser Vater. Their different word orders produce different keys.",
+      "de": "Das vertraute kirchliche Gebet beginnt mit Vater unser; die Lutherbibel mit Unser Vater. Die unterschiedliche Wortfolge ergibt unterschiedliche Schlüssel."
+    },
+    {
+      "kind": "p",
+      "en": "The exact wording mattered. An earlier search had tried the German Lord’s Prayer beginning “Vater unser”, the familiar church wording. The Luther Bible’s “Unser Vater in dem Himmel” produces a different key from the very first word.",
+      "de": "Auf den genauen Wortlaut kam es an. Eine frühere Suche hatte das deutsche Vaterunser mit dem vertrauten kirchlichen Anfang „Vater unser“ ausprobiert. Das „Unser Vater in dem Himmel“ der Lutherbibel ergibt schon ab dem ersten Wort einen anderen Schlüssel."
+    },
+    {
+      "kind": "p",
+      "en": "The key uses 21 distinct words, from “Unser” to “uns”. Four repeats are skipped (“Dein” twice, “Himmel” and “Unser” once each), and the ä in “täglich” is read as a.",
+      "de": "Der Schlüssel verwendet 21 verschiedene Wörter, von „Unser“ bis „uns“. Vier Wiederholungen werden übersprungen („Dein“ zweimal, „Himmel“ und „Unser“ jeweils einmal), und das ä in „täglich“ wird als a gelesen."
+    },
+    {
+      "kind": "attr",
+      "en": "Matthew 6:9–11 in a 1922 printing of the 1912 Luther Bible",
+      "de": "Matthäus 6,9–11 in einem Druck von 1922 der Lutherbibel von 1912"
+    },
+    {
+      "kind": "figcaption",
+      "en": "<a href=\"https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up\">The key passage, Matthew 6:9–11, in a 1922 Berlin printing of the 1912 Luther Bible</a>, published by the British and Foreign Bible Society.",
+      "de": "<a href=\"https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up\">Der Schlüsseltext, Matthäus 6,9–11, in einem Berliner Druck von 1922 der Lutherbibel von 1912</a>, herausgegeben von der Britischen und Ausländischen Bibelgesellschaft."
+    },
+    {
+      "kind": "attr",
+      "en": "The first row worked through: UNSER sums to 77, key letter Y shifts by 24, and F decrypts to H. All 21 letters re-encrypt exactly.",
+      "de": "Die erste Zeile durchgerechnet: UNSER ergibt 77, der Schlüsselbuchstabe Y verschiebt um 24, und F wird zu H entschlüsselt. Alle 21 Buchstaben lassen sich exakt zurückverschlüsseln."
+    },
+    {
+      "kind": "h3",
+      "en": "The key word by word",
+      "de": "Der Schlüssel Wort für Wort"
+    },
+    {
+      "kind": "th",
+      "en": "No.",
+      "de": "Nr."
+    },
+    {
+      "kind": "th",
+      "en": "Key word",
+      "de": "Wort"
+    },
+    {
+      "kind": "th",
+      "en": "Sum",
+      "de": "Sum."
+    },
+    {
+      "kind": "th",
+      "en": "Key",
+      "de": "Schlüssel"
+    },
+    {
+      "kind": "th",
+      "en": "Cipher → plain",
+      "de": "Geheimtext → Klartext"
+    },
+    {
+      "kind": "td",
+      "en": "Unser",
+      "de": "Unser"
+    },
+    {
+      "kind": "td",
+      "en": "Vater",
+      "de": "Vater"
+    },
+    {
+      "kind": "td",
+      "en": "in",
+      "de": "in"
+    },
+    {
+      "kind": "td",
+      "en": "dem",
+      "de": "dem"
+    },
+    {
+      "kind": "td",
+      "en": "Himmel",
+      "de": "Himmel"
+    },
+    {
+      "kind": "td",
+      "en": "Dein",
+      "de": "Dein"
+    },
+    {
+      "kind": "td",
+      "en": "Name",
+      "de": "Name"
+    },
+    {
+      "kind": "td",
+      "en": "werde",
+      "de": "werde"
+    },
+    {
+      "kind": "td",
+      "en": "geheiligt",
+      "de": "geheiligt"
+    },
+    {
+      "kind": "td",
+      "en": "Reich",
+      "de": "Reich"
+    },
+    {
+      "kind": "td",
+      "en": "komme",
+      "de": "komme"
+    },
+    {
+      "kind": "td",
+      "en": "Wille",
+      "de": "Wille"
+    },
+    {
+      "kind": "td",
+      "en": "geschehe",
+      "de": "geschehe"
+    },
+    {
+      "kind": "td",
+      "en": "auf",
+      "de": "auf"
+    },
+    {
+      "kind": "td",
+      "en": "Erden",
+      "de": "Erden"
+    },
+    {
+      "kind": "td",
+      "en": "wie",
+      "de": "wie"
+    },
+    {
+      "kind": "td",
+      "en": "im",
+      "de": "im"
+    },
+    {
+      "kind": "td",
+      "en": "täglich",
+      "de": "täglich"
+    },
+    {
+      "kind": "td",
+      "en": "Brot",
+      "de": "Brot"
+    },
+    {
+      "kind": "td",
+      "en": "gib",
+      "de": "gib"
+    },
+    {
+      "kind": "td",
+      "en": "uns",
+      "de": "uns"
+    },
+    {
+      "kind": "p",
+      "en": "To read a row, take UNSER. Its letters sum to 21+14+19+5+18 = 77, which leaves 25 after dividing by 26, so the key letter is Y. Y shifts by 24, so cipher F goes back 24 places to H.",
+      "de": "Am Beispiel UNSER lässt sich eine Zeile nachvollziehen. Die Buchstabenwerte ergeben 21+14+19+5+18 = 77. Bei der Division durch 26 bleibt der Rest 25, also ist der Schlüsselbuchstabe Y. Y verschiebt um 24 Stellen, daher wird der Geheimtextbuchstabe F um 24 Stellen zurück zu H verschoben."
+    },
+    {
+      "kind": "p",
+      "en": "All 21 letters decrypt correctly and re-encrypt to Wood’s original ciphertext.",
+      "de": "Alle 21 Buchstaben lassen sich korrekt entschlüsseln und wieder zu Woods ursprünglichem Geheimtext verschlüsseln."
+    },
+    {
+      "kind": "attr",
+      "en": "Hier bin ich: German for Here I am. Totsiens: Afrikaans for Goodbye. TEW: Wood’s initials.",
+      "de": "Hier bin ich: Deutsch. Totsiens: Afrikaans für Auf Wiedersehen. TEW: Woods Initialen."
+    },
+    {
+      "kind": "h3",
+      "en": "Reading the message",
+      "de": "Die Botschaft lesen"
+    },
+    {
+      "kind": "p",
+      "en": "The top result under Thouless’s rule was immediately recognizable once the letters were separated into words:",
+      "de": "Das höchstbewertete Ergebnis nach Thouless’ Regel war sofort verständlich, sobald die Buchstaben in Wörter aufgeteilt waren:"
+    },
+    {
+      "kind": "p",
+      "en": "<strong>Hier bin ich. Totsiens. T.E.W.</strong>",
+      "de": "<strong>Hier bin ich. Totsiens. T.E.W.</strong>"
+    },
+    {
+      "kind": "p",
+      "en": "“Hier bin ich” is German for “Here I am”. “Totsiens” is Afrikaans for “Goodbye”. T.E.W. are Wood’s initials.",
+      "de": "„Hier bin ich“ ist Deutsch. „Totsiens“ bedeutet auf Afrikaans „Auf Wiedersehen“. T.E.W. sind Woods Initialen."
+    },
+    {
+      "kind": "p",
+      "en": "Wood meant the message to be read after his death, once a medium had passed on the key. He announces himself, says goodbye and signs it. The key he would have sent begins “Our Father in heaven”.",
+      "de": "Wood wollte, dass die Botschaft erst nach seinem Tod gelesen würde, sobald ein Medium den Schlüssel übermittelt hätte. Er gibt sich zu erkennen, verabschiedet sich und unterschreibt. Der Schlüssel, den er gesendet hätte, beginnt mit „Unser Vater in dem Himmel“."
+    },
+    {
+      "kind": "span",
+      "en": "V · Checking the result",
+      "de": "V · Prüfung des Ergebnisses"
+    },
+    {
+      "kind": "attr",
+      "en": "All 21 letters were reproduced by a standalone script and independently by Astra; the original scans confirmed the ciphertext and method.",
+      "de": "Ein eigenständiges Skript und unabhängig davon Astra reproduzierten alle 21 Buchstaben; die Scans der Originale bestätigten Geheimtext und Verfahren."
+    },
+    {
+      "kind": "h2",
+      "en": "How it was checked",
+      "de": "Wie wir das Ergebnis überprüften"
+    },
+    {
+      "kind": "p",
+      "en": "Before sending the result to Klaus Schmeh, we checked the decryption in several ways.",
+      "de": "Bevor wir das Ergebnis an Klaus Schmeh schickten, überprüften wir die Entschlüsselung auf mehreren Wegen."
+    },
+    {
+      "kind": "h3",
+      "en": "Reproducing the decryption",
+      "de": "Die Entschlüsselung nachvollziehen"
+    },
+    {
+      "kind": "p",
+      "en": "A short standalone script, using no other project code, rebuilds the key from the prayer text, decrypts all 21 letters, and re-encrypts them back to Wood’s exact ciphertext. An independent AI agent, OpenAI’s Astra, independently rebuilt the decryption and reproduced all 21 letters. Its <a href=\"https://github.com/creilly11235/wood-cryptogram-1950/blob/main/notes/astra/REVIEW_WOOD35.md\">full review</a> is available in the repository.",
+      "de": "Ein kurzes, eigenständiges Skript, das keinen anderen Projektcode verwendet, erzeugt den Schlüssel aus dem Gebetstext, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu Woods exaktem Geheimtext. Ein unabhängiger KI-Agent, Astra von OpenAI, entwickelte die Entschlüsselung nochmals selbst und reproduzierte alle 21 Buchstaben. Sein <a href=\"https://github.com/creilly11235/wood-cryptogram-1950/blob/main/notes/astra/REVIEW_WOOD35.md\">vollständiger Prüfbericht</a> ist im Repository verfügbar."
+    },
+    {
+      "kind": "h3",
+      "en": "Original sources",
+      "de": "Originalquellen"
+    },
+    {
+      "kind": "p",
+      "en": "Scans of Wood’s 1950 article and Thouless’s 1948 article confirmed the ciphertext, the method, and Wood’s clues word for word. They also confirmed that “A means no shift” comes from Thouless’s own text, not from a later guess.",
+      "de": "Scans von Woods Artikel aus dem Jahr 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie bestätigten auch, dass „A bedeutet keine Verschiebung“ aus Thouless’ eigenem Text stammt und keine spätere Vermutung ist."
+    },
+    {
+      "kind": "attr",
+      "en": "TEW produced one match: Wood’s message. Seven of 500 random signatures also produced matches. Highlight positions are illustrative; the count comes from the saved test.",
+      "de": "TEW ergab einen Treffer: Woods Botschaft. Sieben von 500 zufälligen Signaturen ergaben ebenfalls Treffer. Die Positionen der Markierungen dienen der Veranschaulichung; die Anzahl stammt aus dem gespeicherten Test."
+    },
+    {
+      "kind": "h3",
+      "en": "Testing for chance matches",
+      "de": "Zufallstreffer prüfen"
+    },
+    {
+      "kind": "p",
+      "en": "A follow-up ran about 854 million trial decryptions across 3,847 Gutenberg books and 19 Bibles, covering both versions of the arithmetic, with and without repeated words. It looked for 18 letters that split into listed words of 3 to 10 letters, followed by a three-letter signature.",
+      "de": "Eine nachträgliche Prüfung führte rund 854 Millionen Probeentschlüsselungen mit 3.847 Gutenberg-Büchern und 19 Bibeln durch. Sie umfasste beide Rechenvarianten, jeweils mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich in Wörter einer Wortliste mit 3 bis 10 Buchstaben aufteilen ließen, gefolgt von einer Signatur aus drei Buchstaben."
+    },
+    {
+      "kind": "p",
+      "en": "With TEW there was exactly one match, and it was this message. With 500 random signatures in place of TEW, 7 of them (1.4%) also got a match, and the examples were word salad.",
+      "de": "Mit TEW gab es genau einen Treffer: diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW ergaben 7 davon (1,4 %) ebenfalls einen Treffer; die Beispiele waren Wortsalat."
+    },
+    {
+      "kind": "p",
+      "en": "TOTSIENS was added to the word list after the solve, and the test was designed after the hit, so it shows rarity, not proof.",
+      "de": "TOTSIENS wurde erst nach der Entschlüsselung in die Wortliste aufgenommen, und der Test wurde erst nach dem Treffer entworfen. Er zeigt daher Seltenheit, liefert aber keinen Beweis."
+    },
+    {
+      "kind": "h3",
+      "en": "Checking for earlier solutions",
+      "de": "Suche nach früheren Lösungen"
+    },
+    {
+      "kind": "p",
+      "en": "Searches of Schmeh’s blog and its comments, Reddit’s r/codes, and the other 2026 solver logs found no earlier solution of Wood’s cryptogram. That is not proof that nobody got there first.",
+      "de": "Suchen in Schmehs Blog und dessen Kommentaren, in Reddits r/codes und in den anderen Lösungsprotokollen von 2026 ergaben keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand zuvor darauf gekommen ist."
+    },
+    {
+      "kind": "span",
+      "en": "VI · Further findings",
+      "de": "VI · Weitere Erkenntnisse"
+    },
+    {
+      "kind": "attr",
+      "en": "Thouless’s 14th example word, SUFFER, sums to 75 and gives W, not the printed U. The final cipher letter should be D, not B.",
+      "de": "Thouless’ 14. Beispielwort SUFFER ergibt die Summe 75 und damit W, nicht das gedruckte U. Der letzte Geheimtextbuchstabe müsste D statt B sein."
+    },
+    {
+      "kind": "h2",
+      "en": "An error in the original example",
+      "de": "Ein Fehler im ursprünglichen Beispiel"
+    },
+    {
+      "kind": "p",
+      "en": "While checking the method against the 1948 paper, we found an arithmetic slip in Thouless’s own worked example. It has been in print for 78 years, and we have not seen it pointed out anywhere.",
+      "de": "Beim Abgleich des Verfahrens mit dem Artikel von 1948 fanden wir einen Rechenfehler in Thouless’ eigenem Beispiel. Er steht seit 78 Jahren so im Druck, und wir haben nirgends einen Hinweis darauf gefunden."
+    },
+    {
+      "kind": "p",
+      "en": "To show how his system works, Thouless enciphered <strong>THERE IS NO DEATH</strong> with Hamlet’s “To be or not to be” speech as the key. He printed the key letters <strong>IGGWW BG PI VNWNU</strong> and the ciphertext <strong>BNKNA JYCWY RWGB</strong>.",
+      "de": "Um sein Verfahren zu erklären, verschlüsselte Thouless <strong>THERE IS NO DEATH</strong> mit Hamlets „To be or not to be“-Monolog als Schlüssel. Er druckte die Schlüsselbuchstaben <strong>IGGWW BG PI VNWNU</strong> und den Geheimtext <strong>BNKNA JYCWY RWGB</strong>."
+    },
+    {
+      "kind": "p",
+      "en": "The first 13 key letters are right. The 14th key word is “suffer”:",
+      "de": "Die ersten 13 Schlüsselbuchstaben stimmen. Das 14. Schlüsselwort ist „suffer“:"
+    },
+    {
+      "kind": "li",
+      "en": "75 = 2 × 26 + 23, so the key letter should be <strong>W</strong>, the 23rd letter.",
+      "de": "75 = 2 × 26 + 23, also müsste der Schlüsselbuchstabe <strong>W</strong> sein, der 23. Buchstabe."
+    },
+    {
+      "kind": "li",
+      "en": "Thouless printed <strong>U</strong>, the 21st.",
+      "de": "Thouless druckte <strong>U</strong>, den 21."
+    },
+    {
+      "kind": "p",
+      "en": "His printed ciphertext follows the printed U, so this is not a single misprint. The 14th plain letter is the final H of <strong>DEATH</strong>. Shifted by U it becomes B, which he printed. Shifted by the correct W it would be <strong>D</strong>. So the last group of his example should read <strong>RWGD</strong>, not <strong>RWGB</strong>.",
+      "de": "Sein gedruckter Geheimtext folgt dem gedruckten U; es handelt sich also nicht um einen einzelnen Druckfehler. Der 14. Klartextbuchstabe ist das letzte H von <strong>DEATH</strong>. Mit U verschoben wird daraus B, das er auch druckte. Mit dem richtigen W verschoben würde daraus <strong>D</strong>. Die letzte Gruppe seines Beispiels müsste daher <strong>RWGD</strong> lauten, nicht <strong>RWGB</strong>."
+    },
+    {
+      "kind": "attr",
+      "en": "Thouless’s worked example with the incorrect U and B marked",
+      "de": "Thouless’ Rechenbeispiel mit Markierungen beim falschen U und B"
+    },
+    {
+      "kind": "figcaption",
+      "en": "<a href=\"https://creilly11235.github.io/wood-cryptogram-1950/thouless_1948_suffer_slip.png\">Thouless’s 1948 example, with “suffer”, the printed U and B, and the recomputed table marked</a>.",
+      "de": "<a href=\"https://creilly11235.github.io/wood-cryptogram-1950/thouless_1948_suffer_slip.png\">Thouless’ Beispiel von 1948 mit Markierungen bei „suffer“, dem gedruckten U und B sowie der nachgerechneten Tabelle</a>."
+    },
+    {
+      "kind": "p",
+      "en": "Wood’s 21 key letters all agree with Thouless’s written rule, which is the method used to decrypt his message.",
+      "de": "Woods 21 Schlüsselbuchstaben stimmen sämtlich mit Thouless’ schriftlicher Regel überein. Nach diesem Verfahren wurde seine Botschaft entschlüsselt."
+    },
+    {
+      "kind": "attr",
+      "en": "The SPR replied on 5 October, confirming that Wood’s file is at Cambridge University Library and offering to include the result in a Psi Encyclopedia article.",
+      "de": "Die SPR antwortete am 5. Oktober: Woods Akte liegt in der Cambridge University Library. Die Society bot an, das Ergebnis in einen Artikel der Psi Encyclopedia aufzunehmen."
+    },
+    {
+      "kind": "h2",
+      "en": "Telling the Society for Psychical Research",
+      "de": "Die Society for Psychical Research informieren"
+    },
+    {
+      "kind": "p",
+      "en": "The key came from a search of books, not from a medium. Make of that what you will. What remains is Wood’s own request. He asked that anyone who tried to decipher his message “communicate the result (even if negative) to the Society”.",
+      "de": "Der Schlüssel kam aus einer Büchersuche, nicht von einem Medium. Was man daraus macht, bleibt jedem selbst überlassen. Es bleibt Woods eigene Bitte: Wer versuche, seine Botschaft zu entschlüsseln, solle „das Ergebnis (auch wenn es negativ ist) der Society mitteilen“."
+    },
+    {
+      "kind": "p",
+      "en": "He promised the Society “fuller particulars” about himself and photographs of him and his home, and said his executors would be asked to tell it “the circumstances” and date of his death.",
+      "de": "Er versprach der Society „nähere Angaben“ zu seiner Person sowie Fotos von sich und seinem Haus. Außerdem sollten seine Testamentsvollstrecker gebeten werden, ihr „die Umstände“ und das Datum seines Todes mitzuteilen."
+    },
+    {
+      "kind": "p",
+      "en": "The Society’s archive officer replied to my email on 5 October, confirming that Wood’s file is held at Cambridge University Library and offering to include the result in a Psi Encyclopedia article on ciphers. I have also asked the library about the file and how to obtain copies.",
+      "de": "Die Archivleitung der Society antwortete am 5. Oktober auf meine E-Mail. Sie bestätigte, dass Woods Akte in der Cambridge University Library liegt, und bot an, das Ergebnis in einen Artikel über Chiffren in der Psi Encyclopedia aufzunehmen. Ich habe mich auch bei der Bibliothek nach der Akte und nach Kopiermöglichkeiten erkundigt."
+    },
+    {
+      "kind": "h2",
+      "en": "Credits",
+      "de": "Mitwirkende"
+    },
+    {
+      "kind": "p",
+      "en": "The project was run by Colin Reilly. Robert Thouless designed the method. Richard Bean’s 2019 solve of Thouless’s Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer; Richard Bean also confirmed the reading and helped improve this account of the search. And we can’t forget the star of the show: Claude (Anthropic), which wrote the search code and found the key. GPT-6 Astra (OpenAI) checked it independently.",
+      "de": "Colin Reilly leitete das Projekt. Robert Thouless entwickelte das Verfahren. Richard Beans Lösung von Thouless’ Botschaft B im Jahr 2019, gefunden durch eine computergestützte Büchersuche, zeigte genau, wie es funktioniert, und bereitete dem hier verwendeten Ansatz den Weg. Klaus Schmeh hielt das Rätsel im Gespräch und bestätigte die Lösung; auch Richard Bean bestätigte die Lesart und half, diese Darstellung der Suche zu verbessern. Und den Star der Vorstellung dürfen wir nicht vergessen: Claude (Anthropic), das den Suchcode schrieb und den Schlüssel fand. GPT-6 Astra (OpenAI) prüfte das Ergebnis unabhängig."
+    },
+    {
+      "kind": "h3",
+      "en": "Sources",
+      "de": "Quellen"
+    },
+    {
+      "kind": "li",
+      "en": "Richard Bean, <a href=\"https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf\"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020.",
+      "de": "Richard Bean, <a href=\"https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf\"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020."
+    },
+    {
+      "kind": "li",
+      "en": "Richard Bean and Louie Helm, <a href=\"https://richardbean.id.au/papers/playfair_histocrypt2025.pdf\"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025.",
+      "de": "Richard Bean und Louie Helm, <a href=\"https://richardbean.id.au/papers/playfair_histocrypt2025.pdf\"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025."
+    },
+    {
+      "kind": "li",
+      "en": "Klaus Schmeh, <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, 4 October 2026.",
+      "de": "Klaus Schmeh, <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, 4. Oktober 2026."
+    },
+    {
+      "kind": "li",
+      "en": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, 17 April 2017.",
+      "de": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, 17. April 2017."
+    },
+    {
+      "kind": "li",
+      "en": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/\">“Richard Bean solves another Top 50 crypto mystery”</a>, 16 August 2019.",
+      "de": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/\">“Richard Bean solves another Top 50 crypto mystery”</a>, 16. August 2019."
+    },
+    {
+      "kind": "li",
+      "en": "T. E. Wood, “A Further Test for Survival”, <a href=\"http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf\"><em>Proceedings of the SPR</em> 49</a>, pp. 105–106.",
+      "de": "T. E. Wood, „A Further Test for Survival“, <a href=\"http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf\"><em>Proceedings of the SPR</em> 49</a>, S. 105–106."
+    },
+    {
+      "kind": "li",
+      "en": "R. H. Thouless, “A Test of Survival”, <a href=\"http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf\"><em>Proceedings of the Society for Psychical Research</em> 48, part 175</a>, July 1948, pp. 253–263.",
+      "de": "R. H. Thouless, „A Test of Survival“, <a href=\"http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf\"><em>Proceedings of the Society for Psychical Research</em> 48, Teil 175</a>, Juli 1948, S. 253–263."
+    },
+    {
+      "kind": "li",
+      "en": "<a href=\"https://www.bibel-online.net/text/luther_1912/matthaeus/6/\">Luther Bible 1912, Matthew 6</a>.",
+      "de": "<a href=\"https://www.bibel-online.net/text/luther_1912/matthaeus/6/\">Lutherbibel 1912, Matthäus 6</a>."
+    },
+    {
+      "kind": "p",
+      "en": "To check the decryption yourself, run <code>python3 harness/wood35t/verify_wood.py</code> from <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">the repository</a>. Code under the MIT License.",
+      "de": "Um die Entschlüsselung selbst zu prüfen, führen Sie <code>python3 harness/wood35t/verify_wood.py</code> aus <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">dem Repository</a> aus. Der Code steht unter der MIT-Lizenz."
+    },
+    {
+      "kind": "p",
+      "en": "You are visitor no. <span class=\"counter\" id=\"visits\">------</span>",
+      "de": "Sie sind Besucher Nr.&nbsp;<span class=\"counter\" id=\"visits\">------</span>"
+    },
+    {
+      "kind": "p",
+      "en": "Visits counted by <a href=\"https://www.goatcounter.com/\">GoatCounter</a>, no cookies. The number updates every few hours.",
+      "de": "Besuche gezählt mit <a href=\"https://www.goatcounter.com/\">GoatCounter</a>, ohne Cookies. Die Zahl wird alle paar Stunden aktualisiert."
+    }
+  ],
+  "js": [
+    {
+      "en": "\"Latin\"",
+      "de": "\"Latein\""
+    },
+    {
+      "en": "\"French\"",
+      "de": "\"Französisch\""
+    },
+    {
+      "en": "\"German\"",
+      "de": "\"Deutsch\""
+    },
+    {
+      "en": "\"Italian\"",
+      "de": "\"Italienisch\""
+    },
+    {
+      "en": "\"Spanish\"",
+      "de": "\"Spanisch\""
+    },
+    {
+      "en": "\"Portuguese\"",
+      "de": "\"Portugiesisch\""
+    },
+    {
+      "en": "\"Dutch\"",
+      "de": "\"Niederländisch\""
+    },
+    {
+      "en": "\"Danish\"",
+      "de": "\"Dänisch\""
+    },
+    {
+      "en": "\"Swedish\"",
+      "de": "\"Schwedisch\""
+    },
+    {
+      "en": "\"Norwegian\"",
+      "de": "\"Norwegisch\""
+    },
+    {
+      "en": "\"Icelandic\"",
+      "de": "\"Isländisch\""
+    },
+    {
+      "en": "\"Esperanto\"",
+      "de": "\"Esperanto\""
+    },
+    {
+      "en": "\"Finnish\"",
+      "de": "\"Finnisch\""
+    },
+    {
+      "en": "\"Hungarian\"",
+      "de": "\"Ungarisch\""
+    },
+    {
+      "en": "\"Polish\"",
+      "de": "\"Polnisch\""
+    },
+    {
+      "en": "\"Czech\"",
+      "de": "\"Tschechisch\""
+    },
+    {
+      "en": "\"Romanian\"",
+      "de": "\"Rumänisch\""
+    },
+    {
+      "en": "\"Afrikaans\"",
+      "de": "\"Afrikaans\""
+    },
+    {
+      "en": "\"Maori\"",
+      "de": "\"Maori\""
+    },
+    {
+      "en": "\"Wood’s 21-letter ciphertext\"",
+      "de": "\"Woods Geheimtext aus 21 Buchstaben\""
+    },
+    {
+      "en": "\"One key word for each message letter\"",
+      "de": "\"Ein Schlüsselwort für jeden Buchstaben der Botschaft\""
+    },
+    {
+      "en": "\"Three clues narrowed the search\"",
+      "de": "\"Drei Hinweise grenzten die Suche ein\""
+    },
+    {
+      "en": "\"An illustration: a freely chosen key can fit any message\"",
+      "de": "\"Veranschaulichung: Ein freier Schlüssel passt zu jeder Botschaft\""
+    },
+    {
+      "en": "\"129 books · 28.6 million candidate keys\"",
+      "de": "\"129 Bücher · 28,6 Millionen mögliche Schlüssel\""
+    },
+    {
+      "en": "\"A known message, hidden with a book key\"",
+      "de": "\"Eine bekannte Botschaft, mit einem Buchschlüssel verschlüsselt\""
+    },
+    {
+      "en": "\"97 found first\"",
+      "de": "\"97 an erster Stelle\""
+    },
+    {
+      "en": "\"3 not found first\"",
+      "de": "\"3 nicht an erster Stelle\""
+    },
+    {
+      "en": "\"Random ciphertexts\"",
+      "de": "\"Zufällige Geheimtexte\""
+    },
+    {
+      "en": "\"Wood’s best result\"",
+      "de": "\"Woods bestes Ergebnis\""
+    },
+    {
+      "en": "\"The same German test message, read two ways\"",
+      "de": "\"Dieselbe deutsche Testbotschaft, auf zwei Arten gelesen\""
+    },
+    {
+      "en": "\"Bible translations in 19 languages\"",
+      "de": "\"Bibelübersetzungen in 19 Sprachen\""
+    },
+    {
+      "en": "\"The opening words change the entire key\"",
+      "de": "\"Die Anfangswörter ändern den gesamten Schlüssel\""
+    },
+    {
+      "en": "\"21 distinct words → 21 key letters → 21 message letters\"",
+      "de": "\"21 verschiedene Wörter → 21 Schlüsselbuchstaben → 21 Klartextbuchstaben\""
+    },
+    {
+      "en": "\"Two languages, followed by Wood’s initials\"",
+      "de": "\"Zwei Sprachen, gefolgt von Woods Initialen\""
+    },
+    {
+      "en": "\"All 21 letters decrypt and re-encrypt exactly\"",
+      "de": "\"Alle 21 Buchstaben lassen sich exakt entschlüsseln und zurückverschlüsseln\""
+    },
+    {
+      "en": "\"7 of 500 random signatures also produced word-like matches\"",
+      "de": "\"7 von 500 zufälligen Signaturen ergaben ebenfalls Wortfolgen\""
+    },
+    {
+      "en": "\"A match\"",
+      "de": "\"Ein Treffer\""
+    },
+    {
+      "en": "\"No match\"",
+      "de": "\"Kein Treffer\""
+    },
+    {
+      "en": "\"Thouless’s example: the last cipher letter should be D\"",
+      "de": "\"Thouless’ Beispiel: Der letzte Geheimtextbuchstabe müsste D sein\""
+    },
+    {
+      "en": "\"The result has been sent to the Society\"",
+      "de": "\"Das Ergebnis wurde der Society mitgeteilt\""
+    },
+    {
+      "en": "\"A passage in a book\"",
+      "de": "\"Eine Passage in einem Buch\""
+    },
+    {
+      "en": "\"Supplies the key words\"",
+      "de": "\"Liefert die Schlüsselwörter\""
+    },
+    {
+      "en": "\"A key hidden in the words\"",
+      "de": "\"Ein in den Wörtern verborgener Schlüssel\""
+    },
+    {
+      "en": "\"One number for each letter\"",
+      "de": "\"Eine Zahl für jeden Buchstaben\""
+    },
+    {
+      "en": "\"A message hidden in 21 letters\"",
+      "de": "\"Eine Botschaft, verborgen in 21 Buchstaben\""
+    },
+    {
+      "en": "\"Published in 1950\"",
+      "de": "\"Veröffentlicht 1950\""
+    },
+    {
+      "en": "\"77 → Y → shift 24\"",
+      "de": "\"77 → Y → Verschiebung 24\""
+    },
+    {
+      "en": "\"Y is letter 25; A means no shift\"",
+      "de": "\"Y ist Buchstabe 25; A bedeutet keine Verschiebung\""
+    },
+    {
+      "en": "\"Move the cipher letter back 24 places\"",
+      "de": "\"F um 24 Stellen zurück → H\""
+    },
+    {
+      "en": "\"A published book\"",
+      "de": "\"Ein veröffentlichtes Buch\""
+    },
+    {
+      "en": "\"An accessible source for the key\"",
+      "de": "\"Eine zugängliche Quelle für den Schlüssel\""
+    },
+    {
+      "en": "\"Foreign languages\"",
+      "de": "\"Fremdsprachen\""
+    },
+    {
+      "en": "\"The key and message need not be English\"",
+      "de": "\"Schlüssel und Botschaft müssen nicht Englisch sein\""
+    },
+    {
+      "en": "\"Repeated words omitted\"",
+      "de": "\"Wiederholte Wörter ausgelassen\""
+    },
+    {
+      "en": "\"Use each key word only once\"",
+      "de": "\"Jedes Schlüsselwort nur einmal verwenden\""
+    },
+    {
+      "en": "\"A freely chosen key can produce this\"",
+      "de": "\"Mit frei gewähltem Schlüssel\""
+    },
+    {
+      "en": "\"Another key can produce this too\"",
+      "de": "\"Mit einem anderen Schlüssel\""
+    },
+    {
+      "en": "\"Readable words alone are not enough\"",
+      "de": "\"Lesbar heißt noch nicht richtig\""
+    },
+    {
+      "en": "\"Each spine represents one book\"",
+      "de": "\"Jeder Buchrücken steht für ein Buch\""
+    },
+    {
+      "en": "\"Every possible starting point was tried\"",
+      "de": "\"Jede mögliche Startposition wurde ausprobiert\""
+    },
+    {
+      "en": "\"Top result in 97 of 100 tests\"",
+      "de": "\"Bestes Ergebnis in 97 von 100 Tests\""
+    },
+    {
+      "en": "\"Each dot is one known-message test\"",
+      "de": "\"Ein Punkt = ein Test\""
+    },
+    {
+      "en": "\"Wood −13.937\"",
+      "de": "\"Wood −13,937\""
+    },
+    {
+      "en": "\"English word list\"",
+      "de": "\"Englische Wortliste\""
+    },
+    {
+      "en": "\"Word lists in seven languages\"",
+      "de": "\"Wortlisten in sieben Sprachen\""
+    },
+    {
+      "en": "\"German Bible\"",
+      "de": "\"Deutsche Bibel\""
+    },
+    {
+      "en": "\"Romanian Bible\"",
+      "de": "\"Rumänische Bibel\""
+    },
+    {
+      "en": "\"Church wording: Vater unser\"",
+      "de": "\"Kirchlicher Wortlaut: Vater unser\""
+    },
+    {
+      "en": "\"Luther Bible: Unser Vater\"",
+      "de": "\"Lutherbibel: Unser Vater\""
+    },
+    {
+      "en": "\"Cipher F → message H\"",
+      "de": "\"Geheimtext F → Klartext H\""
+    },
+    {
+      "en": "\"Cipher V → message I\"",
+      "de": "\"Geheimtext V → Klartext I\""
+    },
+    {
+      "en": "\"Cipher A → message E\"",
+      "de": "\"Geheimtext A → Klartext E\""
+    },
+    {
+      "en": "\"German · Here I am\"",
+      "de": "\"Deutsch · Hier bin ich\""
+    },
+    {
+      "en": "\"Afrikaans · Goodbye\"",
+      "de": "\"Afrikaans · Auf Wiedersehen\""
+    },
+    {
+      "en": "\"Wood’s initials\"",
+      "de": "\"Woods Initialen\""
+    },
+    {
+      "en": "\"21 / 21 letters\"",
+      "de": "\"21 / 21 Buchstaben\""
+    },
+    {
+      "en": "\"Reproduced by the standalone verifier\"",
+      "de": "\"Vom eigenständigen Prüfskript reproduziert\""
+    },
+    {
+      "en": "\"Independently reproduced by Astra\"",
+      "de": "\"Von Astra unabhängig reproduziert\""
+    },
+    {
+      "en": "\"Checked against the original ciphertext\"",
+      "de": "\"Mit dem ursprünglichen Geheimtext abgeglichen\""
+    },
+    {
+      "en": "\"500 random three-letter signatures\"",
+      "de": "\"500 zufällige Signaturen aus drei Buchstaben\""
+    },
+    {
+      "en": "\"Total: 75\"",
+      "de": "\"Summe: 75\""
+    },
+    {
+      "en": "\"Thouless printed U instead\"",
+      "de": "\"Thouless druckte stattdessen U\""
+    },
+    {
+      "en": "\"The final cipher letter: D\"",
+      "de": "\"Der letzte Geheimtextbuchstabe: D\""
+    },
+    {
+      "en": "\"The published example ends in B\"",
+      "de": "\"Das veröffentlichte Beispiel endet auf B\""
+    },
+    {
+      "en": "\"Result sent to the Society\"",
+      "de": "\"Ergebnis an die Society übermittelt\""
+    },
+    {
+      "en": "\"As Wood asked in 1950\"",
+      "de": "\"Wie Wood es 1950 erbeten hatte\""
+    },
+    {
+      "en": "\"The Society replied on 5 October\"",
+      "de": "\"Die Society antwortete am 5. Oktober\""
+    },
+    {
+      "en": "\"The Wood file is at Cambridge University Library\"",
+      "de": "\"Woods Akte: Cambridge University Library\""
+    },
+    {
+      "en": "\"A record for the archive\"",
+      "de": "\"Ein Ergebnis für das Archiv\""
+    },
+    {
+      "en": "\"The Society offered a Psi Encyclopedia update\"",
+      "de": "\"Eintrag in der Psi Encyclopedia angeboten\""
+    },
+    {
+      "en": "\"Wood’s best result vs. 100 random ciphertexts\"",
+      "de": "\"Woods bestes Ergebnis und 100 zufällige Geheimtexte\""
+    },
+    {
+      "en": "\"13 leading distinct readings · Thouless’s rule\"",
+      "de": "\"13 führende unterschiedliche Ergebnisse · Thouless’ Regel\""
+    },
+    {
+      "en": "\"12 random ciphertexts scored higher\"",
+      "de": "\"12 zufällige Geheimtexte wurden höher bewertet\""
+    },
+    {
+      "en": "\"Higher word score →\"",
+      "de": "\"Höhere Wortbewertung →\""
+    },
+    {
+      "en": "\"Other 11\"",
+      "de": "\"Übrige 11\""
+    },
+    {
+      "en": "\"7 signatures with matches · one dot per signature\"",
+      "de": "\"7 Signaturen mit Treffern · ein Punkt je Signatur\""
+    },
+    {
+      "en": "aria-label\",\"Image viewer\")",
+      "de": "aria-label\",\"Bildbetrachter\")"
+    },
+    {
+      "en": "<p class=\"hint\">Scroll or pinch to zoom, drag to move</p>",
+      "de": "<p class=\"hint\">Scrollen oder mit zwei Fingern zoomen, ziehen zum Verschieben</p>"
+    },
+    {
+      "en": "aria-label=\"Zoom out\"",
+      "de": "aria-label=\"Verkleinern\""
+    },
+    {
+      "en": "aria-label=\"Zoom in\"",
+      "de": "aria-label=\"Vergrößern\""
+    },
+    {
+      "en": "aria-label=\"Close\"",
+      "de": "aria-label=\"Schließen\""
+    },
+    {
+      "en": "img.title=\"Click to enlarge\"",
+      "de": "img.title=\"Zum Vergrößern klicken\""
+    },
+    {
+      "en": "\"English-likeness score →\"",
+      "de": "\"Ähnlichkeit mit Englisch →\""
+    }
+  ]
 }
