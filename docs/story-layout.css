@@ -33,8 +33,18 @@ body,
   display: none;
 }
 
+.walkthrough-graphic .progress {
+  display: none;
+}
+
 .step {
   overflow-wrap: break-word;
+}
+
+/* Give the three operations enough reading room to follow their animation. */
+.chapter[data-ch="1"] .step[data-s="method"] ol li[data-walk-stage] {
+  padding-block: 8px;
+  margin-bottom: 1em;
 }
 
 .step .cipher,
@@ -66,6 +76,11 @@ figure img {
 }
 
 @media (max-width: 900px) {
+  .scrolly {
+    --story-gutter: 24px;
+    padding-inline: var(--story-gutter);
+  }
+
   .chapter {
     display: flex;
     flex-direction: column;
@@ -83,6 +98,19 @@ figure img {
     padding: 8px 0;
     border-block: 1px solid var(--veil);
     background: var(--room);
+  }
+
+  /* List markers can overhang the reading column. Cover the page gutters too,
+     without widening the chart or placing a layer over landscape's prose. */
+  :root[data-story-layout="stack"] .chapter > .graphic::before {
+    content: "";
+    position: absolute;
+    inset-inline: calc(-1 * var(--story-gutter));
+    top: calc(-1px - env(safe-area-inset-top, 0px));
+    bottom: -1px;
+    z-index: -1;
+    background: var(--room);
+    pointer-events: none;
   }
 
   .chapter > .text {
@@ -169,6 +197,12 @@ figure img {
   .beat,
   .beatcap {
     display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .scrolly {
+    --story-gutter: 20px;
   }
 }
 

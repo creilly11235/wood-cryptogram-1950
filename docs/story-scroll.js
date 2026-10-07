@@ -33,8 +33,11 @@
       root.dataset.storyShort = String(height <= 450);
       root.style.setProperty('--story-viewport-height', `${height}px`);
       chapters.forEach(record => {
-        record.panelHeight = record.el.getBoundingClientRect().height;
+        const box = record.el.getBoundingClientRect();
+        record.panelHeight = box.height;
         record.panelTop = parseFloat(getComputedStyle(record.el).top) || 0;
+        const exposed = Math.max(0, Math.min(height, box.bottom) - Math.max(0, box.top));
+        setVisibility(record, exposed > 0, exposed / box.height);
       });
     }
 
@@ -49,6 +52,9 @@
       if (progress) progress.innerHTML = steps.map(() => '<i></i>').join('');
       const record = {
         chapter, el, steps, graphic, progress,
+        walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')],
+        walkStage: -1,
+        inView: false,
         caption: el.querySelector('.beatcap'),
         state: null,
         panelHeight: 0,
@@ -96,9 +102,19 @@
         record.steps.forEach((step, i) => {
           if (step.getBoundingClientRect().top <= line) index = i;
         });
-        return [record, index];
+        let walkStage = 0;
+        record.walkTargets.forEach(target => {
+          if (target.getBoundingClientRect().top <= line) walkStage = Number(target.dataset.walkStage);
+        });
+        return [record, index, walkStage];
       });
-      changes.forEach(([record, index]) => select(record, index));
+      changes.forEach(([record, index, walkStage]) => {
+        select(record, index);
+        if (record.walkTargets.length && record.walkStage !== walkStage) {
+          record.walkStage = walkStage;
+          record.graphic.showStage(walkStage);
+        }
+      });
     }
 
     function schedule() {
@@ -107,16 +123,25 @@
       requestAnimationFrame(update);
     }
 
+    function setVisibility(record, inView, ratio) {
+      record.inView = inView;
+      /* Let a new panel arrive before starting its reveal. Otherwise a
+         phone chart can finish animating while only its heading is visible
+         below the preceding section. Keep painting its paused baseline as
+         it enters, then play when the chart can actually be read. */
+      const visible = ratio >= (sideBySide ? .55 : .9);
+      if (record.graphic.visible === visible) return;
+      record.graphic.visible = visible;
+      if (visible) record.graphic.resume();
+      else record.graphic.pause();
+    }
+
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const record = chapters.find(item => item.el === entry.target);
-        const visible = entry.isIntersecting;
-        if (record.graphic.visible === visible) return;
-        record.graphic.visible = visible;
-        if (visible) record.graphic.resume();
-        else record.graphic.pause();
+        setVisibility(record, entry.isIntersecting, entry.intersectionRatio);
       });
-    }, { threshold: 0 });
+    }, { threshold: [0, .55, .9] });
 
     measureViewport(true);
     update();
@@ -124,7 +149,7 @@
 
     function frame(now) {
       chapters.forEach(record => {
-        if (record.graphic.visible) record.graphic.frame(now);
+        if (record.inView) record.graphic.frame(now);
       });
       requestAnimationFrame(frame);
     }

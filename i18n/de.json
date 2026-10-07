@@ -23,7 +23,7 @@
     },
     {
       "kind": "p",
-      "en": "By <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, with assistance from Claude<span>4 October 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code and data on GitHub</a> · <a class=\"lang\" href=\"de/\" hreflang=\"de\" lang=\"de\">Deutsche Fassung</a></span>",
+      "en": "By <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, with assistance from Claude<span>October 4, 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code and data on GitHub</a> · <a class=\"lang\" href=\"de/\" hreflang=\"de\" lang=\"de\">Deutsche Fassung</a></span>",
       "de": "Von <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a>, mit Unterstützung von Claude<span>4. Oktober 2026 · <a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code und Daten auf GitHub</a> · <a class=\"lang\" href=\"../\" hreflang=\"en\" lang=\"en\">English version</a></span>"
     },
     {
@@ -58,13 +58,13 @@
     },
     {
       "kind": "p",
-      "en": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">confirmed it</a> on 4 October 2026.",
-      "de": "Klaus Schmeh <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">bestätigte die Lösung</a> am 4. Oktober 2026."
+      "en": "Confirmed by <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> on October 4, 2026",
+      "de": "Bestätigt von <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> am 4. Oktober 2026"
     },
     {
       "kind": "p",
-      "en": "In 1950, a solicitor named T. E. Wood published a 21 letter cipher as a test of life after death. He planned to send the key back through a medium after he died. Seventy-six years later, we decrypted it without communicating with the dead.",
-      "de": "1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood einen Geheimtext aus 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er den Schlüssel über ein Medium zurücksenden. Sechsundsiebzig Jahre später entschlüsselten wir die Botschaft, ohne mit den Toten in Kontakt zu treten."
+      "en": "In 1950, a solicitor named T. E. Wood published a 21 letter cipher as a test of life after death. He planned to send the key back through a medium after he died. Seventy-six years later, we decrypted it. No séance required.",
+      "de": "1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood einen Geheimtext aus 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er den Schlüssel über ein Medium zurücksenden. Sechsundsiebzig Jahre später entschlüsselten wir ihn. Ganz ohne Séance."
     },
     {
       "kind": "attr",
@@ -118,8 +118,8 @@
     },
     {
       "kind": "p",
-      "en": "His plan depended on keeping the key secret. If a medium supplied it after his death, he hoped that would show that something of him had survived. The idea came from the psychologist Robert Thouless.",
-      "de": "Sein Plan beruhte darauf, den Schlüssel geheim zu halten. Würde ein Medium ihn nach seinem Tod liefern, wäre das, so hoffte er, ein Beleg dafür, dass etwas von ihm den Tod überdauert hatte. Die Idee stammte von dem Psychologen Robert Thouless."
+      "en": "His plan depended on keeping the key secret and if a medium supplied it after he passed, he hoped it would prove there was some kind of life after death.",
+      "de": "Sein Plan beruhte darauf, den Schlüssel geheim zu halten. Würde ein Medium ihn nach seinem Tod übermitteln, wäre das, so hoffte er, ein Beweis für irgendeine Form des Fortlebens."
     },
     {
       "kind": "attr",
@@ -128,8 +128,8 @@
     },
     {
       "kind": "p",
-      "en": "In an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948), Thouless published enciphered messages whose keys only he knew. One of them used a system meant to be unbreakable without the key:",
-      "de": "In einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) veröffentlichte Thouless verschlüsselte Botschaften, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte:"
+      "en": "The idea came from the psychologist Robert Thouless who published an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) with enciphered messages whose keys only he knew. One of them used a system meant to be unbreakable without the key:",
+      "de": "Die Idee stammte von dem Psychologen Robert Thouless, der in einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) verschlüsselte Botschaften veröffentlichte, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte:"
     },
     {
       "kind": "li",
@@ -163,8 +163,8 @@
     },
     {
       "kind": "p",
-      "en": "In response to Thouless’s article, T. E. Wood, a solicitor born in Yorkshire in 1887 who had practiced in Burma, answered with his own message in “A Further Test for Survival” (<em>Proceedings</em> 49, 1950). He published <strong>FVAMI NTKFX XWATB OIZVV X</strong> and left the following clues:",
-      "de": "Als Antwort auf Thouless’ Artikel veröffentlichte T. E. Wood, ein 1887 in Yorkshire geborener Rechtsanwalt, der in Burma praktiziert hatte, seine eigene Botschaft in „A Further Test for Survival“ (<em>Proceedings</em> 49, 1950). Er veröffentlichte <strong>FVAMI NTKFX XWATB OIZVV X</strong> und gab folgende Hinweise:"
+      "en": "In response to Thouless’s article, T. E. Wood, a solicitor born in Yorkshire in 1887 who had practiced in Burma, answered with his own message in “A Further Test for Survival” (<em>Proceedings</em> 49, 1950). He published <strong class=\"cipher-token encoded\">FVAMI NTKFX XWATB OIZVV X</strong> and left the following clues:",
+      "de": "Als Antwort auf Thouless’ Artikel veröffentlichte T. E. Wood, ein 1887 in Yorkshire geborener Rechtsanwalt, der in Burma praktiziert hatte, seine eigene Botschaft in „A Further Test for Survival“ (<em>Proceedings</em> 49, 1950). Er veröffentlichte <strong class=\"cipher-token encoded\">FVAMI NTKFX XWATB OIZVV X</strong> und gab folgende Hinweise:"
     },
     {
       "kind": "li",
@@ -233,7 +233,7 @@
     },
     {
       "kind": "p",
-      "en": "We used publicly available sources for the books and ran 100 known test ciphers to determine whether our code could recover a real message and correctly score it. On 17 September 2026, an initial search tested 28.6 million candidate book keys drawn from 129 books. Each decryption was scored by how much it resembled English. The correct message was the top-scoring result in 97 of 100 tests.",
+      "en": "We used publicly available sources for the books and ran 100 known test ciphers to determine whether our code could recover a real message and correctly score it. On September 17, 2026, an initial search tested 28.6 million candidate book keys drawn from 129 books. Each decryption was scored by how much it resembled English. The correct message was the top-scoring result in 97 of 100 tests.",
       "de": "Wir bezogen die Bücher aus öffentlich zugänglichen Quellen und prüften mit 100 Testbotschaften, deren Klartext bekannt war, ob unser Code eine echte Botschaft wiederfinden und richtig bewerten konnte. Am 17. September 2026 untersuchte eine erste Suche 28,6 Millionen mögliche Buchschlüssel aus 129 Büchern. Jede Entschlüsselung wurde danach bewertet, wie sehr sie Englisch ähnelte. In 97 von 100 Tests erhielt die richtige Botschaft die höchste Bewertung."
     },
     {
@@ -308,8 +308,8 @@
     },
     {
       "kind": "p",
-      "en": "Under Thouless’s rule, the top result came from the German Bible, starting at the sixth word of Matthew 6:9, the opening of the Lord’s Prayer. It decrypted to <strong>HIERBINICHTOTSIENSTEW</strong>.",
-      "de": "Nach Thouless’ Regel kam das höchstbewertete Ergebnis aus der deutschen Bibel, beginnend beim sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Die Entschlüsselung ergab <strong>HIERBINICHTOTSIENSTEW</strong>."
+      "en": "Under Thouless’s rule, the top result came from the German Bible, starting at the sixth word of Matthew 6:9, the opening of the Lord’s Prayer. It decrypted to <strong class=\"cipher-token decoded\">HIERBINICHTOTSIENSTEW</strong>.",
+      "de": "Nach Thouless’ Regel kam das höchstbewertete Ergebnis aus der deutschen Bibel, beginnend beim sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Die Entschlüsselung ergab <strong class=\"cipher-token decoded\">HIERBINICHTOTSIENSTEW</strong>."
     },
     {
       "kind": "button",
@@ -508,8 +508,8 @@
     },
     {
       "kind": "p",
-      "en": "<strong>Hier bin ich. Totsiens. T.E.W.</strong>",
-      "de": "<strong>Hier bin ich. Totsiens. T.E.W.</strong>"
+      "en": "<strong class=\"cipher-token decoded\">Hier bin ich. Totsiens. T.E.W.</strong>",
+      "de": "<strong class=\"cipher-token decoded\">Hier bin ich. Totsiens. T.E.W.</strong>"
     },
     {
       "kind": "p",
@@ -618,8 +618,8 @@
     },
     {
       "kind": "p",
-      "en": "To show how his system works, Thouless enciphered <strong>THERE IS NO DEATH</strong> with Hamlet’s “To be or not to be” speech as the key. He printed the key letters <strong>IGGWW BG PI VNWNU</strong> and the ciphertext <strong>BNKNA JYCWY RWGB</strong>.",
-      "de": "Um sein Verfahren zu erklären, verschlüsselte Thouless <strong>THERE IS NO DEATH</strong> mit Hamlets „To be or not to be“-Monolog als Schlüssel. Er druckte die Schlüsselbuchstaben <strong>IGGWW BG PI VNWNU</strong> und den Geheimtext <strong>BNKNA JYCWY RWGB</strong>."
+      "en": "To show how his system works, Thouless enciphered <strong class=\"cipher-token decoded\">THERE IS NO DEATH</strong> with Hamlet’s “To be or not to be” speech as the key. He printed the key letters <strong>IGGWW BG PI VNWNU</strong> and the ciphertext <strong class=\"cipher-token encoded\">BNKNA JYCWY RWGB</strong>.",
+      "de": "Um sein Verfahren zu erklären, verschlüsselte Thouless <strong class=\"cipher-token decoded\">THERE IS NO DEATH</strong> mit Hamlets „To be or not to be“-Monolog als Schlüssel. Er druckte die Schlüsselbuchstaben <strong>IGGWW BG PI VNWNU</strong> und den Geheimtext <strong class=\"cipher-token encoded\">BNKNA JYCWY RWGB</strong>."
     },
     {
       "kind": "p",
@@ -638,8 +638,8 @@
     },
     {
       "kind": "p",
-      "en": "His printed ciphertext follows the printed U, so this is not a single misprint. The 14th plain letter is the final H of <strong>DEATH</strong>. Shifted by U it becomes B, which he printed. Shifted by the correct W it would be <strong>D</strong>. So the last group of his example should read <strong>RWGD</strong>, not <strong>RWGB</strong>.",
-      "de": "Sein gedruckter Geheimtext folgt dem gedruckten U; es handelt sich also nicht um einen einzelnen Druckfehler. Der 14. Klartextbuchstabe ist das letzte H von <strong>DEATH</strong>. Mit U verschoben wird daraus B, das er auch druckte. Mit dem richtigen W verschoben würde daraus <strong>D</strong>. Die letzte Gruppe seines Beispiels müsste daher <strong>RWGD</strong> lauten, nicht <strong>RWGB</strong>."
+      "en": "His printed ciphertext follows the printed U, so this is not a single misprint. The 14th plain letter is the final H of <strong class=\"cipher-token decoded\">DEATH</strong>. Shifted by U it becomes B, which he printed. Shifted by the correct W it would be <strong class=\"cipher-token encoded\">D</strong>. So the last group of his example should read <strong class=\"cipher-token encoded\">RWGD</strong>, not <strong class=\"cipher-token encoded\">RWGB</strong>.",
+      "de": "Sein gedruckter Geheimtext folgt dem gedruckten U; es handelt sich also nicht um einen einzelnen Druckfehler. Der 14. Klartextbuchstabe ist das letzte H von <strong class=\"cipher-token decoded\">DEATH</strong>. Mit U verschoben wird daraus B, das er auch druckte. Mit dem richtigen W verschoben würde daraus <strong class=\"cipher-token encoded\">D</strong>. Die letzte Gruppe seines Beispiels müsste daher <strong class=\"cipher-token encoded\">RWGD</strong> lauten, nicht <strong class=\"cipher-token encoded\">RWGB</strong>."
     },
     {
       "kind": "attr",
@@ -658,7 +658,7 @@
     },
     {
       "kind": "attr",
-      "en": "The SPR replied on 5 October, confirming that Wood’s file is at Cambridge University Library and offering to include the result in a Psi Encyclopedia article.",
+      "en": "The SPR replied on October 5, 2026, confirming that Wood’s file is at Cambridge University Library and offering to include the result in a Psi Encyclopedia article.",
       "de": "Die SPR antwortete am 5. Oktober: Woods Akte liegt in der Cambridge University Library. Die Society bot an, das Ergebnis in einen Artikel der Psi Encyclopedia aufzunehmen."
     },
     {
@@ -678,7 +678,7 @@
     },
     {
       "kind": "p",
-      "en": "The Society’s archive officer replied to my email on 5 October, confirming that Wood’s file is held at Cambridge University Library and offering to include the result in a Psi Encyclopedia article on ciphers. I have also asked the library about the file and how to obtain copies.",
+      "en": "The Society’s archive officer replied to my email on October 5, 2026, confirming that Wood’s file is held at Cambridge University Library and offering to include the result in a Psi Encyclopedia article on ciphers. I have also asked the library about the file and how to obtain copies.",
       "de": "Die Archivleitung der Society antwortete am 5. Oktober auf meine E-Mail. Sie bestätigte, dass Woods Akte in der Cambridge University Library liegt, und bot an, das Ergebnis in einen Artikel über Chiffren in der Psi Encyclopedia aufzunehmen. Ich habe mich auch bei der Bibliothek nach der Akte und nach Kopiermöglichkeiten erkundigt."
     },
     {
@@ -708,17 +708,17 @@
     },
     {
       "kind": "li",
-      "en": "Klaus Schmeh, <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, 4 October 2026.",
+      "en": "Klaus Schmeh, <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, October 4, 2026.",
       "de": "Klaus Schmeh, <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, 4. Oktober 2026."
     },
     {
       "kind": "li",
-      "en": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, 17 April 2017.",
+      "en": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, April 17, 2017.",
       "de": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/\">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, 17. April 2017."
     },
     {
       "kind": "li",
-      "en": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/\">“Richard Bean solves another Top 50 crypto mystery”</a>, 16 August 2019.",
+      "en": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/\">“Richard Bean solves another Top 50 crypto mystery”</a>, August 16, 2019.",
       "de": "Klaus Schmeh, <a href=\"https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/\">“Richard Bean solves another Top 50 crypto mystery”</a>, 16. August 2019."
     },
     {
@@ -830,20 +830,8 @@
       "de": "\"Maori\""
     },
     {
-      "en": "\"Wood’s 21-letter ciphertext\"",
-      "de": "\"Woods Geheimtext aus 21 Buchstaben\""
-    },
-    {
-      "en": "\"One key word for each message letter\"",
-      "de": "\"Ein Schlüsselwort für jeden Buchstaben der Botschaft\""
-    },
-    {
-      "en": "\"Three clues narrowed the search\"",
-      "de": "\"Drei Hinweise grenzten die Suche ein\""
-    },
-    {
-      "en": "\"An illustration: a freely chosen key can fit any message\"",
-      "de": "\"Veranschaulichung: Ein freier Schlüssel passt zu jeder Botschaft\""
+      "en": "\"One cipher, many possible messages\"",
+      "de": "\"Ein Geheimtext, viele mögliche Botschaften\""
     },
     {
       "en": "\"129 books · 28.6 million candidate keys\"",
@@ -882,8 +870,8 @@
       "de": "\"Die Anfangswörter ändern den gesamten Schlüssel\""
     },
     {
-      "en": "\"21 distinct words → 21 key letters → 21 message letters\"",
-      "de": "\"21 verschiedene Wörter → 21 Schlüsselbuchstaben → 21 Klartextbuchstaben\""
+      "en": "\"The first three of 21 letters\"",
+      "de": "\"Die ersten drei von 21 Buchstaben\""
     },
     {
       "en": "\"Two languages, followed by Wood’s initials\"",
@@ -912,66 +900,6 @@
     {
       "en": "\"The result has been sent to the Society\"",
       "de": "\"Das Ergebnis wurde der Society mitgeteilt\""
-    },
-    {
-      "en": "\"A passage in a book\"",
-      "de": "\"Eine Passage in einem Buch\""
-    },
-    {
-      "en": "\"Supplies the key words\"",
-      "de": "\"Liefert die Schlüsselwörter\""
-    },
-    {
-      "en": "\"A key hidden in the words\"",
-      "de": "\"Ein in den Wörtern verborgener Schlüssel\""
-    },
-    {
-      "en": "\"One number for each letter\"",
-      "de": "\"Eine Zahl für jeden Buchstaben\""
-    },
-    {
-      "en": "\"A message hidden in 21 letters\"",
-      "de": "\"Eine Botschaft, verborgen in 21 Buchstaben\""
-    },
-    {
-      "en": "\"Published in 1950\"",
-      "de": "\"Veröffentlicht 1950\""
-    },
-    {
-      "en": "\"77 → Y → shift 24\"",
-      "de": "\"77 → Y → Verschiebung 24\""
-    },
-    {
-      "en": "\"Y is letter 25; A means no shift\"",
-      "de": "\"Y ist Buchstabe 25; A bedeutet keine Verschiebung\""
-    },
-    {
-      "en": "\"Move the cipher letter back 24 places\"",
-      "de": "\"F um 24 Stellen zurück → H\""
-    },
-    {
-      "en": "\"A published book\"",
-      "de": "\"Ein veröffentlichtes Buch\""
-    },
-    {
-      "en": "\"An accessible source for the key\"",
-      "de": "\"Eine zugängliche Quelle für den Schlüssel\""
-    },
-    {
-      "en": "\"Foreign languages\"",
-      "de": "\"Fremdsprachen\""
-    },
-    {
-      "en": "\"The key and message need not be English\"",
-      "de": "\"Schlüssel und Botschaft müssen nicht Englisch sein\""
-    },
-    {
-      "en": "\"Repeated words omitted\"",
-      "de": "\"Wiederholte Wörter ausgelassen\""
-    },
-    {
-      "en": "\"Use each key word only once\"",
-      "de": "\"Jedes Schlüsselwort nur einmal verwenden\""
     },
     {
       "en": "\"A freely chosen key can produce this\"",
@@ -1030,18 +958,6 @@
       "de": "\"Lutherbibel: Unser Vater\""
     },
     {
-      "en": "\"Cipher F → message H\"",
-      "de": "\"Geheimtext F → Klartext H\""
-    },
-    {
-      "en": "\"Cipher V → message I\"",
-      "de": "\"Geheimtext V → Klartext I\""
-    },
-    {
-      "en": "\"Cipher A → message E\"",
-      "de": "\"Geheimtext A → Klartext E\""
-    },
-    {
       "en": "\"German · Here I am\"",
       "de": "\"Deutsch · Hier bin ich\""
     },
@@ -1098,7 +1014,7 @@
       "de": "\"Wie Wood es 1950 erbeten hatte\""
     },
     {
-      "en": "\"The Society replied on 5 October\"",
+      "en": "\"The Society replied on October 5, 2026\"",
       "de": "\"Die Society antwortete am 5. Oktober\""
     },
     {
@@ -1130,8 +1046,8 @@
       "de": "\"Höhere Wortbewertung →\""
     },
     {
-      "en": "\"Other 11\"",
-      "de": "\"Übrige 11\""
+      "en": "\"Other 11 readings\"",
+      "de": "\"Übrige 11 Ergebnisse\""
     },
     {
       "en": "\"7 signatures with matches · one dot per signature\"",
@@ -1164,6 +1080,94 @@
     {
       "en": "\"English-likeness score →\"",
       "de": "\"Ähnlichkeit mit Englisch →\""
+    },
+    {
+      "en": "\"How the cipher becomes a message\"",
+      "de": "\"Vom Geheimtext zur Botschaft\""
+    },
+    {
+      "en": "\"Encoded\"",
+      "de": "\"Verschlüsselt\""
+    },
+    {
+      "en": "\"Decoded\"",
+      "de": "\"Entschlüsselt\""
+    },
+    {
+      "en": "\"Decoding\"",
+      "de": "\"Entschlüsseln\""
+    },
+    {
+      "en": "\"One key word for every cipher letter\"",
+      "de": "\"Ein Schlüsselwort pro Buchstabe\""
+    },
+    {
+      "en": "\"Start with F and Unser\"",
+      "de": "\"Start mit F und Unser\""
+    },
+    {
+      "en": "\"Add the letters in Unser\"",
+      "de": "\"Die Buchstabenwerte von Unser addieren\""
+    },
+    {
+      "en": "\"Use Y to shift F back 24 places\"",
+      "de": "\"Mit Y: F um 24 Stellen zurück\""
+    },
+    {
+      "en": "\"The first decoded letter is H\"",
+      "de": "\"Der erste Klartextbuchstabe: H\""
+    },
+    {
+      "en": "\"Repeat for all 21 letters\"",
+      "de": "\"Für alle 21 Buchstaben wiederholen\""
+    },
+    {
+      "en": "\"Next\"",
+      "de": "\"Weiter\""
+    },
+    {
+      "en": "\"Replay\"",
+      "de": "\"Wiederholen\""
+    },
+    {
+      "en": "\"Y means a shift of 24 (A = 0)\"",
+      "de": "\"Y verschiebt um 24 Stellen (A = 0)\""
+    },
+    {
+      "en": "\"Back 24\"",
+      "de": "\"24 zurück\""
+    },
+    {
+      "en": "\"The message begins\"",
+      "de": "\"Die Botschaft beginnt\""
+    },
+    {
+      "en": "\"Step\"",
+      "de": "\"Schritt\""
+    },
+    {
+      "en": "\"key word\"",
+      "de": "\"Schlüsselwort\""
+    },
+    {
+      "en": "\"The 21-letter cipher\"",
+      "de": "\"Der Geheimtext: 21 Buchstaben\""
+    },
+    {
+      "en": "\"The key passage\"",
+      "de": "\"Der Schlüsseltext\""
+    },
+    {
+      "en": "\"Previous\"",
+      "de": "\"Zurück\""
+    },
+    {
+      "en": "\"Repeated words are skipped\"",
+      "de": "\"Wiederholte Wörter auslassen\""
+    },
+    {
+      "en": "\"The decoded message\"",
+      "de": "\"Die entschlüsselte Botschaft\""
     }
   ]
 }
