@@ -25,8 +25,11 @@ def main():
     parser.add_argument("--executable")
     parser.add_argument("--out", default=str(Path(tempfile.gettempdir()) / "wood-story-viewer"))
     parser.add_argument("--quick", action="store_true", help="Run the first phone/language only")
+    parser.add_argument("--arrival-only", action="store_true", help="Run Chromium's native late-load arrival regressions only")
     parser.add_argument("--case", choices=["phone", "small", "landscape"], help="Run one viewport after a targeted fix")
     args = parser.parse_args()
+    if args.arrival_only and args.browser != "chromium":
+        parser.error("--arrival-only requires Chromium native touch input")
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     results = []
@@ -51,6 +54,8 @@ def main():
         if args.case:
             cases = [{"phone": (390, 844, "en", "no-preference"), "small": (320, 568, "de", "reduce"),
                       "landscape": (844, 390, "en", "reduce")}[args.case]]
+        if args.arrival_only:
+            cases = [(390, 844, "en", "no-preference")]
         for w, h, lang, motion in cases:
             prefix = f"{args.browser} {lang} {w}x{h} {motion}"
             context = browser.new_context(viewport={"width": w, "height": h},
@@ -118,6 +123,105 @@ def main():
                 })()""")
 
             try:
+                if cd and w == 390 and h == 844:
+                    # Readers can start scrolling once the article is visible,
+                    # while an async analytics request is still loading. The
+                    # initial pageshow used to clear a genuine native pan here.
+                    # Hold that existing request, never the controller or DOM,
+                    # then release it during the same fling from the page top.
+                    page.add_init_script("""window.__arrivalLoadEvents=[];window.__arrivalMaxY=0;
+                      addEventListener('scroll',()=>__arrivalMaxY=Math.max(__arrivalMaxY,scrollY),{passive:true});
+                      for(const type of ['load','pageshow','touchend']) addEventListener(type,
+                        event=>__arrivalLoadEvents.push({type,time:performance.now(),y:scrollY,
+                          persisted:!!event.persisted}),{passive:true});""")
+                    held_analytics = []
+                    analytics_pattern = "**/gc.zgo.at/count.js"
+                    def hold_analytics(route):
+                        held_analytics.append(route)
+                    page.route(analytics_pattern, hold_analytics)
+                    for release_ms in (80, 200, 2500):
+                        attempts = []
+                        for attempt in range(3):
+                            held_analytics.clear()
+                            page.goto(url, wait_until="domcontentloaded")
+                            page.wait_for_function("!!window.WoodStoryController")
+                            page.evaluate("document.fonts.ready")
+                            page.wait_for_timeout(300)
+                            check(page, f"{prefix}: late-load {release_ms}ms starts before pageshow at page top",
+                                  "scrollY===0&&!__arrivalLoadEvents.some(event=>event.type==='pageshow')")
+                            if not held_analytics:
+                                raise RuntimeError("The existing analytics request was not intercepted")
+                            card_top = page.evaluate("WoodStoryController.records[0].card.getBoundingClientRect().top")
+                            drag(w * .525, h * .936, w * .525, h * .107,
+                                 wait=0, steps=3, delay=8)
+                            page.wait_for_timeout(release_ms)
+                            if release_ms < 1000:
+                                check(page, f"{prefix}: late-load {release_ms}ms releases during the approach",
+                                      "!WoodStoryController.current")
+                            held_analytics.pop().fulfill(status=200,
+                                content_type="application/javascript", body="/* Delayed analytics response */")
+                            page.wait_for_timeout(2800)
+                            trace = page.evaluate("""({events:__arrivalLoadEvents,maxY:__arrivalMaxY,
+                              y:scrollY,cardTop:WoodStoryController.records[0].card.getBoundingClientRect().top,
+                              line:innerHeight*.30,current:WoodStoryController.current?.number||null})""")
+                            trace["initialCardTop"] = card_top
+                            attempts.append(trace)
+                            # CDP occasionally ends a gesture without inertia.
+                            # Retry only if it never reaches the card. Passing a
+                            # card unopened is always a real test failure.
+                            if trace["current"] or trace["maxY"] >= card_top - trace["line"]:
+                                break
+                        reached = bool(trace["current"]) or trace["maxY"] >= card_top - trace["line"]
+                        results.append({"check": f"{prefix}: late-load {release_ms}ms native fling reaches entry",
+                                        "passed": reached, "value": attempts})
+                        check(page, f"{prefix}: late-load {release_ms}ms arrival survives initial pageshow",
+                              "String(WoodStoryController.current?.number)==='1'")
+                    page.unroute(analytics_pattern, hold_analytics)
+                    # A reader can also start panning before the controller
+                    # itself arrives. Its touchmove must accept that ongoing
+                    # gesture even though it never received the touchstart.
+                    held_controller = []
+                    controller_pattern = "**/story-scroll.js*"
+                    def hold_controller(route):
+                        held_controller.append(route)
+                    page.route(controller_pattern, hold_controller)
+                    attempts = []
+                    for attempt in range(3):
+                        held_controller.clear()
+                        page.goto(url, wait_until="commit")
+                        page.wait_for_function("window.WoodStory && document.querySelector('.chapter')")
+                        page.wait_for_timeout(300)
+                        check(page, f"{prefix}: delayed controller starts with article visible at page top",
+                              "!window.WoodStoryController&&scrollY===0")
+                        cd.send("Input.dispatchTouchEvent", {"type": "touchStart", "touchPoints": [{"x": 205, "y": 790}]})
+                        cd.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": [{"x": 205, "y": 760}]})
+                        page.wait_for_timeout(20)
+                        if not held_controller:
+                            raise RuntimeError("The controller request was not intercepted")
+                        held_controller.pop().continue_()
+                        page.wait_for_function("!!window.WoodStoryController")
+                        card_top = page.evaluate("scrollY+WoodStoryController.records[0].card.getBoundingClientRect().top")
+                        for y in (580, 330, 90):
+                            cd.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": [{"x": 205, "y": y}]})
+                            page.wait_for_timeout(8)
+                        cd.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+                        page.wait_for_timeout(2800)
+                        trace = page.evaluate("""({events:__arrivalLoadEvents,maxY:__arrivalMaxY,
+                          y:scrollY,cardTop:WoodStoryController.records[0].card.getBoundingClientRect().top,
+                          line:innerHeight*.30,current:WoodStoryController.current?.number||null})""")
+                        trace["initialCardTop"] = card_top
+                        attempts.append(trace)
+                        if trace["current"] or trace["maxY"] >= card_top - trace["line"]:
+                            break
+                    reached = bool(trace["current"]) or trace["maxY"] >= card_top - trace["line"]
+                    results.append({"check": f"{prefix}: delayed controller native fling reaches entry",
+                                    "passed": reached, "value": attempts})
+                    check(page, f"{prefix}: delayed controller accepts the ongoing native pan",
+                          "String(WoodStoryController.current?.number)==='1'")
+                    page.unroute(controller_pattern, hold_controller)
+                if args.arrival_only:
+                    results.append({"check": prefix + ": page errors", "passed": not errors, "errors": errors})
+                    continue
                 load(reset=True)
                 check(page, f"{prefix}: initial load does not open", "!WoodStoryController.current")
                 if cd:
