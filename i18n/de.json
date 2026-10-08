@@ -67,41 +67,6 @@
       "de": "1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood einen Geheimtext aus 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er den Schlüssel über ein Medium zurücksenden. Sechsundsiebzig Jahre später entschlüsselten wir ihn. Ganz ohne Séance."
     },
     {
-      "kind": "attr",
-      "en": "Article sections",
-      "de": "Abschnitte des Artikels"
-    },
-    {
-      "kind": "li",
-      "en": "<a href=\"#the-puzzle\">The puzzle</a>",
-      "de": "<a href=\"#the-puzzle\">Das Rätsel</a>"
-    },
-    {
-      "kind": "li",
-      "en": "<a href=\"#why-it-stayed-open\">Searching book keys</a>",
-      "de": "<a href=\"#why-it-stayed-open\">Suche nach Buchschlüsseln</a>"
-    },
-    {
-      "kind": "li",
-      "en": "<a href=\"#the-idea-that-cracked-it\">The language question</a>",
-      "de": "<a href=\"#the-idea-that-cracked-it\">Die Sprachenfrage</a>"
-    },
-    {
-      "kind": "li",
-      "en": "<a href=\"#the-hit\">The solution</a>",
-      "de": "<a href=\"#the-hit\">Die Lösung</a>"
-    },
-    {
-      "kind": "li",
-      "en": "<a href=\"#how-it-was-checked\">Checking the result</a>",
-      "de": "<a href=\"#how-it-was-checked\">Prüfung des Ergebnisses</a>"
-    },
-    {
-      "kind": "li",
-      "en": "<a href=\"#the-correction\">Further findings</a>",
-      "de": "<a href=\"#the-correction\">Weitere Erkenntnisse</a>"
-    },
-    {
       "kind": "span",
       "en": "I · The cipher",
       "de": "I · Der Geheimtext"
@@ -1168,6 +1133,10 @@
     {
       "en": "\"The decoded message\"",
       "de": "\"Die entschlüsselte Botschaft\""
+    },
+    {
+      "en": "\"Swipe left or right\"",
+      "de": "\"Nach links oder rechts wischen\""
     }
   ]
 }
