@@ -61,8 +61,11 @@ def main():
             cd = context.new_cdp_session(page) if args.browser == "chromium" else None
             url = args.base.rstrip("/") + ("/de/" if lang == "de" else "/")
 
-            def load(reset=False, suffix=""):
-                page.goto(url + suffix, wait_until="networkidle")
+            def load(reset=False, suffix="", refresh=False):
+                if refresh:
+                    page.reload(wait_until="networkidle")
+                else:
+                    page.goto(url + suffix, wait_until="networkidle")
                 page.wait_for_function("!!window.WoodStoryController")
                 if reset:
                     page.evaluate("sessionStorage.clear()")
@@ -136,6 +139,33 @@ def main():
                         page.wait_for_timeout(800)
                         check(page, f"{prefix}: closing brisk arrival does not reopen or cascade", "!WoodStoryController.current&&!WoodStoryController.dialog.open&&document.body.style.position!=='fixed'")
                         check(page, f"{prefix}: closing brisk arrival returns focus to card", "document.activeElement.closest('.mobile-story-card')!==null")
+                    # Read continuously through the real article and complete
+                    # each viewer. Testing X on the first card alone does not
+                    # cover entry after the final-step Close and focus restore.
+                    if w == 390 and h == 844:
+                        load(reset=True)
+                        for number in range(1, 7):
+                            for _ in range(40):
+                                if page.evaluate("!!WoodStoryController.current"):
+                                    break
+                                drag(w * .55, h * .85, w * .55, h * .30,
+                                     wait=600, steps=6, delay=18)
+                                if page.evaluate(f"!WoodStoryController.current && WoodStoryController.records[{number - 1}].card.getBoundingClientRect().bottom < -innerHeight"):
+                                    break
+                            entered = check(page, f"{prefix}: continuous reading auto-opens card {number}", f"String(WoodStoryController.current?.number)==='{number}'")
+                            if not entered:
+                                break
+                            page.wait_for_function("WoodStoryController.phase==='open'")
+                            total = page.evaluate("WoodStoryController.current.count")
+                            for _ in range(total - 1):
+                                page.locator(".mobile-viewer-next").tap()
+                                page.wait_for_timeout(160)
+                            check(page, f"{prefix}: card {number} reaches final Close", "WoodStoryController.current.stage===WoodStoryController.current.count-1")
+                            page.locator(".mobile-viewer-next").tap()
+                            closed()
+                            check(page, f"{prefix}: final Close {number} releases page without cascading", "!WoodStoryController.current&&!WoodStoryController.dialog.open&&document.body.style.position!=='fixed'")
+                            if number == 1:
+                                page.wait_for_timeout(2400)
                     load(reset=True)
                 # Actual downward finger movement carries an unseen card across
                 # its entry line. Programmatic preparation has no input intent.
@@ -185,11 +215,20 @@ def main():
                 page.keyboard.press("Escape")
                 closed()
                 check(page, f"{prefix}: Escape returns focus", "document.activeElement.closest('.mobile-story-card')!==null")
-                load()
+                # Old deployments persisted visits for the browser tab. A
+                # refresh now resets arrival behavior, including for readers
+                # who still have the old storage entry.
+                page.evaluate("sessionStorage.setItem('wood-story-viewed-v1', JSON.stringify(['1','2','3','4','5','6']))")
+                load(refresh=True)
+                check(page, f"{prefix}: reload resets every card's first-arrival state", "WoodStoryController.records.every(record=>!record.opened)")
                 page.evaluate("const c=document.querySelector('.mobile-story-card');scrollTo(0,scrollY+c.getBoundingClientRect().top-innerHeight*.72)")
                 page.wait_for_timeout(750)
                 drag(w * .55, h * .85, w * .55, h * .24)
-                check(page, f"{prefix}: automatic-entry visit survives reload", "!WoodStoryController.current")
+                reopened = check(page, f"{prefix}: first arrival opens again after reload", "String(WoodStoryController.current?.number)==='1'")
+                if reopened:
+                    page.wait_for_function("WoodStoryController.phase==='open'")
+                    page.locator(".mobile-viewer-close").click()
+                    closed()
                 # Fresh pages isolate non-downward arrival and browser geometry.
                 load(reset=True)
                 page.evaluate("const c=document.querySelector('.mobile-story-card');scrollTo(0,scrollY+c.getBoundingClientRect().bottom+50)")
@@ -248,6 +287,17 @@ def main():
                 page.wait_for_timeout(600)
                 check(page, f"{prefix}: returning mobile stays closed", "!WoodStoryController.current&&document.querySelectorAll('.mobile-story-card').length===6")
                 check(page, f"{prefix}: no horizontal page overflow", "document.documentElement.scrollWidth<=innerWidth+1")
+                if w == 390 and h == 844:
+                    load(reset=True)
+                    open_card(1)
+                    page.locator(".mobile-viewer-close").click()
+                    closed()
+                    page.evaluate("const c=WoodStoryController.records[1].card;scrollTo(0,scrollY+c.getBoundingClientRect().top-innerHeight*.30-60)")
+                    page.wait_for_timeout(800)
+                    check(page, f"{prefix}: keyboard continuation starts on restored launch button", "document.activeElement.matches('.mobile-story-open')")
+                    page.keyboard.press("PageDown")
+                    page.wait_for_timeout(700)
+                    check(page, f"{prefix}: PageDown after closing opens the next card", "String(WoodStoryController.current?.number)==='2'")
                 results.append({"check": prefix + ": page errors", "passed": not errors, "errors": errors})
             except Exception as error:
                 results.append({"check": prefix + ": execution", "passed": False, "error": str(error)})
