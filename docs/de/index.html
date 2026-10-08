@@ -515,6 +515,16 @@ const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
    the recovery and signature grids show counts, not a chronological ordering. */
 /* Source: harness/wood35t/PREREG.md, one full Bible per language (Latin Vulgate). */
 const BIBLE_LANGUAGES=["Latein","Französisch","Deutsch","Italienisch","Spanisch","Portugiesisch","Niederländisch","Dänisch","Schwedisch","Norwegisch","Isländisch","Esperanto","Finnisch","Ungarisch","Polnisch","Tschechisch","Rumänisch","Afrikaans","Maori"];
+// Schematic covers: varied bindings suggest a mixed library. These cosmetic
+// choices are seeded once, so animation, resizing and revisits stay consistent.
+const BOOK_SPINES=(()=>{
+  let seed=1950;
+  const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
+  return Array.from({length:129},()=>({
+    width:.65+random()*.85,height:.7+random()*.3,cover:Math.floor(random()*6),
+    binding:Math.floor(random()*4),labelAt:.23+random()*.28,gap:.6+random()*.9,
+  }));
+})();
 
 function Graphic(el){
   if(el.dataset.g==="1"){
@@ -620,27 +630,46 @@ function Graphic(el){
     // Choose the number of shelves from the available space, keeping spines
     // upright even in a short phone viewport. One spine still means one book.
     const rows=Math.max(2,Math.min(6,Math.round(Math.sqrt(129*p.h/(4.5*p.w)))));
-    const cols=Math.ceil(129/rows),dx=p.w/cols,dy=p.h/rows;
-    const covers=["#d3dcdf","#e2ded5","#c4d0d3","#d9dfd8"];
-    for(let row=0;row<rows;row++)reveal(row*70,()=>{
-      const y=p.y+(row+1)*dy-3;
-      line(p.x,y+1,p.x+p.w,y+1,"#b5c0c4",1);
-      line(p.x,y+3,p.x+p.w,y+3,pale,1);
-    });
-    for(let i=0;i<129;i++)reveal(Math.floor(i/cols)*70+(i%cols)*4,()=>{
-      const row=Math.floor(i/cols),variation=((i*7)%11)/10;
-      const w=(dx-Math.min(3,dx*.24))*(.84+variation*.16);
-      const h=Math.max(3,dy-10)*(.79+((i*13)%7)/6*.21);
-      const x=p.x+(i%cols)*dx+(dx-w)/2,y=p.y+(row+1)*dy-3-h;
-      ctx.fillStyle=covers[(i*3+row)%covers.length];ctx.strokeStyle="#899ba2";ctx.lineWidth=.7;
-      ctx.beginPath();ctx.roundRect(x,y,w,h,Math.min(1.2,w*.15));ctx.fill();ctx.stroke();
-      if(w>5)line(x+1.8,y+2,x+1.8,y+h-2,"#f3f5f4",.8);
-      if(h>15){
-        const inset=Math.max(1,w*.2);
-        line(x+inset,y+4,x+w-inset,y+4,"#899ba2",.7);
-        line(x+inset,y+h-4,x+w-inset,y+h-4,"#899ba2",.7);
-      }
-    },350);
+    const cols=Math.ceil(129/rows),dy=p.h/rows;
+    const covers=[["#bccacf","#82949c"],["#c2cbbd","#8b9988"],["#d4c7b7","#a79781"],
+      ["#95a9b2","#6e838d"],["#ddd7c9","#aaa18e"],["#9eafa5","#73897e"]];
+    for(let row=0;row<rows;row++){
+      const books=BOOK_SPINES.slice(row*cols,(row+1)*cols),base=p.y+(row+1)*dy-3;
+      const shelfWidth=p.w*books.length/cols;
+      const gaps=books.reduce((sum,book)=>sum+book.gap,0),weight=books.reduce((sum,book)=>sum+book.width,0);
+      let left=p.x;
+      reveal(row*70,()=>{
+        line(p.x,base+1,p.x+p.w,base+1,"#b5c0c4",1);
+        line(p.x,base+3,p.x+p.w,base+3,pale,1);
+      });
+      books.forEach((book,column)=>{
+        const w=Math.max(.5,(shelfWidth-gaps)*book.width/weight),h=Math.max(3,dy-10)*book.height;
+        const x=left+book.gap/2,y=base-h,[cover,edge]=covers[book.cover];
+        left+=w+book.gap;
+        reveal(row*70+column*4,()=>{
+          ctx.fillStyle=cover;ctx.strokeStyle=edge;ctx.lineWidth=.7;
+          ctx.beginPath();ctx.roundRect(x,y,w,h,Math.min(1.2,w*.15));ctx.fill();ctx.stroke();
+          if(w>5){
+            line(x+1.2,y+2,x+1.2,base-2,"#ebece5",.7);
+            line(x+w-1,y+2,x+w-1,base-2,edge,.5);
+          }
+          if(h>15){
+            const inset=Math.max(.8,w*.17),band=book.binding===2?"#eee6d2":edge;
+            if(book.binding!==0){
+              line(x+inset,y+4,x+w-inset,y+4,band,.8);
+              line(x+inset,base-4,x+w-inset,base-4,band,.8);
+            }
+            if(book.binding===2)line(x+inset,y+7,x+w-inset,y+7,band,.7);
+            if(w>6&&(book.binding===1||book.binding===3)){
+              const labelY=y+h*book.labelAt,labelH=Math.min(11,h*.18);
+              rect(x+w*.2,labelY,w*.6,labelH,"#ede8dc");
+              line(x+w*.32,labelY+labelH*.4,x+w*.68,labelY+labelH*.4,edge,.6);
+              if(labelH>7)line(x+w*.35,labelY+labelH*.65,x+w*.65,labelY+labelH*.65,edge,.5);
+            }
+          }
+        },350);
+      });
+    }
   }
   function words(s,x,y,width,size,delay){
     const parts=s.split(" "),gap=5;let fitted=size;ctx.font=font(fitted,true);
