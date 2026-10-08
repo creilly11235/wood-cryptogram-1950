@@ -22,13 +22,14 @@
       previous: 'Previous step', next: 'Next', navigation: 'Animation steps',
       steps: count => `${count} steps`, step: (index, count) => `Step ${index} of ${count}`,
     };
-    const storageKey = 'wood-story-viewed-v1';
-    let visited;
-    try { visited = new Set(JSON.parse(sessionStorage.getItem(storageKey) || '[]')); }
-    catch (_) { visited = new Set(); }
+    // Each document visit gets one automatic entry per card. Refreshing starts
+    // a new visit; closing and scrolling back within this visit requires a tap.
+    const visited = new Set();
     let current = null;
     let phase = 'closed';
     let transition = null;
+    let transitionEffects = [];
+    let previewSnapshot = null;
     let transitionToken = 0;
     let lockedPosition = 0;
     let lockedCardTop = 0;
@@ -88,15 +89,17 @@
       lastY = window.scrollY;
     }
 
-    const dialog = node('dialog', 'mobile-story-dialog mobile-visual');
+    const dialog = node('dialog', 'mobile-story-dialog');
     dialog.setAttribute('aria-labelledby', 'mobile-viewer-title');
+    const shade = node('div', 'mobile-viewer-shade');
+    shade.setAttribute('aria-hidden', 'true');
     const frame = node('div', 'mobile-viewer-frame');
     const header = node('header', 'mobile-viewer-header');
     const title = node('h2', 'mobile-viewer-title');
     title.id = 'mobile-viewer-title';
     const dismiss = button('mobile-viewer-close', '×', () => close());
     dismiss.setAttribute('aria-label', labels.dismiss);
-    const stageHost = node('div', 'mobile-viewer-stage');
+    const stageHost = node('div', 'mobile-viewer-stage mobile-visual');
     const nav = node('nav', 'mobile-viewer-nav');
     nav.setAttribute('aria-label', labels.navigation);
     const previous = button('mobile-viewer-prev', '', () => advance(-1));
@@ -113,7 +116,7 @@
     header.append(title, dismiss);
     nav.append(previous, count, next);
     frame.append(header, stageHost, nav);
-    dialog.append(frame);
+    dialog.append(shade, frame);
     document.body.append(dialog);
     dialog.addEventListener('cancel', event => { event.preventDefault(); close(); });
 
@@ -249,21 +252,65 @@
       window.scrollTo({top: lockedPosition, behavior: 'instant'});
     }
 
-    function cardTransform(record) {
+    function cardClip(record) {
       const card = record.card.getBoundingClientRect();
       const target = frame.getBoundingClientRect();
-      return `translate(${card.left - target.left}px, ${card.top - target.top}px) scale(${card.width / target.width}, ${card.height / target.height})`;
+      const radius = getComputedStyle(record.card).borderTopLeftRadius;
+      return `inset(${card.top - target.top}px ${target.right - card.right}px ${target.bottom - card.bottom}px ${card.left - target.left}px round ${radius})`;
+    }
+    function snapshotPreview(record) {
+      if (reduced.matches || typeof frame.animate !== 'function') return;
+      const box = record.card.getBoundingClientRect();
+      const snapshot = record.card.cloneNode(true);
+      snapshot.classList.add('mobile-viewer-snapshot');
+      snapshot.setAttribute('aria-hidden', 'true');
+      snapshot.setAttribute('inert', '');
+      snapshot.removeAttribute('id');
+      snapshot.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+      snapshot.querySelectorAll('canvas').forEach((canvas, index) => {
+        const source = record.card.querySelectorAll('canvas')[index];
+        if (source) canvas.getContext('2d').drawImage(source, 0, 0);
+      });
+      Object.assign(snapshot.style, {
+        left: `${box.left}px`, top: `${box.top}px`, width: `${box.width}px`, height: `${box.height}px`,
+      });
+      previewSnapshot = snapshot;
+      dialog.append(snapshot);
+    }
+    function cancelTransition(removeSnapshot = true) {
+      transition?.cancel();
+      transition = null;
+      transitionEffects.forEach(effect => effect.cancel());
+      transitionEffects = [];
+      if (removeSnapshot) {
+        previewSnapshot?.remove();
+        previewSnapshot = null;
+      }
     }
     async function animateFrame(record, opening, interrupted = null) {
       if (reduced.matches || typeof frame.animate !== 'function') return;
-      const compact = {transform: cardTransform(record), borderRadius: '18px'};
-      const full = {transform: 'translate(0, 0) scale(1)', borderRadius: '0px'};
-      const animation = frame.animate(opening ? [compact, full] : [interrupted || full, compact], {
-        duration: opening ? 420 : 340, easing: 'cubic-bezier(.22,.8,.22,1)', fill: 'both',
+      // Grow the surface, never the letters or chart. Both layouts keep their
+      // natural proportions while the preview gives way to the full-size view.
+      const compact = {clipPath: cardClip(record)};
+      const full = {clipPath: 'inset(0px 0px 0px 0px round 0px)'};
+      const duration = opening ? 400 : 320;
+      const animation = frame.animate(opening ? [compact, full] : [{clipPath: interrupted?.clipPath || full.clipPath}, compact], {
+        duration, easing: 'cubic-bezier(.22,.72,.18,1)', fill: 'both',
       });
       transition = animation;
+      const effects = [header, stageHost, nav].map((el, index) => {
+        const from = opening ? {opacity: 0, transform: 'translateY(8px)'} : interrupted?.content[index] || {opacity: 1, transform: 'translateY(0px)'};
+        const to = opening ? {opacity: 1, transform: 'translateY(0px)'} : {opacity: 0, transform: 'translateY(5px)'};
+        return el.animate([from, to], {duration: opening ? 240 : 130, delay: opening ? 90 : 0, easing: 'ease-out', fill: 'both'});
+      });
+      effects.push(shade.animate([{opacity: interrupted?.shade ?? (opening ? 0 : 1)}, {opacity: opening ? 1 : 0}], {duration, easing: 'ease-out', fill: 'both'}));
+      if (previewSnapshot) effects.push(previewSnapshot.animate([{opacity: interrupted?.preview ?? 1}, {opacity: 0}], {duration: 140, easing: 'ease-out', fill: 'both'}));
+      transitionEffects = effects;
       try { await animation.finished; } catch (_) { /* Resizing safely settles the current transition. */ }
-      if (transition === animation) transition = null;
+      // An interrupted open hands ownership to close; its cleanup must not
+      // remove the new animation or its still-visible preview.
+      if (transition === animation) cancelTransition();
+      effects.forEach(effect => effect.cancel());
       animation.cancel();
     }
 
@@ -273,8 +320,6 @@
       suppressAuto();
       returnFocus = source || record.launch;
       visited.add(record.number);
-      try { sessionStorage.setItem(storageKey, JSON.stringify([...visited])); }
-      catch (_) { /* The current page still remembers visits when storage is unavailable. */ }
       record.opened = true;
       if (record.completed) {
         record.completed = false;
@@ -286,6 +331,7 @@
       title.textContent = record.title;
       record.card.dataset.viewerActive = 'true';
       lockPage();
+      snapshotPreview(record);
       stageHost.append(record.el);
       dialog.showModal();
       updateControls(record);
@@ -299,8 +345,7 @@
 
     function finishClose(record, completed, restoreFocus) {
       transitionToken++;
-      transition?.cancel();
-      transition = null;
+      cancelTransition();
       record.completed = completed;
       record.preview.append(record.el);
       record.card.dataset.viewerActive = 'false';
@@ -313,16 +358,25 @@
       updateControls(record);
       rememberPositions();
       updateVisibility();
+      if (restoreFocus && !reduced.matches && typeof record.preview.animate === 'function') {
+        record.preview.animate([{opacity: 0}, {opacity: 1}], {duration: 140, easing: 'ease-out'});
+      }
     }
 
     async function close(completed = current?.stage === current?.count - 1, immediate = false) {
       if (!current || phase === 'closing') return;
       const record = current;
       const token = ++transitionToken;
-      const style = transition ? getComputedStyle(frame) : null;
-      const interrupted = style ? {transform: style.transform, borderRadius: style.borderRadius} : null;
-      transition?.cancel();
-      transition = null;
+      const interrupted = transition ? {
+        clipPath: getComputedStyle(frame).clipPath,
+        content: [header, stageHost, nav].map(el => {
+          const style = getComputedStyle(el);
+          return {opacity: style.opacity, transform: style.transform};
+        }),
+        shade: getComputedStyle(shade).opacity,
+        preview: previewSnapshot ? getComputedStyle(previewSnapshot).opacity : 0,
+      } : null;
+      cancelTransition(false);
       setPhase('closing');
       updateVisibility();
       if (!immediate) await animateFrame(record, false, interrupted);
@@ -465,7 +519,9 @@
     addEventListener('scroll', scroll, {passive: true});
     const scrollingIntent = event => {
       if (!event.isTrusted || current) return;
-      if (event.type === 'keydown' && (!['ArrowDown', 'PageDown', ' '].includes(event.key) || event.target.closest('button, input, textarea, select, [contenteditable]'))) return;
+      if (event.type === 'keydown' && (!['ArrowDown', 'PageDown', ' '].includes(event.key) ||
+          event.target.closest('input, textarea, select, [contenteditable]') ||
+          (event.key === ' ' && event.target.closest('button, [role="button"]')))) return;
       if (event.type === 'wheel' && event.deltaY <= 0) return;
       if (event.type === 'touchmove') {
         if (!pageTouch || event.touches.length !== 1 || (window.visualViewport?.scale || 1) > 1.01) {
