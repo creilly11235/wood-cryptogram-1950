@@ -31,6 +31,7 @@
     let transition = null;
     let transitionEffects = [];
     let previewSnapshot = null;
+    let departureSnapshot = null;
     let transitionToken = 0;
     let lockedPosition = 0;
     let lockedCardTop = 0;
@@ -260,21 +261,42 @@
       const card = record.card.getBoundingClientRect();
       const target = frame.getBoundingClientRect();
       const radius = getComputedStyle(record.card).borderTopLeftRadius;
-      return `inset(${card.top - target.top}px ${target.right - card.right}px ${target.bottom - card.bottom}px ${card.left - target.left}px round ${radius})`;
+      // Keep the card's edges anchored when a mobile toolbar changes the
+      // viewport height during the morph. The full-screen endpoint stays live.
+      return `inset(${card.top - target.top}px calc(100% - ${card.right - target.left}px) calc(100% - ${card.bottom - target.top}px) ${card.left - target.left}px round ${radius})`;
+    }
+    function visualClone(source) {
+      const copy = source.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.setAttribute('inert', '');
+      copy.removeAttribute('id');
+      copy.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+      copy.querySelectorAll('canvas').forEach((canvas, index) => {
+        const bitmap = source.querySelectorAll('canvas')[index];
+        if (bitmap) canvas.getContext('2d').drawImage(bitmap, 0, 0);
+      });
+      // A reader may close midway through a letter flip. Freeze its current
+      // appearance too: cloneNode alone loses Web Animation effects.
+      const originals = [source, ...source.querySelectorAll('*')];
+      const copies = [copy, ...copy.querySelectorAll('*')];
+      source.getAnimations({subtree: true}).forEach(animation => {
+        const target = animation.effect?.target;
+        const frozen = copies[originals.indexOf(target)];
+        if (!frozen) return;
+        const style = getComputedStyle(target);
+        animation.effect.getKeyframes().forEach(keyframe => {
+          Object.keys(keyframe).forEach(property => {
+            if (property !== 'offset' && property in frozen.style) frozen.style[property] = style[property];
+          });
+        });
+      });
+      return copy;
     }
     function snapshotPreview(record) {
       if (reduced.matches || typeof frame.animate !== 'function') return;
       const box = record.card.getBoundingClientRect();
-      const snapshot = record.card.cloneNode(true);
+      const snapshot = visualClone(record.card);
       snapshot.classList.add('mobile-viewer-snapshot');
-      snapshot.setAttribute('aria-hidden', 'true');
-      snapshot.setAttribute('inert', '');
-      snapshot.removeAttribute('id');
-      snapshot.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
-      snapshot.querySelectorAll('canvas').forEach((canvas, index) => {
-        const source = record.card.querySelectorAll('canvas')[index];
-        if (source) canvas.getContext('2d').drawImage(source, 0, 0);
-      });
       Object.assign(snapshot.style, {
         left: `${box.left}px`, top: `${box.top}px`, width: `${box.width}px`, height: `${box.height}px`,
       });
@@ -289,6 +311,8 @@
       if (removeSnapshot) {
         previewSnapshot?.remove();
         previewSnapshot = null;
+        departureSnapshot?.remove();
+        departureSnapshot = null;
       }
     }
     async function animateFrame(record, opening, interrupted = null) {
@@ -297,18 +321,31 @@
       // natural proportions while the preview gives way to the full-size view.
       const compact = {clipPath: cardClip(record)};
       const full = {clipPath: 'inset(0px 0px 0px 0px round 0px)'};
-      const duration = opening ? 400 : 320;
+      const duration = opening ? 440 : interrupted ? 240 : 340;
+      const easing = opening ? 'cubic-bezier(.2,.75,.2,1)' : 'cubic-bezier(.3,0,.2,1)';
       const animation = frame.animate(opening ? [compact, full] : [{clipPath: interrupted?.clipPath || full.clipPath}, compact], {
-        duration, easing: 'cubic-bezier(.22,.72,.18,1)', fill: 'both',
+        duration, easing, fill: 'both',
       });
       transition = animation;
+      const box = record.card.getBoundingClientRect();
+      const drift = Math.max(-24, Math.min(24, (box.top + box.height / 2 - innerHeight / 2) * .3));
       const effects = [header, stageHost, nav].map((el, index) => {
-        const from = opening ? {opacity: 0, transform: 'translateY(8px)'} : interrupted?.content[index] || {opacity: 1, transform: 'translateY(0px)'};
-        const to = opening ? {opacity: 1, transform: 'translateY(0px)'} : {opacity: 0, transform: 'translateY(5px)'};
-        return el.animate([from, to], {duration: opening ? 240 : 130, delay: opening ? 90 : 0, easing: 'ease-out', fill: 'both'});
+        const from = opening ? {opacity: 0, transform: `translateY(${drift}px)`} : interrupted?.content[index] || {opacity: 1, transform: 'translateY(0px)'};
+        const to = opening ? {opacity: 1, transform: 'translateY(0px)'} : {opacity: 0, transform: `translateY(${drift}px)`};
+        return el.animate([from, to], {duration: 260, delay: opening ? 80 : 0, easing: opening ? 'ease-out' : 'ease-in', fill: 'both'});
       });
       effects.push(shade.animate([{opacity: interrupted?.shade ?? (opening ? 0 : 1)}, {opacity: opening ? 1 : 0}], {duration, easing: 'ease-out', fill: 'both'}));
-      if (previewSnapshot) effects.push(previewSnapshot.animate([{opacity: interrupted?.preview ?? 1}, {opacity: 0}], {duration: 140, easing: 'ease-out', fill: 'both'}));
+      if (previewSnapshot) effects.push(previewSnapshot.animate([
+        {opacity: interrupted?.preview ?? 1, transform: interrupted?.previewTransform || 'translateY(0px)'},
+        {opacity: 0, transform: `translateY(${-drift}px)`},
+      ], {duration: opening ? 200 : 130, easing: opening ? 'ease-in' : 'ease-out', fill: 'both'}));
+      if (!opening) {
+        // The real graphic is already back in its card, resizing beneath this
+        // outgoing view. Reveal it before the surface lands, with no late pop-in.
+        effects.push(frame.animate([{opacity: 1}, {opacity: 0}], {
+          duration: duration - (interrupted ? 0 : 70), delay: interrupted ? 0 : 70, easing: 'ease-in-out', fill: 'both',
+        }));
+      }
       transitionEffects = effects;
       try { await animation.finished; } catch (_) { /* Resizing safely settles the current transition. */ }
       // An interrupted open hands ownership to close; its cleanup must not
@@ -362,9 +399,6 @@
       updateControls(record);
       rememberPositions();
       updateVisibility();
-      if (restoreFocus && !reduced.matches && typeof record.preview.animate === 'function') {
-        record.preview.animate([{opacity: 0}, {opacity: 1}], {duration: 140, easing: 'ease-out'});
-      }
     }
 
     async function close(completed = current?.stage === current?.count - 1, immediate = false) {
@@ -379,9 +413,16 @@
         }),
         shade: getComputedStyle(shade).opacity,
         preview: previewSnapshot ? getComputedStyle(previewSnapshot).opacity : 0,
+        previewTransform: previewSnapshot ? getComputedStyle(previewSnapshot).transform : 'none',
       } : null;
       cancelTransition(false);
       setPhase('closing');
+      if (!immediate && !reduced.matches && typeof frame.animate === 'function') {
+        departureSnapshot = visualClone(record.el);
+        departureSnapshot.classList.add('mobile-viewer-departure');
+        stageHost.append(departureSnapshot);
+        record.preview.append(record.el);
+      }
       updateVisibility();
       if (!immediate) await animateFrame(record, false, interrupted);
       if (token !== transitionToken || current !== record) return;
@@ -409,7 +450,7 @@
         lockedCardTop = target;
       }
       // A toolbar resize must not dismiss the viewer or change its selected step.
-      if (transition) transition.finish();
+      if (transition && widthChanged) transition.finish();
       records.forEach(record => {
         if (mobile.matches) {
           if (!record.card.isConnected) {

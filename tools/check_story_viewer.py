@@ -122,6 +122,69 @@ def main():
                   }) && document.documentElement.scrollWidth<=innerWidth+1;
                 })()""")
 
+            def expansion_motion():
+                # Pause the browser's real animations to exercise layout while
+                # the morph is unfinished, independent of machine speed.
+                page.evaluate("""()=>{
+                  const r=WoodStoryController.records[1];
+                  scrollBy({top:r.card.getBoundingClientRect().top-96,behavior:'instant'});
+                  WoodStoryController.open(r);
+                  window.__viewerEffects=WoodStoryController.dialog.getAnimations({subtree:true});
+                  __viewerEffects.forEach(a=>{a.pause();a.currentTime=80;});
+                }""")
+                page.set_viewport_size({"width": w, "height": max(320, h - 80)})
+                page.wait_for_timeout(120)
+                check(page, f"{prefix}: toolbar resize preserves unfinished expansion",
+                      "WoodStoryController.phase==='opening'")
+                page.evaluate("__viewerEffects.forEach(a=>a.finish());delete window.__viewerEffects")
+                page.wait_for_function("WoodStoryController.phase==='open'")
+                geometry("expansion after toolbar resize")
+                page.set_viewport_size({"width": w, "height": h})
+                page.wait_for_timeout(100)
+                page.evaluate("""()=>{
+                  const r=WoodStoryController.current,cv=r.el.querySelector('canvas');
+                  window.__viewerCanvasReturns=[];
+                  // Resizing a canvas clears its bitmap. Observe the end of
+                  // that callback, before another rendered frame can reveal a
+                  // blank return card; restore both accessors after the test.
+                  const originals={};let pending=false;
+                  for(const key of ['width','height']){
+                    const native=Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,key);
+                    originals[key]=Object.getOwnPropertyDescriptor(cv,key);
+                    Object.defineProperty(cv,key,{configurable:true,get(){return native.get.call(this);},set(value){
+                      native.set.call(this,value);
+                      if(pending)return;pending=true;
+                      queueMicrotask(()=>{
+                        pending=false;
+                        const pixels=cv.getContext('2d').getImageData(0,0,cv.width,cv.height).data;
+                        __viewerCanvasReturns.push(pixels.some((value,index)=>index%4===3&&value>0));
+                      });
+                    }});
+                  }
+                  window.__restoreViewerCanvas=()=>{
+                    for(const key of ['width','height']){
+                      if(originals[key])Object.defineProperty(cv,key,originals[key]);else delete cv[key];
+                    }
+                  };
+                  WoodStoryController.close(false);
+                  window.__viewerEffects=WoodStoryController.dialog.getAnimations({subtree:true});
+                  __viewerEffects.forEach(a=>{a.pause();a.currentTime=60;});
+                }""")
+                check(page, f"{prefix}: closing returns original graphic before the reveal", """(()=>{
+                  const r=WoodStoryController.current;
+                  return WoodStoryController.phase==='closing'&&r.el.parentNode===r.preview;
+                })()""")
+                check(page, f"{prefix}: outgoing visual copy is inert and has no duplicate IDs", """(()=>{
+                  const copy=document.querySelector('.mobile-viewer-departure');
+                  return !!copy&&copy.inert&&copy.getAttribute('aria-hidden')==='true'&&!copy.id&&!copy.querySelector('[id]');
+                })()""")
+                page.wait_for_function("__viewerCanvasReturns.length>0")
+                check(page, f"{prefix}: return canvas is painted in the resize callback",
+                      "__viewerCanvasReturns.every(Boolean)")
+                page.evaluate("__viewerEffects.forEach(a=>a.finish());__restoreViewerCanvas();delete window.__viewerEffects;delete window.__restoreViewerCanvas;delete window.__viewerCanvasReturns")
+                closed()
+                check(page, f"{prefix}: expansion cleanup removes visual copies", "!document.querySelector('.mobile-viewer-snapshot,.mobile-viewer-departure')")
+
             try:
                 if cd and w == 390 and h == 844:
                     # Readers can start scrolling once the article is visible,
@@ -361,6 +424,8 @@ def main():
                 page.wait_for_timeout(600)
                 load(reset=True, suffix="#the-hit")
                 check(page, f"{prefix}: hash arrival does not open", "!WoodStoryController.current")
+                if motion == "no-preference":
+                    expansion_motion()
                 # Every chart has the same buttons, last-step Close and swipe.
                 for number in range(1, 7):
                     card = open_card(number)
