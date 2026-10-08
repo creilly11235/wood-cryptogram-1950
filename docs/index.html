@@ -65,7 +65,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher-row .tail{gap:12px}
 .cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.25);font-size:calc(var(--tw) * .65)}
 .cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:58ch;text-wrap:pretty}
-.hero .answer,.hero .lede,.contents{max-width:640px;margin-inline:auto;text-align:left}
+.hero .answer,.hero .lede{max-width:640px;margin-inline:auto;text-align:left}
 .hero .answer{margin-top:40px;padding-top:28px;border-top:1px solid var(--veil-2)}
 .hero .answer p{margin:0 0 .8em}
 .hero .answer-heading{display:grid;gap:4px;margin-bottom:16px}
@@ -75,12 +75,6 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero .answer .answer-status{font:400 .8125rem/1.5 var(--body);color:var(--bone-2);margin:0;text-wrap:pretty}
 .hero .answer-status time{white-space:nowrap}
 .hero .lede{margin-top:28px}
-.contents{margin-top:32px;padding-block:20px;border-block:1px solid var(--veil-2)}
-.contents ol{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;margin:0;padding-left:1.7em;font:var(--t-note);list-style-type:upper-roman}
-.contents li::marker{color:var(--bone-2)}
-.contents a{text-decoration:none}
-.contents a:hover{text-decoration:underline}
-.contents a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
 .scrolly{max-width:1184px;margin:0 auto;padding-inline:24px;counter-reset:chapter}
 .chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start;counter-increment:chapter}
@@ -170,7 +164,7 @@ footer p{margin:0 0 .7em}
   .chapter{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:0 40px}
 }
 @media (max-width:900px){
-  /* Single-column reading layout; sticky panel geometry is in story-layout.css. */
+  /* Single-column reading flow; mobile visuals are laid out in story-layout.css. */
   .hero{padding-top:40px}
   .chapter{display:flex;flex-direction:column}
   .chapter>*{width:100%;max-width:100%;min-width:0}
@@ -194,7 +188,6 @@ footer p{margin:0 0 .7em}
 @media (max-width:600px){
   .cipher-row{--tw:clamp(20px,calc((100vw - 104px) / 11),26px)}
   .cipher-row .line{width:100%;max-width:calc(11 * var(--tw) + 60px)}
-  .contents ol{grid-template-columns:1fr;gap:12px}
 }
 @media (max-width:360px){
   .hero,.scrolly,footer{padding-inline:20px}
@@ -204,10 +197,10 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="story-layout.css?v=7">
-<link rel="stylesheet" href="cipher-cards.css?v=5">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=7">
-<link rel="stylesheet" href="story-graphics.css?v=5">
+<link rel="stylesheet" href="story-layout.css?v=8">
+<link rel="stylesheet" href="cipher-cards.css?v=8">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=8">
+<link rel="stylesheet" href="story-graphics.css?v=8">
 </head>
 <body>
 
@@ -237,14 +230,6 @@ footer p{margin:0 0 .7em}
 <p>The key is the opening of the Lord’s Prayer in the 1912 Luther Bible, used with Robert Thouless’s 1948 word-sum system.</p>
 </div>
 <p class="lede">In 1950, a solicitor named T. E. Wood published a 21 letter cipher as a test of life after death. He planned to send the key back through a medium after he died. Seventy-six years later, we decrypted it. No séance required.</p>
-<nav class="contents" aria-label="Article sections"><ol>
-<li><a href="#the-puzzle">The puzzle</a></li>
-<li><a href="#why-it-stayed-open">Searching book keys</a></li>
-<li><a href="#the-idea-that-cracked-it">The language question</a></li>
-<li><a href="#the-hit">The solution</a></li>
-<li><a href="#how-it-was-checked">Checking the result</a></li>
-<li><a href="#the-correction">Further findings</a></li>
-</ol></nav>
 </div>
 <main class="scrolly">
 <section class="chapter" data-ch="1">
@@ -464,7 +449,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=5"></script>
+<script src="cipher-walkthrough.js?v=8"></script>
 <script>
 (function(){
 "use strict";
@@ -536,7 +521,8 @@ function Graphic(el){
   function dot(x,y,r,c=muted){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();}
   function outlineDot(x,y,r,c=blue){ctx.fillStyle=background;ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.stroke();}
   function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
-  function panel(){const h=Math.min(H,322);return{x:5,y:(H-h)/2,w:W-10,h};}
+  const isMobilePanel=()=>matchMedia("(max-width:900px)").matches&&!!el.closest(".mobile-visual");
+  function panel(){const h=isMobilePanel()?H-12:Math.min(H,322);return{x:5,y:(H-h)/2,w:W-10,h};}
   const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
   function progress(delay=0,duration=400){return instant?1:ease((elapsed-delay)/duration);}
   function reveal(delay,paint,duration=400){ctx.save();ctx.globalAlpha=.18+.82*progress(delay,duration);paint();ctx.restore();}
@@ -597,8 +583,104 @@ function Graphic(el){
     let left=x;parts.forEach((word,i)=>{ctx.font=font(fitted,true);const w=ctx.measureText(word).width+8;
       reveal(delay+i*85,()=>{ctx.fillStyle=decodedBg;ctx.beginPath();ctx.roundRect(left,y-fitted/2-6,w,fitted+12,3);ctx.fill();line(left+2,y+fitted/2+5,left+w-2,y+fitted/2+5,decodedBorder,1.5);text(word,left+w/2,y,fitted,decodedFg,"center",true);});left+=w+gap;});
   }
+  const mobileCopy={"trap":["A freely chosen key can produce this","Another key can produce this too","Readable words alone are not enough"],"shelves":["Each spine represents one book","Every possible starting point was tried"],"plants":["Top result in 97 of 100 tests","Each dot is one known-message test"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["English word list","Word lists in seven languages"],"prayer":["German Bible","Romanian Bible","Other 11 readings","Higher word score →"],"church":["Church wording: Vater unser","Luther Bible: Unser Vater"],"reading":["German · Here I am","Afrikaans · Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"],"next":["Result sent to the Society","As Wood asked in 1950","The Society replied on October 5, 2026","The Wood file is at Cambridge University Library","A record for the archive","The Society offered a Psi Encyclopedia update"]};
+
+  // In the mobile reading flow each scene has its own full-height panel. Labels
+  // get their own lines instead of being squeezed into the desktop side column.
+  function mobileWords(s,x,y,width,size,delay){
+    const parts=s.split(" "),gap=7,rows=[[]];ctx.font=font(size,true);
+    let used=0;
+    parts.forEach(word=>{const w=ctx.measureText(word).width+12;if(used&&used+gap+w>width){rows.push([]);used=0;}rows[rows.length-1].push([word,w]);used+=(used?gap:0)+w;});
+    let index=0;
+    rows.forEach((row,r)=>{let left=x;const rowY=y+(r-(rows.length-1)/2)*(size+24);
+      row.forEach(([word,w])=>{const at=left;reveal(delay+index++*85,()=>{ctx.fillStyle=decodedBg;ctx.beginPath();ctx.roundRect(at,rowY-size/2-7,w,size+14,4);ctx.fill();line(at+2,rowY+size/2+6,at+w-2,rowY+size/2+6,decodedBorder,2);text(word,at+w/2,rowY,size,decodedFg,"center",true);});left+=w+gap;});
+    });
+  }
+  function mobileRows(items){
+    const p=panel(),gap=p.h/items.length;
+    items.forEach(([heading,detail,c=ink,kind],i)=>reveal(i*150,()=>{
+      const y=p.y+gap*(i+.5);
+      if(i)line(p.x,p.y+gap*i,p.x+p.w,p.y+gap*i,pale);
+      if(kind)cipherText(heading,p.x+5,y-24,p.w-5,18,kind);
+      else wrap(heading,p.x,y-24,p.w,19,c,"left",2);
+      wrap(detail,p.x,y+26,p.w,15,muted,"left",2);
+    }));
+  }
+  function drawMobile(){
+    const p=panel(),cx=W/2;
+    switch(state){
+      case "trap":
+        mobileRows([["THE ANSWER IS NOT HERE YET",mobileCopy.trap[0],ink,"decoded"],["WE WILL MEET AT DAWN TODAY",mobileCopy.trap[1],ink,"decoded"],["PLEASE KEEP THIS KEY SAFE",mobileCopy.trap[2],ink,"decoded"]]);break;
+      case "shelves":{
+        const cols=W<500?13:26,nrows=Math.ceil(129/cols),top=p.y+58,bottom=p.y+p.h-55,dx=p.w/cols,dy=(bottom-top)/nrows;
+        wrap(mobileCopy.shelves[0],cx,p.y+19,p.w,17,ink,"center");
+        for(let i=0;i<129;i++)reveal(Math.floor(i/cols)*55,()=>{const x=p.x+(i%cols)*dx+1,y=top+Math.floor(i/cols)*dy,w=Math.max(3,dx-4),h=dy*.78;ctx.fillStyle="#f0f3f5";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+.5,y+.5,w-1,h-1,2);ctx.fill();ctx.stroke();line(x+3,y+3,x+3,y+h-3,muted);});
+        wrap(mobileCopy.shelves[1],cx,p.y+p.h-21,p.w,15,muted,"center");break;
+      }
+      case "plants":{
+        wrap(mobileCopy.plants[0],cx,p.y+19,p.w,18,ink,"center");
+        const gw=Math.min(p.w,p.h*1.4);grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+51,w:gw,h:p.h-102},10,6);
+        wrap(mobileCopy.plants[1],cx,p.y+p.h-21,p.w,15,muted,"center");break;
+      }
+      case "englishResults":{
+        const left=p.x+20,right=p.x+p.w-20,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
+        const bottom=p.y+p.h-65,top=p.y+95,bins=27,counts=Array(bins).fill(0),points=[];
+        EN_NULLX.forEach(value=>{const bin=Math.max(0,Math.min(bins-1,Math.floor((value-min)/(max-min)*bins)));points.push({value,row:counts[bin]++});});
+        const dy=Math.min(18,(bottom-top)/Math.max(...counts)),r=Math.min(4.6,dy*.39,(right-left)/bins*.34);
+        points.forEach((pt,i)=>reveal(i*3,()=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted),300));
+        line(left,bottom+3,right,bottom+3,pale);const wx=map(EN_WOOD);
+        reveal(430,()=>{line(wx,top-10,wx,bottom+3,blue,1.5);outlineDot(wx,bottom+3,5.5,blue);});
+        wrap(mobileCopy.english[0],cx,p.y+22,p.w,17,ink,"center",2);
+        text(mobileCopy.english[1],wx-7,top-22,15,blue,"right",true);
+        [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+24,13,muted,"center",true));
+        wrap(mobileCopy.english[2],cx,p.y+p.h-13,p.w,15,muted,"center");break;
+      }
+      case "idea":{
+        ["VERS TE HT GE WIS SEM IN DER","VERSTEHT GEWISSE MINDER"].forEach((s,i)=>{const y=p.y+p.h*(i?.75:.25);wrap(mobileCopy.idea[i],p.x,y-48,p.w,18,i?ink:muted);mobileWords(s,p.x,y+20,p.w,18,i*380);});
+        line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
+      }
+      case "bibles":{
+        const cols=W<500?2:4,nrows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/nrows;
+        BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*60,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,4);ctx.fill();ctx.stroke();line(x+8,y+8,x+8,y+dy-8,muted,1.5);label(name,x+16,y+dy/2,dx-24,16,ink);}));break;
+      }
+      case "prayer":{
+        const left=p.x+17,right=p.x+p.w-17,map=v=>left+(v+1.75)/.55*(right-left),bottom=p.y+p.h-59,gap=(p.h-82)/3;
+        [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,p.y+45,x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+21,14,muted,"center",true);});
+        line(left,bottom,right,bottom,muted);
+        [[TOP[0][1],blue],[TOP[1][1],muted]].forEach(([value,c],i)=>{const y=p.y+gap*(i+.5)+28;rect(p.x,y-48,p.w,25,background);label(mobileCopy.prayer[i],p.x,y-35,p.w-78,18,c);text(value.toFixed(3).replace("-","−"),p.x+p.w,y-35,15,c,"right",true);reveal(i?140:500,()=>{line(left,y,map(value),y,c,2);outlineDot(map(value),y,i?4.5:6,c);});});
+        const y=p.y+gap*2.5+28;rect(p.x,y-48,p.w,25,background);label(mobileCopy.prayer[2],p.x,y-35,p.w,18,muted);
+        TOP.slice(2).forEach(([,score],i)=>reveal(i*25,()=>dot(map(score),y+(i%3-1)*8,3.5,muted)));
+        wrap(mobileCopy.prayer[3],cx,p.y+p.h-10,p.w,15,muted,"center");break;
+      }
+      case "church":{
+        [CHURCH,PT].forEach((message,i)=>{const y=p.y+p.h*(i?.75:.25);wrap(mobileCopy.church[i],p.x,y-33,p.w,18,i?ink:muted,"left",2);reveal(i?420:120,()=>cipherText(message,p.x+5,y+27,p.w-5,21));});
+        line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
+      }
+      case "table":{
+        [["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]].forEach(([key,cipher,plain],i)=>{const y=p.y+p.h/3*(i+.5);if(i)line(p.x,p.y+p.h/3*i,p.x+p.w,p.y+p.h/3*i,pale);reveal(i*140,()=>{label(key,cx,y-27,p.w,21,ink,"center",true);cipherText(cipher,cx-58,y+24,42,28,"encoded");text("→",cx,y+24,27,muted,"center");});reveal(i*140+250,()=>cipherText(plain,cx+38,y+24,42,28));});break;
+      }
+      case "reading":{
+        ["Hier bin ich.","Totsiens.","T.E.W."].forEach((phrase,i)=>reveal(i*190,()=>{const y=p.y+p.h/3*(i+.5);label(phrase,cx,y-19,p.w,34,decodedFg,"center");wrap(mobileCopy.reading[i],cx,y+28,p.w,17,muted,"center");}));break;
+      }
+      case "checks":mobileRows(mobileCopy.checks.slice(1).map(detail=>[mobileCopy.checks[0],detail,blue]));break;
+      case "luck":{
+        wrap(mobileCopy.luck[0],cx,p.y+22,p.w,17,ink,"center");grid(500,i=>i<7,{x:p.x,y:p.y+58,w:p.w,h:p.h-113},W<500?20:40,4);wrap(mobileCopy.luck[1],cx,p.y+p.h-23,p.w,15,muted,"center");break;
+      }
+      case "slip":{
+        const gap=p.h/3;
+        reveal(0,()=>{const y=p.y+gap*.5;label("SUFFER",cx,y-33,p.w,21,ink,"center",true);label("19 + 21 + 6 + 6 + 5 + 18",cx,y-4,p.w,18,ink,"center",true);text(mobileCopy.slip[0],cx,y+29,18,ink,"center");});
+        line(p.x,p.y+gap,p.x+p.w,p.y+gap,pale);
+        reveal(180,()=>{const y=p.y+gap*1.5;label("75 = 2 × 26 + 23 → W",cx,y-22,p.w,20,ink,"center",true);wrap(mobileCopy.slip[1],cx,y+24,p.w,16,muted,"center");});
+        line(p.x,p.y+gap*2,p.x+p.w,p.y+gap*2,pale);
+        reveal(420,()=>{const y=p.y+gap*2.5;wrap(mobileCopy.slip[2],p.x,y-25,p.w-53,17,ink,"left",2);wrap(mobileCopy.slip[3],p.x,y+24,p.w-53,15,muted,"left",2);cipherText("D",p.x+p.w-32,y,32,26,"encoded");});break;
+      }
+      case "next":mobileRows([[mobileCopy.next[0],mobileCopy.next[1],blue],[mobileCopy.next[2],mobileCopy.next[3],blue],[mobileCopy.next[4],mobileCopy.next[5],ink]]);break;
+    }
+  }
+
   function draw(){
     dirty=false;ctx.clearRect(0,0,W,H);
+    if(isMobilePanel()){drawMobile();return;}
     const p=panel(),cx=W/2,compact=p.h<190,fs=W<360?13:15;
     switch(state){
       case "trap":{
@@ -701,7 +783,7 @@ function Graphic(el){
   function resize(){
     const box=cv.getBoundingClientRect();W=Math.max(1,box.width);H=Math.max(1,box.height);DPR=Math.min(devicePixelRatio||1,2);
     cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);
-    ink=color("--bone")||"#242a2c";muted=color("--bone-2")||"#64707b";blue=color("--candle")||"#276b86";teal=color("--af")||"#568b82";pale=color("--veil")||"#dce2e4";background="#fff";gridGray=color("--dot-s")||"#c6ced6";dirty=true;
+    ink=color("--bone")||"#242a2c";muted=color("--bone-2")||"#64707b";blue=color("--candle")||"#276b86";teal=color("--af")||"#568b82";pale=color("--veil")||"#dce2e4";background=color("--room")||"#fafbfc";gridGray=color("--dot-s")||"#c6ced6";dirty=true;
     decodedBg=color("--cipher-decoded-bg");decodedFg=color("--cipher-decoded-fg");decodedBorder=color("--cipher-decoded-border");
   }
   this.go=function(next,immediate=false){if(state===next&&this.state===next)return;state=next;this.state=next;instant=immediate||reduced;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;};
@@ -709,6 +791,7 @@ function Graphic(el){
   this.resume=function(){if(pausedAt){started+=performance.now()-pausedAt;pausedAt=0;}dirty=true;};
   this.replay=function(){if(state!=="prayer")return;instant=reduced;started=performance.now();pausedAt=0;elapsed=0;lastLetter=-1;strip(instant?PT:CT,instant?"reading":"cipher");dirty=true;};
   this.frame=function(now){
+    if(W<2||H<2)return;
     const before=elapsed;elapsed=Math.max(0,(pausedAt||now)-started);
     // Marks appear at their recorded values; animation never invents new scores.
     if(!instant&&before<1050&&elapsed!==before)dirty=true;
@@ -728,7 +811,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="story-scroll.js?v=5"></script>
+<script src="story-scroll.js?v=8"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */

@@ -46,6 +46,7 @@
       this.labels = Object.assign({}, DEFAULT_LABELS, options.labels || {});
       this.reduced = Boolean(options.reduced);
       this.onStageChange = options.onStageChange;
+      this.onNavigate = options.onNavigate;
       this.stage = -1;
       this.paused = false;
       this.destroyed = false;
@@ -166,7 +167,9 @@
       const shiftCards = this.node('div', 'cw-shift-cards');
       this.shiftFrom = this.node('div', 'cw-single encoded', 'F');
       const arrow = this.node('div', 'cw-arrow');
-      arrow.append(this.node('span', 'cw-arrow-label', label.shift), this.node('span', 'cw-arrow-line', '⟶'));
+      const arrowLine = this.node('span', 'cw-arrow-line');
+      arrowLine.setAttribute('aria-hidden', 'true');
+      arrow.append(this.node('span', 'cw-arrow-label', label.shift), arrowLine);
       this.shiftTo = this.node('div', 'cw-single decoded', 'H');
       shiftCards.append(this.shiftFrom, arrow, this.shiftTo);
       this.shift.append(this.node('div', 'cw-shift-key', label.shiftKey), shiftCards);
@@ -205,6 +208,10 @@
     }
 
     choose(stage) {
+      if (this.onNavigate) {
+        this.onNavigate(stage);
+        return;
+      }
       this.go(stage);
       if (this.onStageChange) this.onStageChange(stage);
     }
