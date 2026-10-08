@@ -1,5 +1,6 @@
-/* Desktop graphics follow the reading column. Mobile charts stay in the
-   article flow; one walkthrough advances in place with buttons or swipes. */
+/* Keep the article's own text in charge of the graphic. Native scrolling
+   changes the state when the next paragraph reaches the reading area below
+   the phone panel (or the middle of the desktop reading column). */
 (() => {
   'use strict';
 
@@ -11,95 +12,74 @@
     const phone = matchMedia('(max-width: 900px)');
     const root = document.documentElement;
     const chapters = [];
-    const records = [];
-    let mobileBuilt = false;
     let viewportWidth = 0;
     let viewportHeight = 0;
+    let sideBySide = false;
     let framePending = false;
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const record = records.find(item => item.el === entry.target);
-        if (record) setVisibility(record, entry.isIntersecting, entry.intersectionRatio);
+    /* Browser toolbar changes resize the visual viewport on phones. Freeze
+       the reading geometry until width/orientation changes so those toolbar
+       changes cannot move a paragraph across the activation threshold. */
+    function measureViewport(force = false) {
+      const width = root.clientWidth;
+      const height = window.innerHeight;
+      if (!force && phone.matches && Math.abs(width - viewportWidth) < 2) return;
+      viewportWidth = width;
+      viewportHeight = height;
+      // Keep CSS and activation geometry on the same cached layout. A browser
+      // toolbar crossing 450px must not rearrange the article during a swipe.
+      sideBySide = !phone.matches || (width >= 500 && height <= 450);
+      root.dataset.storyLayout = sideBySide ? 'side' : 'stack';
+      root.dataset.storyShort = String(height <= 450);
+      root.style.setProperty('--story-viewport-height', `${height}px`);
+      chapters.forEach(record => {
+        const box = record.el.getBoundingClientRect();
+        record.panelHeight = box.height;
+        record.panelTop = parseFloat(getComputedStyle(record.el).top) || 0;
+        const exposed = Math.max(0, Math.min(height, box.bottom) - Math.max(0, box.top));
+        setVisibility(record, exposed > 0, exposed / box.height);
       });
-    }, { threshold: [0, .25, .5, .55, .9] });
-
-    function createRecord(el, chapter, steps, flow = false) {
-      const graphic = new Graphic(el);
-      graphic.visible = false;
-      const progress = el.querySelector('.progress');
-      if (progress && !flow) progress.innerHTML = steps.map(() => '<i></i>').join('');
-      const record = {
-        chapter, el, steps, graphic, progress, flow,
-        walkTargets: flow ? [] : [...chapter.querySelectorAll('[data-walk-stage]')],
-        walkStage: -1,
-        inView: false,
-        caption: el.querySelector('.beatcap'),
-        state: null,
-      };
-      records.push(record);
-      select(record, 0);
-      if (flow && graphic.walkthrough) graphic.walkthrough.enableSwipes();
-      graphic.pause();
-      observer.observe(el);
-      return record;
     }
 
     document.querySelectorAll('.chapter').forEach(chapter => {
       const el = chapter.querySelector('.graphic');
       const steps = [...chapter.querySelectorAll('.step[data-s]')];
       if (!el || !steps.length) return;
-      // Keep the uninitialized markup. The walkthrough replaces its canvas DOM.
-      const template = el.cloneNode(true);
-      const record = createRecord(el, chapter, steps);
-      record.template = template;
+
+      const graphic = new Graphic(el);
+      graphic.visible = false;
+      const progress = el.querySelector('.progress');
+      if (progress) progress.innerHTML = steps.map(() => '<i></i>').join('');
+      const record = {
+        chapter, el, steps, graphic, progress,
+        walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')],
+        walkStage: -1,
+        inView: false,
+        caption: el.querySelector('.beatcap'),
+        state: null,
+        panelHeight: 0,
+        panelTop: 0,
+      };
       chapters.push(record);
+      if (graphic.walkthrough) {
+        graphic.walkthrough.enableSwipes();
+        graphic.walkthrough.onNavigate = stage => {
+          const target = record.walkTargets.find(item => Number(item.dataset.walkStage) === stage);
+          if (!target) return;
+          const next = record.walkTargets.find(item => Number(item.dataset.walkStage) === stage + 1);
+          const box = target.getBoundingClientRect();
+          // Land inside this paragraph's range, leaving a little room to scroll
+          // either way without immediately undoing the button selection.
+          const inset = next ? Math.min(32, (next.getBoundingClientRect().top - box.top) / 2) : 32;
+          window.scrollTo({
+            top: window.scrollY + box.top - readingLine(record) + inset,
+            behavior: api.reduced ? 'instant' : 'smooth',
+          });
+          schedule();
+        };
+      }
+      select(record, 0);
     });
-
-    function buildMobile() {
-      if (mobileBuilt || !phone.matches) return;
-      mobileBuilt = true;
-      chapters.forEach(chapterRecord => {
-        const { chapter, steps, template } = chapterRecord;
-        function panel(step, parent = null) {
-          const section = document.createElement('section');
-          section.className = 'mobile-visual';
-          section.dataset.scene = chapter.dataset.ch === '1' ? 'walkthrough' : step.dataset.s;
-          const el = template.cloneNode(true);
-          section.append(el);
-          if (parent) parent.append(section);
-          else step.after(section);
-          createRecord(el, chapter, [step], true);
-        }
-        if (chapter.dataset.ch === '1') {
-          const sequence = document.createElement('div');
-          sequence.className = 'mobile-walkthrough';
-          const wood = steps.find(step => step.dataset.s === 'wood');
-          wood.before(sequence);
-          panel(wood, sequence);
-        } else {
-          steps.forEach(step => panel(step));
-        }
-      });
-    }
-
-    /* Freeze phone geometry while browser bars expand/collapse. Width changes
-       still remeasure, and the two layouts are built once and reused. */
-    function measureViewport(force = false) {
-      const width = root.clientWidth;
-      const height = Math.min(window.innerHeight, root.clientHeight);
-      if (!force && phone.matches && Math.abs(width - viewportWidth) < 2) return;
-      viewportWidth = width;
-      viewportHeight = height;
-      root.dataset.storyLayout = phone.matches ? 'flow' : 'side';
-      root.style.setProperty('--story-viewport-height', `${height}px`);
-      buildMobile();
-      records.forEach(record => {
-        const box = record.el.getBoundingClientRect();
-        const exposed = Math.max(0, Math.min(height, box.bottom) - Math.max(0, box.top));
-        setVisibility(record, exposed > 0, box.height ? exposed / box.height : 0);
-      });
-    }
 
     function select(record, index) {
       const step = record.steps[index];
@@ -107,8 +87,11 @@
       if (record.state === state) return;
       record.state = state;
       record.el.dataset.state = state;
+      // The factory freezes its own timeline while paused. Starting normally
+      // here lets a chapter's first animation play when it enters the viewport.
       record.graphic.go(state);
       if (!record.graphic.visible) record.graphic.pause();
+
       const description = step.dataset.cap || step.querySelector('h2, h3')?.textContent || '';
       if (record.caption) record.caption.textContent = description;
       const canvas = record.el.querySelector('canvas');
@@ -116,15 +99,25 @@
         canvas.setAttribute('role', 'img');
         canvas.setAttribute('aria-label', description);
       }
-      if (!record.flow) record.steps.forEach((item, i) => item.classList.toggle('on', i === index));
-      record.progress?.querySelectorAll('i').forEach((dot, i) => dot.classList.toggle('on', i <= index));
+      record.steps.forEach((item, i) => item.classList.toggle('on', i === index));
+      record.progress?.querySelectorAll('i').forEach((dot, i) => {
+        dot.classList.toggle('on', i <= index);
+      });
+    }
+
+    function readingLine(record) {
+      const exposed = Math.max(0, viewportHeight - record.panelHeight - record.panelTop);
+      return sideBySide ? viewportHeight * .55
+        : record.panelTop + record.panelHeight + Math.min(88, Math.max(48, exposed * .2));
     }
 
     function update() {
       framePending = false;
-      if (phone.matches) return;
-      const line = viewportHeight * .55;
+      /* Read all positions before changing any strip text. The threshold is
+         48–88px inside the exposed reading area, so the next heading is visible
+         as its graphic changes. There is no extra blank scrolling distance. */
       const changes = chapters.map(record => {
+        const line = readingLine(record);
         let index = 0;
         record.steps.forEach((step, i) => {
           if (step.getBoundingClientRect().top <= line) index = i;
@@ -151,21 +144,31 @@
     }
 
     function setVisibility(record, inView, ratio) {
-      const enabled = record.flow === phone.matches;
-      record.inView = enabled && inView;
-      const height = record.el.getBoundingClientRect().height;
-      const threshold = record.flow ? Math.min(.5, viewportHeight / Math.max(1, height) * .5) : .55;
-      const visible = enabled && inView && ratio >= threshold;
+      record.inView = inView;
+      /* Let a new panel arrive before starting its reveal. Otherwise a
+         phone chart can finish animating while only its heading is visible
+         below the preceding section. Keep painting its paused baseline as
+         it enters, then play when the chart can actually be read. */
+      const visible = ratio >= (sideBySide ? .55 : .9);
       if (record.graphic.visible === visible) return;
       record.graphic.visible = visible;
       if (visible) record.graphic.resume();
       else record.graphic.pause();
     }
 
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const record = chapters.find(item => item.el === entry.target);
+        setVisibility(record, entry.isIntersecting, entry.intersectionRatio);
+      });
+    }, { threshold: [0, .55, .9] });
+
     measureViewport(true);
     update();
+    chapters.forEach(record => observer.observe(record.el));
+
     function frame(now) {
-      records.forEach(record => {
+      chapters.forEach(record => {
         if (record.inView) record.graphic.frame(now);
       });
       requestAnimationFrame(frame);
@@ -173,27 +176,45 @@
     requestAnimationFrame(frame);
 
     addEventListener('scroll', schedule, { passive: true });
-    addEventListener('resize', () => { measureViewport(); schedule(); }, { passive: true });
-    phone.addEventListener('change', () => { measureViewport(true); schedule(); });
-    addEventListener('orientationchange', () => {
-      requestAnimationFrame(() => { measureViewport(true); schedule(); });
+    addEventListener('resize', () => {
+      measureViewport();
+      schedule();
     }, { passive: true });
-    addEventListener('pageshow', () => { measureViewport(true); schedule(); });
+    phone.addEventListener('change', () => {
+      measureViewport(true);
+      schedule();
+    });
+    addEventListener('orientationchange', () => {
+      requestAnimationFrame(() => {
+        measureViewport(true);
+        schedule();
+      });
+    }, { passive: true });
+    addEventListener('pageshow', () => {
+      measureViewport(true);
+      schedule();
+    });
     document.fonts?.ready.then(() => { measureViewport(true); schedule(); });
 
     document.querySelectorAll('.replay').forEach(button => {
       button.addEventListener('click', () => {
-        const record = records.find(item => item.flow === phone.matches && item.chapter === button.closest('.chapter') && item.steps.some(step => step.dataset.s === 'prayer'));
+        const record = chapters.find(item => item.chapter === button.closest('.chapter'));
         if (!record) return;
         const index = record.steps.findIndex(step => step.dataset.s === 'prayer');
-        const target = record.flow ? record.el.parentElement : record.steps[index];
-        target.scrollIntoView({ block: 'start', behavior: 'instant' });
+        if (index < 0) return;
+        const step = record.steps[index];
+        /* Replay stays with its paragraph. The normal trigger reads the same
+           target afterward; no delayed animation fights with scrolling. */
+        step.scrollIntoView({ block: 'start', behavior: 'instant' });
         select(record, index);
         record.graphic.replay();
         if (!record.graphic.visible) record.graphic.pause();
         schedule();
       });
     });
+
+    /* An explicit marker lets browser checks distinguish initialized state
+       from a page that only happened to render the first canvas. */
     root.dataset.storyReady = 'true';
   }
 
