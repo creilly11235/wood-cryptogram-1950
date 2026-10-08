@@ -109,4 +109,68 @@
     .cw-controls{padding-top:5px}
   }
 }
+/* Mobile gives each animation a complete viewport during its scroll sequence.
+   Key words stay readable; the available scene height sets the card size. */
+@media(max-width:900px){
+  .mobile-visual .cipher-walkthrough-host{align-items:stretch}
+  .mobile-visual .cw{height:100%;max-height:none;padding:12px;gap:12px}
+  .mobile-visual .cw-title{font-size:clamp(20px,5.2vw,25px);line-height:1.25;margin-bottom:9px}
+  .mobile-visual .cw-legend{font-size:15px;gap:20px}
+  .mobile-visual .cw-legend-item{gap:7px}
+  .mobile-visual .cw-swatch{width:13px;height:16px;border-radius:3px}
+  .mobile-visual .cw-scene{container-type:size}
+  .mobile-visual .cw-source-grid{gap:18px 6px}
+  .mobile-visual .cw-source-letter{width:min(100%,48px);height:clamp(36px,11cqw,54px);font-size:clamp(25px,7cqw,34px)}
+  .mobile-visual .cw-grid{height:100%;min-height:0;max-height:630px;align-self:center;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(7,minmax(0,1fr));gap:3px 8px;align-items:center}
+  .mobile-visual .cw-pair{gap:2px}
+  .mobile-visual .cw-card{width:clamp(27px,calc((100cqh - 178px)/7),52px);height:clamp(21px,calc((100cqh - 178px)/7),52px)}
+  .mobile-visual .cw-face{font-size:clamp(18px,calc((100cqh - 194px)/9),32px);border-radius:4px}
+  .mobile-visual .cw-word{font-size:clamp(14px,3.8vw,16px);line-height:1.25;letter-spacing:0}
+  .mobile-visual .cw-prayer{font-size:clamp(22px,6vw,29px);line-height:1.55;max-width:28ch}
+  .mobile-visual .cw-key-note{font-size:15px;line-height:1.45;margin-top:20px}
+  .mobile-visual .cw-single{width:82px;height:94px;font-size:56px}
+  .mobile-visual .cw-focus,.mobile-visual .cw-result,.mobile-visual .cw-shift{gap:24px}
+  .mobile-visual .cw-focus-pair{gap:10px}
+  .mobile-visual .cw-focus-word{font-size:23px}
+  .mobile-visual .cw[data-stage="4"] .cw-focus{gap:28px}
+  .mobile-visual .cw[data-stage="4"] .cw-focus-pair{gap:8px}
+  .mobile-visual .cw[data-stage="4"] .cw-single{width:64px;height:74px;font-size:45px}
+  .mobile-visual .cw[data-stage="4"] .cw-focus-word{font-size:21px}
+  .mobile-visual .cw-math{gap:23px}
+  .mobile-visual .cw-sum{gap:clamp(3px,1.3cqw,7px)}
+  .mobile-visual .cw-term{gap:7px;min-width:21px}
+  .mobile-visual .cw-term-letter{font-size:16px}
+  .mobile-visual .cw-term-value{font-size:clamp(19px,5.8cqw,25px)}
+  .mobile-visual .cw-plus,.mobile-visual .cw-equals{font-size:16px;padding-top:21px}
+  .mobile-visual .cw-total{font-size:29px;padding-top:20px}
+  .mobile-visual .cw-reduction{font-size:clamp(15px,4.4cqw,19px)}
+  .mobile-visual .cw-shift-key,.mobile-visual .cw-result-label{font-size:19px;line-height:1.4}
+  .mobile-visual .cw-shift-cards{gap:clamp(10px,4cqw,24px)}
+  .mobile-visual .cw-arrow-label{font-size:15px}
+  .mobile-visual .cw-message-reading{font-size:clamp(30px,8cqw,42px);line-height:1.5}
+  .mobile-visual .cw-controls{padding-top:10px;gap:8px}
+  .mobile-visual .cw-previous,.mobile-visual .cw-next{font-size:16px;min-height:44px;min-width:82px;padding-inline:14px}
+  .mobile-visual .cw-step-count{font-size:14px}
+}
+@media(max-width:900px) and (orientation:landscape){
+  .mobile-visual .cw{padding:10px 16px;gap:8px}
+  .mobile-visual .cw-title{font-size:20px;margin-bottom:5px}
+  .mobile-visual .cw-legend{font-size:14px}
+  .mobile-visual .cw-grid{grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:4px 7px}
+  .mobile-visual .cw-card{width:clamp(24px,calc((100cqh - 72px)/3),43px);height:clamp(24px,calc((100cqh - 72px)/3),43px)}
+  .mobile-visual .cw-face{font-size:clamp(20px,calc((100cqh - 72px)/4),29px)}
+  .mobile-visual .cw-word{font-size:14px}
+  .mobile-visual .cw-source-grid{gap:8px 6px}
+  .mobile-visual .cw-source-letter{width:40px;height:clamp(28px,24cqh,43px);font-size:27px}
+  .mobile-visual .cw-prayer{font-size:22px;line-height:1.45;max-width:42ch}
+  .mobile-visual .cw-key-note{font-size:14px;margin-top:10px}
+  .mobile-visual .cw-focus,.mobile-visual .cw-result,.mobile-visual .cw-shift{gap:12px}
+  .mobile-visual .cw-single{width:57px;height:63px;font-size:42px}
+  .mobile-visual .cw[data-stage="4"] .cw-focus{flex-direction:row;gap:30px}
+  .mobile-visual .cw[data-stage="4"] .cw-focus-pair{gap:5px}
+  .mobile-visual .cw[data-stage="4"] .cw-single{width:48px;height:52px;font-size:36px}
+  .mobile-visual .cw-math{width:auto;gap:14px}
+  .mobile-visual .cw-message-reading{font-size:28px;line-height:1.3}
+  .mobile-visual .cw-controls{padding-top:7px}
+}
 @media(prefers-reduced-motion:reduce){.cw *,.cw *::before,.cw *::after{scroll-behavior:auto}}

@@ -59,12 +59,27 @@ frame.addEventListener('load', async () => {
     // view so parent-page clipping does not pause the animation under test.
     frame.scrollIntoView({ block: 'start', behavior: 'instant' });
     const chapters = [...doc.querySelectorAll('.chapter')];
-    // Cloned, fixed mobile scenes are the regression: fail before testing later behavior.
-    check(chapters.length === 6 && chapters.every(chapter => chapter.querySelectorAll('.graphic').length === 1),
+    const mobile = width <= 900;
+    // The same six graphic elements serve every state and both layouts.
+    check(chapters.length === 6 && doc.querySelectorAll('.graphic').length === 6 && chapters.every(chapter => chapter.querySelectorAll('.graphic').length === 1),
       `One shared graphic per chapter (found ${doc.querySelectorAll('.graphic').length} graphics in ${chapters.length} chapters)`);
     const graphics = chapters.map(chapter => chapter.querySelector('.graphic'));
     const walk = graphics[0].querySelector('.cw');
     check(doc.querySelectorAll('.cw').length === 1, 'One walkthrough serves every cipher stage');
+    const runs = chapters.map(chapter => chapter.querySelector('.story-run.mobile-visual'));
+    if (mobile) {
+      check(runs.every((run, index) => run && run.querySelector('.graphic') === graphics[index]) && doc.querySelectorAll('.story-run').length === 6,
+        'Mobile has one scroll run containing the original graphic per chapter');
+      check(runs.every(run => !run.querySelector('.step')),
+        'Mobile scroll runs contain no article paragraphs behind the graphic');
+      check(runs[0].previousElementSibling?.dataset.s === 'method' && runs[0].nextElementSibling?.dataset.s === 'wood',
+        'The first visual starts immediately before Wood and his clues');
+      check(runs.slice(1).every((run, index) => run.previousElementSibling === chapters[index + 1].querySelector('.step:last-of-type')),
+        'Later visual runs follow their chapter’s final prose step');
+    } else {
+      check(doc.querySelectorAll('.story-run').length === 0 && graphics.every(graphic => graphic.parentElement.classList.contains('chapter')),
+        'Desktop keeps the original graphics directly beside the reading columns');
+    }
     async function settleScroll() {
       let stable = 0, last = win.scrollY;
       await until(() => {
@@ -74,27 +89,42 @@ frame.addEventListener('load', async () => {
         return stable >= 3;
       }, 'Article scrolling did not settle');
     }
-    async function visit(target, graphic, expected, actual) {
-      const css = win.getComputedStyle(graphic);
-      const stacked = width <= 900 && doc.documentElement.dataset.storyLayout !== 'side';
-      const panelBottom = (parseFloat(css.top) || 0) + graphic.getBoundingClientRect().height;
+    async function visitDesktop(target, expected, actual) {
       // Approach through the visible prose, not the controller's activation formula.
-      const readingTop = stacked ? panelBottom : 0;
-      const start = stacked ? Math.min(height - 24, readingTop + 120) : height / 2;
-      win.scrollTo({ top: win.scrollY + target.getBoundingClientRect().top - start, behavior: 'instant' });
+      win.scrollTo({ top: win.scrollY + target.getBoundingClientRect().top - height / 2, behavior: 'instant' });
       await settleScroll();
       for (let n = 0; actual() !== expected && n < 24; n++) {
-        if (target.getBoundingClientRect().top < readingTop - 20) break;
+        if (target.getBoundingClientRect().top < -20) break;
         win.scrollBy({ top: 10, behavior: 'instant' });
         await pause(35);
       }
       await until(() => actual() === expected, `Scroll target ${expected}: got ${actual()}`, 600);
       check(actual() === expected, `Scroll selects ${expected}`);
     }
+    async function visitRun(index, stage, expected, actual) {
+      const run = runs[index];
+      const distance = parseFloat(win.getComputedStyle(run).getPropertyValue('--run-step'));
+      check(Number.isFinite(distance) && distance > 0, `Chapter ${index + 1}: mobile scroll distance is defined`);
+      const before = win.scrollY;
+      const target = before + run.getBoundingClientRect().top + stage * distance;
+      // Native page movement, in either direction, drives one persistent panel.
+      win.scrollBy({ top: target - before, behavior: 'instant' });
+      await settleScroll();
+      await until(() => actual() === expected, `Mobile scroll target ${expected}: got ${actual()}`, 600);
+      check(Math.abs(win.scrollY - target) < 2 && actual() === expected,
+        `Mobile scroll selects ${expected} at chapter ${index + 1}, stage ${stage}`);
+    }
     function visible(graphic, label) {
       const rect = graphic.getBoundingClientRect();
-      const stacked = width <= 900 && doc.documentElement.dataset.storyLayout !== 'side';
-      check(rect.width > 0 && (stacked ? rect.top >= -2 && rect.bottom <= height + 2 : rect.bottom > 0 && rect.top < height), `${label}: graphic is visible in the viewport`);
+      if (mobile) {
+        check(rect.width > 0 && Math.abs(rect.top) <= 2 && Math.abs(rect.height - win.innerHeight) <= 2 && Math.abs(rect.bottom - win.innerHeight) <= 2,
+          `${label}: the same graphic fills the viewport from top to bottom`);
+      } else {
+        const prose = graphic.parentElement.querySelector('.text').getBoundingClientRect();
+        check(rect.width > 0 && rect.bottom > 0 && rect.top < height && rect.left >= prose.right - 1,
+          `${label}: graphic remains visible to the right of the prose`);
+      }
+      check(doc.documentElement.scrollWidth <= width + 1, `${label}: no horizontal overflow`);
     }
     async function walkthroughGeometry(stage) {
       if (stage === 7) await until(() => walk.dataset.finale === 'settled', 'Final message animation did not settle', 6500);
@@ -103,16 +133,20 @@ frame.addEventListener('load', async () => {
       const controls = walk.querySelector('.cw-controls').getBoundingClientRect();
       const scene = walk.querySelector('.cw-scene').getBoundingClientRect();
       const content = [...walk.querySelectorAll('.cw-scene *')].map(el => el.getBoundingClientRect()).filter(rect => rect.width && rect.height);
-      const contained = (width <= 900 && doc.documentElement.dataset.storyLayout !== 'side') || graphics[0].getBoundingClientRect().top <= 2;
-      check((!contained || controls.top >= 0 && controls.bottom <= height + 2) && scene.bottom <= controls.top + 1 && content.every(rect => rect.bottom <= controls.top + 1), `Stage ${stage}: scene and controls do not overlap`);
+      const graphic = graphics[0].getBoundingClientRect();
+      const contained = mobile || graphic.top <= 2;
+      check((!contained || controls.top >= 0 && controls.bottom <= height + 2) && scene.bottom <= controls.top + 1 && content.every(rect => rect.top >= scene.top - 1 && rect.bottom <= controls.top + 1 && rect.left >= graphic.left - 1 && rect.right <= graphic.right + 1), `Stage ${stage}: scene and controls fit without overlap`);
     }
     const targets = [...chapters[0].querySelectorAll('[data-walk-stage]')];
+    const visitWalk = stage => mobile
+      ? visitRun(0, stage, String(stage), () => walk.dataset.stage)
+      : visitDesktop(targets.find(target => Number(target.dataset.walkStage) === stage), String(stage), () => walk.dataset.stage);
     for (const stage of [0, 1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1, 0]) {
-      await visit(targets.find(target => Number(target.dataset.walkStage) === stage), graphics[0], String(stage), () => walk.dataset.stage);
+      await visitWalk(stage);
       check(chapters[0].querySelector('.cw') === walk, `Stage ${stage}: same walkthrough element`);
       await walkthroughGeometry(stage);
     }
-    await visit(targets.find(target => target.dataset.walkStage === '3'), graphics[0], '3', () => walk.dataset.stage);
+    await visitWalk(3);
     for (const [selector, expected, direction] of [['.cw-next', '4', 1], ['.cw-previous', '3', -1]]) {
       const before = win.scrollY;
       walk.querySelector(selector).click();
@@ -122,17 +156,64 @@ frame.addEventListener('load', async () => {
       win.scrollBy({ top: 8, behavior: 'instant' });
       await settleScroll();
       check(walk.dataset.stage === expected, `Small scroll preserves button-selected stage ${expected}`);
+      visible(graphics[0], `Button-selected stage ${expected}`);
     }
-    await visit(targets.find(target => target.dataset.walkStage === '7'), graphics[0], '7', () => walk.dataset.stage);
+    await visitWalk(7);
     walk.querySelector('.cw-next').click();
     await walkthroughGeometry(7);
     check(walk.dataset.stage === '7', 'Replay stays on the final stage');
+    if (mobile) {
+      const wood = chapters[0].querySelector('.step[data-s="wood"]');
+      const before = win.scrollY;
+      win.scrollBy({ top: wood.getBoundingClientRect().top - 24, behavior: 'instant' });
+      await settleScroll();
+      const prose = wood.getBoundingClientRect(), graphic = graphics[0].getBoundingClientRect();
+      check(win.scrollY > before && prose.top >= 0 && prose.top < height / 2 && graphic.bottom <= prose.top + 1,
+        'Scrolling past the final stage releases the visual into Wood and his clues');
+      check(walk.dataset.stage === '7', 'Exiting the first visual preserves the final decoded state');
+    }
     for (let index = 1; index < chapters.length; index++) {
       const graphic = graphics[index], steps = [...chapters[index].querySelectorAll('.step[data-s]')];
       for (const step of [...steps, ...steps.slice(0, -1).reverse()]) {
-        await visit(step, graphic, step.dataset.s, () => graphic.dataset.state);
+        if (mobile) await visitRun(index, steps.indexOf(step), step.dataset.s, () => graphic.dataset.state);
+        else await visitDesktop(step, step.dataset.s, () => graphic.dataset.state);
         check(chapters[index].querySelector('.graphic') === graphic, `Chapter ${index + 1}: same graphic at ${step.dataset.s}`);
         visible(graphic, step.dataset.s);
+      }
+    }
+    if (mobile) {
+      // Browser bars change the viewport height without changing its width.
+      // Exercise later chapters, where reflowing earlier runs used to change
+      // the active stage even though the reader had not scrolled.
+      for (const index of [1, 3, 5]) {
+        const graphic = graphics[index];
+        const expected = chapters[index].querySelectorAll('.step[data-s]')[1].dataset.s;
+        await visitRun(index, 1, expected, () => graphic.dataset.state);
+        const distance = win.getComputedStyle(runs[index]).getPropertyValue('--run-step');
+        for (const resizedHeight of [height - 80, height, height + 80, height]) {
+          frame.style.height = `${resizedHeight}px`;
+          await until(() => win.innerHeight === resizedHeight, 'The article viewport did not resize');
+          await settleScroll();
+          const rect = graphic.getBoundingClientRect();
+          check(graphic.dataset.state === expected,
+            `Chapter ${index + 1}: viewport height ${resizedHeight} preserves ${expected}`);
+          check(Math.abs(rect.top) <= 2 && Math.abs(rect.height - resizedHeight) <= 2 && Math.abs(rect.bottom - resizedHeight) <= 2,
+            `Chapter ${index + 1}: the pinned graphic fills the resized ${resizedHeight}px viewport`);
+          check(win.getComputedStyle(runs[index]).getPropertyValue('--run-step') === distance,
+            `Chapter ${index + 1}: a height-only resize preserves scroll distances`);
+        }
+      }
+      await visitWalk(4);
+      const rotatedSize = width > height ? [390, 844] : [844, 390];
+      for (const [resizedWidth, resizedHeight] of [rotatedSize, [width, height]]) {
+        frame.style.width = `${resizedWidth}px`;
+        frame.style.height = `${resizedHeight}px`;
+        await until(() => win.innerWidth === resizedWidth && win.innerHeight === resizedHeight, 'The article viewport did not rotate');
+        await settleScroll();
+        const rect = graphics[0].getBoundingClientRect();
+        check(walk.dataset.stage === '4', 'Rotating the phone preserves the active animation stage');
+        check(Math.abs(rect.top) <= 2 && Math.abs(rect.height - resizedHeight) <= 2,
+          `Rotation keeps the visual full-screen at ${resizedWidth} × ${resizedHeight}`);
       }
     }
     check(doc.documentElement.scrollWidth <= width + 1, 'Article has no horizontal overflow');

@@ -28,7 +28,7 @@
     keyWord: 'key word',
     keyNote: 'Repeated words are skipped',
     decodedMessage: 'The decoded message',
-    swipeHint: 'Swipe left or right'
+    swipeHint: 'Scroll to explore · or use the buttons'
   };
 
   class CipherWalkthrough {
