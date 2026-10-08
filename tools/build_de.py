@@ -66,7 +66,7 @@ for asset in ("wood_1950_p105.png", "luther_1922_mt6_9-11.jpg", "thouless_1948_s
 body = swap(body, '<p class="small">Besuche gezählt', '<p class="small">Diese deutsche Fassung wurde mit KI-Unterstützung aus dem Englischen übersetzt und von einem zweiten KI-System gegengelesen, aber noch nicht von einem Muttersprachler geprüft. Hinweise auf Fehler sind willkommen, gern als <a href="https://github.com/creilly11235/wood-cryptogram-1950/issues">Issue auf GitHub</a>.</p>\n<p class="small">Besuche gezählt', "footer")
 de = head + body + script
 # The translated page is one directory deeper; share the layout and scroll code.
-for asset in ("story-layout.css", "story-graphics.css", "story-scroll.js", "cipher-cards.css", "cipher-walkthrough.css", "cipher-walkthrough.js"):
+for asset in ("story-layout.css", "story-graphics.css", "story-viewer.css", "story-scroll.js", "cipher-cards.css", "cipher-walkthrough.css", "cipher-walkthrough.js"):
     de = re.sub(r'((?:src|href)=\")' + re.escape(asset) + r'(?=[?\"])', r'\1../' + asset, de)
 if problems:
     sys.exit("build_de: " + str(len(problems)) + " problem(s)\n" + "\n".join(problems))

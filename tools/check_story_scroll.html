@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <meta charset="utf-8">
-<title>Story scroll regression check</title>
+<title>Story navigation regression check</title>
 <style>
   body { margin: 24px; font: 16px/1.5 system-ui, sans-serif; color: #202830; }
   nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; }
@@ -9,10 +9,11 @@
   .pass { color: #17663a; } .fail { color: #a32020; }
   #status { font-weight: 700; } #results { max-width: 90ch; }
 </style>
-<h1>Story scroll regression check</h1>
-<p>Serve the repository over HTTP and open this page. The iframe runs the real article.
-  Use <code>?width=320&amp;height=568&amp;lang=de</code> for another viewport or language.
-  Reduced motion follows the browser setting.</p>
+<h1>Story navigation regression check</h1>
+<p>Serve the repository over HTTP and open this page. It tests the real article’s mobile cards,
+  full-screen viewer and desktop scroll sequence. Use
+  <code>?width=320&amp;height=568&amp;lang=de</code> for another viewport or language.
+  Native touch and automatic-entry tests live in <code>check_story_viewer.py</code>.</p>
 <nav id="sizes"></nav>
 <p id="status">Loading…</p>
 <iframe id="article" title="Article under test"></iframe>
@@ -35,7 +36,7 @@ for (const [w, h] of [[390, 844], [320, 568], [844, 390], [1440, 900]]) {
 frame.style.width = `${width}px`;
 frame.style.height = `${height}px`;
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
-async function until(predicate, message, timeout = 3000) {
+async function until(predicate, message, timeout = 4000) {
   const end = performance.now() + timeout;
   while (performance.now() < end) {
     if (predicate()) return;
@@ -55,168 +56,139 @@ frame.addEventListener('load', async () => {
   try {
     await until(() => doc.documentElement.dataset.storyReady === 'true', 'Article did not initialize');
     await Promise.race([doc.fonts.ready, pause(3000)]);
-    // The article intentionally pauses offscreen graphics. Keep the iframe in
-    // view so parent-page clipping does not pause the animation under test.
     frame.scrollIntoView({ block: 'start', behavior: 'instant' });
     const chapters = [...doc.querySelectorAll('.chapter')];
-    const mobile = width <= 900;
-    // The same six graphic elements serve every state and both layouts.
-    check(chapters.length === 6 && doc.querySelectorAll('.graphic').length === 6 && chapters.every(chapter => chapter.querySelectorAll('.graphic').length === 1),
-      `One shared graphic per chapter (found ${doc.querySelectorAll('.graphic').length} graphics in ${chapters.length} chapters)`);
     const graphics = chapters.map(chapter => chapter.querySelector('.graphic'));
     const walk = graphics[0].querySelector('.cw');
+    const mobile = width <= 900;
+    const api = win.WoodStoryController;
+    check(chapters.length === 6 && graphics.every(Boolean) && doc.querySelectorAll('.graphic').length === 6,
+      'Six original graphics serve every stage and both layouts');
     check(doc.querySelectorAll('.cw').length === 1, 'One walkthrough serves every cipher stage');
-    const runs = chapters.map(chapter => chapter.querySelector('.story-run.mobile-visual'));
-    if (mobile) {
-      check(runs.every((run, index) => run && run.querySelector('.graphic') === graphics[index]) && doc.querySelectorAll('.story-run').length === 6,
-        'Mobile has one scroll run containing the original graphic per chapter');
-      check(runs.every(run => !run.querySelector('.step')),
-        'Mobile scroll runs contain no article paragraphs behind the graphic');
-      check(runs[0].previousElementSibling?.dataset.s === 'method' && runs[0].nextElementSibling?.dataset.s === 'wood',
-        'The first visual starts immediately before Wood and his clues');
-      check(runs.slice(1).every((run, index) => run.previousElementSibling === chapters[index + 1].querySelector('.step:last-of-type')),
-        'Later visual runs follow their chapter’s final prose step');
-    } else {
-      check(doc.querySelectorAll('.story-run').length === 0 && graphics.every(graphic => graphic.parentElement.classList.contains('chapter')),
-        'Desktop keeps the original graphics directly beside the reading columns');
-    }
-    async function settleScroll() {
+    check(doc.querySelectorAll('.story-run').length === 0, 'No mobile scroll runway remains');
+    async function settle() {
+      await pause(160);
       let stable = 0, last = win.scrollY;
       await until(() => {
-        const current = win.scrollY;
-        stable = Math.abs(current - last) < 1 ? stable + 1 : 0;
-        last = current;
+        const y = win.scrollY;
+        stable = Math.abs(y - last) < 1 ? stable + 1 : 0;
+        last = y;
         return stable >= 3;
       }, 'Article scrolling did not settle');
     }
-    async function visitDesktop(target, expected, actual) {
-      // Approach through the visible prose, not the controller's activation formula.
-      win.scrollTo({ top: win.scrollY + target.getBoundingClientRect().top - height / 2, behavior: 'instant' });
-      await settleScroll();
-      for (let n = 0; actual() !== expected && n < 24; n++) {
-        if (target.getBoundingClientRect().top < -20) break;
-        win.scrollBy({ top: 10, behavior: 'instant' });
-        await pause(35);
-      }
-      await until(() => actual() === expected, `Scroll target ${expected}: got ${actual()}`, 600);
-      check(actual() === expected, `Scroll selects ${expected}`);
+    function overflow(label) {
+      check(doc.documentElement.scrollWidth <= win.innerWidth + 1, `${label}: no horizontal overflow`);
     }
-    async function visitRun(index, stage, expected, actual) {
-      const run = runs[index];
-      const distance = parseFloat(win.getComputedStyle(run).getPropertyValue('--run-step'));
-      check(Number.isFinite(distance) && distance > 0, `Chapter ${index + 1}: mobile scroll distance is defined`);
-      const before = win.scrollY;
-      const target = before + run.getBoundingClientRect().top + stage * distance;
-      // Native page movement, in either direction, drives one persistent panel.
-      win.scrollBy({ top: target - before, behavior: 'instant' });
-      await settleScroll();
-      await until(() => actual() === expected, `Mobile scroll target ${expected}: got ${actual()}`, 600);
-      check(Math.abs(win.scrollY - target) < 2 && actual() === expected,
-        `Mobile scroll selects ${expected} at chapter ${index + 1}, stage ${stage}`);
-    }
-    function visible(graphic, label) {
-      const rect = graphic.getBoundingClientRect();
-      if (mobile) {
-        check(rect.width > 0 && Math.abs(rect.top) <= 2 && Math.abs(rect.height - win.innerHeight) <= 2 && Math.abs(rect.bottom - win.innerHeight) <= 2,
-          `${label}: the same graphic fills the viewport from top to bottom`);
-      } else {
-        const prose = graphic.parentElement.querySelector('.text').getBoundingClientRect();
-        check(rect.width > 0 && rect.bottom > 0 && rect.top < height && rect.left >= prose.right - 1,
-          `${label}: graphic remains visible to the right of the prose`);
-      }
-      check(doc.documentElement.scrollWidth <= width + 1, `${label}: no horizontal overflow`);
-    }
-    async function walkthroughGeometry(stage) {
-      if (stage === 7) await until(() => walk.dataset.finale === 'settled', 'Final message animation did not settle', 6500);
-      else await until(() => !doc.getAnimations().some(animation => walk.contains(animation.effect?.target) && ['running', 'pending'].includes(animation.playState)), 'Walkthrough animation did not settle');
-      visible(graphics[0], `Stage ${stage}`);
-      const controls = walk.querySelector('.cw-controls').getBoundingClientRect();
-      const scene = walk.querySelector('.cw-scene').getBoundingClientRect();
-      const content = [...walk.querySelectorAll('.cw-scene *')].map(el => el.getBoundingClientRect()).filter(rect => rect.width && rect.height);
-      const graphic = graphics[0].getBoundingClientRect();
-      const contained = mobile || graphic.top <= 2;
-      check((!contained || controls.top >= 0 && controls.bottom <= height + 2) && scene.bottom <= controls.top + 1 && content.every(rect => rect.top >= scene.top - 1 && rect.bottom <= controls.top + 1 && rect.left >= graphic.left - 1 && rect.right <= graphic.right + 1), `Stage ${stage}: scene and controls fit without overlap`);
-    }
-    const targets = [...chapters[0].querySelectorAll('[data-walk-stage]')];
-    const visitWalk = stage => mobile
-      ? visitRun(0, stage, String(stage), () => walk.dataset.stage)
-      : visitDesktop(targets.find(target => Number(target.dataset.walkStage) === stage), String(stage), () => walk.dataset.stage);
-    for (const stage of [0, 1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1, 0]) {
-      await visitWalk(stage);
-      check(chapters[0].querySelector('.cw') === walk, `Stage ${stage}: same walkthrough element`);
-      await walkthroughGeometry(stage);
-    }
-    await visitWalk(3);
-    for (const [selector, expected, direction] of [['.cw-next', '4', 1], ['.cw-previous', '3', -1]]) {
-      const before = win.scrollY;
-      walk.querySelector(selector).click();
-      await until(() => walk.dataset.stage === expected, `Button did not select stage ${expected}`);
-      await settleScroll();
-      check((win.scrollY - before) * direction > 5, `Button moves the article to stage ${expected}`);
-      win.scrollBy({ top: 8, behavior: 'instant' });
-      await settleScroll();
-      check(walk.dataset.stage === expected, `Small scroll preserves button-selected stage ${expected}`);
-      visible(graphics[0], `Button-selected stage ${expected}`);
-    }
-    await visitWalk(7);
-    walk.querySelector('.cw-next').click();
-    await walkthroughGeometry(7);
-    check(walk.dataset.stage === '7', 'Replay stays on the final stage');
-    if (mobile) {
-      const wood = chapters[0].querySelector('.step[data-s="wood"]');
-      const before = win.scrollY;
-      win.scrollBy({ top: wood.getBoundingClientRect().top - 24, behavior: 'instant' });
-      await settleScroll();
-      const prose = wood.getBoundingClientRect(), graphic = graphics[0].getBoundingClientRect();
-      check(win.scrollY > before && prose.top >= 0 && prose.top < height / 2 && graphic.bottom <= prose.top + 1,
-        'Scrolling past the final stage releases the visual into Wood and his clues');
-      check(walk.dataset.stage === '7', 'Exiting the first visual preserves the final decoded state');
-    }
-    for (let index = 1; index < chapters.length; index++) {
-      const graphic = graphics[index], steps = [...chapters[index].querySelectorAll('.step[data-s]')];
-      for (const step of [...steps, ...steps.slice(0, -1).reverse()]) {
-        if (mobile) await visitRun(index, steps.indexOf(step), step.dataset.s, () => graphic.dataset.state);
-        else await visitDesktop(step, step.dataset.s, () => graphic.dataset.state);
-        check(chapters[index].querySelector('.graphic') === graphic, `Chapter ${index + 1}: same graphic at ${step.dataset.s}`);
-        visible(graphic, step.dataset.s);
-      }
+    function viewerGeometry(label) {
+      const dialog = doc.querySelector('.mobile-story-dialog');
+      const box = dialog.getBoundingClientRect();
+      const header = dialog.querySelector('.mobile-viewer-header').getBoundingClientRect();
+      const nav = dialog.querySelector('.mobile-viewer-nav').getBoundingClientRect();
+      const stage = dialog.querySelector('.mobile-viewer-stage').getBoundingClientRect();
+      check(dialog.matches(':modal') && box.top >= -1 && box.top <= 1 && Math.abs(box.height - win.innerHeight) <= 2,
+        `${label}: viewer is a full-height native modal`);
+      check(header.top >= -1 && nav.bottom <= win.innerHeight + 1 && stage.top >= header.bottom - 1 && stage.bottom <= nav.top + 1,
+        `${label}: header, stage and navigation do not overlap`);
+      check([...dialog.querySelectorAll('.mobile-viewer-close,.mobile-viewer-prev,.mobile-viewer-next')].every(button => {
+        const r = button.getBoundingClientRect();
+        return r.width >= 43 && r.height >= 43 && r.left >= -1 && r.right <= win.innerWidth + 1 && r.top >= -1 && r.bottom <= win.innerHeight + 1;
+      }), `${label}: close and navigation have visible touch targets`);
+      overflow(label);
     }
     if (mobile) {
-      // Browser bars change the viewport height without changing its width.
-      // Exercise later chapters, where reflowing earlier runs used to change
-      // the active stage even though the reader had not scrolled.
-      for (const index of [1, 3, 5]) {
-        const graphic = graphics[index];
-        const expected = chapters[index].querySelectorAll('.step[data-s]')[1].dataset.s;
-        await visitRun(index, 1, expected, () => graphic.dataset.state);
-        const distance = win.getComputedStyle(runs[index]).getPropertyValue('--run-step');
-        for (const resizedHeight of [height - 80, height, height + 80, height]) {
-          frame.style.height = `${resizedHeight}px`;
-          await until(() => win.innerHeight === resizedHeight, 'The article viewport did not resize');
-          await settleScroll();
-          const rect = graphic.getBoundingClientRect();
-          check(graphic.dataset.state === expected,
-            `Chapter ${index + 1}: viewport height ${resizedHeight} preserves ${expected}`);
-          check(Math.abs(rect.top) <= 2 && Math.abs(rect.height - resizedHeight) <= 2 && Math.abs(rect.bottom - resizedHeight) <= 2,
-            `Chapter ${index + 1}: the pinned graphic fills the resized ${resizedHeight}px viewport`);
-          check(win.getComputedStyle(runs[index]).getPropertyValue('--run-step') === distance,
-            `Chapter ${index + 1}: a height-only resize preserves scroll distances`);
+      check(!!api, 'Mobile viewer controller is initialized');
+      const cards = [...doc.querySelectorAll('.mobile-story-card')];
+      check(cards.length === 6 && cards.every((card, i) => card.querySelector('.graphic') === graphics[i]),
+        'Each card starts with its original graphic');
+      check(cards[0].previousElementSibling?.dataset.s === 'method' && cards[0].nextElementSibling?.dataset.s === 'wood',
+        'First card sits immediately before Wood and his clues');
+      check(cards.slice(1).every((card, i) => card.previousElementSibling === [...chapters[i + 1].querySelectorAll('.step[data-s]')].at(-1)),
+        'Later cards follow their chapter’s narrative');
+      const dialog = doc.querySelector('.mobile-story-dialog');
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        card.scrollIntoView({ block: 'center', behavior: 'instant' });
+        await settle();
+        check(!dialog.open, `Chapter ${i + 1}: a programmatic jump does not open the viewer`);
+        const launch = card.querySelector('.mobile-story-open');
+        const readingY = win.scrollY;
+        launch.click();
+        await until(() => dialog.open && String(api.current?.number) === String(i + 1), `Chapter ${i + 1} did not open`);
+        await pause(500);
+        check(dialog.querySelector('.graphic') === graphics[i] && doc.querySelectorAll('.graphic').length === 6,
+          `Chapter ${i + 1}: opening moves the original graphic without making a duplicate`);
+        check(dialog.contains(doc.activeElement), `Chapter ${i + 1}: focus enters the viewer`);
+        dialog.querySelector('.mobile-viewer-close').click();
+        await until(() => !dialog.open, 'Initial close did not finish');
+        await settle();
+        check(Math.abs(win.scrollY - readingY) < 3, `Chapter ${i + 1}: closing restores the exact reading position`);
+        launch.click();
+        await until(() => dialog.open && api.current, 'Could not reopen after checking reading position');
+        await pause(500);
+        const count = Number(card.dataset.stages);
+        for (let stage = 0; stage < count; stage++) {
+          if (stage) dialog.querySelector('.mobile-viewer-next').click();
+          await until(() => api.current?.stage === stage, `Chapter ${i + 1}: Next did not reach ${stage}`);
+          viewerGeometry(`Chapter ${i + 1}, stage ${stage + 1}`);
+          check(graphics[i].isConnected && dialog.contains(graphics[i]), `Chapter ${i + 1}, stage ${stage + 1}: graphic stays in the viewer`);
+          if (!i) check(walk.dataset.stage === String(stage), `Walkthrough presents stage ${stage + 1}`);
+          else check(graphics[i].dataset.state === chapters[i].querySelectorAll('.step[data-s]')[stage].dataset.s,
+            `Chapter ${i + 1}: navigation presents the matching chart state`);
+        }
+        check(dialog.querySelector('.mobile-viewer-next').textContent.trim().includes(language === 'de' ? 'Schließen' : 'Close'),
+          `Chapter ${i + 1}: final Next becomes Close`);
+        dialog.querySelector('.mobile-viewer-prev').click();
+        await until(() => api.current?.stage === count - 2, 'Previous did not move back');
+        const stage = count - 2;
+        for (const [w, h] of [[width, Math.max(320, height - 80)], [844, 390], [width, height]]) {
+          frame.style.width = `${w}px`; frame.style.height = `${h}px`;
+          await pause(350);
+          check(api.current?.stage === stage, `Chapter ${i + 1}: resizing to ${w} × ${h} preserves the stage`);
+          viewerGeometry(`Chapter ${i + 1} at ${w} × ${h}`);
+        }
+        dialog.querySelector('.mobile-viewer-close').click();
+        await until(() => !dialog.open, 'X did not close the viewer');
+        await settle();
+        const restoredY = win.scrollY, restoredCard = card.getBoundingClientRect();
+        check(restoredCard.top < win.innerHeight && restoredCard.bottom > 0,
+          `Chapter ${i + 1}: closing after rotation returns to the visible card`);
+        check(card.contains(graphics[i]) && card.contains(doc.activeElement), `Chapter ${i + 1}: closing returns the graphic and focus to its card`);
+        launch.click();
+        await until(() => dialog.open && api.current?.stage === stage, 'Reopening did not resume');
+        await pause(500);
+        dialog.querySelector('.mobile-viewer-next').click();
+        await until(() => api.current?.stage === count - 1, 'Could not return to final stage');
+        dialog.querySelector('.mobile-viewer-next').click();
+        await until(() => !dialog.open, 'Final Close did not close the viewer');
+        await settle();
+        check(card.contains(graphics[i]) && Math.abs(win.scrollY - restoredY) < 3,
+          `Chapter ${i + 1}: final Close shrinks into the same card without moving the article`);
+      }
+      cards[0].querySelector('.mobile-story-open').click();
+      await until(() => dialog.open, 'Could not reopen for breakpoint check');
+      frame.style.width = '1440px'; frame.style.height = '900px';
+      await pause(500);
+      check(!dialog.open && !api.current && doc.body.style.position !== 'fixed', 'Switching to desktop closes the viewer and releases document scrolling');
+      check(graphics.every(graphic => graphic.parentElement.classList.contains('chapter')), 'Switching to desktop returns every graphic beside its prose');
+      frame.style.width = `${width}px`; frame.style.height = `${height}px`;
+      await pause(500);
+      check(doc.querySelectorAll('.mobile-story-card').length === 6 && !dialog.open, 'Returning to mobile restores six cards without opening one');
+    } else {
+      check(graphics.every(graphic => graphic.parentElement.classList.contains('chapter')), 'Desktop graphics stay directly beside their reading columns');
+      for (let i = 0; i < chapters.length; i++) {
+        const targets = [...chapters[i].querySelectorAll(i ? '.step[data-s]' : '[data-walk-stage]')];
+        for (const target of [...targets, ...targets.slice(0, -1).reverse()]) {
+          win.scrollTo({ top: win.scrollY + target.getBoundingClientRect().top - height * .55 + 15, behavior: 'instant' });
+          await settle();
+          await until(() => i ? graphics[i].dataset.state === target.dataset.s : walk.dataset.stage === target.dataset.walkStage,
+            `Desktop chapter ${i + 1}: scroll did not reach ${target.dataset.s || target.dataset.walkStage}`);
+          const box = graphics[i].getBoundingClientRect(), prose = chapters[i].querySelector('.text').getBoundingClientRect();
+          check(box.width > 0 && box.bottom > 0 && box.top < height && box.left >= prose.right - 1,
+            `Desktop chapter ${i + 1}: scroll selects ${target.dataset.s || target.dataset.walkStage} with the graphic visible to the right`);
+          overflow(`Desktop chapter ${i + 1}`);
         }
       }
-      await visitWalk(4);
-      const rotatedSize = width > height ? [390, 844] : [844, 390];
-      for (const [resizedWidth, resizedHeight] of [rotatedSize, [width, height]]) {
-        frame.style.width = `${resizedWidth}px`;
-        frame.style.height = `${resizedHeight}px`;
-        await until(() => win.innerWidth === resizedWidth && win.innerHeight === resizedHeight, 'The article viewport did not rotate');
-        await settleScroll();
-        const rect = graphics[0].getBoundingClientRect();
-        check(walk.dataset.stage === '4', 'Rotating the phone preserves the active animation stage');
-        check(Math.abs(rect.top) <= 2 && Math.abs(rect.height - resizedHeight) <= 2,
-          `Rotation keeps the visual full-screen at ${resizedWidth} × ${resizedHeight}`);
-      }
     }
-    check(doc.documentElement.scrollWidth <= width + 1, 'Article has no horizontal overflow');
     result.status = 'passed'; status.className = 'pass';
     status.textContent = `PASS: ${result.checks.length} checks at ${width} × ${height} (${language})`;
   } catch (error) {
