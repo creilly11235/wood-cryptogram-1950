@@ -38,8 +38,9 @@
     let framePending = false;
     let lastY = window.scrollY;
     let viewportWidth = 0;
-    let pageTouch = null;
-    let userScrollUntil = 0;
+    let arrivalArmed = false;
+    let touchHeld = false;
+    let scrollKeyHeld = null;
     let suppressAutoUntil = performance.now() + 700;
 
     function node(tag, className, text) {
@@ -81,7 +82,9 @@
       dialog.dataset.phase = next;
     }
     function suppressAuto(duration = 500) {
-      userScrollUntil = 0;
+      arrivalArmed = false;
+      touchHeld = false;
+      scrollKeyHeld = null;
       suppressAutoUntil = performance.now() + duration;
     }
     function rememberPositions() {
@@ -492,7 +495,7 @@
       const y = window.scrollY;
       const delta = y - lastY;
       const now = performance.now();
-      const eligible = mobile.matches && (window.visualViewport?.scale || 1) <= 1.01 && now > suppressAutoUntil && now < userScrollUntil;
+      const eligible = mobile.matches && (window.visualViewport?.scale || 1) <= 1.01 && now > suppressAutoUntil && arrivalArmed;
       const line = innerHeight * .30;
       let arrival = null;
       records.forEach(record => {
@@ -524,42 +527,62 @@
           (event.key === ' ' && event.target.closest('button, [role="button"]')))) return;
       if (event.type === 'wheel' && event.deltaY <= 0) return;
       if (event.type === 'touchmove') {
-        if (!pageTouch || event.touches.length !== 1 || (window.visualViewport?.scale || 1) > 1.01) {
-          pageTouch = null;
+        if (event.touches.length !== 1 || (window.visualViewport?.scale || 1) > 1.01) {
+          suppressAuto();
           return;
         }
-        const touch = event.touches[0];
-        const dy = pageTouch.y - touch.clientY;
-        const dx = Math.abs(pageTouch.x - touch.clientX);
-        if (dy < 5 || dy <= dx) return;
+        // Input may begin before the controller loads or while a viewer closes.
+        // A real page-scroll delta supplies direction; no touchstart is required.
+        touchHeld = true;
       }
-      userScrollUntil = performance.now() + 1800;
+      if (event.type === 'keydown') scrollKeyHeld = event.key;
+      arrivalArmed = true;
       suppressAutoUntil = 0;
     };
     addEventListener('touchstart', event => {
       if (!event.isTrusted || current || event.touches.length !== 1) {
-        pageTouch = null;
         if (event.touches.length > 1) suppressAuto();
         return;
       }
-      pageTouch = {x: event.touches[0].clientX, y: event.touches[0].clientY};
+      touchHeld = true;
       // Scroll direction comes from scrollY. Arm before the browser takes over
       // a native pan, which can cancel delivery of subsequent touch events.
       if ((window.visualViewport?.scale || 1) <= 1.01) {
-        userScrollUntil = performance.now() + 1800;
+        arrivalArmed = true;
         suppressAutoUntil = 0;
-      }
+      } else suppressAuto();
     }, {passive: true});
-    addEventListener('touchcancel', () => { pageTouch = null; }, {passive: true});
+    const releaseTouch = () => { touchHeld = false; };
+    addEventListener('touchend', releaseTouch, {passive: true});
+    addEventListener('touchcancel', releaseTouch, {passive: true});
     addEventListener('wheel', scrollingIntent, {passive: true});
     addEventListener('touchmove', scrollingIntent, {passive: true});
     addEventListener('keydown', scrollingIntent);
+    addEventListener('keyup', event => { if (event.key === scrollKeyHeld) scrollKeyHeld = null; });
+    // Native scrolling can outlast delivery of touch events. Keep its permission
+    // until the browser reports that the gesture AND momentum have ended.
+    // Older Safari has no scrollend: retain permission until an explicit reset
+    // below instead of guessing when compositor-owned scrolling has stopped.
+    document.addEventListener('scrollend', event => {
+      if (event.target === document && !touchHeld && !scrollKeyHeld) arrivalArmed = false;
+    });
     document.addEventListener('click', event => {
       if (event.target.closest('a[href*="#"]')) suppressAuto();
     }, {capture: true});
     addEventListener('hashchange', () => { suppressAuto(); rememberPositions(); });
-    addEventListener('pageshow', () => { suppressAuto(); layout(); });
+    addEventListener('pageshow', event => {
+      // Initial pageshow waits for async resources and may arrive in the middle
+      // of a real swipe. Only a history restore invalidates that input.
+      if (event.persisted) suppressAuto();
+      layout();
+    });
+    addEventListener('pagehide', () => suppressAuto());
+    addEventListener('popstate', () => { suppressAuto(); rememberPositions(); });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) suppressAuto(); });
     addEventListener('resize', layout, {passive: true});
+    window.visualViewport?.addEventListener('resize', () => {
+      if (window.visualViewport.scale > 1.01) suppressAuto();
+    }, {passive: true});
     mobile.addEventListener('change', layout);
     document.fonts?.ready.then(layout);
 
