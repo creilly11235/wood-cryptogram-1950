@@ -138,6 +138,11 @@
     z-index: 2;
     margin: 0;
     max-width: none;
+    /* The frame supplies the expanding surface. Carry only the preview's
+       contents, so a second card outline cannot linger inside it. */
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
     pointer-events: none;
   }
   .mobile-viewer-frame {
