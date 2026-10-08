@@ -114,7 +114,7 @@ frame.addEventListener('load', async () => {
         const readingY = win.scrollY;
         launch.click();
         await until(() => dialog.open && String(api.current?.number) === String(i + 1), `Chapter ${i + 1} did not open`);
-        await pause(500);
+        await until(() => api.phase === 'open', 'Opening transition did not finish');
         check(dialog.querySelector('.graphic') === graphics[i] && doc.querySelectorAll('.graphic').length === 6,
           `Chapter ${i + 1}: opening moves the original graphic without making a duplicate`);
         check(dialog.contains(doc.activeElement), `Chapter ${i + 1}: focus enters the viewer`);
@@ -124,7 +124,7 @@ frame.addEventListener('load', async () => {
         check(Math.abs(win.scrollY - readingY) < 3, `Chapter ${i + 1}: closing restores the exact reading position`);
         launch.click();
         await until(() => dialog.open && api.current, 'Could not reopen after checking reading position');
-        await pause(500);
+        await until(() => api.phase === 'open', 'Reopening transition did not finish');
         const count = Number(card.dataset.stages);
         for (let stage = 0; stage < count; stage++) {
           if (stage) dialog.querySelector('.mobile-viewer-next').click();
@@ -155,7 +155,7 @@ frame.addEventListener('load', async () => {
         check(card.contains(graphics[i]) && card.contains(doc.activeElement), `Chapter ${i + 1}: closing returns the graphic and focus to its card`);
         launch.click();
         await until(() => dialog.open && api.current?.stage === stage, 'Reopening did not resume');
-        await pause(500);
+        await until(() => api.phase === 'open', 'Resume transition did not finish');
         dialog.querySelector('.mobile-viewer-next').click();
         await until(() => api.current?.stage === count - 1, 'Could not return to final stage');
         dialog.querySelector('.mobile-viewer-next').click();

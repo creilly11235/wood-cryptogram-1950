@@ -20,8 +20,9 @@ for u in units(en):
     if u["en"] not in known:
         problems.append("untranslated unit: " + u["en"][:90])
 
-cut = en.index("<script")
-head, body, script = en[:en.index("<body>")], en[en.index("<body>"):cut], en[cut:]
+body_start = en.index("<body>")
+cut = en.index("<script", body_start)
+head, body, script = en[:body_start], en[body_start:cut], en[cut:]
 
 def swap(text, a, b, where):
     if a not in text:

@@ -4,6 +4,7 @@
   'use strict';
 
   function start() {
+    const startupScrollY = window.scrollY;
     const api = window.WoodStory;
     if (!api) throw new Error('The Wood graphic factory must load before story-scroll.js');
     const mobile = matchMedia('(max-width: 900px)');
@@ -646,6 +647,19 @@
       requestAnimationFrame(paint);
     }
     layout();
+    const pendingInput = window.WoodStoryPendingInput?.take();
+    if (pendingInput?.armed && mobile.matches && (window.visualViewport?.scale || 1) <= 1.01) {
+      arrivalArmed = true;
+      touchHeld = pendingInput.touchHeld;
+      scrollKeyHeld = pendingInput.scrollKeyHeld;
+      suppressAutoUntil = 0;
+      // Include movement that happened before this controller arrived, even if
+      // the finger has lifted and only native momentum is still in progress.
+      const movement = startupScrollY - pendingInput.startY;
+      lastY = window.scrollY - movement;
+      records.forEach(record => { record.previousTop += movement; });
+      scroll();
+    }
     requestAnimationFrame(paint);
     root.dataset.storyReady = 'true';
     window.WoodStoryController = {records, open, close, setStage, dialog,
