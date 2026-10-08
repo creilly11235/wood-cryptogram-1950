@@ -71,12 +71,12 @@ def main():
                 page.evaluate("document.fonts.ready")
                 page.wait_for_timeout(1000)
 
-            def drag(x0, y0, x1, y1, wait=700):
+            def drag(x0, y0, x1, y1, wait=700, steps=10, delay=30):
                 if cd:
                     cd.send("Input.dispatchTouchEvent", {"type": "touchStart", "touchPoints": [{"x": x0, "y": y0}]})
-                    for i in range(1, 11):
-                        cd.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": [{"x": x0 + (x1 - x0) * i / 10, "y": y0 + (y1 - y0) * i / 10}]})
-                        page.wait_for_timeout(30)
+                    for i in range(1, steps + 1):
+                        cd.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": [{"x": x0 + (x1 - x0) * i / steps, "y": y0 + (y1 - y0) * i / steps}]})
+                        page.wait_for_timeout(delay)
                     cd.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
                 else:
                     # WebKit's mobile driver has no native touch/wheel dispatch.
@@ -117,6 +117,26 @@ def main():
             try:
                 load(reset=True)
                 check(page, f"{prefix}: initial load does not open", "!WoodStoryController.current")
+                if cd:
+                    # Begin at the real page top and keep the momentum of an
+                    # ordinary brisk phone flick. Preparing a scroll position
+                    # immediately above the card hid the former debounce bug:
+                    # the card was passed before its delayed entry check ran.
+                    check(page, f"{prefix}: fresh flick test starts at page top", "scrollY===0")
+                    for _ in range(20):
+                        drag(w * .55, h * .85, w * .55, h * .30, wait=600, steps=6, delay=18)
+                        if page.evaluate("!!WoodStoryController.current || document.querySelector('.mobile-story-card').getBoundingClientRect().bottom < -innerHeight"):
+                            break
+                    opened_first = check(page, f"{prefix}: brisk native flicks from page top open first card", "String(WoodStoryController.current?.number)==='1'")
+                    if opened_first:
+                        geometry("brisk first arrival")
+                        check(page, f"{prefix}: arrival gesture keeps first step", "WoodStoryController.current.stage===0")
+                        page.locator(".mobile-viewer-close").click()
+                        closed()
+                        page.wait_for_timeout(800)
+                        check(page, f"{prefix}: closing brisk arrival does not reopen or cascade", "!WoodStoryController.current&&!WoodStoryController.dialog.open&&document.body.style.position!=='fixed'")
+                        check(page, f"{prefix}: closing brisk arrival returns focus to card", "document.activeElement.closest('.mobile-story-card')!==null")
+                    load(reset=True)
                 # Actual downward finger movement carries an unseen card across
                 # its entry line. Programmatic preparation has no input intent.
                 page.evaluate("const c=document.querySelector('.mobile-story-card');scrollTo(0,scrollY+c.getBoundingClientRect().top-innerHeight*.72)")
