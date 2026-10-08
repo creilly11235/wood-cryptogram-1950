@@ -27,7 +27,8 @@
     step: 'Step',
     keyWord: 'key word',
     keyNote: 'Repeated words are skipped',
-    decodedMessage: 'The decoded message'
+    decodedMessage: 'The decoded message',
+    swipeHint: 'Swipe left or right'
   };
 
   class CipherWalkthrough {
@@ -46,7 +47,6 @@
       this.labels = Object.assign({}, DEFAULT_LABELS, options.labels || {});
       this.reduced = Boolean(options.reduced);
       this.onStageChange = options.onStageChange;
-      this.onNavigate = options.onNavigate;
       this.stage = -1;
       this.paused = false;
       this.destroyed = false;
@@ -208,12 +208,37 @@
     }
 
     choose(stage) {
-      if (this.onNavigate) {
-        this.onNavigate(stage);
-        return;
-      }
       this.go(stage);
       if (this.onStageChange) this.onStageChange(stage);
+    }
+
+    enableSwipes() {
+      if (this.swipeController) return;
+      this.swipeController = new AbortController();
+      const options = {passive: true, signal: this.swipeController.signal};
+      const hint = this.node('div', 'cw-swipe-hint', this.labels.swipeHint);
+      this.root.querySelector('.cw-head').append(hint);
+      this.scene.classList.add('cw-swipe-scene');
+      let start = null;
+      this.scene.addEventListener('pointerdown', event => {
+        if (!event.isPrimary || event.pointerType !== 'touch') {
+          start = null;
+          return;
+        }
+        start = {id: event.pointerId, x: event.clientX, y: event.clientY};
+      }, options);
+      this.scene.addEventListener('pointercancel', () => { start = null; }, options);
+      this.scene.addEventListener('pointerup', event => {
+        const origin = start;
+        start = null;
+        if (!origin || event.pointerId !== origin.id) return;
+        const dx = event.clientX - origin.x, dy = event.clientY - origin.y;
+        // Vertical motion belongs to the page; a deliberate horizontal swipe
+        // changes one step without moving the walkthrough or the reading.
+        if (Math.abs(dx) < 45 || Math.abs(dx) <= 1.5 * Math.abs(dy)) return;
+        const stage = Math.max(0, Math.min(7, this.stage + (dx < 0 ? 1 : -1)));
+        if (stage !== this.stage) this.choose(stage);
+      }, options);
     }
 
     animate(element, keyframes, options = {}) {
@@ -474,6 +499,7 @@
     }
 
     destroy() {
+      this.swipeController?.abort();
       this.cancel();
       this.resizeObserver.disconnect();
       this.destroyed = true;

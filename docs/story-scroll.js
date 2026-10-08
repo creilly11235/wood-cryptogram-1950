@@ -1,5 +1,5 @@
-/* Desktop graphics follow the reading column. Mobile visuals are ordinary
-   full-screen sections: scrolling and buttons lead to the same fixed scenes. */
+/* Desktop graphics follow the reading column. Mobile charts stay in the
+   article flow; one walkthrough advances in place with buttons or swipes. */
 (() => {
   'use strict';
 
@@ -12,7 +12,6 @@
     const root = document.documentElement;
     const chapters = [];
     const records = [];
-    const mobileWalk = [];
     let mobileBuilt = false;
     let viewportWidth = 0;
     let viewportHeight = 0;
@@ -25,34 +24,22 @@
       });
     }, { threshold: [0, .25, .5, .55, .9] });
 
-    function createRecord(el, chapter, steps, flow = false, stage = null) {
+    function createRecord(el, chapter, steps, flow = false) {
       const graphic = new Graphic(el);
       graphic.visible = false;
       const progress = el.querySelector('.progress');
       if (progress && !flow) progress.innerHTML = steps.map(() => '<i></i>').join('');
       const record = {
-        chapter, el, steps, graphic, progress, flow, stage,
+        chapter, el, steps, graphic, progress, flow,
         walkTargets: flow ? [] : [...chapter.querySelectorAll('[data-walk-stage]')],
         walkStage: -1,
         inView: false,
-        needsReveal: stage !== null,
         caption: el.querySelector('.beatcap'),
         state: null,
       };
       records.push(record);
       select(record, 0);
-      if (stage !== null) {
-        const walk = graphic.walkthrough;
-        walk.go(stage);
-        walk.title.removeAttribute('aria-live');
-        walk.title.tabIndex = -1;
-        walk.onNavigate = next => {
-          const target = mobileWalk[Math.max(0, Math.min(7, next))];
-          if (!target) return;
-          target.graphic.walkthrough.title.focus({ preventScroll: true });
-          target.el.parentElement.scrollIntoView({ block: 'start', behavior: api.reduced ? 'instant' : 'smooth' });
-        };
-      }
+      if (flow && graphic.walkthrough) graphic.walkthrough.enableSwipes();
       graphic.pause();
       observer.observe(el);
       return record;
@@ -74,23 +61,22 @@
       mobileBuilt = true;
       chapters.forEach(chapterRecord => {
         const { chapter, steps, template } = chapterRecord;
-        function panel(step, stage = null, parent = null) {
+        function panel(step, parent = null) {
           const section = document.createElement('section');
           section.className = 'mobile-visual';
-          section.dataset.scene = stage === null ? step.dataset.s : `walk-${stage}`;
+          section.dataset.scene = chapter.dataset.ch === '1' ? 'walkthrough' : step.dataset.s;
           const el = template.cloneNode(true);
           section.append(el);
           if (parent) parent.append(section);
           else step.after(section);
-          const record = createRecord(el, chapter, [step], true, stage);
-          if (stage !== null) mobileWalk.push(record);
+          createRecord(el, chapter, [step], true);
         }
         if (chapter.dataset.ch === '1') {
           const sequence = document.createElement('div');
           sequence.className = 'mobile-walkthrough';
           const wood = steps.find(step => step.dataset.s === 'wood');
           wood.before(sequence);
-          for (let stage = 0; stage < 8; stage++) panel(wood, stage, sequence);
+          panel(wood, sequence);
         } else {
           steps.forEach(step => panel(step));
         }
@@ -172,14 +158,6 @@
       const visible = enabled && inView && ratio >= threshold;
       if (record.graphic.visible === visible) return;
       record.graphic.visible = visible;
-      if (visible && record.needsReveal) {
-        record.needsReveal = false;
-        // Measure the transition origins on arrival, after fonts and the
-        // current orientation have established the panel's real geometry.
-        const walk = record.graphic.walkthrough;
-        if (record.stage > 0) walk.go(record.stage - 1);
-        walk.go(record.stage, { force: true });
-      }
       if (visible) record.graphic.resume();
       else record.graphic.pause();
     }
