@@ -1,6 +1,6 @@
-/* Keep the article's own text in charge of the graphic. Native scrolling
-   changes the state when the next paragraph reaches the reading area below
-   the phone panel (or the middle of the desktop reading column). */
+/* Desktop follows the reading column. On phones, one full-screen graphic
+   advances through a dedicated stretch of native page scrolling, with the
+   article outside that stretch. Buttons use the same scroll positions. */
 (() => {
   'use strict';
 
@@ -16,29 +16,98 @@
     let viewportHeight = 0;
     let sideBySide = false;
     let framePending = false;
+    let activeRun = null;
 
-    /* Browser toolbar changes resize the visual viewport on phones. Freeze
-       the reading geometry until width/orientation changes so those toolbar
-       changes cannot move a paragraph across the activation threshold. */
-    function measureViewport(force = false) {
+    /* Freeze the distance between states while a phone's browser chrome opens
+       or closes. The panel itself can follow 100dvh without moving a state. */
+    function measureViewport(force = false, resetGeometry = false) {
       const width = root.clientWidth;
       const height = window.innerHeight;
-      if (!force && phone.matches && Math.abs(width - viewportWidth) < 2) return;
-      viewportWidth = width;
-      viewportHeight = height;
-      // Keep CSS and activation geometry on the same cached layout. A browser
-      // toolbar crossing 450px must not rearrange the article during a swipe.
-      sideBySide = !phone.matches || (width >= 500 && height <= 450);
+      const geometryChanged = resetGeometry || !phone.matches || Math.abs(width - viewportWidth) >= 2;
+      // Capture the last stable reading position before orientation reflows the
+      // article. Height-only browser-toolbar changes never scroll the page.
+      const anchor = geometryChanged && phone.matches && !sideBySide ? activeRun : null;
+      if (geometryChanged) {
+        viewportWidth = width;
+        viewportHeight = height;
+      }
+      sideBySide = !phone.matches;
       root.dataset.storyLayout = sideBySide ? 'side' : 'stack';
-      root.dataset.storyShort = String(height <= 450);
-      root.style.setProperty('--story-viewport-height', `${height}px`);
+      root.dataset.storyShort = String(viewportHeight <= 450);
+      root.style.setProperty('--story-viewport-height', `${viewportHeight}px`);
+      if (geometryChanged || force) {
+        chapters.forEach(record => layout(record, geometryChanged));
+      }
+      refreshRunHeights();
+      if (anchor && anchor.record.run.isConnected) {
+        const record = anchor.record;
+        window.scrollTo({
+          top: window.scrollY + record.run.getBoundingClientRect().top + anchor.progress * record.runStep,
+          behavior: 'instant',
+        });
+      }
       chapters.forEach(record => {
         const box = record.el.getBoundingClientRect();
         record.panelHeight = box.height;
         record.panelTop = parseFloat(getComputedStyle(record.el).top) || 0;
         const exposed = Math.max(0, Math.min(height, box.bottom) - Math.max(0, box.top));
-        setVisibility(record, exposed > 0, exposed / box.height);
+        setVisibility(record, exposed > 0, box.height ? exposed / box.height : 0);
       });
+    }
+
+    function layout(record, resetGeometry) {
+      if (sideBySide) {
+        if (record.run.isConnected) {
+          record.home.after(record.el);
+          record.run.remove();
+        }
+        return;
+      }
+      if (!record.run.isConnected) {
+        const wood = record.steps.find(step => step.dataset.s === 'wood');
+        if (record.graphic.walkthrough && wood) wood.before(record.run);
+        else record.steps[record.steps.length - 1].after(record.run);
+        record.run.append(record.el);
+      }
+      if (resetGeometry || !record.runStep) {
+        record.runStep = Math.round(Math.max(140, Math.min(240, viewportHeight * .32)));
+        record.runPanelHeight = viewportHeight;
+      }
+      record.run.style.setProperty('--run-panel-height', `${record.runPanelHeight}px`);
+      record.run.style.setProperty('--run-step', `${record.runStep}px`);
+      record.run.style.setProperty('--run-travel', `${(record.runCount - 1) * record.runStep}px`);
+    }
+
+    /* Offscreen runways keep their last measured height. Otherwise a toolbar
+       resize adds its height difference once per earlier chapter and moves the
+       current chart to a different state. Refresh only visible/entering runs;
+       their own top stays fixed and native touch scrolling stays untouched. */
+    function refreshRunHeights() {
+      if (sideBySide) return;
+      const height = window.innerHeight;
+      const visible = chapters.filter(record => {
+        if (!record.run.isConnected || record.runPanelHeight === height) return false;
+        const box = record.run.getBoundingClientRect();
+        return box.bottom > 0 && box.top < height;
+      });
+      visible.forEach(record => {
+        record.runPanelHeight = height;
+        record.run.style.setProperty('--run-panel-height', `${height}px`);
+      });
+    }
+
+    function runIndex(record) {
+      return Math.max(0, Math.min(record.runCount - 1,
+        Math.round(-record.run.getBoundingClientRect().top / record.runStep)));
+    }
+
+    function navigateRun(record, index, behavior) {
+      const stage = Math.max(0, Math.min(record.runCount - 1, index));
+      window.scrollTo({
+        top: window.scrollY + record.run.getBoundingClientRect().top + stage * record.runStep,
+        behavior,
+      });
+      schedule();
     }
 
     document.querySelectorAll('.chapter').forEach(chapter => {
@@ -46,12 +115,19 @@
       const steps = [...chapter.querySelectorAll('.step[data-s]')];
       if (!el || !steps.length) return;
 
+      const home = document.createComment('Desktop graphic position');
+      el.before(home);
+      const run = document.createElement('div');
+      run.className = 'story-run mobile-visual';
       const graphic = new Graphic(el);
       graphic.visible = false;
       const progress = el.querySelector('.progress');
       if (progress) progress.innerHTML = steps.map(() => '<i></i>').join('');
       const record = {
-        chapter, el, steps, graphic, progress,
+        chapter, el, steps, graphic, progress, home, run,
+        runStep: 0,
+        runPanelHeight: 0,
+        runCount: graphic.walkthrough ? 8 : steps.length,
         walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')],
         walkStage: -1,
         inView: false,
@@ -60,10 +136,16 @@
         panelHeight: 0,
         panelTop: 0,
       };
+      run.dataset.chapter = chapter.dataset.ch;
+      run.dataset.stages = String(record.runCount);
       chapters.push(record);
       if (graphic.walkthrough) {
         graphic.walkthrough.enableSwipes();
         graphic.walkthrough.onNavigate = stage => {
+          if (!sideBySide) {
+            navigateRun(record, stage, api.reduced ? 'instant' : 'smooth');
+            return;
+          }
           const target = record.walkTargets.find(item => Number(item.dataset.walkStage) === stage);
           if (!target) return;
           const next = record.walkTargets.find(item => Number(item.dataset.walkStage) === stage + 1);
@@ -105,19 +187,37 @@
       });
     }
 
-    function readingLine(record) {
-      const exposed = Math.max(0, viewportHeight - record.panelHeight - record.panelTop);
-      return sideBySide ? viewportHeight * .55
-        : record.panelTop + record.panelHeight + Math.min(88, Math.max(48, exposed * .2));
+    function readingLine() {
+      return viewportHeight * .55;
     }
 
     function update() {
       framePending = false;
-      /* Read all positions before changing any strip text. The threshold is
-         48–88px inside the exposed reading area, so the next heading is visible
-         as its graphic changes. There is no extra blank scrolling distance. */
+      refreshRunHeights();
+      // Remember progress only at the measured width; a pending resize may have
+      // already reflowed the DOM before its geometry callback has run.
+      if (root.clientWidth === viewportWidth) {
+        activeRun = null;
+        if (!sideBySide) {
+          chapters.some(record => {
+            const box = record.run.getBoundingClientRect();
+            if (box.top > 1 || box.bottom < window.innerHeight - 1) return false;
+            activeRun = {record, progress: Math.max(0, Math.min(record.runCount - 1, -box.top / record.runStep))};
+            return true;
+          });
+        }
+      }
+      /* Read every position first. A phone's stage depends only on its own
+         native scroll run; no paragraph can show through behind the graphic. */
       const changes = chapters.map(record => {
-        const line = readingLine(record);
+        if (!sideBySide) {
+          const stage = runIndex(record);
+          // The opening graphic has eight stages but only three prose states.
+          // Its visual stage is independent of the article's paragraph labels.
+          const index = record.graphic.walkthrough ? (stage === 0 ? 0 : stage === 7 ? 2 : 1) : stage;
+          return [record, index, record.graphic.walkthrough ? stage : 0];
+        }
+        const line = readingLine();
         let index = 0;
         record.steps.forEach((step, i) => {
           if (step.getBoundingClientRect().top <= line) index = i;
@@ -186,7 +286,7 @@
     });
     addEventListener('orientationchange', () => {
       requestAnimationFrame(() => {
-        measureViewport(true);
+        measureViewport(true, true);
         schedule();
       });
     }, { passive: true });
@@ -203,9 +303,9 @@
         const index = record.steps.findIndex(step => step.dataset.s === 'prayer');
         if (index < 0) return;
         const step = record.steps[index];
-        /* Replay stays with its paragraph. The normal trigger reads the same
-           target afterward; no delayed animation fights with scrolling. */
-        step.scrollIntoView({ block: 'start', behavior: 'instant' });
+        /* Replay and ordinary navigation land on the same activation point. */
+        if (sideBySide) step.scrollIntoView({ block: 'start', behavior: 'instant' });
+        else navigateRun(record, index, 'instant');
         select(record, index);
         record.graphic.replay();
         if (!record.graphic.visible) record.graphic.pause();
