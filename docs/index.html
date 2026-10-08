@@ -234,11 +234,11 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="story-layout.css?v=17">
-<link rel="stylesheet" href="cipher-cards.css?v=17">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=17">
-<link rel="stylesheet" href="story-graphics.css?v=17">
-<link rel="stylesheet" href="story-viewer.css?v=17">
+<link rel="stylesheet" href="story-layout.css?v=18">
+<link rel="stylesheet" href="cipher-cards.css?v=18">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=18">
+<link rel="stylesheet" href="story-graphics.css?v=18">
+<link rel="stylesheet" href="story-viewer.css?v=18">
 </head>
 <body>
 
@@ -487,7 +487,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=17"></script>
+<script src="cipher-walkthrough.js?v=18"></script>
 <script>
 (function(){
 "use strict";
@@ -614,6 +614,33 @@ function Graphic(el){
     const rows=Math.ceil(count/columns),dx=p.w/columns,dy=p.h/rows,r=Math.min(maxRadius,dx*.32,dy*.32);
     for(let i=0;i<count;i++)reveal(Math.floor(i/columns)*35,()=>dot(p.x+dx*((i%columns)+.5),p.y+dy*(Math.floor(i/columns)+.5),r,highlight(i)?blue:gridGray),300);
   }
+  function bookshelves(p){
+    if(p.w<1||p.h<1)return;
+    // Choose the number of shelves from the available space, keeping spines
+    // upright even in a short phone viewport. One spine still means one book.
+    const rows=Math.max(2,Math.min(6,Math.round(Math.sqrt(129*p.h/(4.5*p.w)))));
+    const cols=Math.ceil(129/rows),dx=p.w/cols,dy=p.h/rows;
+    const covers=["#d3dcdf","#e2ded5","#c4d0d3","#d9dfd8"];
+    for(let row=0;row<rows;row++)reveal(row*70,()=>{
+      const y=p.y+(row+1)*dy-3;
+      line(p.x,y+1,p.x+p.w,y+1,"#b5c0c4",1);
+      line(p.x,y+3,p.x+p.w,y+3,pale,1);
+    });
+    for(let i=0;i<129;i++)reveal(Math.floor(i/cols)*70+(i%cols)*4,()=>{
+      const row=Math.floor(i/cols),variation=((i*7)%11)/10;
+      const w=(dx-Math.min(3,dx*.24))*(.84+variation*.16);
+      const h=Math.max(3,dy-10)*(.79+((i*13)%7)/6*.21);
+      const x=p.x+(i%cols)*dx+(dx-w)/2,y=p.y+(row+1)*dy-3-h;
+      ctx.fillStyle=covers[(i*3+row)%covers.length];ctx.strokeStyle="#899ba2";ctx.lineWidth=.7;
+      ctx.beginPath();ctx.roundRect(x,y,w,h,Math.min(1.2,w*.15));ctx.fill();ctx.stroke();
+      if(w>5)line(x+1.8,y+2,x+1.8,y+h-2,"#f3f5f4",.8);
+      if(h>15){
+        const inset=Math.max(1,w*.2);
+        line(x+inset,y+4,x+w-inset,y+4,"#899ba2",.7);
+        line(x+inset,y+h-4,x+w-inset,y+h-4,"#899ba2",.7);
+      }
+    },350);
+  }
   function words(s,x,y,width,size,delay){
     const parts=s.split(" "),gap=5;let fitted=size;ctx.font=font(fitted,true);
     const total=()=>parts.reduce((sum,word)=>sum+ctx.measureText(word).width+8,0)+(parts.length-1)*gap;
@@ -650,9 +677,9 @@ function Graphic(el){
       case "trap":
         mobileRows([["THE ANSWER IS NOT HERE YET",mobileCopy.trap[0],ink,"decoded"],["WE WILL MEET AT DAWN TODAY",mobileCopy.trap[1],ink,"decoded"],["PLEASE KEEP THIS KEY SAFE",mobileCopy.trap[2],ink,"decoded"]]);break;
       case "shelves":{
-        const cols=W<500?13:26,nrows=Math.ceil(129/cols),top=p.y+(wideShort?35:58),bottom=p.y+p.h-(wideShort?33:55),dx=p.w/cols,dy=(bottom-top)/nrows;
+        const top=p.y+(wideShort?35:58),bottom=p.y+p.h-(wideShort?33:55);
         wrap(mobileCopy.shelves[0],cx,p.y+(wideShort?13:19),p.w,17,ink,"center");
-        for(let i=0;i<129;i++)reveal(Math.floor(i/cols)*55,()=>{const x=p.x+(i%cols)*dx+1,y=top+Math.floor(i/cols)*dy,w=Math.max(3,dx-4),h=dy*.78;ctx.fillStyle="#f0f3f5";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+.5,y+.5,w-1,h-1,2);ctx.fill();ctx.stroke();line(x+3,y+3,x+3,y+h-3,muted);});
+        bookshelves({x:p.x,y:top,w:p.w,h:Math.max(1,bottom-top)});
         wrap(mobileCopy.shelves[1],cx,p.y+p.h-(wideShort?12:21),p.w,15,muted,"center");break;
       }
       case "plants":{
@@ -736,10 +763,7 @@ function Graphic(el){
         rows([["THE ANSWER IS NOT HERE YET","A freely chosen key can produce this",ink,true,"decoded"],["WE WILL MEET AT DAWN TODAY","Another key can produce this too",ink,true,"decoded"],["PLEASE KEEP THIS KEY SAFE","Readable words alone are not enough",ink,true,"decoded"]]);break;
       }
       case "shelves":{
-        const top=p.y+30,bottom=p.y+p.h-25,cols=W<360?22:26,countRows=Math.ceil(129/cols),dx=p.w/cols,dy=(bottom-top)/countRows;
-        for(let i=0;i<129;i++)reveal(Math.floor(i/cols)*70,()=>{const x=p.x+(i%cols)*dx+1,y=top+Math.floor(i/cols)*dy,w=Math.max(3,dx-3),h=dy*.76;
-          ctx.fillStyle="#f0f3f5";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+.5,y+.5,w-1,h-1,1.5);ctx.fill();ctx.stroke();line(x+2,y+2,x+2,y+h-2,muted);
-        });
+        bookshelves({x:p.x,y:p.y+30,w:p.w,h:Math.max(1,p.h-55)});
         label("Each spine represents one book",cx,p.y+10,p.w,fs,ink,"center");
         label("Every possible starting point was tried",cx,p.y+p.h-9,p.w,13,muted,"center");break;
       }
@@ -869,7 +893,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="story-scroll.js?v=17"></script>
+<script src="story-scroll.js?v=18"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */
