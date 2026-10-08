@@ -5,6 +5,7 @@
 .t.decoded,.cipher-token.decoded{border:1px solid var(--cipher-decoded-border);background:var(--cipher-decoded-bg);color:var(--cipher-decoded-fg);box-shadow:var(--cipher-decoded-rule)}
 .t{border-radius:var(--cipher-card-radius);padding-top:.09em}
 .cipher-token{border-radius:var(--cipher-card-radius);padding:.12em .3em .16em}
+.step p .cipher-token{display:inline-block;max-inline-size:100%;font-weight:400;line-height:1.2;padding:.16em .3em .1em;vertical-align:baseline}
 td .cipher-token{min-width:1.65em;padding:.12em .18em .16em}
 .hero .answer .answer-message{border-radius:6px;padding:14px 16px 16px;line-height:1.4}
 @media(max-width:900px){.tiles .t{border-radius:2px}}
