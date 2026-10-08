@@ -109,7 +109,7 @@
     .cw-controls{padding-top:5px}
   }
 }
-/* Mobile gives each animation a complete viewport during its scroll sequence.
+/* The mobile viewer gives each animation the available screen space.
    Key words stay readable; the available scene height sets the card size. */
 @media(max-width:900px){
   .mobile-visual .cipher-walkthrough-host{align-items:stretch}

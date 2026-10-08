@@ -1,323 +1,572 @@
-/* Desktop follows the reading column. On phones, one full-screen graphic
-   advances through a dedicated stretch of native page scrolling, with the
-   article outside that stretch. Buttons use the same scroll positions. */
+/* Desktop follows the reading column. Mobile offers one preview card per
+   chapter, opening into a button/swipe-driven dialog on its first arrival. */
 (() => {
   'use strict';
 
   function start() {
     const api = window.WoodStory;
     if (!api) throw new Error('The Wood graphic factory must load before story-scroll.js');
-
-    const { Graphic } = api;
-    const phone = matchMedia('(max-width: 900px)');
+    const mobile = matchMedia('(max-width: 900px)');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const root = document.documentElement;
-    const chapters = [];
-    let viewportWidth = 0;
-    let viewportHeight = 0;
-    let sideBySide = false;
+    const records = [];
+    const german = root.lang.startsWith('de');
+    const labels = german ? {
+      explore: 'Animation ansehen', resume: 'Animation fortsetzen', replay: 'Animation wiederholen',
+      close: 'Schließen', dismiss: 'Animation schließen und zum Artikel zurückkehren',
+      previous: 'Vorheriger Schritt', next: 'Weiter', navigation: 'Animationsschritte',
+      steps: count => `${count} Schritte`, step: (index, count) => `Schritt ${index} von ${count}`,
+    } : {
+      explore: 'Explore animation', resume: 'Continue animation', replay: 'Replay animation',
+      close: 'Close', dismiss: 'Close animation and return to the article',
+      previous: 'Previous step', next: 'Next', navigation: 'Animation steps',
+      steps: count => `${count} steps`, step: (index, count) => `Step ${index} of ${count}`,
+    };
+    const storageKey = 'wood-story-viewed-v1';
+    let visited;
+    try { visited = new Set(JSON.parse(sessionStorage.getItem(storageKey) || '[]')); }
+    catch (_) { visited = new Set(); }
+    let current = null;
+    let phase = 'closed';
+    let transition = null;
+    let transitionToken = 0;
+    let lockedPosition = 0;
+    let lockedCardTop = 0;
+    let originalBodyStyle = null;
+    let returnFocus = null;
     let framePending = false;
-    let activeRun = null;
+    let lastY = window.scrollY;
+    let viewportWidth = 0;
+    let pageTouch = null;
+    let autoCandidate = null;
+    let autoTimer = 0;
+    let userScrollUntil = 0;
+    let suppressAutoUntil = performance.now() + 700;
 
-    /* Freeze the distance between states while a phone's browser chrome opens
-       or closes. The panel itself can follow 100dvh without moving a state. */
-    function measureViewport(force = false, resetGeometry = false) {
-      const width = root.clientWidth;
-      const height = window.innerHeight;
-      const geometryChanged = resetGeometry || !phone.matches || Math.abs(width - viewportWidth) >= 2;
-      // Capture the last stable reading position before orientation reflows the
-      // article. Height-only browser-toolbar changes never scroll the page.
-      const anchor = geometryChanged && phone.matches && !sideBySide ? activeRun : null;
-      if (geometryChanged) {
-        viewportWidth = width;
-        viewportHeight = height;
+    function node(tag, className, text) {
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (text !== undefined) el.textContent = text;
+      return el;
+    }
+    function button(className, text, callback) {
+      const el = node('button', className, text);
+      el.type = 'button';
+      el.addEventListener('click', callback);
+      return el;
+    }
+    function labelButton(el, text, direction) {
+      const children = text ? [document.createTextNode(text)] : [];
+      if (direction) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('width', '18');
+        svg.setAttribute('height', '18');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('focusable', 'false');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '1.75');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', direction === 'back' ? 'M19 12H5m6-6-6 6 6 6' : direction === 'expand' ? 'M6 18 18 6M6 6h12v12' : 'M5 12h14m-6-6 6 6-6 6');
+        svg.append(path);
+        children.push(svg);
       }
-      sideBySide = !phone.matches;
-      root.dataset.storyLayout = sideBySide ? 'side' : 'stack';
-      root.dataset.storyShort = String(viewportHeight <= 450);
-      root.style.setProperty('--story-viewport-height', `${viewportHeight}px`);
-      if (geometryChanged || force) {
-        chapters.forEach(record => layout(record, geometryChanged));
-      }
-      refreshRunHeights();
-      if (anchor && anchor.record.run.isConnected) {
-        const record = anchor.record;
-        window.scrollTo({
-          top: window.scrollY + record.run.getBoundingClientRect().top + anchor.progress * record.runStep,
-          behavior: 'instant',
-        });
-      }
-      chapters.forEach(record => {
-        const box = record.el.getBoundingClientRect();
-        record.panelHeight = box.height;
-        record.panelTop = parseFloat(getComputedStyle(record.el).top) || 0;
-        const exposed = Math.max(0, Math.min(height, box.bottom) - Math.max(0, box.top));
-        setVisibility(record, exposed > 0, box.height ? exposed / box.height : 0);
-      });
+      el.replaceChildren(...children);
+    }
+    function setPhase(next) {
+      phase = next;
+      root.dataset.viewerOpen = String(next !== 'closed');
+      dialog.dataset.phase = next;
+    }
+    function suppressAuto(duration = 500) {
+      clearTimeout(autoTimer);
+      autoCandidate = null;
+      userScrollUntil = 0;
+      suppressAutoUntil = performance.now() + duration;
+    }
+    function rememberPositions() {
+      records.forEach(record => { record.previousTop = record.card.getBoundingClientRect().top; });
+      lastY = window.scrollY;
     }
 
-    function layout(record, resetGeometry) {
-      if (sideBySide) {
-        if (record.run.isConnected) {
-          record.home.after(record.el);
-          record.run.remove();
-        }
-        return;
-      }
-      if (!record.run.isConnected) {
-        const wood = record.steps.find(step => step.dataset.s === 'wood');
-        if (record.graphic.walkthrough && wood) wood.before(record.run);
-        else record.steps[record.steps.length - 1].after(record.run);
-        record.run.append(record.el);
-      }
-      if (resetGeometry || !record.runStep) {
-        record.runStep = Math.round(Math.max(140, Math.min(240, viewportHeight * .32)));
-        record.runPanelHeight = viewportHeight;
-      }
-      record.run.style.setProperty('--run-panel-height', `${record.runPanelHeight}px`);
-      record.run.style.setProperty('--run-step', `${record.runStep}px`);
-      record.run.style.setProperty('--run-travel', `${(record.runCount - 1) * record.runStep}px`);
-    }
-
-    /* Offscreen runways keep their last measured height. Otherwise a toolbar
-       resize adds its height difference once per earlier chapter and moves the
-       current chart to a different state. Refresh only visible/entering runs;
-       their own top stays fixed and native touch scrolling stays untouched. */
-    function refreshRunHeights() {
-      if (sideBySide) return;
-      const height = window.innerHeight;
-      const visible = chapters.filter(record => {
-        if (!record.run.isConnected || record.runPanelHeight === height) return false;
-        const box = record.run.getBoundingClientRect();
-        return box.bottom > 0 && box.top < height;
-      });
-      visible.forEach(record => {
-        record.runPanelHeight = height;
-        record.run.style.setProperty('--run-panel-height', `${height}px`);
-      });
-    }
-
-    function runIndex(record) {
-      return Math.max(0, Math.min(record.runCount - 1,
-        Math.round(-record.run.getBoundingClientRect().top / record.runStep)));
-    }
-
-    function navigateRun(record, index, behavior) {
-      const stage = Math.max(0, Math.min(record.runCount - 1, index));
-      window.scrollTo({
-        top: window.scrollY + record.run.getBoundingClientRect().top + stage * record.runStep,
-        behavior,
-      });
-      schedule();
-    }
+    const dialog = node('dialog', 'mobile-story-dialog mobile-visual');
+    dialog.setAttribute('aria-labelledby', 'mobile-viewer-title');
+    const frame = node('div', 'mobile-viewer-frame');
+    const header = node('header', 'mobile-viewer-header');
+    const title = node('h2', 'mobile-viewer-title');
+    title.id = 'mobile-viewer-title';
+    const dismiss = button('mobile-viewer-close', '×', () => close());
+    dismiss.setAttribute('aria-label', labels.dismiss);
+    const stageHost = node('div', 'mobile-viewer-stage');
+    const nav = node('nav', 'mobile-viewer-nav');
+    nav.setAttribute('aria-label', labels.navigation);
+    const previous = button('mobile-viewer-prev', '', () => advance(-1));
+    labelButton(previous, '', 'back');
+    previous.setAttribute('aria-label', labels.previous);
+    const count = node('span', 'mobile-viewer-count');
+    count.setAttribute('aria-live', 'polite');
+    count.setAttribute('aria-atomic', 'true');
+    const next = button('mobile-viewer-next', labels.next, () => {
+      if (!current || phase !== 'open') return;
+      if (current.stage === current.count - 1) close(true);
+      else advance(1);
+    });
+    header.append(title, dismiss);
+    nav.append(previous, count, next);
+    frame.append(header, stageHost, nav);
+    dialog.append(frame);
+    document.body.append(dialog);
+    dialog.addEventListener('cancel', event => { event.preventDefault(); close(); });
 
     document.querySelectorAll('.chapter').forEach(chapter => {
       const el = chapter.querySelector('.graphic');
       const steps = [...chapter.querySelectorAll('.step[data-s]')];
       if (!el || !steps.length) return;
-
       const home = document.createComment('Desktop graphic position');
       el.before(home);
-      const run = document.createElement('div');
-      run.className = 'story-run mobile-visual';
-      const graphic = new Graphic(el);
+      const graphic = new api.Graphic(el);
       graphic.visible = false;
+      const number = chapter.dataset.ch;
+      const card = node('section', 'mobile-story-card');
+      card.dataset.chapter = number;
+      const preview = node('div', 'mobile-story-preview');
+      preview.setAttribute('role', 'button');
+      preview.setAttribute('tabindex', '0');
+      preview.setAttribute('aria-haspopup', 'dialog');
+      const footer = node('footer', 'mobile-story-footer');
+      const launch = button('mobile-story-open', labels.explore, () => open(record, launch));
+      launch.setAttribute('aria-haspopup', 'dialog');
+      const detail = node('span', 'mobile-story-detail');
+      footer.append(launch, detail);
+      card.append(preview, footer);
+      const record = {
+        number, chapter, el, graphic, home, steps, card, preview, launch, detail,
+        title: el.querySelector('.gbar .ct')?.textContent.trim() || '',
+        stage: 0, count: graphic.walkthrough ? 8 : steps.length,
+        opened: visited.has(number), completed: false, previousTop: Infinity,
+        renderMode: null, desktopState: null, desktopStage: -1,
+        walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')],
+      };
+      card.dataset.stages = String(record.count);
+      detail.textContent = labels.steps(record.count);
+      preview.addEventListener('click', () => open(record, preview));
+      preview.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          open(record, preview);
+        }
+      });
       const progress = el.querySelector('.progress');
       if (progress) progress.innerHTML = steps.map(() => '<i></i>').join('');
-      const record = {
-        chapter, el, steps, graphic, progress, home, run,
-        runStep: 0,
-        runPanelHeight: 0,
-        runCount: graphic.walkthrough ? 8 : steps.length,
-        walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')],
-        walkStage: -1,
-        inView: false,
-        caption: el.querySelector('.beatcap'),
-        state: null,
-        panelHeight: 0,
-        panelTop: 0,
-      };
-      run.dataset.chapter = chapter.dataset.ch;
-      run.dataset.stages = String(record.runCount);
-      chapters.push(record);
       if (graphic.walkthrough) {
-        graphic.walkthrough.enableSwipes();
-        graphic.walkthrough.onNavigate = stage => {
-          if (!sideBySide) {
-            navigateRun(record, stage, api.reduced ? 'instant' : 'smooth');
+        // The shared mobile viewer owns swipes; desktop buttons follow prose.
+        graphic.walkthrough.onNavigate = index => {
+          if (mobile.matches) {
+            if (current === record) setStage(record, index);
             return;
           }
-          const target = record.walkTargets.find(item => Number(item.dataset.walkStage) === stage);
+          const target = record.walkTargets.find(item => Number(item.dataset.walkStage) === index);
           if (!target) return;
-          const next = record.walkTargets.find(item => Number(item.dataset.walkStage) === stage + 1);
+          const following = record.walkTargets.find(item => Number(item.dataset.walkStage) === index + 1);
           const box = target.getBoundingClientRect();
-          // Land inside this paragraph's range, leaving a little room to scroll
-          // either way without immediately undoing the button selection.
-          const inset = next ? Math.min(32, (next.getBoundingClientRect().top - box.top) / 2) : 32;
-          window.scrollTo({
-            top: window.scrollY + box.top - readingLine(record) + inset,
-            behavior: api.reduced ? 'instant' : 'smooth',
-          });
+          const inset = following ? Math.min(32, (following.getBoundingClientRect().top - box.top) / 2) : 32;
+          window.scrollTo({top: window.scrollY + box.top - innerHeight * .55 + inset, behavior: reduced.matches ? 'instant' : 'smooth'});
           schedule();
         };
       }
-      select(record, 0);
+      records.push(record);
+      updateControls(record);
     });
 
-    function select(record, index) {
+    function describe(record, index) {
       const step = record.steps[index];
-      const state = step.dataset.s;
-      if (record.state === state) return;
-      record.state = state;
-      record.el.dataset.state = state;
-      // The factory freezes its own timeline while paused. Starting normally
-      // here lets a chapter's first animation play when it enters the viewport.
-      record.graphic.go(state);
-      if (!record.graphic.visible) record.graphic.pause();
-
       const description = step.dataset.cap || step.querySelector('h2, h3')?.textContent || '';
-      if (record.caption) record.caption.textContent = description;
+      record.el.dataset.state = step.dataset.s;
+      const caption = record.el.querySelector('.beatcap');
+      if (caption) caption.textContent = description;
       const canvas = record.el.querySelector('canvas');
       if (canvas && description) {
         canvas.setAttribute('role', 'img');
         canvas.setAttribute('aria-label', description);
       }
       record.steps.forEach((item, i) => item.classList.toggle('on', i === index));
-      record.progress?.querySelectorAll('i').forEach((dot, i) => {
-        dot.classList.toggle('on', i <= index);
-      });
+      record.el.querySelectorAll('.progress i').forEach((dot, i) => dot.classList.toggle('on', i <= index));
     }
 
-    function readingLine() {
-      return viewportHeight * .55;
+    function updateControls(record) {
+      const label = record.completed ? labels.replay : record.opened ? labels.resume : labels.explore;
+      labelButton(record.launch, label, 'expand');
+      record.preview.setAttribute('aria-label', `${label}: ${record.title}`);
+      record.card.dataset.stage = String(record.stage);
+      record.card.dataset.opened = String(record.opened);
+      record.card.dataset.completed = String(record.completed);
+      if (current !== record) return;
+      previous.disabled = record.stage === 0;
+      count.textContent = `${record.stage + 1} / ${record.count}`;
+      count.setAttribute('aria-label', labels.step(record.stage + 1, record.count));
+      labelButton(next, record.stage === record.count - 1 ? labels.close : labels.next, record.stage === record.count - 1 ? null : 'forward');
+      dialog.dataset.chapter = record.number;
+      dialog.dataset.stage = String(record.stage);
+    }
+
+    function setStage(recordOrNumber, requested, force = false) {
+      const record = typeof recordOrNumber === 'object' ? recordOrNumber : records.find(item => item.number === String(recordOrNumber));
+      if (!record || !Number.isFinite(requested)) return;
+      const stage = Math.max(0, Math.min(record.count - 1, Math.round(requested)));
+      const changed = record.stage !== stage || record.renderMode !== 'mobile';
+      record.stage = stage;
+      record.renderMode = 'mobile';
+      const index = record.graphic.walkthrough ? (stage === 0 ? 0 : stage === 7 ? 2 : 1) : stage;
+      if (changed || force) {
+        record.graphic.go(record.steps[index].dataset.s);
+        if (record.graphic.walkthrough) record.graphic.showStage(stage);
+        if (force && !changed) record.graphic.replay();
+        describe(record, index);
+        if (!record.graphic.visible) record.graphic.pause();
+      }
+      updateControls(record);
+      updateVisibility();
+    }
+
+    function advance(direction) {
+      if (!current || phase !== 'open') return;
+      setStage(current, current.stage + direction);
+    }
+
+    function lockPage() {
+      lockedPosition = window.scrollY;
+      lockedCardTop = current.card.getBoundingClientRect().top;
+      originalBodyStyle = document.body.getAttribute('style');
+      Object.assign(document.body.style, {
+        position: 'fixed', top: `${-lockedPosition}px`, left: '0', right: '0', width: '100%',
+      });
+      document.body.classList.add('story-viewer-open');
+    }
+    function unlockPage() {
+      if (originalBodyStyle === null) document.body.removeAttribute('style');
+      else document.body.setAttribute('style', originalBodyStyle);
+      document.body.classList.remove('story-viewer-open');
+      window.scrollTo({top: lockedPosition, behavior: 'instant'});
+    }
+
+    function cardTransform(record) {
+      const card = record.card.getBoundingClientRect();
+      const target = frame.getBoundingClientRect();
+      return `translate(${card.left - target.left}px, ${card.top - target.top}px) scale(${card.width / target.width}, ${card.height / target.height})`;
+    }
+    async function animateFrame(record, opening, interrupted = null) {
+      if (reduced.matches || typeof frame.animate !== 'function') return;
+      const compact = {transform: cardTransform(record), borderRadius: '18px'};
+      const full = {transform: 'translate(0, 0) scale(1)', borderRadius: '0px'};
+      const animation = frame.animate(opening ? [compact, full] : [interrupted || full, compact], {
+        duration: opening ? 420 : 340, easing: 'cubic-bezier(.22,.8,.22,1)', fill: 'both',
+      });
+      transition = animation;
+      try { await animation.finished; } catch (_) { /* Resizing safely settles the current transition. */ }
+      if (transition === animation) transition = null;
+      animation.cancel();
+    }
+
+    async function open(recordOrNumber, source) {
+      const record = typeof recordOrNumber === 'object' ? recordOrNumber : records.find(item => item.number === String(recordOrNumber));
+      if (!record || current || !mobile.matches) return;
+      suppressAuto();
+      returnFocus = source || record.launch;
+      visited.add(record.number);
+      try { sessionStorage.setItem(storageKey, JSON.stringify([...visited])); }
+      catch (_) { /* The current page still remembers visits when storage is unavailable. */ }
+      record.opened = true;
+      if (record.completed) {
+        record.completed = false;
+        setStage(record, 0, true);
+      }
+      current = record;
+      const token = ++transitionToken;
+      setPhase('opening');
+      title.textContent = record.title;
+      record.card.dataset.viewerActive = 'true';
+      lockPage();
+      stageHost.append(record.el);
+      dialog.showModal();
+      updateControls(record);
+      updateVisibility();
+      dismiss.focus({preventScroll: true});
+      await animateFrame(record, true);
+      if (token !== transitionToken || current !== record) return;
+      setPhase('open');
+      updateVisibility();
+    }
+
+    function finishClose(record, completed, restoreFocus) {
+      transitionToken++;
+      transition?.cancel();
+      transition = null;
+      record.completed = completed;
+      record.preview.append(record.el);
+      record.card.dataset.viewerActive = 'false';
+      current = null;
+      setPhase('closed');
+      if (dialog.open) dialog.close();
+      unlockPage();
+      suppressAuto(700);
+      if (restoreFocus && returnFocus?.isConnected) returnFocus.focus({preventScroll: true});
+      updateControls(record);
+      rememberPositions();
+      updateVisibility();
+    }
+
+    async function close(completed = current?.stage === current?.count - 1, immediate = false) {
+      if (!current || phase === 'closing') return;
+      const record = current;
+      const token = ++transitionToken;
+      const style = transition ? getComputedStyle(frame) : null;
+      const interrupted = style ? {transform: style.transform, borderRadius: style.borderRadius} : null;
+      transition?.cancel();
+      transition = null;
+      setPhase('closing');
+      updateVisibility();
+      if (!immediate) await animateFrame(record, false, interrupted);
+      if (token !== transitionToken || current !== record) return;
+      finishClose(record, Boolean(completed), mobile.matches);
+    }
+
+    function layout() {
+      const widthChanged = root.clientWidth !== viewportWidth;
+      viewportWidth = root.clientWidth;
+      // Browser toolbar height changes belong to the current native gesture.
+      // Only a width/breakpoint change invalidates its arrival measurements.
+      if (widthChanged) suppressAuto(400);
+      root.dataset.storyLayout = mobile.matches ? 'stack' : 'side';
+      root.style.setProperty('--story-viewport-height', `${innerHeight}px`);
+      const desktopReturn = !mobile.matches && current ? {record: current, stage: current.stage} : null;
+      if (desktopReturn) finishClose(current, current.stage === current.count - 1, false);
+      if (widthChanged && current) {
+        // Rotation reflows the article underneath its fixed-body scroll lock.
+        // Keep the originating card visible for the return morph, adjusting the
+        // stored document offset rather than restoring an obsolete pixel offset.
+        const box = current.card.getBoundingClientRect();
+        const target = Math.max(16, Math.min(lockedCardTop, Math.max(16, innerHeight - box.height - 24)));
+        lockedPosition = Math.max(0, lockedPosition + box.top - target);
+        document.body.style.top = `${-lockedPosition}px`;
+        lockedCardTop = target;
+      }
+      // A toolbar resize must not dismiss the viewer or change its selected step.
+      if (transition) transition.finish();
+      records.forEach(record => {
+        if (mobile.matches) {
+          if (!record.card.isConnected) {
+            const wood = record.steps.find(step => step.dataset.s === 'wood');
+            if (record.graphic.walkthrough && wood) wood.before(record.card);
+            else record.steps[record.steps.length - 1].after(record.card);
+          }
+          if (current !== record && record.el.parentNode !== record.preview) record.preview.append(record.el);
+          if (record.renderMode !== 'mobile') setStage(record, record.stage, true);
+        } else {
+          if (record.card.isConnected) {
+            record.home.after(record.el);
+            record.card.remove();
+          }
+          if (record.renderMode !== 'desktop') {
+            record.renderMode = 'desktop';
+            record.desktopState = null;
+            record.desktopStage = -1;
+          }
+        }
+      });
+      if (desktopReturn) {
+        // A tablet can cross the breakpoint on rotation. Return to the same
+        // scene's prose in the desktop column, rather than an obsolete offset.
+        const record = desktopReturn.record;
+        const target = record.graphic.walkthrough
+          ? record.walkTargets.find(item => Number(item.dataset.walkStage) === desktopReturn.stage)
+          : record.steps[desktopReturn.stage];
+        if (target) {
+          target.setAttribute('tabindex', '-1');
+          target.focus({preventScroll: true});
+          window.scrollTo({top: window.scrollY + target.getBoundingClientRect().top - innerHeight * .55 + 18, behavior: 'instant'});
+        }
+      }
+      if (widthChanged) rememberPositions();
+      update();
+    }
+
+    function updateVisibility() {
+      records.forEach(record => {
+        const box = record.el.getBoundingClientRect();
+        const visible = current ? current === record && phase === 'open' : box.height > 0 && box.bottom > 0 && box.top < innerHeight;
+        record.inView = box.height > 0 && box.bottom > 0 && box.top < innerHeight;
+        if (record.graphic.visible === visible) return;
+        record.graphic.visible = visible;
+        if (visible) record.graphic.resume();
+        else record.graphic.pause();
+      });
     }
 
     function update() {
       framePending = false;
-      refreshRunHeights();
-      // Remember progress only at the measured width; a pending resize may have
-      // already reflowed the DOM before its geometry callback has run.
-      if (root.clientWidth === viewportWidth) {
-        activeRun = null;
-        if (!sideBySide) {
-          chapters.some(record => {
-            const box = record.run.getBoundingClientRect();
-            if (box.top > 1 || box.bottom < window.innerHeight - 1) return false;
-            activeRun = {record, progress: Math.max(0, Math.min(record.runCount - 1, -box.top / record.runStep))};
-            return true;
-          });
-        }
+      if (!mobile.matches) {
+        records.forEach(record => {
+          let index = 0;
+          record.steps.forEach((step, i) => { if (step.getBoundingClientRect().top <= innerHeight * .55) index = i; });
+          const state = record.steps[index].dataset.s;
+          if (record.desktopState !== state) {
+            record.desktopState = state;
+            record.graphic.go(state);
+            describe(record, index);
+            if (!record.graphic.visible) record.graphic.pause();
+          }
+          if (record.graphic.walkthrough) {
+            let stage = 0;
+            record.walkTargets.forEach(target => { if (target.getBoundingClientRect().top <= innerHeight * .55) stage = Number(target.dataset.walkStage); });
+            if (record.desktopStage !== stage) {
+              record.desktopStage = stage;
+              record.graphic.showStage(stage);
+            }
+          }
+        });
       }
-      /* Read every position first. A phone's stage depends only on its own
-         native scroll run; no paragraph can show through behind the graphic. */
-      const changes = chapters.map(record => {
-        if (!sideBySide) {
-          const stage = runIndex(record);
-          // The opening graphic has eight stages but only three prose states.
-          // Its visual stage is independent of the article's paragraph labels.
-          const index = record.graphic.walkthrough ? (stage === 0 ? 0 : stage === 7 ? 2 : 1) : stage;
-          return [record, index, record.graphic.walkthrough ? stage : 0];
-        }
-        const line = readingLine();
-        let index = 0;
-        record.steps.forEach((step, i) => {
-          if (step.getBoundingClientRect().top <= line) index = i;
-        });
-        let walkStage = 0;
-        record.walkTargets.forEach(target => {
-          if (target.getBoundingClientRect().top <= line) walkStage = Number(target.dataset.walkStage);
-        });
-        return [record, index, walkStage];
-      });
-      changes.forEach(([record, index, walkStage]) => {
-        select(record, index);
-        if (record.walkTargets.length && record.walkStage !== walkStage) {
-          record.walkStage = walkStage;
-          record.graphic.showStage(walkStage);
-        }
-      });
+      updateVisibility();
     }
-
     function schedule() {
       if (framePending) return;
       framePending = true;
       requestAnimationFrame(update);
     }
 
-    function setVisibility(record, inView, ratio) {
-      record.inView = inView;
-      /* Let a new panel arrive before starting its reveal. Otherwise a
-         phone chart can finish animating while only its heading is visible
-         below the preceding section. Keep painting its paused baseline as
-         it enters, then play when the chart can actually be read. */
-      const visible = ratio >= (sideBySide ? .55 : .9);
-      if (record.graphic.visible === visible) return;
-      record.graphic.visible = visible;
-      if (visible) record.graphic.resume();
-      else record.graphic.pause();
+    function scroll() {
+      if (current) return;
+      const y = window.scrollY;
+      const delta = y - lastY;
+      const now = performance.now();
+      const eligible = mobile.matches && (window.visualViewport?.scale || 1) <= 1.01 && now > suppressAutoUntil && (now < userScrollUntil || autoCandidate);
+      const line = innerHeight * .30;
+      records.forEach(record => {
+        const box = record.card.getBoundingClientRect();
+        if (eligible && delta > 0 && !visited.has(record.number) && record.previousTop > line && box.top <= line && box.bottom > 0) autoCandidate = record;
+        record.previousTop = box.top;
+      });
+      clearTimeout(autoTimer);
+      // Tiny positive momentum deltas still belong to the downward arrival.
+      if (delta < -1 || !eligible) autoCandidate = null;
+      if (autoCandidate) {
+        autoTimer = setTimeout(() => {
+          const candidate = autoCandidate;
+          autoCandidate = null;
+          if (!candidate || current || !mobile.matches || (window.visualViewport?.scale || 1) > 1.01 || performance.now() < suppressAutoUntil || visited.has(candidate.number)) return;
+          const box = candidate.card.getBoundingClientRect();
+          // A fast fling past a card should not pull the reader back into it.
+          if (box.top >= -box.height * .35 && box.top < innerHeight * .5 && box.bottom > 80) open(candidate);
+        }, 180);
+      }
+      lastY = y;
+      schedule();
     }
+    addEventListener('scroll', scroll, {passive: true});
+    const scrollingIntent = event => {
+      if (!event.isTrusted || current) return;
+      if (event.type === 'keydown' && (!['ArrowDown', 'PageDown', ' '].includes(event.key) || event.target.closest('button, input, textarea, select, [contenteditable]'))) return;
+      if (event.type === 'wheel' && event.deltaY <= 0) return;
+      if (event.type === 'touchmove') {
+        if (!pageTouch || event.touches.length !== 1 || (window.visualViewport?.scale || 1) > 1.01) {
+          pageTouch = null;
+          return;
+        }
+        const touch = event.touches[0];
+        const dy = pageTouch.y - touch.clientY;
+        const dx = Math.abs(pageTouch.x - touch.clientX);
+        if (dy < 5 || dy <= dx) return;
+      }
+      userScrollUntil = performance.now() + 1800;
+    };
+    addEventListener('touchstart', event => {
+      if (!event.isTrusted || current || event.touches.length !== 1) {
+        pageTouch = null;
+        if (event.touches.length > 1) suppressAuto();
+        return;
+      }
+      pageTouch = {x: event.touches[0].clientX, y: event.touches[0].clientY};
+    }, {passive: true});
+    addEventListener('touchcancel', () => { pageTouch = null; }, {passive: true});
+    addEventListener('wheel', scrollingIntent, {passive: true});
+    addEventListener('touchmove', scrollingIntent, {passive: true});
+    addEventListener('keydown', scrollingIntent);
+    document.addEventListener('click', event => {
+      if (event.target.closest('a[href*="#"]')) suppressAuto();
+    }, {capture: true});
+    addEventListener('hashchange', () => { suppressAuto(); rememberPositions(); });
+    addEventListener('pageshow', () => { suppressAuto(); layout(); });
+    addEventListener('resize', layout, {passive: true});
+    mobile.addEventListener('change', layout);
+    document.fonts?.ready.then(layout);
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const record = chapters.find(item => item.el === entry.target);
-        setVisibility(record, entry.isIntersecting, entry.intersectionRatio);
-      });
-    }, { threshold: [0, .55, .9] });
-
-    measureViewport(true);
-    update();
-    chapters.forEach(record => observer.observe(record.el));
-
-    function frame(now) {
-      chapters.forEach(record => {
-        if (record.inView) record.graphic.frame(now);
-      });
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-
-    addEventListener('scroll', schedule, { passive: true });
-    addEventListener('resize', () => {
-      measureViewport();
-      schedule();
-    }, { passive: true });
-    phone.addEventListener('change', () => {
-      measureViewport(true);
-      schedule();
+    let swipe = null;
+    let ignoreClickUntil = 0;
+    stageHost.addEventListener('touchstart', event => {
+      swipe = null;
+      if (phase !== 'open' || event.touches.length !== 1 || (window.visualViewport?.scale || 1) > 1.01 || event.target.closest('button, a, input, select, textarea')) return;
+      const touch = event.touches[0];
+      swipe = {id: touch.identifier, x: touch.clientX, y: touch.clientY, direction: null, started: performance.now()};
+    }, {passive: true});
+    stageHost.addEventListener('touchmove', event => {
+      if (!swipe || event.touches.length !== 1) { swipe = null; return; }
+      const touch = event.touches[0];
+      const dx = touch.clientX - swipe.x, dy = touch.clientY - swipe.y;
+      if (!swipe.direction && Math.max(Math.abs(dx), Math.abs(dy)) > 12) swipe.direction = Math.abs(dx) > Math.abs(dy) * 1.3 ? 'horizontal' : 'vertical';
+    }, {passive: true});
+    stageHost.addEventListener('touchend', event => {
+      const origin = swipe;
+      swipe = null;
+      if (!origin || origin.direction !== 'horizontal' || phase !== 'open' || performance.now() - origin.started > 1500) return;
+      const touch = [...event.changedTouches].find(item => item.identifier === origin.id);
+      if (!touch) return;
+      const dx = touch.clientX - origin.x, dy = touch.clientY - origin.y;
+      if (Math.abs(dx) < Math.max(42, Math.min(65, innerWidth * .12)) || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+      ignoreClickUntil = performance.now() + 350;
+      advance(dx < 0 ? 1 : -1);
+    }, {passive: true});
+    stageHost.addEventListener('touchcancel', () => { swipe = null; }, {passive: true});
+    stageHost.addEventListener('click', event => {
+      if (performance.now() < ignoreClickUntil) { event.preventDefault(); event.stopPropagation(); }
+    }, {capture: true});
+    // Fixed body keeps the article still on iOS. Prevent single-finger rubber
+    // banding inside the dialog, while allowing multi-touch browser zoom.
+    dialog.addEventListener('touchmove', event => {
+      if (event.touches.length === 1 && (window.visualViewport?.scale || 1) <= 1.01 && event.cancelable) event.preventDefault();
+    }, {passive: false});
+    dialog.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key) || event.target.closest('input, textarea, select, [contenteditable]')) return;
+      event.preventDefault();
+      advance(event.key === 'ArrowRight' ? 1 : -1);
     });
-    addEventListener('orientationchange', () => {
-      requestAnimationFrame(() => {
-        measureViewport(true, true);
-        schedule();
-      });
-    }, { passive: true });
-    addEventListener('pageshow', () => {
-      measureViewport(true);
-      schedule();
-    });
-    document.fonts?.ready.then(() => { measureViewport(true); schedule(); });
 
-    document.querySelectorAll('.replay').forEach(button => {
-      button.addEventListener('click', () => {
-        const record = chapters.find(item => item.chapter === button.closest('.chapter'));
-        if (!record) return;
+    document.querySelectorAll('.replay').forEach(button => button.addEventListener('click', () => {
+      const record = records.find(item => item.chapter === button.closest('.chapter'));
+      if (!record) return;
+      if (mobile.matches) {
+        record.completed = false;
+        setStage(record, 0, true);
+        open(record, button);
+      } else {
         const index = record.steps.findIndex(step => step.dataset.s === 'prayer');
-        if (index < 0) return;
-        const step = record.steps[index];
-        /* Replay and ordinary navigation land on the same activation point. */
-        if (sideBySide) step.scrollIntoView({ block: 'start', behavior: 'instant' });
-        else navigateRun(record, index, 'instant');
-        select(record, index);
+        if (index >= 0) record.steps[index].scrollIntoView({block: 'start', behavior: 'instant'});
         record.graphic.replay();
-        if (!record.graphic.visible) record.graphic.pause();
         schedule();
-      });
-    });
+      }
+    }));
 
-    /* An explicit marker lets browser checks distinguish initialized state
-       from a page that only happened to render the first canvas. */
+    function paint(now) {
+      records.forEach(record => { if (record.inView) record.graphic.frame(now); });
+      requestAnimationFrame(paint);
+    }
+    layout();
+    requestAnimationFrame(paint);
     root.dataset.storyReady = 'true';
+    window.WoodStoryController = {records, open, close, setStage, dialog,
+      get current() { return current; }, get phase() { return phase; }};
   }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once: true});
   else start();
 })();

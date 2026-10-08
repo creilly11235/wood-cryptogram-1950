@@ -198,10 +198,11 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=11">
-<link rel="stylesheet" href="../cipher-cards.css?v=11">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=11">
-<link rel="stylesheet" href="../story-graphics.css?v=11">
+<link rel="stylesheet" href="../story-layout.css?v=12">
+<link rel="stylesheet" href="../cipher-cards.css?v=12">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=12">
+<link rel="stylesheet" href="../story-graphics.css?v=12">
+<link rel="stylesheet" href="../story-viewer.css?v=12">
 </head>
 <body>
 
@@ -450,7 +451,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=11"></script>
+<script src="../cipher-walkthrough.js?v=12"></script>
 <script>
 (function(){
 "use strict";
@@ -608,31 +609,31 @@ function Graphic(el){
     }));
   }
   function drawMobile(){
-    const p=panel(),cx=W/2,short=p.h<300;
+    const p=panel(),cx=W/2,short=p.h<300,wideShort=W>500&&p.h<220;
     switch(state){
       case "trap":
         mobileRows([["THE ANSWER IS NOT HERE YET",mobileCopy.trap[0],ink,"decoded"],["WE WILL MEET AT DAWN TODAY",mobileCopy.trap[1],ink,"decoded"],["PLEASE KEEP THIS KEY SAFE",mobileCopy.trap[2],ink,"decoded"]]);break;
       case "shelves":{
-        const cols=W<500?13:26,nrows=Math.ceil(129/cols),top=p.y+58,bottom=p.y+p.h-55,dx=p.w/cols,dy=(bottom-top)/nrows;
-        wrap(mobileCopy.shelves[0],cx,p.y+19,p.w,17,ink,"center");
+        const cols=W<500?13:26,nrows=Math.ceil(129/cols),top=p.y+(wideShort?35:58),bottom=p.y+p.h-(wideShort?33:55),dx=p.w/cols,dy=(bottom-top)/nrows;
+        wrap(mobileCopy.shelves[0],cx,p.y+(wideShort?13:19),p.w,17,ink,"center");
         for(let i=0;i<129;i++)reveal(Math.floor(i/cols)*55,()=>{const x=p.x+(i%cols)*dx+1,y=top+Math.floor(i/cols)*dy,w=Math.max(3,dx-4),h=dy*.78;ctx.fillStyle="#f0f3f5";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+.5,y+.5,w-1,h-1,2);ctx.fill();ctx.stroke();line(x+3,y+3,x+3,y+h-3,muted);});
-        wrap(mobileCopy.shelves[1],cx,p.y+p.h-21,p.w,15,muted,"center");break;
+        wrap(mobileCopy.shelves[1],cx,p.y+p.h-(wideShort?12:21),p.w,15,muted,"center");break;
       }
       case "plants":{
-        wrap(mobileCopy.plants[0],cx,p.y+19,p.w,18,ink,"center");
-        const gw=Math.min(p.w,p.h*1.4);grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+51,w:gw,h:p.h-102},10,6);
-        wrap(mobileCopy.plants[1],cx,p.y+p.h-21,p.w,15,muted,"center");break;
+        wrap(mobileCopy.plants[0],cx,p.y+(wideShort?13:19),p.w,18,ink,"center");
+        const gw=Math.min(p.w,p.h*1.4);grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+(wideShort?32:51),w:gw,h:p.h-(wideShort?64:102)},10,6);
+        wrap(mobileCopy.plants[1],cx,p.y+p.h-(wideShort?12:21),p.w,15,muted,"center");break;
       }
       case "englishResults":{
         const left=p.x+20,right=p.x+p.w-20,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
-        const bottom=p.y+p.h-65,top=p.y+95,bins=27,counts=Array(bins).fill(0),points=[];
+        const compact=p.h<250,bottom=p.y+p.h-(compact?55:65),top=p.y+(compact?57:95),bins=27,counts=Array(bins).fill(0),points=[];
         EN_NULLX.forEach(value=>{const bin=Math.max(0,Math.min(bins-1,Math.floor((value-min)/(max-min)*bins)));points.push({value,row:counts[bin]++});});
-        const dy=Math.min(18,(bottom-top)/Math.max(...counts)),r=Math.min(4.6,dy*.39,(right-left)/bins*.34);
+        const dy=Math.max(1.8,Math.min(18,(bottom-top)/Math.max(...counts))),r=Math.min(4.6,dy*.39,(right-left)/bins*.34);
         points.forEach((pt,i)=>reveal(i*3,()=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted),300));
         line(left,bottom+3,right,bottom+3,pale);const wx=map(EN_WOOD);
         reveal(430,()=>{line(wx,top-10,wx,bottom+3,blue,1.5);outlineDot(wx,bottom+3,5.5,blue);});
-        wrap(mobileCopy.english[0],cx,p.y+22,p.w,17,ink,"center",2);
-        text(mobileCopy.english[1],wx-7,top-22,15,blue,"right",true);
+        wrap(mobileCopy.english[0],cx,p.y+(compact?13:22),p.w,17,ink,"center",2);
+        text(mobileCopy.english[1],wx-7,top-(compact?18:22),15,blue,"right",true);
         [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+24,13,muted,"center",true));
         wrap(mobileCopy.english[2],cx,p.y+p.h-13,p.w,15,muted,"center");break;
       }
@@ -645,27 +646,38 @@ function Graphic(el){
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*60,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,4);ctx.fill();ctx.stroke();line(x+8,y+8,x+8,y+dy-8,muted,1.5);label(name,x+16,y+dy/2,dx-24,16,ink);}));break;
       }
       case "prayer":{
-        const left=p.x+17,right=p.x+p.w-17,map=v=>left+(v+1.75)/.55*(right-left),bottom=p.y+p.h-59,gap=(p.h-82)/3;
-        [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,p.y+45,x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+21,14,muted,"center",true);});
+        const compact=p.h<300,left=p.x+17,right=p.x+p.w-17,map=v=>left+(v+1.75)/.55*(right-left),bottom=p.y+p.h-(compact?48:59),gap=(p.h-(compact?58:82))/3;
+        const labelOffset=compact?18:35,rowOffset=compact?9:28;
+        [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,p.y+(compact?5:45),x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+21,14,muted,"center",true);});
         line(left,bottom,right,bottom,muted);
-        [[TOP[0][1],blue],[TOP[1][1],muted]].forEach(([value,c],i)=>{const y=p.y+gap*(i+.5)+28;rect(p.x,y-48,p.w,25,background);label(mobileCopy.prayer[i],p.x,y-35,p.w-78,18,c);text(value.toFixed(3).replace("-","−"),p.x+p.w,y-35,15,c,"right",true);reveal(i?140:500,()=>{line(left,y,map(value),y,c,2);outlineDot(map(value),y,i?4.5:6,c);});});
-        const y=p.y+gap*2.5+28;rect(p.x,y-48,p.w,25,background);label(mobileCopy.prayer[2],p.x,y-35,p.w,18,muted);
-        TOP.slice(2).forEach(([,score],i)=>reveal(i*25,()=>dot(map(score),y+(i%3-1)*8,3.5,muted)));
+        [[TOP[0][1],blue],[TOP[1][1],muted]].forEach(([value,c],i)=>{const y=p.y+gap*(i+.5)+rowOffset;rect(p.x,y-labelOffset-12,p.w,22,background);label(mobileCopy.prayer[i],p.x,y-labelOffset,p.w-78,compact?16:18,c);text(value.toFixed(3).replace("-","−"),p.x+p.w,y-labelOffset,compact?13:15,c,"right",true);reveal(i?140:500,()=>{line(left,y,map(value),y,c,2);outlineDot(map(value),y,i?4.5:6,c);});});
+        const y=p.y+gap*2.5+rowOffset;rect(p.x,y-labelOffset-12,p.w,22,background);label(mobileCopy.prayer[2],p.x,y-labelOffset,p.w,compact?16:18,muted);
+        TOP.slice(2).forEach(([,score],i)=>reveal(i*25,()=>dot(map(score),y+(i%3-1)*(compact?5:8),3.5,muted)));
         wrap(mobileCopy.prayer[3],cx,p.y+p.h-10,p.w,15,muted,"center");break;
       }
       case "church":{
+        if(wideShort){
+          [CHURCH,PT].forEach((message,i)=>{const y=p.y+p.h*(i?.75:.25);wrap(mobileCopy.church[i],p.x,y,p.w*.46,18,i?ink:muted,"left",2);reveal(i?420:120,()=>cipherText(message,p.x+p.w*.51,y,p.w*.48,21));});
+          line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
+        }
         [CHURCH,PT].forEach((message,i)=>{const y=p.y+p.h*(i?.75:.25);wrap(mobileCopy.church[i],p.x,y-33,p.w,18,i?ink:muted,"left",2);reveal(i?420:120,()=>cipherText(message,p.x+5,y+27,p.w-5,21));});
         line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
       }
       case "table":{
+        if(wideShort){
+          [["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]].forEach(([key,cipher,plain],i)=>{const y=p.y+p.h/3*(i+.5),x=p.x+p.w*.58;if(i)line(p.x,p.y+p.h/3*i,p.x+p.w,p.y+p.h/3*i,pale);reveal(i*140,()=>{label(key,p.x+p.w*.25,y,p.w*.46,21,ink,"center",true);cipherText(cipher,x,y,42,24,"encoded");text("→",x+62,y,24,muted,"center");});reveal(i*140+250,()=>cipherText(plain,x+110,y,42,24));});break;
+        }
         [["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]].forEach(([key,cipher,plain],i)=>{const y=p.y+p.h/3*(i+.5);if(i)line(p.x,p.y+p.h/3*i,p.x+p.w,p.y+p.h/3*i,pale);reveal(i*140,()=>{label(key,cx,y-(short?18:27),p.w,short?18:21,ink,"center",true);cipherText(cipher,cx-58,y+(short?18:24),42,short?22:28,"encoded");text("→",cx,y+(short?18:24),short?22:27,muted,"center");});reveal(i*140+250,()=>cipherText(plain,cx+38,y+(short?18:24),42,short?22:28));});break;
       }
       case "reading":{
+        if(wideShort){
+          ["Hier bin ich.","Totsiens.","T.E.W."].forEach((phrase,i)=>reveal(i*190,()=>{const y=p.y+p.h/3*(i+.5);label(phrase,p.x+12,y,p.w*.48,30,decodedFg);wrap(mobileCopy.reading[i],p.x+p.w*.54,y,p.w*.44,17,muted);}));break;
+        }
         ["Hier bin ich.","Totsiens.","T.E.W."].forEach((phrase,i)=>reveal(i*190,()=>{const y=p.y+p.h/3*(i+.5);label(phrase,cx,y-(short?13:19),p.w,short?28:34,decodedFg,"center");wrap(mobileCopy.reading[i],cx,y+(short?21:28),p.w,17,muted,"center");}));break;
       }
       case "checks":mobileRows(mobileCopy.checks.slice(1).map(detail=>[mobileCopy.checks[0],detail,blue]));break;
       case "luck":{
-        wrap(mobileCopy.luck[0],cx,p.y+22,p.w,17,ink,"center");grid(500,i=>i<7,{x:p.x,y:p.y+58,w:p.w,h:p.h-113},W<500?20:40,4);wrap(mobileCopy.luck[1],cx,p.y+p.h-23,p.w,15,muted,"center");break;
+        wrap(mobileCopy.luck[0],cx,p.y+(wideShort?13:22),p.w,17,ink,"center");grid(500,i=>i<7,{x:p.x,y:p.y+(wideShort?32:58),w:p.w,h:p.h-(wideShort?64:113)},W<500?20:40,4);wrap(mobileCopy.luck[1],cx,p.y+p.h-(wideShort?12:23),p.w,15,muted,"center");break;
       }
       case "slip":{
         const gap=p.h/3;
@@ -750,6 +762,7 @@ function Graphic(el){
         reveal(420,()=>cipherText(PT,p.x+5,y2+11,p.w-5,fs));break;
       }
       case "table":{
+
         [["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]].forEach(([key,cipher,plain],i)=>{
           const y=p.y+p.h/3*(i+.5),x=p.x+p.w-76;
           if(i)line(p.x,p.y+p.h/3*i,p.x+p.w,p.y+p.h/3*i,pale);
@@ -782,7 +795,8 @@ function Graphic(el){
     }
   }
   function resize(){
-    const box=cv.getBoundingClientRect();W=Math.max(1,box.width);H=Math.max(1,box.height);DPR=Math.min(devicePixelRatio||1,2);
+    // Measure layout space, not the temporary scale during card expansion.
+    W=Math.max(1,cv.clientWidth);H=Math.max(1,cv.clientHeight);DPR=Math.min(devicePixelRatio||1,2);
     cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);
     ink=color("--bone")||"#242a2c";muted=color("--bone-2")||"#64707b";blue=color("--candle")||"#276b86";teal=color("--af")||"#568b82";pale=color("--veil")||"#dce2e4";background=color("--room")||"#fafbfc";gridGray=color("--dot-s")||"#c6ced6";dirty=true;
     decodedBg=color("--cipher-decoded-bg");decodedFg=color("--cipher-decoded-fg");decodedBorder=color("--cipher-decoded-border");
@@ -806,13 +820,17 @@ function Graphic(el){
     }
     if(dirty)draw();
   };
-  new ResizeObserver(resize).observe(cv);document.fonts?.ready.then(()=>{dirty=true;});resize();
+  // Canvas bitmap changes can affect intrinsic sizing. Defer them until the
+  // next frame so they cannot feed back into the same resize delivery.
+  let resizePending=false;
+  new ResizeObserver(()=>{if(resizePending)return;resizePending=true;requestAnimationFrame(()=>{resizePending=false;resize();});}).observe(cv);
+  document.fonts?.ready.then(()=>{dirty=true;});resize();
 }
 
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=11"></script>
+<script src="../story-scroll.js?v=12"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */
