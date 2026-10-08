@@ -48,7 +48,8 @@ class _P(HTMLParser):
             if re.search(r"[a-z]{2,}", re.sub(r"<[^>]+>", "", inner)): self.units.append((tag, inner))
 
 def units(html):
-    head, body = html[:html.index("<body>")], html[html.index("<body>"):html.index("<script")]
+    body_start = html.index("<body>")
+    head, body = html[:body_start], html[body_start:html.index("<script", body_start)]
     out = [("title", re.search(r"<title>(.*?)</title>", head).group(1))]
     for m in re.finditer(r'<meta (?:name|property)="(?:description|og:title|og:description|og:image:alt)" content="([^"]*)">', head):
         out.append(("meta", m.group(1)))
