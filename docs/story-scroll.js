@@ -38,8 +38,6 @@
     let lastY = window.scrollY;
     let viewportWidth = 0;
     let pageTouch = null;
-    let autoCandidate = null;
-    let autoTimer = 0;
     let userScrollUntil = 0;
     let suppressAutoUntil = performance.now() + 700;
 
@@ -70,7 +68,7 @@
         svg.setAttribute('stroke-linecap', 'round');
         svg.setAttribute('stroke-linejoin', 'round');
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', direction === 'back' ? 'M19 12H5m6-6-6 6 6 6' : direction === 'expand' ? 'M6 18 18 6M6 6h12v12' : 'M5 12h14m-6-6 6 6-6 6');
+        path.setAttribute('d', direction === 'back' ? 'M19 12H5m6-6-6 6 6 6' : direction === 'expand' ? 'M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5' : 'M5 12h14m-6-6 6 6-6 6');
         svg.append(path);
         children.push(svg);
       }
@@ -82,8 +80,6 @@
       dialog.dataset.phase = next;
     }
     function suppressAuto(duration = 500) {
-      clearTimeout(autoTimer);
-      autoCandidate = null;
       userScrollUntil = 0;
       suppressAutoUntil = performance.now() + duration;
     }
@@ -198,7 +194,8 @@
 
     function updateControls(record) {
       const label = record.completed ? labels.replay : record.opened ? labels.resume : labels.explore;
-      labelButton(record.launch, label, 'expand');
+      labelButton(record.launch, '', 'expand');
+      record.launch.setAttribute('aria-label', `${label}: ${record.title}`);
       record.preview.setAttribute('aria-label', `${label}: ${record.title}`);
       record.card.dataset.stage = String(record.stage);
       record.card.dataset.opened = String(record.opened);
@@ -441,27 +438,28 @@
       const y = window.scrollY;
       const delta = y - lastY;
       const now = performance.now();
-      const eligible = mobile.matches && (window.visualViewport?.scale || 1) <= 1.01 && now > suppressAutoUntil && (now < userScrollUntil || autoCandidate);
+      const eligible = mobile.matches && (window.visualViewport?.scale || 1) <= 1.01 && now > suppressAutoUntil && now < userScrollUntil;
       const line = innerHeight * .30;
+      let arrival = null;
       records.forEach(record => {
         const box = record.card.getBoundingClientRect();
-        if (eligible && delta > 0 && !visited.has(record.number) && record.previousTop > line && box.top <= line && box.bottom > 0) autoCandidate = record;
+        if (!arrival && eligible && delta > 0 && !visited.has(record.number) && box.top <= line &&
+            (record.previousTop > line || box.bottom > line)) arrival = record;
         record.previousTop = box.top;
       });
-      clearTimeout(autoTimer);
-      // Tiny positive momentum deltas still belong to the downward arrival.
-      if (delta < -1 || !eligible) autoCandidate = null;
-      if (autoCandidate) {
-        autoTimer = setTimeout(() => {
-          const candidate = autoCandidate;
-          autoCandidate = null;
-          if (!candidate || current || !mobile.matches || (window.visualViewport?.scale || 1) > 1.01 || performance.now() < suppressAutoUntil || visited.has(candidate.number)) return;
-          const box = candidate.card.getBoundingClientRect();
-          // A fast fling past a card should not pull the reader back into it.
-          if (box.top >= -box.height * .35 && box.top < innerHeight * .5 && box.bottom > 80) open(candidate);
-        }, 180);
-      }
       lastY = y;
+      if (arrival) {
+        // Capture arrival during the scroll itself. Waiting for momentum to
+        // stop lets an ordinary phone flick carry the card out of view.
+        const box = arrival.card.getBoundingClientRect();
+        if (box.top < 0) {
+          // Browsers can combine several scroll updates into one. Keep the
+          // crossed card visible as the viewer expands and when it closes.
+          const top = Math.max(16, Math.min(line, innerHeight - box.height - 16));
+          window.scrollTo({top: window.scrollY + box.top - top, behavior: 'instant'});
+        }
+        open(arrival);
+      }
       schedule();
     }
     addEventListener('scroll', scroll, {passive: true});
@@ -480,6 +478,7 @@
         if (dy < 5 || dy <= dx) return;
       }
       userScrollUntil = performance.now() + 1800;
+      suppressAutoUntil = 0;
     };
     addEventListener('touchstart', event => {
       if (!event.isTrusted || current || event.touches.length !== 1) {
@@ -488,6 +487,12 @@
         return;
       }
       pageTouch = {x: event.touches[0].clientX, y: event.touches[0].clientY};
+      // Scroll direction comes from scrollY. Arm before the browser takes over
+      // a native pan, which can cancel delivery of subsequent touch events.
+      if ((window.visualViewport?.scale || 1) <= 1.01) {
+        userScrollUntil = performance.now() + 1800;
+        suppressAutoUntil = 0;
+      }
     }, {passive: true});
     addEventListener('touchcancel', () => { pageTouch = null; }, {passive: true});
     addEventListener('wheel', scrollingIntent, {passive: true});
