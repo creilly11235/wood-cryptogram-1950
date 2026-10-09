@@ -84,7 +84,7 @@
     {
       "kind": "p",
       "en": "The plan depended on keeping the key secret. Only Wood knew it, so if a medium produced it after his death, he hoped that would count as evidence that something of him had survived.",
-      "de": "Sein Plan beruhte darauf, den Schlüssel geheim zu halten. Würde ein Medium ihn nach seinem Tod übermitteln, wäre das, so hoffte er, ein Beweis für irgendeine Form des Fortlebens."
+      "de": "Sein Plan beruhte darauf, den Schlüssel geheim zu halten. Würde ein Medium ihn nach seinem Tod übermitteln, wäre das, so hoffte er, ein Hinweis darauf, dass etwas von ihm fortlebte."
     },
     {
       "kind": "attr",
@@ -543,13 +543,13 @@
     },
     {
       "kind": "p",
-      "en": "With TEW as the signature there was exactly one match, and it was this message. With 500 random signatures in its place, 7 of them (1.4%) also produced a match, and every one of those was word salad.",
-      "de": "Mit TEW gab es genau einen Treffer: diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW ergaben 7 davon (1,4 %) ebenfalls einen Treffer, und jedes dieser Beispiele war Wortsalat."
+      "en": "With TEW as the signature there was exactly one match, and it was this message. With 500 random signatures in its place, 7 of them (1.4%) also produced a match, and the examples were word salad.",
+      "de": "Mit TEW gab es genau einen Treffer: diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW ergaben 7 davon (1,4 %) ebenfalls einen Treffer, und die Beispiele waren Wortsalat."
     },
     {
       "kind": "p",
-      "en": "There are two caveats. TOTSIENS was added to the word list after the solve, and the test itself was designed after the hit, so it shows that the match is rare, not that it is proven.",
-      "de": "Zwei Einschränkungen: TOTSIENS wurde erst nach der Entschlüsselung in die Wortliste aufgenommen, und der Test wurde erst nach dem Treffer entworfen. Er zeigt also, dass der Treffer selten ist, nicht, dass er bewiesen ist."
+      "en": "There are two caveats. TOTSIENS was added to the word list after the solve, and the test itself was designed after the hit, so it shows that the match is rare, which is not the same as proof.",
+      "de": "Zwei Einschränkungen: TOTSIENS wurde erst nach der Entschlüsselung in die Wortliste aufgenommen, und der Test wurde erst nach dem Treffer entworfen. Er zeigt also, dass der Treffer selten ist, was noch kein Beweis ist."
     },
     {
       "kind": "h3",
@@ -563,8 +563,8 @@
     },
     {
       "kind": "span",
-      "en": "VI · Further findings",
-      "de": "VI · Weitere Erkenntnisse"
+      "en": "VI · A further finding",
+      "de": "VI · Eine weitere Erkenntnis"
     },
     {
       "kind": "attr",
