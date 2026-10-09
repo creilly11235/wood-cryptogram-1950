@@ -16,12 +16,12 @@
       explore: 'Animation ansehen', resume: 'Animation fortsetzen', replay: 'Animation wiederholen',
       close: 'Schließen', dismiss: 'Animation schließen und zum Artikel zurückkehren',
       previous: 'Vorheriger Schritt', next: 'Weiter', navigation: 'Animationsschritte',
-      steps: count => `${count} Schritte`, step: (index, count) => `Schritt ${index} von ${count}`,
+      steps: count => count === 1 ? '1 Schritt' : `${count} Schritte`, step: (index, count) => `Schritt ${index} von ${count}`,
     } : {
       explore: 'Explore animation', resume: 'Continue animation', replay: 'Replay animation',
       close: 'Close', dismiss: 'Close animation and return to the article',
       previous: 'Previous step', next: 'Next', navigation: 'Animation steps',
-      steps: count => `${count} steps`, step: (index, count) => `Step ${index} of ${count}`,
+      steps: count => count === 1 ? '1 step' : `${count} steps`, step: (index, count) => `Step ${index} of ${count}`,
     };
     // Each document visit gets one automatic entry per card. Refreshing starts
     // a new visit; closing and scrolling back within this visit requires a tap.

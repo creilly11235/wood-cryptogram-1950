@@ -27,11 +27,9 @@
 }
 .graphic[data-state="reading"] .tiles,
 .graphic[data-state="checks"] .tiles,
-.graphic[data-state="luck"] .tiles,
-.graphic[data-state="next"] .tiles{display:none}
+.graphic[data-state="luck"] .tiles{display:none}
 .graphic[data-state="checks"] .capR,
-.graphic[data-state="luck"] .capR,
-.graphic[data-state="next"] .capR{display:none}
+.graphic[data-state="luck"] .capR{display:none}
 @media(max-width:900px){
   .graphic:not(.walkthrough-graphic) .gbody{padding:12px;max-height:none}
   .graphic:not(.walkthrough-graphic) .gcap{font-size:13px;line-height:1.3;gap:8px;margin-bottom:9px}
