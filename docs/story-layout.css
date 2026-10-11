@@ -86,6 +86,15 @@ figure img {
     min-height: calc(var(--story-viewport-height) * .52);
   }
 
+  /* The pinned wrapper exists for phones; the desktop grid sees through it. */
+  .chapter > .pin { display: contents; }
+  .chapter > .pin > .text,
+  .chapter > .text-after { grid-column: 1; }
+  .chapter > .pin > .graphic { grid-column: 2; grid-row: 1 / span 2; }
+  .chapter > .pin > .text { padding-bottom: 0; }
+  .chapter > .text-after { padding-top: 0; }
+  .chapter > .pin > .text > .step:last-child { min-height: calc(var(--story-viewport-height) * .52); }
+
   /* The final paragraph must leave room for its full-height sticky neighbor.
      Otherwise the chapter boundary pushes the chart up before it can be read. */
   .chapter > .text > .step:last-child {
@@ -94,7 +103,7 @@ figure img {
 }
 
 @media (max-width: 900px) {
-  :root { --story-panel-height: 100dvh; --pinned-height: clamp(300px, 48vh, 420px); --pinned-height: clamp(300px, 48svh, 420px); }
+  :root { --story-panel-height: 100dvh; }
   .scrolly { --story-gutter: 24px; padding-inline: var(--story-gutter); }
   .chapter { display: block; position: relative; }
   .chapter > .text { max-width: none; padding-block: 24px 40px; }
@@ -109,26 +118,58 @@ figure img {
   .progress { display: flex; flex: none; gap: 5px; align-items: center; margin-left: auto; }
   .gcap span:empty, .sub:empty { display: none; }
 
-  /* The cipher walkthrough stays pinned above its explanation, the way a
-     news graphic holds the top of a phone screen while the text scrolls by. */
-  .chapter.pinned-chapter { display: flex; flex-direction: column; }
-  .chapter.pinned-chapter > .graphic {
-    order: 0;
-    align-self: stretch;
+  /* The cipher walkthrough fills the screen and holds while the passages
+     that explain it rise over its lower part one at a time, news-graphic style. */
+  .chapter.pinned-chapter > .pin { position: relative; }
+  .chapter.pinned-chapter > .pin > .graphic {
     position: sticky;
     top: 0;
-    z-index: 3;
+    z-index: 1;
     width: auto;
     max-width: none;
-    height: var(--pinned-height);
+    height: 100vh;
+    height: 100svh;
     min-height: 0;
     margin-inline: calc(-1 * var(--story-gutter));
-    padding: 10px var(--story-gutter) 8px;
-    border-top: 0;
-    border-bottom: 1px solid var(--veil-2);
+    padding: max(10px, env(safe-area-inset-top, 0px)) var(--story-gutter) var(--card-space);
+    border: 0;
     background: var(--room);
+    --card-space: 42svh;
   }
-  .chapter.pinned-chapter > .text { order: 1; padding-top: 28px; }
+  .chapter.pinned-chapter > .pin > .text {
+    display: flow-root; /* keeps the last card's spacing inside the pinned run */
+    position: relative;
+    z-index: 2;
+    margin-top: -38svh;
+    padding-block: 0 0;
+    pointer-events: none;
+  }
+  .chapter.pinned-chapter > .text-after { padding-top: 32px; }
+  .pinned-chapter .pin .step { padding: 0; }
+  .pinned-chapter .pin .step + .step { padding-top: 0; }
+  .pinned-chapter .pin .step ol { padding: 0; margin: 0; }
+  .pinned-chapter .pin .step ul { margin: 0; }
+  .pinned-chapter .pin .step li { list-style-position: inside; }
+  /* Every passage in the pinned run is one card, spaced a screen apart. */
+  .pinned-chapter .pin > .text > .step[data-walk-stage],
+  .pinned-chapter .pin > .text > .step:not([data-walk-stage]) > p,
+  .pinned-chapter .pin > .text > .step:not([data-walk-stage]) ol > li {
+    display: block;
+    margin: 0 auto 64svh;
+    padding: 16px 18px;
+    max-width: 560px;
+    border: 1px solid var(--veil-2);
+    border-radius: 3px;
+    background: rgb(250 251 252 / 96%);
+    box-shadow: 0 6px 24px rgb(31 44 48 / 8%);
+    pointer-events: auto;
+    will-change: opacity;
+  }
+  .pinned-chapter .pin > .text > .step:last-child > p:last-child { margin-bottom: 72svh; }
+  .pinned-chapter .pin .step h2 { font-size: 1.5rem; margin-bottom: 12px; }
+  .pinned-chapter .pin .step p:last-child, .pinned-chapter .pin .step li:last-child { margin-bottom: 0; }
+  .pinned-chapter .pin .step p { margin: 0; }
+  .pinned-chapter .pin [data-walk-stage]::before { display: none; }
   .chapter.pinned-chapter .gbar { margin-bottom: 4px; padding-bottom: 6px; }
   .pinned-chapter .cw-controls,
   .pinned-chapter .cw-swipe-hint { display: none; }
@@ -145,15 +186,13 @@ figure img {
   .pinned-chapter .cw-single { width: 64px; height: 72px; font-size: 44px; }
   .pinned-chapter .cw[data-stage="4"] .cw-single { width: 36px; height: 40px; font-size: 26px; }
   .pinned-chapter .cw-message-reading { font-size: clamp(22px, 7cqw, 30px); }
-  .pinned-chapter .step { scroll-margin-top: calc(var(--pinned-height) + 16px); }
-  /* Each numbered operation gets its own moment under the pinned graphic. */
-  .pinned-chapter .step[data-s="method"] ol li[data-walk-stage] { margin-bottom: 1.6em; }
 }
 @media (max-width: 360px) {
   .scrolly { --story-gutter: 20px; }
 }
 @media (max-width: 900px) and (orientation: landscape) {
-  :root { --pinned-height: clamp(240px, 66vh, 300px); --pinned-height: clamp(240px, 66svh, 300px); }
+  .chapter.pinned-chapter > .pin > .graphic { --card-space: 30svh; }
+  .chapter.pinned-chapter > .pin > .text { margin-top: -26svh; }
   .gbar { margin-bottom: 5px; padding-bottom: 5px; }
   .pinned-chapter .cw { padding-top: 4px; gap: 4px; }
   .pinned-chapter .cw-legend { display: none; }

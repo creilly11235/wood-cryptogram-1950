@@ -100,12 +100,19 @@
       return target.dataset.walkStage.trim().split(/\s+/).map(Number).filter(Number.isFinite);
     }
     const WALK_HOLD = {1: 2600, 3: 1700, 5: 2800};
-    function walkLine(record) {
-      if (!mobile.matches) return innerHeight * .55;
-      // The pinned graphic owns the top of the screen; prose crosses a line
-      // part way down the reading space that remains beneath it.
-      const bottom = Math.max(0, record.el.getBoundingClientRect().bottom);
-      return Math.max(innerHeight * .3, bottom + (innerHeight - bottom) * .42);
+    // On phones the passages are cards that rise over the full-screen graphic;
+    // a card takes over its stage as it enters the lower part of the screen.
+    function walkLine() {
+      return innerHeight * (mobile.matches ? .88 : .55);
+    }
+    function fadeCards(record) {
+      const focal = innerHeight * (innerWidth > innerHeight ? .8 : .72);
+      record.cards.forEach(card => {
+        const box = card.getBoundingClientRect();
+        const distance = Math.abs((box.top + box.bottom) / 2 - focal) / innerHeight;
+        const opacity = Math.max(0, Math.min(1, 1 - (distance - .14) / .18));
+        card.style.opacity = opacity.toFixed(3);
+      });
     }
     function playWalk(record, index, forward, preferred, hold = false) {
       record.walkTimers.forEach(clearTimeout);
@@ -186,6 +193,7 @@
         opened: visited.has(number), completed: false, previousTop: Infinity,
         renderMode: null, desktopState: null, pinned,
         walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')], walkIndex: null, walkTimers: [], walkPreferred: undefined,
+        cards: [...chapter.querySelectorAll('.pin > .text > .step[data-walk-stage], .pin > .text > .step:not([data-walk-stage]) > p, .pin > .text > .step:not([data-walk-stage]) li')],
       };
       card.dataset.stages = String(record.count);
       detail.textContent = labels.steps(record.count);
@@ -213,7 +221,7 @@
           const box = target.getBoundingClientRect();
           const inset = following ? Math.min(32, (following.getBoundingClientRect().top - box.top) / 2) : 32;
           record.walkPreferred = index;
-          window.scrollTo({top: window.scrollY + box.top - walkLine(record) + inset, behavior: reduced.matches ? 'instant' : 'smooth'});
+          window.scrollTo({top: window.scrollY + box.top - walkLine() + inset, behavior: reduced.matches ? 'instant' : 'smooth'});
           schedule();
         };
       }
@@ -503,6 +511,7 @@
             record.renderMode = mode;
             record.desktopState = null;
             record.walkIndex = null;
+            if (mode === 'desktop') record.cards.forEach(card => { card.style.opacity = ''; });
           }
         }
       });
@@ -550,7 +559,8 @@
             if (!record.graphic.visible) record.graphic.pause();
           }
           if (record.graphic.walkthrough) {
-            const line = walkLine(record);
+            if (mobile.matches) fadeCards(record);
+            const line = walkLine();
             let walkIndex = 0;
             record.walkTargets.forEach((target, i) => { if (target.getBoundingClientRect().top <= line) walkIndex = i; });
             if (record.walkIndex !== walkIndex) {

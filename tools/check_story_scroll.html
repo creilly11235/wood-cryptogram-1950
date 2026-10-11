@@ -70,20 +70,18 @@ frame.addEventListener('load', async () => {
     async function walkthroughFollowsProse(label) {
       // Both layouts: each passage selects its stage(s), the final one after a reading pause.
       const targets = [...chapters[0].querySelectorAll('[data-walk-stage]')];
-      const line = () => {
-        if (!mobile) return height * .55;
-        const bottom = Math.max(0, graphics[0].getBoundingClientRect().bottom);
-        return Math.max(height * .3, bottom + (height - bottom) * .42);
-      };
+      const line = height * (mobile ? .88 : .55);
       for (const target of [...targets, ...targets.slice(0, -1).reverse()]) {
-        for (let pass = 0; pass < 3; pass++) win.scrollTo({ top: win.scrollY + target.getBoundingClientRect().top - line() + 15, behavior: 'instant' });
+        const place = target.getBoundingClientRect();
+        // Phones centre the card on its focal line; desktop crosses the trigger line.
+        win.scrollTo({ top: win.scrollY + (mobile ? (place.top + place.bottom) / 2 - height * .72 : place.top - line + 15), behavior: 'instant' });
         await settle();
         await until(() => walk.dataset.stage === lastStage(target), `${label}: scroll did not reach stage ${lastStage(target)}`, 6000);
         check(target.classList.contains('is-walk-active') && doc.querySelectorAll('.is-walk-active').length === 1,
           `${label}: the passage for stage ${lastStage(target)} is marked as current`);
         const box = graphics[0].getBoundingClientRect(), prose = chapters[0].querySelector('.text').getBoundingClientRect();
-        check(box.width > 0 && box.bottom > 0 && box.top < height && (mobile ? box.top >= -1 && (box.top > 1 || box.bottom <= height * .8) : box.left >= prose.right - 1),
-          `${label}: stage ${lastStage(target)} shows with the graphic ${mobile ? 'pinned at the top' : 'visible to the right'}`);
+        check(box.width > 0 && box.bottom > 0 && box.top < height && (mobile ? box.top >= -1 && Number(getComputedStyle(target).opacity) > .9 : box.left >= prose.right - 1),
+          `${label}: stage ${lastStage(target)} shows with the graphic ${mobile ? 'behind a fully visible card' : 'visible to the right'}`);
         overflow(label);
       }
     }
@@ -118,7 +116,7 @@ frame.addEventListener('load', async () => {
     }
     if (mobile) {
       check(!!api, 'Mobile viewer controller is initialized');
-      check(graphics[0].parentElement === chapters[0] && getComputedStyle(graphics[0]).position === 'sticky',
+      check(graphics[0].parentElement.matches('.chapter > .pin') && getComputedStyle(graphics[0]).position === 'sticky',
         'The cipher walkthrough stays pinned in its chapter instead of a card');
       await walkthroughFollowsProse('Mobile chapter 1');
       const cards = [...doc.querySelectorAll('.mobile-story-card')];
@@ -190,12 +188,12 @@ frame.addEventListener('load', async () => {
       frame.style.width = '1440px'; frame.style.height = '900px';
       await pause(500);
       check(!dialog.open && !api.current && doc.body.style.position !== 'fixed', 'Switching to desktop closes the viewer and releases document scrolling');
-      check(graphics.every(graphic => graphic.parentElement.classList.contains('chapter')), 'Switching to desktop returns every graphic beside its prose');
+      check(graphics.every(graphic => graphic.parentElement.matches('.chapter, .chapter > .pin')), 'Switching to desktop returns every graphic beside its prose');
       frame.style.width = `${width}px`; frame.style.height = `${height}px`;
       await pause(500);
       check(doc.querySelectorAll('.mobile-story-card').length === 5 && !dialog.open, 'Returning to mobile restores five cards without opening one');
     } else {
-      check(graphics.every(graphic => graphic.parentElement.classList.contains('chapter')), 'Desktop graphics stay directly beside their reading columns');
+      check(graphics.every(graphic => graphic.parentElement.matches('.chapter, .chapter > .pin')), 'Desktop graphics stay directly beside their reading columns');
       await walkthroughFollowsProse('Desktop chapter 1');
       for (let i = 1; i < chapters.length; i++) {
         const targets = [...chapters[i].querySelectorAll('.step[data-s]')];
