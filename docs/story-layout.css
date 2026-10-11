@@ -42,10 +42,12 @@ body,
 }
 
 /* Give the three operations enough reading room to follow their animation. */
-.chapter[data-ch="1"] .step[data-s="method"] ol li[data-walk-stage] {
+.chapter[data-ch="1"] .step[data-s="method"] ol li {
   padding-block: 8px;
   margin-bottom: 1em;
 }
+.chapter[data-ch="1"] .step[data-s="method"] ol li p { margin: 0; }
+.chapter[data-ch="1"] .step[data-s="method"] ol li p + p { margin-top: .7em; }
 
 /* The passage driving the animation carries a thin mark in the margin, so
    a reader can see which sentence the graphic is illustrating. */
@@ -61,9 +63,8 @@ body,
   opacity: 0;
   transition: opacity .4s;
 }
-.step ol > li[data-walk-stage]::before { left: calc(-1.3em - 16px); }
 .step [data-walk-stage].is-walk-active::before { opacity: 1; }
-.step li[data-walk-stage].is-walk-active::marker { color: var(--candle); }
+.step ol > li:has(.is-walk-active)::marker { color: var(--candle); }
 
 .step .cipher,
 .step code,
@@ -156,11 +157,10 @@ figure img {
   .pinned-chapter .pin .step + .step { padding-top: 0; }
   .pinned-chapter .pin .step ol { padding: 0; margin: 0; }
   .pinned-chapter .pin .step ul { margin: 0; }
-  .pinned-chapter .pin .step li { list-style-position: inside; }
-  /* Every passage in the pinned run is one card, spaced a screen apart. */
-  .pinned-chapter .pin > .text > .step[data-walk-stage],
-  .pinned-chapter .pin > .text > .step:not([data-walk-stage]) > p,
-  .pinned-chapter .pin > .text > .step:not([data-walk-stage]) ol > li {
+  .pinned-chapter .pin .step li { list-style: none; padding: 0; margin: 0; }
+  /* Every passage in the pinned run is one card, spaced a screen apart.
+     The graphic's "Step n of 3" line carries the numbering here. */
+  .pinned-chapter .pin > .text .step [data-walk-stage] {
     display: block;
     margin: 0 auto 64svh;
     padding: 16px 18px;
@@ -172,7 +172,7 @@ figure img {
     pointer-events: auto;
     will-change: opacity;
   }
-  .pinned-chapter .pin > .text > .step:last-child > p:last-child { margin-bottom: 72svh; }
+  .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child { margin-bottom: 72svh; }
   .pinned-chapter .pin .step h2 { font-size: 1.5rem; margin-bottom: 12px; }
   .pinned-chapter .pin .step p:last-child, .pinned-chapter .pin .step li:last-child { margin-bottom: 0; }
   .pinned-chapter .pin .step p { margin: 0; }

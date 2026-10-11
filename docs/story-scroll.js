@@ -94,12 +94,13 @@
       records.forEach(record => { if (record.card) record.previousTop = record.card.getBoundingClientRect().top; });
       lastY = window.scrollY;
     }
-    // A prose element may carry one stage or a short sequence ("1 2"): the
-    // first plays on arrival and the rest follow after a reading pause.
+    // Each prose element carries the stage it explains. The graphic only
+    // changes as the reader moves from one passage to the next, so nothing
+    // moves while a passage is being read. A sequence ("1 2") is still
+    // accepted and shows its first stage going forward, its last going back.
     function walkSequence(target) {
       return target.dataset.walkStage.trim().split(/\s+/).map(Number).filter(Number.isFinite);
     }
-    const WALK_HOLD = {1: 3200, 3: 1700, 5: 2800};
     // On phones the passages are cards that rise over the full-screen graphic;
     // a card takes over its stage as it enters the lower part of the screen.
     function walkLine() {
@@ -114,9 +115,7 @@
         card.style.opacity = opacity.toFixed(3);
       });
     }
-    function playWalk(record, index, forward, preferred, hold = false) {
-      record.walkTimers.forEach(clearTimeout);
-      record.walkTimers = [];
+    function playWalk(record, index, forward, preferred) {
       record.walkIndex = index;
       const target = record.walkTargets[index];
       const sequence = walkSequence(target);
@@ -124,12 +123,6 @@
       if (sequence.includes(preferred)) start = sequence.indexOf(preferred);
       record.graphic.showStage(sequence[start]);
       record.walkTargets.forEach((item, i) => item.classList.toggle('is-walk-active', i === index));
-      if (hold) return;
-      let delay = 0;
-      for (let i = start + 1; i < sequence.length; i++) {
-        delay += WALK_HOLD[sequence[i - 1]] || 2000;
-        record.walkTimers.push(setTimeout(() => record.graphic.showStage(sequence[i]), delay));
-      }
     }
 
     const dialog = node('dialog', 'mobile-story-dialog');
@@ -192,8 +185,8 @@
         stage: 0, count: graphic.walkthrough ? 8 : steps.length,
         opened: visited.has(number), completed: false, previousTop: Infinity,
         renderMode: null, desktopState: null, pinned,
-        walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')], walkIndex: null, walkTimers: [], walkPreferred: undefined,
-        cards: [...chapter.querySelectorAll('.pin > .text > .step[data-walk-stage], .pin > .text > .step:not([data-walk-stage]) > p, .pin > .text > .step:not([data-walk-stage]) li')],
+        walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')], walkIndex: null, walkPreferred: undefined,
+        cards: [...chapter.querySelectorAll('.pin > .text [data-walk-stage]')],
       };
       card.dataset.stages = String(record.count);
       detail.textContent = labels.steps(record.count);
