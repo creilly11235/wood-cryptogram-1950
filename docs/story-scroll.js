@@ -99,7 +99,7 @@
     function walkSequence(target) {
       return target.dataset.walkStage.trim().split(/\s+/).map(Number).filter(Number.isFinite);
     }
-    const WALK_HOLD = {1: 2600, 3: 1700, 5: 2800};
+    const WALK_HOLD = {1: 3200, 3: 1700, 5: 2800};
     // On phones the passages are cards that rise over the full-screen graphic;
     // a card takes over its stage as it enters the lower part of the screen.
     function walkLine() {

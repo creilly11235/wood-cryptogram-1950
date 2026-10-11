@@ -80,8 +80,13 @@ frame.addEventListener('load', async () => {
         check(target.classList.contains('is-walk-active') && doc.querySelectorAll('.is-walk-active').length === 1,
           `${label}: the passage for stage ${lastStage(target)} is marked as current`);
         const box = graphics[0].getBoundingClientRect(), prose = chapters[0].querySelector('.text').getBoundingClientRect();
-        check(box.width > 0 && box.bottom > 0 && box.top < height && (mobile ? box.top >= -1 && Number(getComputedStyle(target).opacity) > .9 : box.left >= prose.right - 1),
-          `${label}: stage ${lastStage(target)} shows with the graphic ${mobile ? 'behind a fully visible card' : 'visible to the right'}`);
+        if (mobile && !target.closest('.pin')) {
+          // The introduction reads before the graphic arrives; it only needs to keep its stage.
+          check(box.top > 0, `${label}: stage ${lastStage(target)} reads before the graphic takes the screen`);
+        } else {
+          check(box.width > 0 && box.bottom > 0 && box.top < height && (mobile ? box.top >= -1 && Number(getComputedStyle(target).opacity) > .9 : box.left >= prose.right - 1),
+            `${label}: stage ${lastStage(target)} shows with the graphic ${mobile ? 'behind a fully visible card' : 'visible to the right'}`);
+        }
         overflow(label);
       }
     }

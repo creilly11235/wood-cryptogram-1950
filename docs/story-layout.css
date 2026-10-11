@@ -88,11 +88,14 @@ figure img {
 
   /* The pinned wrapper exists for phones; the desktop grid sees through it. */
   .chapter > .pin { display: contents; }
+  .chapter > .text.text-before,
   .chapter > .pin > .text,
-  .chapter > .text-after { grid-column: 1; }
-  .chapter > .pin > .graphic { grid-column: 2; grid-row: 1 / span 2; }
-  .chapter > .pin > .text { padding-bottom: 0; }
-  .chapter > .text-after { padding-top: 0; }
+  .chapter > .text.text-after { grid-column: 1; }
+  .chapter > .pin > .graphic { grid-column: 2; grid-row: 1 / span 3; }
+  .chapter > .text.text-before { padding-bottom: 0; }
+  .chapter > .pin > .text { padding-block: 0; }
+  .chapter > .text.text-after { padding-top: 0; }
+  .chapter > .text.text-before > .step:last-child,
   .chapter > .pin > .text > .step:last-child { min-height: calc(var(--story-viewport-height) * .52); }
 
   /* The final paragraph must leave room for its full-height sticky neighbor.
@@ -144,7 +147,9 @@ figure img {
     padding-block: 0 0;
     pointer-events: none;
   }
-  .chapter.pinned-chapter > .text-after { padding-top: 32px; }
+  .chapter.pinned-chapter > .text.text-before { padding-bottom: 0; }
+  .chapter.pinned-chapter > .text.text-before > .step { padding-bottom: 8px; }
+  .chapter.pinned-chapter > .text.text-after { padding-top: 32px; }
   .pinned-chapter .pin .step { padding: 0; }
   .pinned-chapter .pin .step + .step { padding-top: 0; }
   .pinned-chapter .pin .step ol { padding: 0; margin: 0; }
