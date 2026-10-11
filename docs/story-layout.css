@@ -144,7 +144,9 @@ figure img {
     position: relative;
     z-index: 2;
     margin-top: -38svh;
-    padding-block: 0 0;
+    /* The graphic holds on the plain cipher for a screen's worth of scrolling
+       after the introduction has gone, then the first card rises into view. */
+    padding-block: 66svh 0;
     pointer-events: none;
   }
   .chapter.pinned-chapter > .text.text-before { padding-bottom: 0; }
@@ -197,7 +199,7 @@ figure img {
 }
 @media (max-width: 900px) and (orientation: landscape) {
   .chapter.pinned-chapter > .pin > .graphic { --card-space: 30svh; }
-  .chapter.pinned-chapter > .pin > .text { margin-top: -26svh; }
+  .chapter.pinned-chapter > .pin > .text { margin-top: -26svh; padding-top: 52svh; }
   .gbar { margin-bottom: 5px; padding-bottom: 5px; }
   .pinned-chapter .cw { padding-top: 4px; gap: 4px; }
   .pinned-chapter .cw-legend { display: none; }
