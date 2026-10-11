@@ -91,7 +91,7 @@
       suppressAutoUntil = performance.now() + duration;
     }
     function rememberPositions() {
-      records.forEach(record => { if (record.card) record.previousTop = record.card.getBoundingClientRect().top; });
+      records.forEach(record => { if (!record.pinned) record.previousTop = record.card.getBoundingClientRect().top; });
       lastY = window.scrollY;
     }
     // Each prose element carries the stage it explains. The graphic only
@@ -119,6 +119,7 @@
       record.walkIndex = index;
       const target = record.walkTargets[index];
       const sequence = walkSequence(target);
+      if (!sequence.length) return;
       let start = forward ? 0 : sequence.length - 1;
       if (sequence.includes(preferred)) start = sequence.indexOf(preferred);
       record.graphic.showStage(sequence[start]);
@@ -206,7 +207,7 @@
           const targetIndex = record.walkTargets.findIndex(item => walkSequence(item).includes(index));
           if (targetIndex < 0) return;
           if (targetIndex === record.walkIndex) {
-            playWalk(record, targetIndex, true, index, true);
+            playWalk(record, targetIndex, true, index);
             return;
           }
           const target = record.walkTargets[targetIndex];
@@ -541,27 +542,26 @@
       framePending = false;
       records.forEach(record => {
         if (mobile.matches && !record.pinned) return;
-        {
-          let index = 0;
-          record.steps.forEach((step, i) => { if (step.getBoundingClientRect().top <= innerHeight * .55) index = i; });
-          const state = record.steps[index].dataset.s;
-          if (record.desktopState !== state) {
-            record.desktopState = state;
-            record.graphic.go(state);
-            describe(record, index);
-            if (!record.graphic.visible) record.graphic.pause();
-          }
-          if (record.graphic.walkthrough) {
-            if (mobile.matches) fadeCards(record);
-            const line = walkLine();
-            let walkIndex = 0;
-            record.walkTargets.forEach((target, i) => { if (target.getBoundingClientRect().top <= line) walkIndex = i; });
-            if (record.walkIndex !== walkIndex) {
-              const forward = record.walkIndex === null || walkIndex > record.walkIndex;
-              const preferred = record.walkPreferred;
-              record.walkPreferred = undefined;
-              playWalk(record, walkIndex, forward, preferred);
-            }
+        let index = 0;
+        record.steps.forEach((step, i) => { if (step.getBoundingClientRect().top <= innerHeight * .55) index = i; });
+        const state = record.steps[index].dataset.s;
+        if (record.desktopState !== state) {
+          record.desktopState = state;
+          record.graphic.go(state);
+          describe(record, index);
+          if (!record.graphic.visible) record.graphic.pause();
+        }
+        if (record.graphic.walkthrough) {
+          if (mobile.matches) fadeCards(record);
+          const line = walkLine();
+          let walkIndex = 0;
+          record.walkTargets.forEach((target, i) => { if (target.getBoundingClientRect().top <= line) walkIndex = i; });
+          if (record.walkIndex !== walkIndex) {
+            const forward = record.walkIndex === null || walkIndex > record.walkIndex;
+            // A requested stage is kept until the passage that holds it is reached.
+            const preferred = record.walkPreferred;
+            if (preferred === undefined || walkSequence(record.walkTargets[walkIndex]).includes(preferred)) record.walkPreferred = undefined;
+            playWalk(record, walkIndex, forward, preferred);
           }
         }
       });

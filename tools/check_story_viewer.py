@@ -469,7 +469,7 @@ def main():
                 page.set_viewport_size({"width": 1440, "height": 900})
                 page.wait_for_timeout(600)
                 check(page, f"{prefix}: desktop breakpoint closes and unlocks", "!WoodStoryController.current&&!WoodStoryController.dialog.open&&document.body.style.position!=='fixed'")
-                check(page, f"{prefix}: desktop restores six original graphics", "document.querySelectorAll('.chapter > .graphic').length===6&&document.querySelectorAll('.graphic').length===6")
+                check(page, f"{prefix}: desktop restores six original graphics", "document.querySelectorAll('.chapter > .graphic, .chapter > .pin > .graphic').length===6&&document.querySelectorAll('.graphic').length===6")
                 page.set_viewport_size({"width": w, "height": h})
                 page.wait_for_timeout(600)
                 check(page, f"{prefix}: returning mobile stays closed", "!WoodStoryController.current&&document.querySelectorAll('.mobile-story-card').length===5")
