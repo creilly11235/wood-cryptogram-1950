@@ -3,43 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>
-// Remember native input before the article's external viewer code arrives.
-(() => {
-  const listeners = new AbortController();
-  const options = {passive: true, signal: listeners.signal};
-  const state = {armed: false, touchHeld: false, scrollKeyHeld: null, startY: scrollY};
-  const reset = () => { state.armed = false; state.touchHeld = false; state.scrollKeyHeld = null; };
-  const input = event => {
-    if (!event.isTrusted || !matchMedia('(max-width: 900px)').matches) return;
-    if ((window.visualViewport?.scale || 1) > 1.01 || (event.touches && event.touches.length !== 1)) { reset(); return; }
-    if (event.type === 'wheel' && event.deltaY <= 0) return;
-    if (event.type === 'keydown' && (!['ArrowDown', 'PageDown', ' '].includes(event.key) ||
-        event.target.closest('input, textarea, select, [contenteditable]') ||
-        (event.key === ' ' && event.target.closest('button, [role="button"]')))) return;
-    if (!state.armed || event.type === 'touchstart') state.startY = scrollY;
-    state.armed = true;
-    if (event.touches) state.touchHeld = true;
-    if (event.type === 'keydown') state.scrollKeyHeld = event.key;
-  };
-  for (const type of ['touchstart', 'touchmove', 'wheel', 'keydown']) addEventListener(type, input, options);
-  for (const type of ['touchend', 'touchcancel']) addEventListener(type, () => { state.touchHeld = false; }, options);
-  addEventListener('keyup', event => { if (event.key === state.scrollKeyHeld) state.scrollKeyHeld = null; }, options);
-  document.addEventListener('scrollend', event => {
-    if (event.target === document && !state.touchHeld && !state.scrollKeyHeld) reset();
-  }, options);
-  document.addEventListener('click', event => { if (event.target.closest('a[href*="#"]')) reset(); }, {...options, capture: true});
-  for (const type of ['hashchange', 'popstate', 'pagehide', 'orientationchange']) addEventListener(type, reset, options);
-  addEventListener('pageshow', event => { if (event.persisted) reset(); }, options);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) reset(); }, options);
-  window.visualViewport?.addEventListener('resize', () => { if (window.visualViewport.scale > 1.01) reset(); }, options);
-  window.WoodStoryPendingInput = {take() {
-    listeners.abort();
-    delete window.WoodStoryPendingInput;
-    return state;
-  }};
-})();
-</script>
 <title>Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte</title>
 <meta name="description" content="Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch.">
 <link rel="canonical" href="https://creilly11235.github.io/wood-cryptogram-1950/de/">
@@ -234,11 +197,10 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=22">
-<link rel="stylesheet" href="../cipher-cards.css?v=22">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=22">
-<link rel="stylesheet" href="../story-graphics.css?v=22">
-<link rel="stylesheet" href="../story-viewer.css?v=22">
+<link rel="stylesheet" href="../story-layout.css?v=23">
+<link rel="stylesheet" href="../cipher-cards.css?v=23">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=23">
+<link rel="stylesheet" href="../story-graphics.css?v=23">
 </head>
 <body>
 
@@ -318,6 +280,13 @@ footer p{margin:0 0 .7em}
 </section>
 </div></section>
 <section class="chapter" data-ch="2">
+<div class="text text-before">
+<section class="step" id="why-it-stayed-open">
+<h2>Warum es ungelöst blieb</h2>
+<p>Könnte man die Schlüsselbuchstaben frei wählen, ließe sich derselbe Geheimtext in jede beliebige Botschaft gleicher Länge verwandeln.</p>
+</section>
+</div>
+<div class="pin">
 <div class="graphic" data-g="2">
 <div class="gbar"><span class="ct">II · Die Büchersuche</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
@@ -327,25 +296,32 @@ footer p{margin:0 0 .7em}
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
-<section class="step" data-s="trap" data-cap="Veranschaulichung: Frei gewählte Schlüssel können aus demselben Geheimtext jede dieser Botschaften mit 21 Buchstaben erzeugen." id="why-it-stayed-open">
-<h2>Warum es ungelöst blieb</h2>
-<p>Könnte man die Schlüsselbuchstaben frei wählen, ließe sich derselbe Geheimtext in jede beliebige Botschaft gleicher Länge verwandeln. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte — erst recht nicht bei einem so kurzen Text.</p>
+<section class="step" data-s="trap" data-walk-stage="1" data-cap="Veranschaulichung: Frei gewählte Schlüssel können aus demselben Geheimtext jede dieser Botschaften mit 21 Buchstaben erzeugen.">
+<p>Jeder dieser drei Sätze entsteht aus Woods 21 Buchstaben mit einem anderen frei gewählten Schlüssel. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte, erst recht nicht bei einem so kurzen Text.</p>
 </section>
-<section class="step" data-s="shelves" data-cap="129 Bücher lieferten 28,6 Millionen mögliche Schlüssel. Jeder Buchrücken steht für ein Buch.">
-<h3>Wo anfangen?</h3>
-<p>Wood hatte allerdings etwas Wichtiges verraten: Sein Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs. Damit ließ sich eine Sammlung von Büchern durchsuchen, indem man jedes Wort der Reihe nach als möglichen Anfang ausprobierte.</p>
+<section class="step" data-s="shelves" data-walk-stage="2" data-cap="129 Bücher lieferten 28,6 Millionen mögliche Schlüssel. Jeder Buchrücken steht für ein Buch.">
+<p>Wood hatte allerdings etwas Wichtiges verraten. Sein Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs, also ließ sich eine Sammlung von Büchern durchsuchen, ein Anfangswort nach dem anderen. Jeder Buchrücken hier steht für eines der 129 Bücher dieser ersten Suche.</p>
 </section>
-<section class="step" data-s="plants" data-cap="In 97 von 100 bekannten Testbotschaften erhielt die richtige Botschaft die höchste Bewertung. Jeder Punkt steht für einen Test.">
-<p>Bevor wir nach Woods Botschaft suchten, prüften wir mit 100 Testbotschaften, deren Klartext bekannt war, ob unser Code eine echte Botschaft wiederfinden und richtig bewerten konnte. Jede Entschlüsselung wurde danach bewertet, wie sehr sie Englisch ähnelte, und in 97 von 100 Tests erhielt die richtige Botschaft die höchste Bewertung. Am 17. September 2026 untersuchte die erste eigentliche Suche 28,6 Millionen mögliche Schlüssel aus 129 öffentlich zugänglichen Büchern.</p>
+<section class="step" data-s="plants" data-walk-stage="3" data-cap="In 97 von 100 bekannten Testbotschaften erhielt die richtige Botschaft die höchste Bewertung. Jeder Punkt steht für einen Test.">
+<p>Bevor wir nach Woods Botschaft suchten, ließen wir 100 Testbotschaften mit bekanntem Klartext durch denselben Code laufen. Jede Entschlüsselung wurde danach bewertet, wie sehr sie Englisch ähnelte, und in 97 von 100 Tests erhielt die richtige Botschaft die höchste Bewertung.</p>
 </section>
-<section class="step" data-s="englishResults" data-cap="Jeder graue Punkt ist das beste Ergebnis für einen von 100 zufälligen Geheimtexten. Zwölf wurden höher bewertet als Woods bestes Ergebnis, das blau markiert ist.">
-<h3>Die Suche nach Schlüsseln</h3>
-<p>Die Suche verglich zunächst Muster aus fünf Buchstaben und prüfte dann, wie gut sich die stärksten Kandidaten in englische Wörter aufteilen ließen. So ließen sich mögliche Lesarten ordnen, allerdings mit einer klaren Schwäche: Jede Lesart wurde als Englisch beurteilt.</p>
-<p>Woods Botschaft ergab nichts Lesbares. Wir weiteten die Suche von 129 Büchern auf 3.977 Texte aus: Hinzu kamen 3.848 Bücher von Project Gutenberg in 14 Sprachen, insgesamt wurden rund 429 Millionen mögliche Schlüssel geprüft. Noch immer fand sich nichts Überzeugendes.</p>
-<p>Um zu sehen, was die Suche mit reinem Rauschen anstellt, ließen wir sie mit 100 zufälligen Folgen aus je 21 Buchstaben laufen. In 12 dieser Tests fand sie ein Ergebnis mit einer höheren Bewertung als alles, was sie für Woods Botschaft gefunden hatte. Die größere Bibliothek lieferte mehr verlockende falsche Fährten, aber keine lesbare Botschaft.</p>
+<section class="step" data-s="englishResults" data-walk-stage="4" data-cap="Jeder graue Punkt ist das beste Ergebnis für einen von 100 zufälligen Geheimtexten. Zwölf wurden höher bewertet als Woods bestes Ergebnis, das blau markiert ist.">
+<p>Woods Botschaft ergab nichts Lesbares, auch nicht, als die Suche auf 3.977 Texte angewachsen war. Mit 100 zufälligen Folgen aus je 21 Buchstaben statt Woods Geheimtext fand dieselbe Suche in 12 Fällen ein Ergebnis mit einer höheren Bewertung als alles, was sie für Woods Botschaft gefunden hatte.</p>
+</section>
+</div></div>
+<div class="text text-after">
+<section class="step">
+<p>Die erste Suche am 17. September 2026 prüfte 28,6 Millionen mögliche Schlüssel aus 129 öffentlich zugänglichen Büchern. Danach kamen 3.848 Bücher von Project Gutenberg in 14 Sprachen hinzu, insgesamt wurden rund 429 Millionen mögliche Schlüssel geprüft, und die größere Bibliothek lieferte mehr verlockende falsche Fährten, aber keine lesbare Botschaft.</p>
+<p>Die Schwäche lag in der Bewertung. Die Suche verglich zunächst Muster aus fünf Buchstaben und prüfte dann, wie gut sich die stärksten Kandidaten in englische Wörter aufteilen ließen. So ließen sich mögliche Lesarten ordnen, doch jede Lesart wurde als Englisch beurteilt.</p>
 </section>
 </div></section>
 <section class="chapter" data-ch="3">
+<div class="text text-before">
+<section class="step" id="the-idea-that-cracked-it">
+<p>Da war noch Woods Hinweis, dass die Botschaft „nicht in einer einzigen Sprache“ sein werde. Die nächste Suche erkannte Wörter in sieben Sprachen und erlaubte einen Sprachwechsel von Wort zu Wort. Ein schneller Vergleich von Buchstabenmustern grenzte die Kandidaten ein, bevor das Programm versuchte, sie in Wörter aufzuteilen. Es bevorzugte häufige Wörter und wertete es ab, wenn eine Zeichenfolge in winzige Fragmente zerlegt wurde oder die Sprache ständig wechselte, nur damit die Teile irgendwie passten.</p>
+</section>
+</div>
+<div class="pin">
 <div class="graphic" data-g="3">
 <div class="gbar"><span class="ct">III · Über Sprachgrenzen hinweg</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
@@ -355,14 +331,21 @@ footer p{margin:0 0 .7em}
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
-<section class="step" data-s="idea" data-cap="Dieselbe deutsche Testbotschaft: Eine englische Wortliste zerlegt sie in Fragmente; Wortlisten in sieben Sprachen erkennen VERSTEHT GEWISSE MINDER." id="the-idea-that-cracked-it">
-<p>Da war noch Woods Hinweis, dass die Botschaft „nicht in einer einzigen Sprache“ sein werde. Die nächste Suche erkannte Wörter in sieben Sprachen und erlaubte einen Sprachwechsel von Wort zu Wort. Ein schneller Vergleich von Buchstabenmustern grenzte die Kandidaten ein, bevor das Programm versuchte, sie in Wörter aufzuteilen. Es bevorzugte häufige Wörter und wertete es ab, wenn eine Zeichenfolge in winzige Fragmente zerlegt wurde oder die Sprache ständig wechselte, nur damit die Teile irgendwie passten.</p>
+<section class="step" data-s="idea" data-walk-stage="1" data-cap="Dieselbe deutsche Testbotschaft: Eine englische Wortliste zerlegt sie in Fragmente; Wortlisten in sieben Sprachen erkennen VERSTEHT GEWISSE MINDER.">
+<p>Der Unterschied zeigt sich an derselben deutschen Testbotschaft. Eine englische Wortliste zerlegt sie in Bruchstücke, und Wortlisten in sieben Sprachen finden VERSTEHT GEWISSE MINDER im Ganzen wieder.</p>
 </section>
-<section class="step" data-s="bibles" data-cap="Die gezielte Suche nahm Bibelübersetzungen in 19 Sprachen hinzu. Jedes Buch steht für eine Übersetzung.">
+<section class="step" data-s="bibles" data-walk-stage="2" data-cap="Die gezielte Suche nahm Bibelübersetzungen in 19 Sprachen hinzu. Jedes Buch steht für eine Übersetzung.">
 <p>Außerdem brauchten wir eine gezielter ausgewählte Quelle. Wood hatte geschrieben, der Schlüssel stehe „in einem zugänglichen Buch“ in einer Fremdsprache, und kaum ein Buch ist zugänglicher als eine Bibel, also nahmen wir Übersetzungen in 19 Sprachen in die Suche auf.</p>
 </section>
-</div></section>
+</div></div></section>
 <section class="chapter" data-ch="4">
+<div class="text text-before">
+<section class="step" id="the-hit">
+<h2>Der Treffer</h2>
+<p>Die Bibelsuche ging die 19 Bibeln Wort für Wort durch. Für jedes mögliche Anfangswort baute sie den Schlüssel zweimal auf, einmal mit übersprungenen und einmal mit beibehaltenen Wortwiederholungen, und das alles für zwei Lesarten der Rechenregel, Thouless’ eigene Regel und eine verbreitete Variante. Das ergab 26,7 Millionen mögliche Schlüssel je Lesart, und der erste Durchlauf dauerte weniger als drei Minuten.</p>
+</section>
+</div>
+<div class="pin">
 <div class="graphic" data-g="4">
 <div class="gbar"><span class="ct">IV · Die Lösung</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
@@ -372,19 +355,27 @@ footer p{margin:0 0 .7em}
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
-<section class="step" data-s="prayer" data-cap="Die 13 führenden unterschiedlichen Ergebnisse der Bibelsuche nach Thouless’ Regel. Die deutsche Bibel erhält die höchste Bewertung und ergibt HIERBINICHTOTSIENSTEW." id="the-hit">
-<h2>Der Treffer</h2>
-<p>Die Bibelsuche ging die 19 Bibeln Wort für Wort durch. Für jedes mögliche Anfangswort baute sie den Schlüssel zweimal auf, einmal mit übersprungenen und einmal mit beibehaltenen Wortwiederholungen, und das alles für zwei Lesarten der Rechenregel, Thouless’ eigene Regel und eine verbreitete Variante. Das ergab 26,7 Millionen mögliche Schlüssel je Lesart, und der erste Durchlauf dauerte weniger als drei Minuten.</p>
-<p>Nach Thouless’ Regel kam das höchstbewertete Ergebnis aus der deutschen Bibel, beginnend beim sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Die Entschlüsselung ergab <strong class="cipher-token decoded">HIERBINICHTOTSIENSTEW</strong>.</p>
+<section class="step" data-s="prayer" data-walk-stage="1" data-cap="Die 13 führenden unterschiedlichen Ergebnisse der Bibelsuche nach Thouless’ Regel. Die deutsche Bibel erhält die höchste Bewertung und ergibt HIERBINICHTOTSIENSTEW.">
+<p>Nach Thouless’ Regel kam das höchstbewertete Ergebnis aus der deutschen Bibel, beginnend beim sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Es lag deutlich vor der rumänischen Bibel auf dem zweiten Platz, und die Entschlüsselung ergab <strong class="cipher-token decoded">HIERBINICHTOTSIENSTEW</strong>.</p>
+</section>
+<section class="step" data-s="church" data-walk-stage="2" data-cap="Das vertraute kirchliche Gebet beginnt mit Vater unser; die Lutherbibel mit Unser Vater. Die unterschiedliche Wortfolge ergibt unterschiedliche Schlüssel.">
+<p>Auf den genauen Wortlaut kam es an. Eine frühere Suche hatte das deutsche Vaterunser mit dem vertrauten kirchlichen Anfang „Vater unser“ ausprobiert und nichts gefunden. Das „Unser Vater in dem Himmel“ der Lutherbibel ergibt schon ab dem ersten Wort einen anderen Schlüssel.</p>
+</section>
+<section class="step" data-s="table" data-walk-stage="3" data-cap="Die erste Zeile durchgerechnet: UNSER ergibt 77, der Schlüsselbuchstabe Y verschiebt um 24, und F wird zu H entschlüsselt. Alle 21 Buchstaben lassen sich exakt zurückverschlüsseln.">
+<p>Am ersten Schlüsselwort lässt sich das nachvollziehen. Die Buchstabenwerte von UNSER ergeben 21+14+19+5+18 = 77. Bei der Division durch 26 bleibt der Rest 25, also ist der Schlüsselbuchstabe Y. Y verschiebt um 24 Stellen, daher wird der Geheimtextbuchstabe F um 24 Stellen zurück zu H verschoben.</p>
+</section>
+<section class="step" data-s="reading" data-walk-stage="4" data-cap="Hier bin ich: Deutsch. Totsiens: Afrikaans für Auf Wiedersehen. TEW: Woods Initialen.">
+<p>In Wörter aufgeteilt lauten die Buchstaben <strong class="cipher-token decoded">Hier bin ich. Totsiens. T.E.W.</strong></p>
+<p>„Hier bin ich“ ist Deutsch, „Totsiens“ bedeutet auf Afrikaans „Auf Wiedersehen“, und T.E.W. sind Woods Initialen.</p>
+</section>
+</div></div>
+<div class="text text-after">
+<section class="step">
+<p>Wood wollte, dass die Botschaft erst nach seinem Tod gelesen würde, sobald ein Medium den Schlüssel übermittelt hätte. Darin gibt er sich zu erkennen, verabschiedet sich und unterschreibt. Der Schlüssel, den er zurückgesendet hätte, beginnt mit „Unser Vater in dem Himmel“.</p>
 <blockquote class="quote" lang="de" translate="no">Unser Vater in dem Himmel! Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns …</blockquote>
 <button class="replay" type="button">Entschlüsselung erneut abspielen</button>
-</section>
-<section class="step" data-s="church" data-cap="Das vertraute kirchliche Gebet beginnt mit Vater unser; die Lutherbibel mit Unser Vater. Die unterschiedliche Wortfolge ergibt unterschiedliche Schlüssel.">
-<p>Auf den genauen Wortlaut kam es an. Eine frühere Suche hatte das deutsche Vaterunser mit dem vertrauten kirchlichen Anfang „Vater unser“ ausprobiert und nichts gefunden. Das „Unser Vater in dem Himmel“ der Lutherbibel ergibt schon ab dem ersten Wort einen anderen Schlüssel.</p>
 <p>Der Schlüssel verwendet 21 verschiedene Wörter, von „Unser“ bis „uns“. Vier Wiederholungen werden übersprungen („Dein“ zweimal, „Himmel“ und „Unser“ jeweils einmal), und das ä in „täglich“ wird als a gelesen.</p>
 <figure><img src="../luther_1922_mt6_9-11.jpg" width="1272" height="538" alt="Matthäus 6,9–11 in einem Druck von 1922 der Lutherbibel von 1912" loading="lazy"><figcaption><a href="https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up">Der Schlüsseltext, Matthäus 6,9–11, in einem Berliner Druck von 1922 der Lutherbibel von 1912</a>, herausgegeben von der Britischen und Ausländischen Bibelgesellschaft.</figcaption></figure>
-</section>
-<section class="step" data-s="table" data-cap="Die erste Zeile durchgerechnet: UNSER ergibt 77, der Schlüsselbuchstabe Y verschiebt um 24, und F wird zu H entschlüsselt. Alle 21 Buchstaben lassen sich exakt zurückverschlüsseln.">
 <h3>Der Schlüssel, Wort für Wort</h3>
 <div class="table-wrap"><table><thead><tr><th scope="col">Nr.</th><th scope="col">Wort</th><th scope="col">Sum.</th><th scope="col">Schlüssel</th><th scope="col">Geheimtext → Klartext</th></tr></thead><tbody>
 <tr><td>1</td><td>Unser</td><td>77</td><td>Y</td><td><span class="cipher-token encoded">F</span> → <span class="cipher-token decoded">H</span></td></tr>
@@ -409,18 +400,17 @@ footer p{margin:0 0 .7em}
 <tr><td>20</td><td>gib</td><td>18</td><td>R</td><td><span class="cipher-token encoded">V</span> → <span class="cipher-token decoded">E</span></td></tr>
 <tr><td>21</td><td>uns</td><td>54</td><td>B</td><td><span class="cipher-token encoded">X</span> → <span class="cipher-token decoded">W</span></td></tr>
 </tbody></table></div>
-<p>Am Beispiel UNSER lässt sich eine Zeile nachvollziehen. Die Buchstabenwerte ergeben 21+14+19+5+18 = 77. Bei der Division durch 26 bleibt der Rest 25, also ist der Schlüsselbuchstabe Y. Y verschiebt um 24 Stellen, daher wird der Geheimtextbuchstabe F um 24 Stellen zurück zu H verschoben.</p>
 <p>Alle 21 Buchstaben lassen sich korrekt entschlüsseln und wieder zu Woods ursprünglichem Geheimtext verschlüsseln.</p>
-</section>
-<section class="step" data-s="reading" data-cap="Hier bin ich: Deutsch. Totsiens: Afrikaans für Auf Wiedersehen. TEW: Woods Initialen.">
-<h3>Die Botschaft lesen</h3>
-<p>Das höchstbewertete Ergebnis nach Thouless’ Regel war sofort verständlich, sobald die Buchstaben in Wörter aufgeteilt waren:</p>
-<p><strong class="cipher-token decoded">Hier bin ich. Totsiens. T.E.W.</strong></p>
-<p>„Hier bin ich“ ist Deutsch, „Totsiens“ bedeutet auf Afrikaans „Auf Wiedersehen“, und T.E.W. sind Woods Initialen.</p>
-<p>Wood wollte, dass die Botschaft erst nach seinem Tod gelesen würde, sobald ein Medium den Schlüssel übermittelt hätte. Darin gibt er sich zu erkennen, verabschiedet sich und unterschreibt. Der Schlüssel, den er zurückgesendet hätte, beginnt mit „Unser Vater in dem Himmel“.</p>
 </section>
 </div></section>
 <section class="chapter" data-ch="5">
+<div class="text text-before">
+<section class="step" id="how-it-was-checked">
+<h2>Wie wir das Ergebnis überprüften</h2>
+<p>Bevor wir das Ergebnis an Klaus Schmeh schickten, überprüften wir die Entschlüsselung auf mehreren Wegen.</p>
+</section>
+</div>
+<div class="pin">
 <div class="graphic" data-g="5">
 <div class="gbar"><span class="ct">V · Prüfung des Ergebnisses</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
@@ -430,24 +420,33 @@ footer p{margin:0 0 .7em}
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
-<section class="step" data-s="checks" data-cap="Ein eigenständiges Skript und unabhängig davon Astra reproduzierten alle 21 Buchstaben; die Scans der Originale bestätigten Geheimtext und Verfahren." id="how-it-was-checked">
-<h2>Wie wir das Ergebnis überprüften</h2>
-<p>Bevor wir das Ergebnis an Klaus Schmeh schickten, überprüften wir die Entschlüsselung auf mehreren Wegen.</p>
-<h3>Die Entschlüsselung nachvollziehen</h3>
-<p>Ein kurzes, eigenständiges Skript, das keinen anderen Projektcode verwendet, erzeugt den Schlüssel aus dem Gebetstext, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu Woods exaktem Geheimtext. Astra von OpenAI entwickelte die Entschlüsselung unabhängig davon nochmals selbst und reproduzierte alle 21 Buchstaben. Sein <a href="https://github.com/creilly11235/wood-cryptogram-1950/blob/main/notes/astra/REVIEW_WOOD35.md">vollständiger Prüfbericht</a> liegt im Repository.</p>
+<section class="step" data-s="checks" data-walk-stage="1" data-cap="Ein eigenständiges Skript und unabhängig davon Astra reproduzierten alle 21 Buchstaben; die Scans der Originale bestätigten Geheimtext und Verfahren.">
+<p>Ein kurzes, eigenständiges Skript, das keinen anderen Projektcode verwendet, erzeugt den Schlüssel aus dem Gebetstext, entschlüsselt alle 21 Buchstaben und verschlüsselt sie wieder zu Woods exaktem Geheimtext. Astra von OpenAI reproduzierte unabhängig davon alle 21 Buchstaben.</p>
+</section>
+<section class="step" data-s="luck" data-walk-stage="2" data-cap="TEW ergab einen Treffer: Woods Botschaft. Sieben von 500 zufälligen Signaturen ergaben ebenfalls Treffer. Die Positionen der Markierungen dienen der Veranschaulichung; die Anzahl stammt aus dem gespeicherten Test.">
+<p>Wie wahrscheinlich wäre ein solcher Treffer durch Zufall? Eine nachträgliche Prüfung führte rund 854 Millionen Probeentschlüsselungen mit 3.847 Gutenberg-Büchern und 19 Bibeln durch und suchte nach Wörterbuchwörtern, gefolgt von einer Signatur aus drei Buchstaben. Mit TEW als Signatur gab es genau einen Treffer, nämlich diese Botschaft, und von 500 zufälligen Signaturen ergaben überhaupt nur 7 einen Treffer.</p>
+</section>
+</div></div>
+<div class="text text-after">
+<section class="step">
+<p>Astras <a href="https://github.com/creilly11235/wood-cryptogram-1950/blob/main/notes/astra/REVIEW_WOOD35.md">vollständiger Prüfbericht</a> zur Entschlüsselung liegt im Repository.</p>
+<p>Jeder Versuch der Zufallsprüfung musste 18 Buchstaben sauber in Wörterbuchwörter mit 3 bis 10 Buchstaben aufteilen. Die Prüfung umfasste beide Rechenvarianten, jeweils mit und ohne wiederholte Wörter, und die Treffer der zufälligen Signaturen (1,4 %) waren Wortsalat.</p>
+<p>Zwei Einschränkungen: TOTSIENS wurde erst nach der Entschlüsselung in die Wortliste aufgenommen, und der Test wurde erst nach dem Treffer entworfen. Er zeigt also, dass der Treffer selten ist, was noch kein Beweis ist.</p>
 <h3>Originalquellen</h3>
 <p>Scans von Woods Artikel aus dem Jahr 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie klärten auch eine Frage, bei der wir unsicher gewesen waren: Die Regel „A bedeutet keine Verschiebung“ stammt aus Thouless’ eigenem Text und ist keine spätere Vermutung.</p>
-</section>
-<section class="step" data-s="luck" data-cap="TEW ergab einen Treffer: Woods Botschaft. Sieben von 500 zufälligen Signaturen ergaben ebenfalls Treffer. Die Positionen der Markierungen dienen der Veranschaulichung; die Anzahl stammt aus dem gespeicherten Test.">
-<h3>Zufallstreffer prüfen</h3>
-<p>Wie wahrscheinlich wäre ein solcher Treffer durch Zufall? Eine nachträgliche Prüfung führte rund 854 Millionen Probeentschlüsselungen mit 3.847 Gutenberg-Büchern und 19 Bibeln durch. Sie umfasste beide Rechenvarianten, jeweils mit und ohne wiederholte Wörter. Gesucht wurden 18 Buchstaben, die sich sauber in Wörterbuchwörter mit 3 bis 10 Buchstaben aufteilen ließen, gefolgt von einer Signatur aus drei Buchstaben.</p>
-<p>Mit TEW gab es genau einen Treffer: diese Botschaft. Mit 500 zufälligen Signaturen anstelle von TEW ergaben 7 davon (1,4 %) ebenfalls einen Treffer, und die Beispiele waren Wortsalat.</p>
-<p>Zwei Einschränkungen: TOTSIENS wurde erst nach der Entschlüsselung in die Wortliste aufgenommen, und der Test wurde erst nach dem Treffer entworfen. Er zeigt also, dass der Treffer selten ist, was noch kein Beweis ist.</p>
 <h3>Suche nach früheren Lösungen</h3>
 <p>Suchen in Schmehs Blog und dessen Kommentaren, in Reddits r/codes und in den anderen Lösungsprotokollen von 2026 ergaben keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand zuvor darauf gekommen ist.</p>
 </section>
 </div></section>
 <section class="chapter" data-ch="6">
+<div class="text text-before">
+<section class="step" id="the-correction">
+<h2>Ein Fehler im ursprünglichen Beispiel</h2>
+<p>Beim Abgleich des Verfahrens mit dem Artikel von 1948 fanden wir einen Rechenfehler in Thouless’ eigenem Beispiel. Er steht seit 78 Jahren so im Druck, und soweit wir sehen, hat ihn noch niemand bemerkt.</p>
+<p>Um sein Verfahren zu erklären, verschlüsselte Thouless <strong class="cipher-token decoded">THERE IS NO DEATH</strong> mit Hamlets „To be or not to be“-Monolog als Schlüssel. Er druckte die Schlüsselbuchstaben <strong>IGGWW BG PI VNWNU</strong> und den Geheimtext <strong class="cipher-token encoded">BNKNA JYCWY RWGB</strong>.</p>
+</section>
+</div>
+<div class="pin">
 <div class="graphic" data-g="6">
 <div class="gbar"><span class="ct">VI · Eine weitere Erkenntnis</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
@@ -457,17 +456,19 @@ footer p{margin:0 0 .7em}
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
-<section class="step" data-s="slip" data-cap="Thouless’ 14. Beispielwort SUFFER ergibt die Summe 75 und damit W, nicht das gedruckte U. Der letzte Geheimtextbuchstabe müsste D statt B sein." id="the-correction">
-<h2>Ein Fehler im ursprünglichen Beispiel</h2>
-<p>Beim Abgleich des Verfahrens mit dem Artikel von 1948 fanden wir einen Rechenfehler in Thouless’ eigenem Beispiel. Er steht seit 78 Jahren so im Druck, und soweit wir sehen, hat ihn noch niemand bemerkt.</p>
-<p>Um sein Verfahren zu erklären, verschlüsselte Thouless <strong class="cipher-token decoded">THERE IS NO DEATH</strong> mit Hamlets „To be or not to be“-Monolog als Schlüssel. Er druckte die Schlüsselbuchstaben <strong>IGGWW BG PI VNWNU</strong> und den Geheimtext <strong class="cipher-token encoded">BNKNA JYCWY RWGB</strong>.</p>
-<p>Die ersten 13 Schlüsselbuchstaben stimmen. Das 14. Schlüsselwort ist „suffer“, und hier geht es schief:</p>
-<ul>
-<li>S+U+F+F+E+R = 19+21+6+6+5+18 = <strong>75</strong></li>
-<li>75 = 2 × 26 + 23, also müsste der Schlüsselbuchstabe <strong>W</strong> sein, der 23. Buchstabe.</li>
-<li>Thouless druckte <strong>U</strong>, den 21.</li>
-</ul>
-<p>Sein gedruckter Geheimtext folgt dem gedruckten U; es handelt sich also nicht um einen einzelnen Druckfehler. Der 14. Klartextbuchstabe ist das letzte H von <strong class="cipher-token decoded">DEATH</strong>. Mit U verschoben wird daraus B, das er auch druckte. Mit dem richtigen W verschoben würde daraus <strong class="cipher-token encoded">D</strong>. Die letzte Gruppe seines Beispiels müsste daher <strong class="cipher-token encoded">RWGD</strong> lauten, nicht <strong class="cipher-token encoded">RWGB</strong>.</p>
+<section class="step" data-s="slipSum" data-walk-stage="1" data-cap="Thouless’ 14. Beispielwort SUFFER ergibt die Summe 19+21+6+6+5+18 = 75.">
+<p>Die ersten 13 Schlüsselbuchstaben stimmen, und das 14. Schlüsselwort ist „suffer“. Seine Buchstaben ergeben 19+21+6+6+5+18 = <strong>75</strong>.</p>
+</section>
+<section class="step" data-s="slipKey" data-walk-stage="2" data-cap="75 = 2 × 26 + 23, also müsste der Schlüsselbuchstabe W sein, der 23. Buchstabe. Thouless druckte U, den 21.">
+<p>75 = 2 × 26 + 23, also müsste der Schlüsselbuchstabe <strong>W</strong> sein, der 23. Buchstabe. Thouless druckte <strong>U</strong>, den 21.</p>
+</section>
+<section class="step" data-s="slip" data-walk-stage="3" data-cap="Der letzte Geheimtextbuchstabe müsste D sein, nicht das gedruckte B, sodass die letzte Gruppe des Beispiels RWGD lautet.">
+<p>Sein gedruckter Geheimtext folgt dem gedruckten U, es handelt sich also nicht um einen einzelnen Druckfehler. Der 14. Klartextbuchstabe ist das letzte H von <strong class="cipher-token decoded">DEATH</strong>. Mit U verschoben wird daraus B, das er auch druckte, mit dem richtigen W verschoben dagegen <strong class="cipher-token encoded">D</strong>.</p>
+</section>
+</div></div>
+<div class="text text-after">
+<section class="step">
+<p>Die letzte Gruppe seines Beispiels müsste daher <strong class="cipher-token encoded">RWGD</strong> lauten, nicht <strong class="cipher-token encoded">RWGB</strong>.</p>
 <figure><img src="../thouless_1948_suffer_slip.png" width="1568" height="1966" alt="Thouless’ Rechenbeispiel mit Markierungen beim falschen U und B" loading="lazy"><figcaption><a href="https://creilly11235.github.io/wood-cryptogram-1950/thouless_1948_suffer_slip.png">Thouless’ Beispiel von 1948 mit Markierungen bei „suffer“, dem gedruckten U und B sowie der nachgerechneten Tabelle</a>.</figcaption></figure>
 <p>Wood dagegen hielt sich korrekt an Thouless’ schriftliche Regel. Alle 21 seiner Schlüsselbuchstaben stimmen damit überein, und nach diesem Verfahren wurde seine Botschaft entschlüsselt.</p>
 </section>
@@ -495,7 +496,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=22"></script>
+<script src="../cipher-walkthrough.js?v=23"></script>
 <script>
 (function(){
 "use strict";
@@ -512,7 +513,9 @@ const PLANT_DE="VERSTEHTGEWISSEMINDER",CHURCH="SXFFFLOEPTPPQMAVDXEUR";
 /* Source: attempts/wood35_solve_2026-10-04/bib_ml.out, the Bible pass using
    Thouless's arithmetic. These 13 distinct readings deduplicate 15 printed rows. */
 const TOP=[["HIERBINICHTOTSIENSTEW",-1.270],["RASFATAFITEANDAMAPOSE",-1.493],["TUTANUMTOCAOANDEERSEL",-1.545],["BATAOSUESPITKINMENQUI",-1.577],["NOMRAMOPOCHARILSGENCH",-1.588],["AVEAYESCROURAQUEAAPON",-1.639],["AABORGTUTOALEESVACOSA",-1.663],["OVEGENOVOPTAFOREIBIAS",-1.681],["IOQUEOLAIALTANREGTOCF",-1.686],["ELATAFIMFEPOTETAINEXL",-1.689],["JECFITSOSNAVISEEDUREV",-1.694],["ETJENTTANGAAPLAGAOVAL",-1.712],["VEFURSESOIFURCHEREUDC",-1.719]];
-const THOU={fixed:"BNKNAJYCWYRWGD"};
+const THOU={printed:"BNKNAJYCWYRWGB",fixed:"BNKNAJYCWYRWGD"};
+/* The correction builds up one row at a time: the sum, the key letter, the cipher letter. */
+const SLIP_ROWS={slipSum:1,slipKey:2,slip:3};
 /* The luck grid uses lookelsewhere.json and tew_hits.json: 7 of 500 random
    signatures yielded at least one matching decryption (8 decryptions total).
    The identities of the seven signatures were not saved; grid positions are
@@ -553,7 +556,7 @@ function Graphic(el){
   const self=this,cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
   const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
   const capL=el.querySelector(".capL"),capR=el.querySelector(".capR"),legend=el.querySelector(".legend");
-  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0;
+  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0;
   let W=1,H=1,DPR=1;
   const color=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   let ink,muted,blue,teal,pale,background,gridGray,decodedBg,decodedFg,decodedBorder;
@@ -574,10 +577,11 @@ function Graphic(el){
     text(s,x+1,y,fitted,kind==="decoded"?decodedFg:background,"left",true);
   }
   function line(x1,y1,x2,y2,c=pale,width=1){ctx.strokeStyle=c;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
-  function dot(x,y,r,c=muted){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();}
-  function outlineDot(x,y,r,c=blue){ctx.fillStyle=background;ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.stroke();}
+  function dot(x,y,r,c=muted){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,Math.max(.4,r),0,Math.PI*2);ctx.fill();}
+  function outlineDot(x,y,r,c=blue){ctx.fillStyle=background;ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,Math.max(.4,r),0,Math.PI*2);ctx.fill();ctx.stroke();}
   function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
-  const isMobilePanel=()=>matchMedia("(max-width:900px)").matches&&!!el.closest(".mobile-visual");
+  // Portrait phones get the full-screen scenes; a landscape phone is short and wide, like the desktop column.
+  const isMobilePanel=()=>matchMedia("(max-width:900px) and (orientation:portrait)").matches;
   function panel(){const h=isMobilePanel()?Math.max(0,H-12):Math.min(H,322);return{x:5,y:(H-h)/2,w:W-10,h};}
   const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
   function progress(delay=0,duration=400){return instant?1:ease((elapsed-delay)/duration);}
@@ -624,7 +628,9 @@ function Graphic(el){
       case "reading":strip(PT,"reading");caption("Zwei Sprachen, gefolgt von Woods Initialen");break;
       case "checks":strip(PT,"reading");caption("Alle 21 Buchstaben lassen sich exakt entschlüsseln und zurückverschlüsseln");break;
       case "luck":strip(PT,"reading");caption("7 von 500 zufälligen Signaturen ergaben ebenfalls Wortfolgen");legendItems([["Ein Treffer",blue],["Kein Treffer",gridGray]]);break;
-      case "slip":strip(THOU.fixed);caption("Thouless’ Beispiel: Der letzte Geheimtextbuchstabe müsste D sein");break;
+      case "slipSum":strip(THOU.printed);caption("Thouless’ 14. Schlüsselwort SUFFER");break;
+      case "slipKey":strip(THOU.printed);caption("Der Schlüsselbuchstabe müsste W sein, nicht U");break;
+      case "slip":strip(THOU.fixed);caption("Der letzte Geheimtextbuchstabe müsste D sein, nicht B");break;
     }
   }
   function grid(count,highlight,p,columns,maxRadius=4){
@@ -697,6 +703,10 @@ function Graphic(el){
       row.forEach(([word,w])=>{const at=left;reveal(delay+index++*85,()=>{ctx.fillStyle=decodedBg;ctx.beginPath();ctx.roundRect(at,rowY-size/2-7,w,size+14,4);ctx.fill();line(at+2,rowY+size/2+6,at+w-2,rowY+size/2+6,decodedBorder,2);text(word,at+w/2,rowY,size,decodedFg,"center",true);});left+=w+gap;});
     });
   }
+  function slipRow(i,paint){
+    if(i>=SLIP_ROWS[state])return;
+    if(i<slipShown){ctx.save();paint();ctx.restore();}else reveal((i-slipShown)*180,paint);
+  }
   function mobileRows(items){
     const p=panel(),gap=p.h/items.length,offset=Math.min(24,gap*.23);
     items.forEach(([heading,detail,c=ink,kind],i)=>reveal(i*150,()=>{
@@ -720,7 +730,7 @@ function Graphic(el){
       }
       case "plants":{
         wrap(mobileCopy.plants[0],cx,p.y+(wideShort?13:19),p.w,18,ink,"center");
-        const gw=Math.min(p.w,p.h*1.4);grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+(wideShort?32:51),w:gw,h:p.h-(wideShort?64:102)},10,6);
+        const gw=Math.min(p.w,p.h*1.4);grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+(wideShort?32:51),w:gw,h:Math.max(24,p.h-(wideShort?64:102))},10,6);
         wrap(mobileCopy.plants[1],cx,p.y+p.h-(wideShort?12:21),p.w,15,muted,"center");break;
       }
       case "englishResults":{
@@ -737,7 +747,7 @@ function Graphic(el){
         wrap(mobileCopy.english[2],cx,p.y+p.h-13,p.w,15,muted,"center");break;
       }
       case "idea":{
-        ["VERS TE HT GE WIS SEM IN DER","VERSTEHT GEWISSE MINDER"].forEach((s,i)=>{const y=p.y+p.h*(i?.75:.25);wrap(mobileCopy.idea[i],p.x,y-(short?25:48),p.w,18,i?ink:muted);mobileWords(s,p.x,y+(short?15:20),p.w,18,i*380);});
+        ["VERS TE HT GE WIS SEM IN DER","VERSTEHT GEWISSE MINDER"].forEach((s,i)=>{const top=p.y+p.h*i/2,half=p.h/2;wrap(mobileCopy.idea[i],p.x,top+11,p.w,short?16:18,i?ink:muted);mobileWords(s,p.x,top+half/2+14,p.w,short?15:18,i*380);});
         line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
       }
       case "bibles":{
@@ -776,15 +786,15 @@ function Graphic(el){
       }
       case "checks":mobileRows(mobileCopy.checks.slice(1).map(detail=>[mobileCopy.checks[0],detail,blue]));break;
       case "luck":{
-        wrap(mobileCopy.luck[0],cx,p.y+(wideShort?13:22),p.w,17,ink,"center");grid(500,i=>i<7,{x:p.x,y:p.y+(wideShort?32:58),w:p.w,h:p.h-(wideShort?64:113)},W<500?20:40,4);wrap(mobileCopy.luck[1],cx,p.y+p.h-(wideShort?12:23),p.w,15,muted,"center");break;
+        wrap(mobileCopy.luck[0],cx,p.y+(wideShort?13:22),p.w,17,ink,"center");grid(500,i=>i<7,{x:p.x,y:p.y+(wideShort?32:58),w:p.w,h:Math.max(24,p.h-(wideShort?64:113))},W<500?20:40,4);wrap(mobileCopy.luck[1],cx,p.y+p.h-(wideShort?12:23),p.w,15,muted,"center");break;
       }
-      case "slip":{
+      case "slipSum":case "slipKey":case "slip":{
         const gap=p.h/3;
-        reveal(0,()=>{const y=p.y+gap*.5;label("SUFFER",cx,y-(short?22:33),p.w,short?18:21,ink,"center",true);label("19 + 21 + 6 + 6 + 5 + 18",cx,y-1,p.w,short?16:18,ink,"center",true);text(mobileCopy.slip[0],cx,y+(short?21:29),short?16:18,ink,"center");});
-        line(p.x,p.y+gap,p.x+p.w,p.y+gap,pale);
-        reveal(180,()=>{const y=p.y+gap*1.5;label("75 = 2 × 26 + 23 → W",cx,y-(short?16:22),p.w,20,ink,"center",true);wrap(mobileCopy.slip[1],cx,y+(short?19:24),p.w,16,muted,"center");});
-        line(p.x,p.y+gap*2,p.x+p.w,p.y+gap*2,pale);
-        reveal(420,()=>{const y=p.y+gap*2.5;wrap(mobileCopy.slip[2],p.x,y-(short?17:25),p.w-53,17,ink,"left",2);wrap(mobileCopy.slip[3],p.x,y+(short?19:24),p.w-53,15,muted,"left",2);cipherText("D",p.x+p.w-32,y,32,26,"encoded");});break;
+        slipRow(0,()=>{const y=p.y+gap*.5;label("SUFFER",cx,y-(short?22:33),p.w,short?18:21,ink,"center",true);label("19 + 21 + 6 + 6 + 5 + 18",cx,y-1,p.w,short?16:18,ink,"center",true);text(mobileCopy.slip[0],cx,y+(short?21:29),short?16:18,ink,"center");});
+        if(SLIP_ROWS[state]>1)line(p.x,p.y+gap,p.x+p.w,p.y+gap,pale);
+        slipRow(1,()=>{const y=p.y+gap*1.5;label("75 = 2 × 26 + 23 → W",cx,y-(short?16:22),p.w,20,ink,"center",true);wrap(mobileCopy.slip[1],cx,y+(short?19:24),p.w,16,muted,"center");});
+        if(SLIP_ROWS[state]>2)line(p.x,p.y+gap*2,p.x+p.w,p.y+gap*2,pale);
+        slipRow(2,()=>{const y=p.y+gap*2.5;wrap(mobileCopy.slip[2],p.x,y-(short?17:25),p.w-53,17,ink,"left",2);wrap(mobileCopy.slip[3],p.x,y+(short?19:24),p.w-53,15,muted,"left",2);cipherText("D",p.x+p.w-32,y,32,26,"encoded");});break;
       }
     }
   }
@@ -876,13 +886,13 @@ function Graphic(el){
         grid(500,i=>i<7,{x:p.x,y:p.y+30,w:p.w,h:p.h-51},p.h<190?50:25,3.4);
         label("7 Signaturen mit Treffern · ein Punkt je Signatur",cx,p.y+p.h-9,p.w,12,muted,"center");break;
       }
-      case "slip":{
+      case "slipSum":case "slipKey":case "slip":{
         const gap=p.h/3,small=gap<65;
-        reveal(0,()=>{const y=p.y+gap*.5;label("SUFFER = 19 + 21 + 6 + 6 + 5 + 18",cx,y-10,p.w,small?11:14,ink,"center",true);label("Summe: 75",cx,y+13,p.w,small?12:16,ink,"center");});
-        line(p.x,p.y+gap,p.x+p.w,p.y+gap,pale);
-        reveal(180,()=>{const y=p.y+gap*1.5;label("75 = 2 × 26 + 23 → W",cx,y-10,p.w,small?13:18,ink,"center",true);label("Thouless druckte stattdessen U",cx,y+14,p.w,small?11:12,muted,"center");});
-        line(p.x,p.y+gap*2,p.x+p.w,p.y+gap*2,pale);
-        reveal(420,()=>{const y=p.y+gap*2.5;label("Der letzte Geheimtextbuchstabe: D",p.x,y-10,p.w-60,small?11:14,ink);label("Das veröffentlichte Beispiel endet auf B",p.x,y+13,p.w-60,small?10:12,muted);cipherText("D",p.x+p.w-32,y,32,22,"encoded");});break;
+        slipRow(0,()=>{const y=p.y+gap*.5;label("SUFFER = 19 + 21 + 6 + 6 + 5 + 18",cx,y-10,p.w,small?11:14,ink,"center",true);label("Summe: 75",cx,y+13,p.w,small?12:16,ink,"center");});
+        if(SLIP_ROWS[state]>1)line(p.x,p.y+gap,p.x+p.w,p.y+gap,pale);
+        slipRow(1,()=>{const y=p.y+gap*1.5;label("75 = 2 × 26 + 23 → W",cx,y-10,p.w,small?13:18,ink,"center",true);label("Thouless druckte stattdessen U",cx,y+14,p.w,small?11:12,muted,"center");});
+        if(SLIP_ROWS[state]>2)line(p.x,p.y+gap*2,p.x+p.w,p.y+gap*2,pale);
+        slipRow(2,()=>{const y=p.y+gap*2.5;label("Der letzte Geheimtextbuchstabe: D",p.x,y-10,p.w-60,small?11:14,ink);label("Das veröffentlichte Beispiel endet auf B",p.x,y+13,p.w-60,small?10:12,muted);cipherText("D",p.x+p.w-32,y,32,22,"encoded");});break;
       }
     }
   }
@@ -896,7 +906,7 @@ function Graphic(el){
     // frame so returning to the preview cannot briefly expose an empty canvas.
     if(W>1&&H>1)draw();
   }
-  this.go=function(next,immediate=false){if(state===next&&this.state===next)return;state=next;this.state=next;instant=immediate||reduced;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;};
+  this.go=function(next,immediate=false){if(state===next&&this.state===next)return;slipShown=Math.min(SLIP_ROWS[state]||0,SLIP_ROWS[next]||0);state=next;this.state=next;instant=immediate||reduced;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;};
   this.pause=function(){if(!pausedAt){pausedAt=performance.now();this.frame(pausedAt);}};
   this.resume=function(){if(pausedAt){started+=performance.now()-pausedAt;pausedAt=0;}dirty=true;};
   this.replay=function(){if(state!=="prayer")return;instant=reduced;started=performance.now();pausedAt=0;elapsed=0;lastLetter=-1;strip(instant?PT:CT,instant?"reading":"cipher");dirty=true;};
@@ -925,7 +935,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=22"></script>
+<script src="../story-scroll.js?v=23"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */
