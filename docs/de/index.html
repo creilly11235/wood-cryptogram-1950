@@ -60,7 +60,9 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero .hero-links a{display:inline-flex;align-items:center;min-height:44px;padding-block:8px}
 /* The ciphertext stays at the top of the screen while the opening scrolls
    beneath it, decoding as the reader goes. */
-.cipher-row{--tw:28px;position:sticky;top:var(--hero-stick-top,env(safe-area-inset-top,0px));z-index:3;margin:16px 0 0;padding:12px 0 14px;display:flex;flex-direction:column;align-items:center;background:var(--room)}
+.reveal-track{position:relative;margin-top:12px}
+.reveal-hold{height:70svh}
+.cipher-row{--tw:28px;position:sticky;top:var(--hero-stick-top,env(safe-area-inset-top,0px));z-index:3;margin:0;padding:6px 0 12px;display:flex;flex-direction:column;align-items:center;background:var(--room)}
 .cipher-row.is-stuck{border-bottom:1px solid var(--veil)}
 .cipher-row .intro{font:var(--t-note);color:var(--bone-2);margin:0 0 14px}
 .cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:8px 12px}
@@ -71,13 +73,11 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher-row[data-stage="3"] .gloss{opacity:1}
 .cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.25);font-size:calc(var(--tw) * .65)}
 .cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:58ch;text-wrap:pretty}
-.hero .hero-body{min-height:70svh}
 .hero .answer,.hero .lede{max-width:640px;margin-inline:auto;text-align:left}
-.hero .answer{margin-top:40px;padding-top:28px;border-top:1px solid var(--veil-2)}
+.hero .answer{margin-top:8px;padding-top:28px;border-top:1px solid var(--veil-2)}
 .hero .answer p{margin:0 0 .8em}
 .hero .answer-heading{display:grid;gap:4px;margin-bottom:16px}
 .hero .answer .sv{font:var(--t-note);color:var(--bone-2);margin:0}
-.hero .answer .answer-message{font:var(--t-heading);text-wrap:balance;margin-bottom:16px;padding:12px 16px}
 .hero .answer .answer-meaning{color:var(--bone)}
 .hero .answer .answer-status{font:400 .8125rem/1.5 var(--body);color:var(--bone-2);margin:0;text-wrap:pretty}
 .hero .answer-status time{white-space:nowrap}
@@ -202,7 +202,7 @@ footer p{margin:0 0 .7em}
 <h1>Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte</h1>
 <p class="byline"><span class="byline-author">Von <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a></span> <time datetime="2026-10-04">4. Oktober 2026</time></p>
 <p class="hero-links"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a> <a class="lang" href="../" hreflang="en" lang="en">English version</a></p>
-  <div class="reveal-start"></div>
+  <div class="reveal-track">
   <figure class="cipher-row" aria-label="Woods Geheimtext, FVAMI NTKFX XWATB OIZVV X" data-message="HIER BIN ICH TOTSIENS TEW">
     <p class="intro">„Mein verschlüsselter Text lautet:“</p>
     <div class="line" translate="no">
@@ -214,18 +214,17 @@ footer p{margin:0 0 .7em}
     <ul class="hero-gloss" hidden><li></li><li></li><li></li><li>Auf Wiedersehen</li><li>Woods Initialen</li></ul>
     <figcaption>T. E. Wood, „A Further Test for Survival“, <em>Proceedings of the S.P.R.</em> 49 (1950), S. 105.</figcaption>
   </figure>
-<div class="hero-body">
+  <div class="reveal-hold"></div>
+  </div>
 <div class="answer">
 <div class="answer-heading">
 <p class="sv">Gelöst</p>
 <p class="answer-status">Bestätigt von <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">Klaus Schmeh</a> am <time datetime="2026-10-04">4. Oktober 2026</time></p>
 </div>
-<p class="answer-message cipher-token decoded" translate="no"><span lang="de">Hier bin ich</span>. <span lang="af">Totsiens</span>. T.E.W.</p>
-<p class="answer-meaning">„Hier bin ich“ auf Deutsch, „auf Wiedersehen“ auf Afrikaans und Woods Initialen. Geschrieben, um erst nach seinem Tod gelesen zu werden.</p>
+<p class="answer-meaning">Wood schrieb sie auf Deutsch und Afrikaans und unterzeichnete mit seinen Initialen, damit sie nach seinem Tod gelesen würde.</p>
 <p>Der Schlüssel ist der Anfang des Vaterunsers in der Lutherbibel von 1912, verwendet nach Robert Thouless’ Wortsummenverfahren von 1948.</p>
 </div>
 <p class="lede">1950 veröffentlichte ein Rechtsanwalt namens T. E. Wood einen Geheimtext aus 21 Buchstaben als Test des Fortlebens nach dem Tod. Nach seinem Tod wollte er den Schlüssel über ein Medium zurücksenden. Sechsundsiebzig Jahre später entschlüsselten wir ihn. Ganz ohne Séance.</p>
-</div>
 </div>
 <main class="scrolly">
 <section class="chapter" data-ch="1">

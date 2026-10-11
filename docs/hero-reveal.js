@@ -1,12 +1,12 @@
-/* The ciphertext at the top of the article stays in view while the opening
-   scrolls beneath it, and decodes as the reader goes: the letters turn to
-   their decoded values, regroup into words, and each word gains a gloss. */
+/* The ciphertext at the top of the article pins to the top of the screen
+   and decodes as the reader scrolls: the letters turn to their decoded
+   values, regroup into words, and each word gains a gloss. Then it lets go
+   and the opening continues. */
 (() => {
   'use strict';
   const figure = document.querySelector('.hero .cipher-row');
-  const start = document.querySelector('.hero .reveal-start');
-  if (!figure || !start) return;
-  const hero = figure.closest('.hero');
+  const track = figure && figure.closest('.reveal-track');
+  if (!track) return;
   const line = figure.querySelector('.line');
   const tiles = [...line.querySelectorAll('.t')];
   const cipher = tiles.map(tile => tile.textContent);
@@ -83,12 +83,14 @@
   function update() {
     framePending = false;
     const top = parseFloat(getComputedStyle(figure).top) || 0;
-    const scrolled = top - start.getBoundingClientRect().bottom;
-    // The cipher can stay pinned until the opening has passed beneath it.
-    const range = Math.max(1, hero.getBoundingClientRect().bottom - start.getBoundingClientRect().bottom - figure.offsetHeight);
+    const box = track.getBoundingClientRect();
+    const scrolled = top - box.top;
+    // The cipher stays pinned through the hold beneath it, and the reveal
+    // finishes before the opening's text arrives.
+    const range = Math.max(1, box.height - figure.offsetHeight);
     const progress = scrolled / range;
     figure.classList.toggle('is-stuck', scrolled > 0 && progress < 1);
-    const stage = progress < .12 ? 0 : progress < .4 ? 1 : progress < .62 ? 2 : 3;
+    const stage = progress < .08 ? 0 : progress < .42 ? 1 : progress < .66 ? 2 : 3;
     if (figure.dataset.stage !== String(stage)) apply(stage);
   }
   function schedule() {

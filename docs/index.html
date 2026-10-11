@@ -59,7 +59,9 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero .hero-links a{display:inline-flex;align-items:center;min-height:44px;padding-block:8px}
 /* The ciphertext stays at the top of the screen while the opening scrolls
    beneath it, decoding as the reader goes. */
-.cipher-row{--tw:28px;position:sticky;top:var(--hero-stick-top,env(safe-area-inset-top,0px));z-index:3;margin:16px 0 0;padding:12px 0 14px;display:flex;flex-direction:column;align-items:center;background:var(--room)}
+.reveal-track{position:relative;margin-top:12px}
+.reveal-hold{height:70svh}
+.cipher-row{--tw:28px;position:sticky;top:var(--hero-stick-top,env(safe-area-inset-top,0px));z-index:3;margin:0;padding:6px 0 12px;display:flex;flex-direction:column;align-items:center;background:var(--room)}
 .cipher-row.is-stuck{border-bottom:1px solid var(--veil)}
 .cipher-row .intro{font:var(--t-note);color:var(--bone-2);margin:0 0 14px}
 .cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:8px 12px}
@@ -70,13 +72,11 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher-row[data-stage="3"] .gloss{opacity:1}
 .cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.25);font-size:calc(var(--tw) * .65)}
 .cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:58ch;text-wrap:pretty}
-.hero .hero-body{min-height:70svh}
 .hero .answer,.hero .lede{max-width:640px;margin-inline:auto;text-align:left}
-.hero .answer{margin-top:40px;padding-top:28px;border-top:1px solid var(--veil-2)}
+.hero .answer{margin-top:8px;padding-top:28px;border-top:1px solid var(--veil-2)}
 .hero .answer p{margin:0 0 .8em}
 .hero .answer-heading{display:grid;gap:4px;margin-bottom:16px}
 .hero .answer .sv{font:var(--t-note);color:var(--bone-2);margin:0}
-.hero .answer .answer-message{font:var(--t-heading);text-wrap:balance;margin-bottom:16px;padding:12px 16px}
 .hero .answer .answer-meaning{color:var(--bone)}
 .hero .answer .answer-status{font:400 .8125rem/1.5 var(--body);color:var(--bone-2);margin:0;text-wrap:pretty}
 .hero .answer-status time{white-space:nowrap}
@@ -202,7 +202,7 @@ footer p{margin:0 0 .7em}
 <h1>Solving the 1950 cipher meant to test life after death</h1>
 <p class="byline"><span class="byline-author">By <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a></span> <time datetime="2026-10-04">October 4, 2026</time></p>
 <p class="hero-links"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code and data</a> <a class="lang" href="de/" hreflang="de" lang="de">Deutsche Fassung</a></p>
-  <div class="reveal-start"></div>
+  <div class="reveal-track">
   <figure class="cipher-row" aria-label="Wood's ciphertext, FVAMI NTKFX XWATB OIZVV X" data-message="HIER BIN ICH TOTSIENS TEW">
     <p class="intro">“My ciphered passage is:”</p>
     <div class="line" translate="no">
@@ -214,18 +214,17 @@ footer p{margin:0 0 .7em}
     <ul class="hero-gloss" hidden><li>Here</li><li>am</li><li>I</li><li>Goodbye</li><li>Wood’s initials</li></ul>
     <figcaption>T. E. Wood, “A Further Test for Survival”, <em>Proceedings of the S.P.R.</em> 49 (1950), p. 105.</figcaption>
   </figure>
-<div class="hero-body">
+  <div class="reveal-hold"></div>
+  </div>
 <div class="answer">
 <div class="answer-heading">
 <p class="sv">Solved</p>
 <p class="answer-status">Confirmed by <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">Klaus Schmeh</a> on <time datetime="2026-10-04">October 4, 2026</time></p>
 </div>
-<p class="answer-message cipher-token decoded" translate="no"><span lang="de">Hier bin ich</span>. <span lang="af">Totsiens</span>. T.E.W.</p>
-<p class="answer-meaning">“Here I am” in German, “goodbye” in Afrikaans, and Wood’s initials, written to be read after his death.</p>
+<p class="answer-meaning">Wood wrote it in German and Afrikaans and signed it with his initials, to be read after his death.</p>
 <p>The key is the opening of the Lord’s Prayer in the 1912 Luther Bible, used with Robert Thouless’s 1948 word-sum system.</p>
 </div>
 <p class="lede">In 1950, a solicitor named T. E. Wood published a 21 letter cipher as a test of life after death, planning to send the key back through a medium once he had died. Seventy-six years later, we decrypted it. No séance required.</p>
-</div>
 </div>
 <main class="scrolly">
 <section class="chapter" data-ch="1">
