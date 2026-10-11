@@ -164,7 +164,12 @@
         sum.append(term);
       });
       sum.append(this.node('span', 'cw-equals', '='), this.node('strong', 'cw-total', '77'));
-      this.math.append(sum, this.node('div', 'cw-reduction', label.keyReduction));
+      const reduction = this.node('div', 'cw-reduction');
+      label.keyReduction.split('→').forEach((part, index) => {
+        if (index) reduction.append(this.node('span', 'cw-reduction-arrow', '→'));
+        reduction.append(part);
+      });
+      this.math.append(sum, reduction);
       this.focus.append(this.focusPair, this.math);
 
       this.shift = this.node('div', 'cw-shift');

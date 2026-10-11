@@ -68,8 +68,8 @@
   },
   {
    "kind": "span",
-   "en": "I · The cipher",
-   "de": "I · Der Geheimtext"
+   "en": "I · Decoding the cipher",
+   "de": "I · Den Geheimtext entschlüsseln"
   },
   {
    "kind": "attr",
