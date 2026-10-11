@@ -43,13 +43,8 @@
     },
     {
       "kind": "p",
-      "en": "Solved",
-      "de": "Gelöst"
-    },
-    {
-      "kind": "p",
-      "en": "Confirmed by <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> on <time datetime=\"2026-10-04\">October 4, 2026</time>",
-      "de": "Bestätigt von <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> am <time datetime=\"2026-10-04\">4. Oktober 2026</time>"
+      "en": "Solve confirmed by <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> on <time datetime=\"2026-10-04\">October 4, 2026</time>",
+      "de": "Lösung bestätigt von <a href=\"https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/\">Klaus Schmeh</a> am <time datetime=\"2026-10-04\">4. Oktober 2026</time>"
     },
     {
       "kind": "p",
