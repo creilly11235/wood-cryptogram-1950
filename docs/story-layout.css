@@ -33,10 +33,6 @@ body,
   display: none;
 }
 
-.walkthrough-graphic .progress {
-  display: none;
-}
-
 .step {
   overflow-wrap: break-word;
 }
@@ -48,23 +44,6 @@ body,
 }
 .chapter[data-ch="1"] .step[data-s="method"] ol li p { margin: 0; }
 .chapter[data-ch="1"] .step[data-s="method"] ol li p + p { margin-top: .7em; }
-
-/* The passage driving the animation carries a thin mark in the margin, so
-   a reader can see which sentence the graphic is illustrating. */
-.step[data-walk-stage], .step [data-walk-stage] { position: relative; }
-.step[data-walk-stage]::before, .step [data-walk-stage]::before {
-  content: "";
-  position: absolute;
-  top: .3em;
-  bottom: .3em;
-  left: -16px;
-  width: 2px;
-  background: var(--candle);
-  opacity: 0;
-  transition: opacity .4s;
-}
-.step[data-walk-stage].is-walk-active::before, .step [data-walk-stage].is-walk-active::before { opacity: 1; }
-.step ol > li:has(.is-walk-active)::marker { color: var(--candle); }
 
 .step .cipher,
 .step code,
@@ -105,9 +84,6 @@ figure img {
   .chapter > .pin:last-child > .text > .step:last-child {
     min-height: calc(var(--story-viewport-height) - 32px);
   }
-
-  /* Charts label their own progress beside the chapter title. */
-  .gbar .gstep { margin-left: auto; font: var(--t-note); color: var(--candle); white-space: nowrap; }
 }
 
 @media (max-width: 900px) {
@@ -121,12 +97,7 @@ figure img {
 
   .gbody { min-height: 0; overflow: visible; }
   .gbody canvas { flex: 1 1 0; min-height: 0; }
-  .gbar { flex: none; gap: 8px; margin-bottom: 8px; padding-bottom: 8px; }
-  .gbar .ct { font-size: 1rem; line-height: 1.3; }
-  .progress { display: flex; flex: none; gap: 5px; align-items: center; margin-left: auto; }
-  .gcap span:empty, .sub:empty { display: none; }
-  .gbar .gstep { margin-left: auto; font: var(--t-note); color: var(--candle); white-space: nowrap; }
-  .gbar .gstep + .progress { margin-left: 0; }
+  .sub:empty { display: none; }
   /* The replay button belongs to the desktop column; phones replay by scrolling. */
   .chapter .replay { display: none; }
 
@@ -183,11 +154,9 @@ figure img {
   .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child,
   .pinned-chapter .pin > .text > .step[data-walk-stage]:last-child { margin-bottom: 72svh; }
   .pinned-chapter .pin > .text > .step[data-walk-stage] p + p { margin-top: .7em; }
-  .pinned-chapter .pin .step h2 { font-size: 1.5rem; margin-bottom: 12px; }
   .pinned-chapter .pin .step p:last-child, .pinned-chapter .pin .step li:last-child { margin-bottom: 0; }
   .pinned-chapter .pin .step p { margin: 0; }
   .pinned-chapter .pin [data-walk-stage]::before, .pinned-chapter .pin .step[data-walk-stage]::before { display: none; }
-  .chapter.pinned-chapter .gbar { margin-bottom: 4px; padding-bottom: 6px; }
   .pinned-chapter .cw-controls,
   .pinned-chapter .cw-swipe-hint { display: none; }
   .pinned-chapter .cw { padding: 8px 0 4px; gap: 8px; }
@@ -221,11 +190,8 @@ figure img {
 @media (max-width: 900px) and (orientation: landscape) {
   .chapter.pinned-chapter > .pin > .graphic { --card-space: 30svh; }
   .chapter.pinned-chapter > .pin > .text { margin-top: -26svh; padding-top: 52svh; }
-  .gbar { margin-bottom: 5px; padding-bottom: 5px; }
   .pinned-chapter .cw { padding-top: 4px; gap: 4px; }
   .pinned-chapter .cw-legend { display: none; }
-  .pinned-chapter .cw-step-tag { margin-bottom: 1px; }
-  .pinned-chapter .cw-title { margin-bottom: 2px; }
   .pinned-chapter .cw-source-letter,
   .pinned-chapter .cw-card { height: clamp(22px, calc((100cqh - 58px) / 3), 40px); }
   .pinned-chapter .cw-face, .pinned-chapter .cw-source-letter { font-size: 18px; }

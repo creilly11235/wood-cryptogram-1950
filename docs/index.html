@@ -52,7 +52,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero{max-width:780px;margin:0 auto;padding-block:64px 16px;padding-inline:24px;text-align:center}
 .hero .langhint{font:var(--t-note);margin:-28px 0 22px}
 :root[lang="de"] body{-webkit-hyphens:auto;hyphens:auto}
-:root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3,:root[lang="de"] .gbar .ct{-webkit-hyphens:manual;hyphens:manual}
+:root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3{-webkit-hyphens:manual;hyphens:manual}
 .hero h1{font:400 clamp(2rem,4.2vw,3rem)/1.2 var(--body);margin:0 auto;text-wrap:balance;max-width:22ch;letter-spacing:-.025em}
 .hero .byline{display:grid;justify-items:center;gap:2px;font:var(--t-note);color:var(--bone-2);margin:24px 0 0}
 .hero .hero-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 20px;margin:6px 0 0;font:var(--t-note)}
@@ -75,13 +75,11 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero .answer-status time{white-space:nowrap}
 .hero .lede{margin-top:28px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
-.scrolly{max-width:1184px;margin:0 auto;padding-inline:24px;counter-reset:chapter}
-.chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start;counter-increment:chapter}
+.scrolly{max-width:1184px;margin:0 auto;padding-inline:24px}
+.chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start}
 .chapter+.chapter{border-top:1px solid var(--veil-2)}
 .graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
 .gbody{display:flex;flex-direction:column;flex:1;min-height:0}
-.gbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--veil)}
-.gbar .ct{font:var(--t-note);color:var(--bone-2);min-width:0}
 .replay:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
 .replay{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin-top:8px;padding:8px 14px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:2px;cursor:pointer;max-width:100%}
 .replay:hover{border-color:var(--candle);color:var(--bone)}
@@ -94,24 +92,19 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .t.decoded,.cipher-token.decoded{background:var(--cipher-decoded-bg);color:var(--cipher-decoded-fg);border:1px solid var(--cipher-decoded-border);border-bottom:3px double var(--cipher-decoded-border)}
 .cipher-token{font-family:var(--mono);font-size:.9em;font-weight:400;padding:.1em .25em;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 td .cipher-token{display:inline-grid;place-items:center;min-width:1.5em;padding:.1em}
-.capR{font:var(--t-data);white-space:nowrap;align-self:flex-start}
 .sub{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;margin-top:4px;min-height:1.2em;max-width:680px}
 .sub span{min-width:0;text-align:center;font:clamp(8px,1.1vw,11px)/1.2 var(--mono);color:var(--bone-3);overflow:hidden;white-space:nowrap;transition:color .5s}
 .sub span.on{color:var(--candle)}
-.gcap{display:flex;justify-content:space-between;gap:12px;font:var(--t-note);color:var(--bone-2);margin:10px 0 2px;min-height:1.4em;max-width:680px}
-.gcap b{font:var(--t-data);color:var(--bone)}
 canvas{flex:1;width:100%;min-height:0;display:block}
 .legend{display:flex;flex-wrap:wrap;gap:4px 16px;font:var(--t-note);color:var(--bone-2);margin-top:8px;min-height:1.4em}
 .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 .text{min-width:0}
-.beats,.beatcap,.progress{display:none}
+.beats,.beatcap{display:none}
 /* article column */
 .text{padding-block:80px 96px}
 .chapter:first-child .text{padding-top:80px}
 .step{min-height:52vh;padding:0 0 64px;scroll-margin-top:32px}
 .step+.step{padding-top:24px}
-.eyebrow{font:var(--t-note);color:var(--bone-2);margin:0 0 12px}
-.chapter .text>.step:first-child .eyebrow::before{content:counter(chapter,upper-roman) " \00b7  "}
 .step h2{font:var(--t-heading);color:var(--bone);margin:0 0 20px;text-wrap:balance;letter-spacing:-.015em}
 .step h3{font:700 1em/1.5 var(--body);color:var(--bone);margin:1.8em 0 .75em;text-wrap:balance}
 .step>h3:first-child{margin-top:0}
@@ -174,13 +167,7 @@ footer p{margin:0 0 .7em}
   .step+.step{padding-top:16px}
   th,td{padding:8px 4px}
   .graphic{order:2;height:100vh;height:100dvh;z-index:2;padding:12px 0 12px;border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
-  .progress{display:flex;gap:5px;align-items:center;margin-left:auto}
-  .progress i{width:5px;height:5px;border-radius:50%;background:var(--veil-2);transition:background .3s}
-  .progress i.on{background:var(--candle)}
   .beatcap{display:block;margin:12px 0 0;font:var(--t-note);color:var(--bone);border-top:1px solid var(--veil);padding-top:12px;min-height:calc(4 * 1.6em + 13px)}
-  .gbar{margin-bottom:8px}
-  .gcap{margin-top:6px;line-height:1.3;flex-wrap:wrap;justify-content:flex-start;gap:2px 14px}
-  .gcap span{max-width:100%;overflow-wrap:anywhere}
   .legend{min-height:44px;align-content:flex-start}
   .tiles,.sub{gap:2px}
 }
@@ -241,11 +228,9 @@ footer p{margin:0 0 .7em}
 </div>
 <div class="pin">
 <div class="graphic" data-g="1">
-<div class="gbar"><span class="ct">I · Decoding the cipher</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
 <div class="tiles" aria-hidden="true" translate="no"></div>
 <div class="sub" aria-hidden="true" translate="no"></div>
-<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
@@ -288,11 +273,9 @@ footer p{margin:0 0 .7em}
 </div>
 <div class="pin">
 <div class="graphic" data-g="2">
-<div class="gbar"><span class="ct">II · Searching books</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
 <div class="tiles" aria-hidden="true" translate="no"></div>
 <div class="sub" aria-hidden="true" translate="no"></div>
-<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
@@ -323,11 +306,9 @@ footer p{margin:0 0 .7em}
 </div>
 <div class="pin">
 <div class="graphic" data-g="3">
-<div class="gbar"><span class="ct">III · Across languages</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
 <div class="tiles" aria-hidden="true" translate="no"></div>
 <div class="sub" aria-hidden="true" translate="no"></div>
-<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
@@ -347,11 +328,9 @@ footer p{margin:0 0 .7em}
 </div>
 <div class="pin">
 <div class="graphic" data-g="4">
-<div class="gbar"><span class="ct">IV · The solution</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
 <div class="tiles" aria-hidden="true" translate="no"></div>
 <div class="sub" aria-hidden="true" translate="no"></div>
-<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
@@ -412,11 +391,9 @@ footer p{margin:0 0 .7em}
 </div>
 <div class="pin">
 <div class="graphic" data-g="5">
-<div class="gbar"><span class="ct">V · Checking the result</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
 <div class="tiles" aria-hidden="true" translate="no"></div>
 <div class="sub" aria-hidden="true" translate="no"></div>
-<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
@@ -448,11 +425,9 @@ footer p{margin:0 0 .7em}
 </div>
 <div class="pin">
 <div class="graphic" data-g="6">
-<div class="gbar"><span class="ct">VI · A further finding</span><span class="progress" aria-hidden="true"></span></div>
 <div class="gbody">
 <div class="tiles" aria-hidden="true" translate="no"></div>
 <div class="sub" aria-hidden="true" translate="no"></div>
-<div class="gcap"><span class="capL"></span><span class="capR"></span></div>
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
@@ -543,7 +518,7 @@ function Graphic(el){
     const walk=new CipherWalkthrough(host,{ct:CT,pt:PT,reduced,labels:{
       label:"How the cipher becomes a message",encoded:"Encoded",decoded:"Decoded",
       stages:["The 21-letter cipher","The key passage","One key word for every cipher letter","Start with F and Unser","Add the letters in Unser","Use Y to shift F back 24 places","The first decoded letter is H","Repeat for all 21 letters"],
-      previous:"Previous",next:"Next",replay:"Replay",keyNote:"Repeated words are skipped",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y means a shift of 24 (A = 0)",shift:"Back 24",firstDecoded:"The message begins",step:"Step",keyWord:"key word",listSteps:["Step 1 of 3","Step 2 of 3","Step 3 of 3"],decodedMessage:"The decoded message",swipeHint:"Scroll to explore · or use the buttons"
+      previous:"Previous",next:"Next",replay:"Replay",keyNote:"Repeated words are skipped",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y means a shift of 24 (A = 0)",shift:"Back 24",firstDecoded:"The message begins",step:"Step",keyWord:"key word",decodedMessage:"The decoded message",swipeHint:"Scroll to explore · or use the buttons"
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};
@@ -554,10 +529,10 @@ function Graphic(el){
   }
   const self=this,cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
   const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
-  const capL=el.querySelector(".capL"),capR=el.querySelector(".capR"),legend=el.querySelector(".legend");
+  const legend=el.querySelector(".legend");
   let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0;
   // A scene change cross-fades from the last painted frame, and the new
-  // scene's own reveals wait for the fade, so no label ever snaps in place.
+  // scene's own reveals wait for the fade, so nothing snaps into place.
   const snap=document.createElement("canvas"),snapCtx=snap.getContext("2d"),FADE=360,SETTLE=160;
   let fading=false,sceneDelay=0,sceneAlpha=1,stripSig="";
   const fadeIn=node=>{if(instant||!node.animate)return;node.animate([{opacity:0},{opacity:1}],{duration:FADE,easing:"ease-out"});};
@@ -606,7 +581,6 @@ function Graphic(el){
       wrap(item[1],p.x+5,detailY,p.w-10,compact?11:12,muted,"left",compact?1:2);
     }));
   }
-  function caption(left,right) {if(capL.textContent!==left)fadeIn(capL);capL.textContent=left;capR.textContent=right??(stripKind==="cipher"?"Encoded":"Decoded");}
   function legendItems(items){
     legend.replaceChildren();fadeIn(legend);items.forEach(([s,c])=>{const item=document.createElement("span"),mark=document.createElement("i");mark.style.background=c;item.append(mark,document.createTextNode(s));legend.append(item);});
   }
@@ -621,21 +595,21 @@ function Graphic(el){
   function configure(){
     legend.replaceChildren();strip(CT);lastLetter=-1;
     switch(state){
-      case "trap":caption("One cipher, many possible messages");break;
-      case "shelves":caption("129 books · 28.6 million candidate keys");break;
-      case "plants":strip(EN_PLANT_MSG,"reading");caption("A known message, hidden with a book key");legendItems([["97 found first",blue],["3 not found first",gridGray]]);break;
-      case "englishResults":strip(JUNK[0],"junk");caption("Wood’s best result vs. 100 random ciphertexts");legendItems([["Random ciphertexts",muted],["Wood’s best result",blue]]);break;
-      case "idea":strip(PLANT_DE,"reading");caption("The same German test message, read two ways");break;
-      case "bibles":caption("Bible translations in 19 languages");break;
-      case "prayer":strip(instant?PT:CT,instant?"reading":"cipher");caption("13 leading distinct readings · Thouless’s rule");break;
-      case "church":strip(PT,"reading");caption("The opening words change the entire key");break;
-      case "table":strip(PT,"reading");caption("The first three of 21 letters");break;
-      case "reading":strip(PT,"reading");caption("Two languages, followed by Wood’s initials");break;
-      case "checks":strip(PT,"reading");caption("All 21 letters decrypt and re-encrypt exactly");break;
-      case "luck":strip(PT,"reading");caption("7 of 500 random signatures also produced word-like matches");legendItems([["A match",blue],["No match",gridGray]]);break;
-      case "slipSum":strip(THOU.printed);caption("Thouless’s 14th key word, SUFFER");break;
-      case "slipKey":strip(THOU.printed);caption("The key letter should be W, not U");break;
-      case "slip":strip(THOU.fixed);caption("The last cipher letter should be D, not B");break;
+      case "trap":break;
+      case "shelves":break;
+      case "plants":strip(EN_PLANT_MSG,"reading");legendItems([["97 found first",blue],["3 not found first",gridGray]]);break;
+      case "englishResults":strip(JUNK[0],"junk");legendItems([["Random ciphertexts",muted],["Wood’s best result",blue]]);break;
+      case "idea":strip(PLANT_DE,"reading");break;
+      case "bibles":break;
+      case "prayer":strip(instant?PT:CT,instant?"reading":"cipher");break;
+      case "church":strip(PT,"reading");break;
+      case "table":strip(PT,"reading");break;
+      case "reading":strip(PT,"reading");break;
+      case "checks":strip(PT,"reading");break;
+      case "luck":strip(PT,"reading");legendItems([["A match",blue],["No match",gridGray]]);break;
+      case "slipSum":strip(THOU.printed);break;
+      case "slipKey":strip(THOU.printed);break;
+      case "slip":strip(THOU.fixed);break;
     }
   }
   function grid(count,highlight,p,columns,maxRadius=4){
@@ -949,7 +923,7 @@ function Graphic(el){
         t.textContent=decoded?PT[i]:CT[i];t.className="t "+(decoded?"decoded":"encoded");
         t.style.transform=turn===0||turn===1?"":`scaleX(${Math.max(.04,Math.abs(Math.cos(turn*Math.PI)))})`;
         if(turn===1)n++;
-      });lastLetter=n;capR.textContent=n===21?"Decoded":"Decoding";
+      });lastLetter=n;
     }
     if(dirty)draw();
   };

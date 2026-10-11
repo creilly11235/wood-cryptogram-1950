@@ -10,10 +10,6 @@
     const mobile = matchMedia('(max-width: 900px)');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const root = document.documentElement;
-    const german = root.lang.startsWith('de');
-    const stepLabel = german
-      ? (index, count) => `Schritt ${index} von ${count}`
-      : (index, count) => `Step ${index} of ${count}`;
     const records = [];
     let framePending = false;
 
@@ -59,21 +55,10 @@
       chapter.classList.add('pinned-chapter');
       const record = {
         chapter, el, graphic, steps,
-        count: graphic.walkthrough ? 8 : steps.length,
-        state: null, renderMode: null, stepTag: null,
+        state: null, renderMode: null,
         walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')], walkIndex: null, walkPreferred: undefined,
         cards: [...chapter.querySelectorAll('.pin > .text [data-walk-stage]')],
       };
-      const progress = el.querySelector('.progress');
-      if (progress) {
-        progress.innerHTML = steps.map(() => '<i></i>').join('');
-        // The graphic labels its own progress; the cipher walkthrough has its own tag.
-        if (!graphic.walkthrough) {
-          record.stepTag = document.createElement('span');
-          record.stepTag.className = 'gstep';
-          progress.before(record.stepTag);
-        }
-      }
       if (graphic.walkthrough) {
         // The buttons follow the prose: a stage within the current passage
         // shows at once; any other scrolls to the passage that explains it.
@@ -108,10 +93,8 @@
         canvas.setAttribute('aria-label', description);
       }
       record.steps.forEach((item, i) => item.classList.toggle('on', i === index));
-      record.el.querySelectorAll('.progress i').forEach((dot, i) => dot.classList.toggle('on', i <= index));
-      if (record.stepTag) record.stepTag.textContent = stepLabel(index + 1, record.count);
-      // The passage driving a chart carries the margin mark; the cipher
-      // walkthrough marks its passages stage by stage instead.
+      // The passage driving a chart is marked for scripts and checks; the
+      // cipher walkthrough marks its passages stage by stage instead.
       if (!record.graphic.walkthrough) record.steps.forEach((item, i) => item.classList.toggle('is-walk-active', i === index));
     }
 

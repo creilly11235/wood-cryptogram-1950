@@ -105,7 +105,6 @@ frame.addEventListener('load', async () => {
           if (mobile) check([...chapter.querySelectorAll('.pin > .text [data-walk-stage]')].filter(card => Number(getComputedStyle(card).opacity) > .5).length === 1,
             `${label}: only the card for ${expected(target)} is readable`);
         }
-        if (index > 0) check(graphic.querySelector('.gstep').textContent.trim().length > 0, `${label}: the graphic labels its step`);
         overflow(label);
       }
     }
