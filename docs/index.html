@@ -556,6 +556,11 @@ function Graphic(el){
   const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
   const capL=el.querySelector(".capL"),capR=el.querySelector(".capR"),legend=el.querySelector(".legend");
   let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0;
+  // A scene change cross-fades from the last painted frame, and the new
+  // scene's own reveals wait for the fade, so no label ever snaps in place.
+  const snap=document.createElement("canvas"),snapCtx=snap.getContext("2d"),FADE=360,SETTLE=160;
+  let fading=false,sceneDelay=0,sceneAlpha=1,stripSig="";
+  const fadeIn=node=>{if(instant||!node.animate)return;node.animate([{opacity:0},{opacity:1}],{duration:FADE,easing:"ease-out"});};
   let W=1,H=1,DPR=1;
   const color=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   let ink,muted,blue,teal,pale,background,gridGray,decodedBg,decodedFg,decodedBorder;
@@ -583,8 +588,8 @@ function Graphic(el){
   const isMobilePanel=()=>matchMedia("(max-width:900px) and (orientation:portrait)").matches;
   function panel(){const h=isMobilePanel()?Math.max(0,H-12):Math.min(H,322);return{x:5,y:(H-h)/2,w:W-10,h};}
   const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
-  function progress(delay=0,duration=400){return instant?1:ease((elapsed-delay)/duration);}
-  function reveal(delay,paint,duration=400){ctx.save();ctx.globalAlpha=.18+.82*progress(delay,duration);paint();ctx.restore();}
+  function progress(delay=0,duration=400){return instant?1:ease((elapsed-sceneDelay-delay)/duration);}
+  function reveal(delay,paint,duration=400){ctx.save();ctx.globalAlpha=sceneAlpha*(.18+.82*progress(delay,duration));paint();ctx.restore();}
   function wrap(s,x,y,max,size=13,c=muted,align="left",lines=2){
     ctx.font=font(size);const words=s.split(" "),out=[];let current="";
     words.forEach(word=>{const next=current?current+" "+word:word;if(current&&ctx.measureText(next).width>max){out.push(current);current=word;}else current=next;});if(current)out.push(current);
@@ -601,15 +606,16 @@ function Graphic(el){
       wrap(item[1],p.x+5,detailY,p.w-10,compact?11:12,muted,"left",compact?1:2);
     }));
   }
-  function caption(left,right) {capL.textContent=left;capR.textContent=right??(stripKind==="cipher"?"Encoded":"Decoded");}
+  function caption(left,right) {if(capL.textContent!==left)fadeIn(capL);capL.textContent=left;capR.textContent=right??(stripKind==="cipher"?"Encoded":"Decoded");}
   function legendItems(items){
-    legend.replaceChildren();items.forEach(([s,c])=>{const item=document.createElement("span"),mark=document.createElement("i");mark.style.background=c;item.append(mark,document.createTextNode(s));legend.append(item);});
+    legend.replaceChildren();fadeIn(legend);items.forEach(([s,c])=>{const item=document.createElement("span"),mark=document.createElement("i");mark.style.background=c;item.append(mark,document.createTextNode(s));legend.append(item);});
   }
   function strip(s,kind="cipher"){
     stripKind=kind;
     const letters=[...s];tiles.style.gridTemplateColumns=`repeat(${letters.length},minmax(0,1fr))`;
     if(tiles.children.length!==letters.length){tiles.replaceChildren(...letters.map(()=>{const t=document.createElement("div");t.className="t";return t;}));}
     letters.forEach((c,i)=>{const t=tiles.children[i];t.textContent=c;t.className="t "+(kind==="cipher"?"encoded":"decoded");t.style.transform="";});
+    if(stripSig&&stripSig!==s+kind)fadeIn(tiles);stripSig=s+kind;
     sub.replaceChildren();
   }
   function configure(){
@@ -772,10 +778,15 @@ function Graphic(el){
         line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
       }
       case "table":{
-        if(wideShort){
-          [["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]].forEach(([key,cipher,plain],i)=>{const y=p.y+p.h/3*(i+.5),x=p.x+p.w*.58;if(i)line(p.x,p.y+p.h/3*i,p.x+p.w,p.y+p.h/3*i,pale);reveal(i*140,()=>{label(key,p.x+p.w*.25,y,p.w*.46,21,ink,"center",true);cipherText(cipher,x,y,42,24,"encoded");text("→",x+62,y,24,muted,"center");});reveal(i*140+250,()=>cipherText(plain,x+110,y,42,24));});break;
+        // Each row needs about 90px for its key line above the letters;
+        // shorter rows put the key and the letters side by side instead.
+        const gap=p.h/3,rowsOf=[["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]];
+        if(wideShort||gap<92){
+          const keySize=Math.min(21,gap*.3),tileSize=Math.min(24,gap*.38),tileW=Math.min(42,tileSize+18),x=p.x+p.w-tileW*2-62;
+          rowsOf.forEach(([key,cipher,plain],i)=>{const y=p.y+gap*(i+.5);if(i)line(p.x,p.y+gap*i,p.x+p.w,p.y+gap*i,pale);reveal(i*140,()=>{label(key,p.x,y,x-p.x-14,keySize,ink,"left",true);cipherText(cipher,x,y,tileW,tileSize,"encoded");text("→",x+tileW+26,y,tileSize,muted,"center");});reveal(i*140+250,()=>cipherText(plain,x+tileW+62,y,tileW,tileSize));});break;
         }
-        [["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]].forEach(([key,cipher,plain],i)=>{const y=p.y+p.h/3*(i+.5);if(i)line(p.x,p.y+p.h/3*i,p.x+p.w,p.y+p.h/3*i,pale);reveal(i*140,()=>{label(key,cx,y-(short?18:27),p.w,short?18:21,ink,"center",true);cipherText(cipher,cx-58,y+(short?18:24),42,short?22:28,"encoded");text("→",cx,y+(short?18:24),short?22:27,muted,"center");});reveal(i*140+250,()=>cipherText(plain,cx+38,y+(short?18:24),42,short?22:28));});break;
+        const keySize=Math.min(21,gap*.2),tileSize=Math.min(28,gap*.27),up=gap*.26,down=gap*.24;
+        rowsOf.forEach(([key,cipher,plain],i)=>{const y=p.y+gap*(i+.5);if(i)line(p.x,p.y+gap*i,p.x+p.w,p.y+gap*i,pale);reveal(i*140,()=>{label(key,cx,y-up,p.w,keySize,ink,"center",true);cipherText(cipher,cx-58,y+down,42,tileSize,"encoded");text("→",cx,y+down,tileSize,muted,"center");});reveal(i*140+250,()=>cipherText(plain,cx+38,y+down,42,tileSize));});break;
       }
       case "reading":{
         if(wideShort){
@@ -800,6 +811,15 @@ function Graphic(el){
 
   function draw(){
     dirty=false;ctx.clearRect(0,0,W,H);
+    sceneAlpha=fading?ease(elapsed/FADE):1;
+    if(fading&&sceneAlpha<1&&snap.width===cv.width&&snap.height===cv.height){
+      ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1-sceneAlpha;ctx.drawImage(snap,0,0);ctx.restore();
+    }
+    if(sceneAlpha>=1)fading=false;
+    ctx.globalAlpha=sceneAlpha;
+    try{paintScene();}finally{ctx.globalAlpha=1;}
+  }
+  function paintScene(){
     if(isMobilePanel()){drawMobile();return;}
     const p=panel(),cx=W/2,compact=p.h<190,fs=W<360?13:15;
     switch(state){
@@ -905,7 +925,16 @@ function Graphic(el){
     // frame so returning to the preview cannot briefly expose an empty canvas.
     if(W>1&&H>1)draw();
   }
-  this.go=function(next,immediate=false){if(state===next&&this.state===next)return;slipShown=Math.min(SLIP_ROWS[state]||0,SLIP_ROWS[next]||0);state=next;this.state=next;instant=immediate||reduced;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;};
+  this.go=function(next,immediate=false){
+    if(state===next&&this.state===next)return;
+    slipShown=Math.min(SLIP_ROWS[state]||0,SLIP_ROWS[next]||0);
+    instant=immediate||reduced;
+    // Keep the frame on screen so the next scene can fade over it.
+    fading=!instant&&this.state!==undefined&&cv.width>1&&cv.height>1;
+    if(fading){snap.width=cv.width;snap.height=cv.height;snapCtx.drawImage(cv,0,0);}
+    sceneDelay=fading?SETTLE:0;
+    state=next;this.state=next;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;
+  };
   this.pause=function(){if(!pausedAt){pausedAt=performance.now();this.frame(pausedAt);}};
   this.resume=function(){if(pausedAt){started+=performance.now()-pausedAt;pausedAt=0;}dirty=true;};
   this.replay=function(){if(state!=="prayer")return;instant=reduced;started=performance.now();pausedAt=0;elapsed=0;lastLetter=-1;strip(instant?PT:CT,instant?"reading":"cipher");dirty=true;};
@@ -913,7 +942,7 @@ function Graphic(el){
     if(W<2||H<2)return;
     const before=elapsed;elapsed=Math.max(0,(pausedAt||now)-started);
     // Marks appear at their recorded values; animation never invents new scores.
-    if(!instant&&before<1050&&elapsed!==before)dirty=true;
+    if(!instant&&before<1050+SETTLE&&elapsed!==before)dirty=true;
     if(state==="prayer"&&!instant&&lastLetter<21){
       let n=0;[...tiles.children].forEach((t,i)=>{
         const turn=Math.max(0,Math.min(1,(elapsed-i*90)/320)),decoded=turn>=.5;
