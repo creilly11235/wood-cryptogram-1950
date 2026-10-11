@@ -233,11 +233,11 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="story-layout.css?v=19">
-<link rel="stylesheet" href="cipher-cards.css?v=19">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=19">
-<link rel="stylesheet" href="story-graphics.css?v=19">
-<link rel="stylesheet" href="story-viewer.css?v=19">
+<link rel="stylesheet" href="story-layout.css?v=20">
+<link rel="stylesheet" href="cipher-cards.css?v=20">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=20">
+<link rel="stylesheet" href="story-graphics.css?v=20">
+<link rel="stylesheet" href="story-viewer.css?v=20">
 </head>
 <body>
 
@@ -281,18 +281,18 @@ footer p{margin:0 0 .7em}
 <div class="text">
 <section class="step" data-s="summary" data-walk-stage="0" data-cap="Wood published a message and kept its book key secret, hoping to send the key back after his death." id="the-puzzle">
 <h2>The puzzle</h2>
-<p data-walk-stage="1">The plan depended on keeping the key secret. Only Wood knew it, so if a medium produced it after his death, he hoped that would count as evidence that something of him had survived.</p>
+<p>The plan depended on keeping the key secret. Only Wood knew it, so if a medium produced it after his death, he hoped that would count as evidence that something of him had survived.</p>
 </section>
 <section class="step" data-s="method" data-cap="Each distinct key word supplies one shift. UNSER sums to 77, giving key letter Y; cipher F decrypts to H.">
-<p data-walk-stage="2">The idea came from the psychologist Robert Thouless, who had published an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) two years earlier. It contained enciphered messages whose keys only he knew, and one of them used a system meant to be unbreakable without the key:</p>
+<p>The idea came from the psychologist Robert Thouless, who had published an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) two years earlier. It contained enciphered messages whose keys only he knew, and one of them used a system meant to be unbreakable without the key:</p>
 <ol>
-<li data-walk-stage="3">Pick a passage of text as the key, skipping any word that has already appeared.</li>
-<li data-walk-stage="4">Turn each word into a single letter by adding up its letters (A=1 to Z=26), divide by 26, and take the remainder (1 is A, 25 is Y, 0 is Z).</li>
-<li data-walk-stage="5">Use that key letter to shift one message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way.</li>
+<li data-walk-stage="1 2">Pick a passage of text as the key, skipping any word that has already appeared.</li>
+<li data-walk-stage="3 4">Turn each word into a single letter by adding up its letters (A=1 to Z=26), divide by 26, and take the remainder (1 is A, 25 is Y, 0 is Z).</li>
+<li data-walk-stage="5 6">Use that key letter to shift one message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way.</li>
 </ol>
-<p data-walk-stage="6">Each key word supplies the shift for one message letter, so a 21-letter message needs 21 distinct key words. This is the method Wood adopted for his own test.</p>
+<p data-walk-stage="7">Each key word supplies the shift for one message letter, so a 21-letter message needs 21 distinct key words. This is the method Wood adopted for his own test.</p>
 </section>
-<section class="step" data-s="wood" data-walk-stage="7" data-cap="Wood’s clues: an accessible book in a foreign language, repeated words omitted, and a message in more than one language.">
+<section class="step" data-s="wood" data-cap="Wood’s clues: an accessible book in a foreign language, repeated words omitted, and a message in more than one language.">
 <h3>Wood and his clues</h3>
 <p>T. E. Wood, a solicitor born in Yorkshire in 1887 who had practiced in Burma, answered Thouless with a message of his own in “A Further Test for Survival” (<em>Proceedings</em> 49, 1950). He published <strong class="cipher-token encoded">FVAMI NTKFX XWATB OIZVV X</strong> along with three clues:</p>
 <ul>
@@ -480,7 +480,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=19"></script>
+<script src="cipher-walkthrough.js?v=20"></script>
 <script>
 (function(){
 "use strict";
@@ -526,7 +526,7 @@ function Graphic(el){
     const walk=new CipherWalkthrough(host,{ct:CT,pt:PT,reduced,labels:{
       label:"How the cipher becomes a message",encoded:"Encoded",decoded:"Decoded",
       stages:["The 21-letter cipher","The key passage","One key word for every cipher letter","Start with F and Unser","Add the letters in Unser","Use Y to shift F back 24 places","The first decoded letter is H","Repeat for all 21 letters"],
-      previous:"Previous",next:"Next",replay:"Replay",keyNote:"Repeated words are skipped",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y means a shift of 24 (A = 0)",shift:"Back 24",firstDecoded:"The message begins",step:"Step",keyWord:"key word",decodedMessage:"The decoded message",swipeHint:"Scroll to explore · or use the buttons"
+      previous:"Previous",next:"Next",replay:"Replay",keyNote:"Repeated words are skipped",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y means a shift of 24 (A = 0)",shift:"Back 24",firstDecoded:"The message begins",step:"Step",keyWord:"key word",listSteps:["Step 1 of 3","Step 2 of 3","Step 3 of 3"],decodedMessage:"The decoded message",swipeHint:"Scroll to explore · or use the buttons"
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};
@@ -910,7 +910,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="story-scroll.js?v=19"></script>
+<script src="story-scroll.js?v=20"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */

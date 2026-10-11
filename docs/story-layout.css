@@ -47,6 +47,24 @@ body,
   margin-bottom: 1em;
 }
 
+/* The passage driving the animation carries a thin mark in the margin, so
+   a reader can see which sentence the graphic is illustrating. */
+.step [data-walk-stage] { position: relative; }
+.step [data-walk-stage]::before {
+  content: "";
+  position: absolute;
+  top: .3em;
+  bottom: .3em;
+  left: -16px;
+  width: 2px;
+  background: var(--candle);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.step ol > li[data-walk-stage]::before { left: calc(-1.3em - 16px); }
+.step [data-walk-stage].is-walk-active::before { opacity: 1; }
+.step li[data-walk-stage].is-walk-active::marker { color: var(--candle); }
+
 .step .cipher,
 .step code,
 .step a {
@@ -76,7 +94,7 @@ figure img {
 }
 
 @media (max-width: 900px) {
-  :root { --story-panel-height: 100dvh; }
+  :root { --story-panel-height: 100dvh; --pinned-height: clamp(300px, 48vh, 420px); --pinned-height: clamp(300px, 48svh, 420px); }
   .scrolly { --story-gutter: 24px; padding-inline: var(--story-gutter); }
   .chapter { display: block; position: relative; }
   .chapter > .text { max-width: none; padding-block: 24px 40px; }
@@ -90,10 +108,63 @@ figure img {
   .gbar .ct { font-size: 1rem; line-height: 1.3; }
   .progress { display: flex; flex: none; gap: 5px; align-items: center; margin-left: auto; }
   .gcap span:empty, .sub:empty { display: none; }
+
+  /* The cipher walkthrough stays pinned above its explanation, the way a
+     news graphic holds the top of a phone screen while the text scrolls by. */
+  .chapter.pinned-chapter { display: flex; flex-direction: column; }
+  .chapter.pinned-chapter > .graphic {
+    order: 0;
+    align-self: stretch;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    width: auto;
+    max-width: none;
+    height: var(--pinned-height);
+    min-height: 0;
+    margin-inline: calc(-1 * var(--story-gutter));
+    padding: 10px var(--story-gutter) 8px;
+    border-top: 0;
+    border-bottom: 1px solid var(--veil-2);
+    background: var(--room);
+  }
+  .chapter.pinned-chapter > .text { order: 1; padding-top: 28px; }
+  .chapter.pinned-chapter .gbar { margin-bottom: 4px; padding-bottom: 6px; }
+  .pinned-chapter .cw-controls,
+  .pinned-chapter .cw-swipe-hint { display: none; }
+  .pinned-chapter .cw { padding: 8px 0 4px; gap: 8px; }
+  .pinned-chapter .cw-scene { container-type: size; }
+  .pinned-chapter .cw-source-letter,
+  .pinned-chapter .cw-card { width: min(100%, 44px); height: clamp(32px, calc((100cqh - 78px) / 3), 46px); }
+  .pinned-chapter .cw-source-grid { gap: clamp(8px, 4cqh, 16px) 5px; }
+  .pinned-chapter .cw-grid { gap: clamp(6px, 3cqh, 12px) 5px; }
+  .pinned-chapter .cw-source-letter,
+  .pinned-chapter .cw-face { font-size: clamp(20px, 6.5cqw, 28px); }
+  .pinned-chapter .cw-word { font-size: clamp(10.5px, 3cqw, 12.5px); }
+  .pinned-chapter .cw-prayer { font-size: clamp(17px, 5cqw, 21px); max-width: 32ch; }
+  .pinned-chapter .cw-single { width: 64px; height: 72px; font-size: 44px; }
+  .pinned-chapter .cw[data-stage="4"] .cw-single { width: 36px; height: 40px; font-size: 26px; }
+  .pinned-chapter .cw-message-reading { font-size: clamp(22px, 7cqw, 30px); }
+  .pinned-chapter .step { scroll-margin-top: calc(var(--pinned-height) + 16px); }
+  /* Each numbered operation gets its own moment under the pinned graphic. */
+  .pinned-chapter .step[data-s="method"] ol li[data-walk-stage] { margin-bottom: 1.6em; }
 }
 @media (max-width: 360px) {
   .scrolly { --story-gutter: 20px; }
 }
 @media (max-width: 900px) and (orientation: landscape) {
+  :root { --pinned-height: clamp(240px, 66vh, 300px); --pinned-height: clamp(240px, 66svh, 300px); }
   .gbar { margin-bottom: 5px; padding-bottom: 5px; }
+  .pinned-chapter .cw { padding-top: 4px; gap: 4px; }
+  .pinned-chapter .cw-legend { display: none; }
+  .pinned-chapter .cw-step-tag { margin-bottom: 1px; }
+  .pinned-chapter .cw-title { margin-bottom: 2px; }
+  .pinned-chapter .cw-source-letter,
+  .pinned-chapter .cw-card { height: clamp(22px, calc((100cqh - 58px) / 3), 40px); }
+  .pinned-chapter .cw-face, .pinned-chapter .cw-source-letter { font-size: 18px; }
+  .pinned-chapter .cw-word { font-size: 10.5px; }
+  .pinned-chapter .cw-pair { gap: 2px; }
+  .pinned-chapter .cw-source-grid, .pinned-chapter .cw-grid { gap: 3px 5px; }
+  .pinned-chapter .cw-prayer { font-size: 16px; line-height: 1.4; max-width: 46ch; }
+  .pinned-chapter .cw-single { width: 48px; height: 54px; font-size: 34px; }
 }

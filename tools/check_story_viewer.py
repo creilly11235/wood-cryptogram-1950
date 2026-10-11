@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Exercise the real mobile article, including trusted native touch input.
 
+Chapter 1 is a pinned scroll-driven walkthrough (covered by check_story_scroll.html);
+the card and viewer checks here begin at chapter 2.
+
 Requires Playwright and a local HTTP server for this repository. Example:
   python3 -m http.server 8000
   python3 tools/check_story_viewer.py --base http://127.0.0.1:8000/docs/
@@ -214,7 +217,7 @@ def main():
                                   "scrollY===0&&!__arrivalLoadEvents.some(event=>event.type==='pageshow')")
                             if not held_analytics:
                                 raise RuntimeError("The existing analytics request was not intercepted")
-                            card_top = page.evaluate("WoodStoryController.records[0].card.getBoundingClientRect().top")
+                            card_top = page.evaluate("WoodStoryController.records[1].card.getBoundingClientRect().top")
                             drag(w * .525, h * .936, w * .525, h * .22,
                                  wait=0, steps=3, delay=8)
                             page.wait_for_timeout(release_ms)
@@ -223,7 +226,7 @@ def main():
                                 content_type="application/javascript", body="/* Delayed analytics response */")
                             page.wait_for_timeout(2800)
                             trace = page.evaluate("""({events:__arrivalLoadEvents,maxY:__arrivalMaxY,
-                              y:scrollY,cardTop:WoodStoryController.records[0].card.getBoundingClientRect().top,
+                              y:scrollY,cardTop:WoodStoryController.records[1].card.getBoundingClientRect().top,
                               line:innerHeight*.30,current:WoodStoryController.current?.number||null})""")
                             trace["initialCardTop"] = card_top
                             trace["releasedBeforeArrival"] = released_before_arrival
@@ -242,7 +245,7 @@ def main():
                         results.append({"check": f"{prefix}: late-load {release_ms}ms native fling reaches entry",
                                         "passed": reached, "value": attempts})
                         check(page, f"{prefix}: late-load {release_ms}ms arrival survives initial pageshow",
-                              "String(WoodStoryController.current?.number)==='1'")
+                              "String(WoodStoryController.current?.number)==='2'")
                     page.unroute(analytics_pattern, hold_analytics)
                     # A reader can also start panning before the controller
                     # itself arrives. Cover both an ongoing touch and momentum
@@ -277,7 +280,7 @@ def main():
                             page.wait_for_function("!!window.WoodStoryController")
                             check(page, f"{prefix}: controller {release} consumes startup input recorder",
                                   "!window.WoodStoryPendingInput")
-                            card_top = page.evaluate("scrollY+WoodStoryController.records[0].card.getBoundingClientRect().top")
+                            card_top = page.evaluate("scrollY+WoodStoryController.records[1].card.getBoundingClientRect().top")
                             if release == "during touch":
                                 for y in (580, 330, 90):
                                     cd.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": [{"x": 205, "y": y}]})
@@ -285,7 +288,7 @@ def main():
                                 cd.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
                             page.wait_for_timeout(2800)
                             trace = page.evaluate("""({events:__arrivalLoadEvents,maxY:__arrivalMaxY,
-                              y:scrollY,cardTop:WoodStoryController.records[0].card.getBoundingClientRect().top,
+                              y:scrollY,cardTop:WoodStoryController.records[1].card.getBoundingClientRect().top,
                               line:innerHeight*.30,current:WoodStoryController.current?.number||null})""")
                             trace["initialCardTop"] = card_top
                             attempts.append(trace)
@@ -295,7 +298,7 @@ def main():
                         results.append({"check": f"{prefix}: controller {release} native fling reaches entry",
                                         "passed": reached, "value": attempts})
                         check(page, f"{prefix}: controller {release} accepts the ongoing native pan",
-                              "String(WoodStoryController.current?.number)==='1'")
+                              "String(WoodStoryController.current?.number)==='2'")
                     page.unroute(controller_pattern, hold_controller)
                 if args.arrival_only:
                     results.append({"check": prefix + ": page errors", "passed": not errors, "errors": errors})
@@ -312,7 +315,7 @@ def main():
                         drag(w * .55, h * .85, w * .55, h * .30, wait=600, steps=6, delay=18)
                         if page.evaluate("!!WoodStoryController.current || document.querySelector('.mobile-story-card').getBoundingClientRect().bottom < -innerHeight"):
                             break
-                    opened_first = check(page, f"{prefix}: brisk native flicks from page top open first card", "String(WoodStoryController.current?.number)==='1'")
+                    opened_first = check(page, f"{prefix}: brisk native flicks from page top open first card (chapter 2)", "String(WoodStoryController.current?.number)==='2'")
                     if opened_first:
                         geometry("brisk first arrival")
                         check(page, f"{prefix}: arrival gesture keeps first step", "WoodStoryController.current.stage===0")
@@ -326,7 +329,7 @@ def main():
                     # cover entry after the final-step Close and focus restore.
                     if w == 390 and h == 844:
                         load(reset=True)
-                        for number in range(1, 7):
+                        for number in range(2, 7):
                             for _ in range(40):
                                 if page.evaluate("!!WoodStoryController.current"):
                                     break
@@ -346,7 +349,7 @@ def main():
                             page.locator(".mobile-viewer-next").tap()
                             closed()
                             check(page, f"{prefix}: final Close {number} releases page without cascading", "!WoodStoryController.current&&!WoodStoryController.dialog.open&&document.body.style.position!=='fixed'")
-                            if number == 1:
+                            if number == 2:
                                 page.wait_for_timeout(2400)
                     load(reset=True)
                 # Actual downward finger movement carries an unseen card across
@@ -355,9 +358,9 @@ def main():
                 page.wait_for_timeout(750)
                 check(page, f"{prefix}: positioning before card does not open", "!WoodStoryController.current")
                 drag(w * .55, h * .85, w * .55, h * .24)
-                entered = check(page, f"{prefix}: native downward arrival opens first card", "String(WoodStoryController.current?.number)==='1'")
+                entered = check(page, f"{prefix}: native downward arrival opens first card (chapter 2)", "String(WoodStoryController.current?.number)==='2'")
                 if not entered:
-                    open_card(1)
+                    open_card(2)
                 geometry("automatic entry")
                 check(page, f"{prefix}: initial stage", "WoodStoryController.current.stage===0")
                 page.screenshot(path=str(out / f"{args.browser}-{lang}-{w}-open.png"))
@@ -388,10 +391,10 @@ def main():
                 drag(w * .55, h * .28, w * .55, h * .79)
                 drag(w * .55, h * .82, w * .55, h * .24)
                 check(page, f"{prefix}: reversing then revisiting does not auto-open", "!WoodStoryController.current")
-                first = page.locator('.mobile-story-card[data-chapter="1"] .mobile-story-preview')
+                first = page.locator('.mobile-story-card[data-chapter="2"] .mobile-story-preview')
                 first.scroll_into_view_if_needed()
                 first.tap()
-                page.wait_for_function("String(WoodStoryController.current?.number)==='1'")
+                page.wait_for_function("String(WoodStoryController.current?.number)==='2'")
                 page.wait_for_timeout(500)
                 check(page, f"{prefix}: tapping the card reopens and resumes", "WoodStoryController.current.stage===1")
                 page.keyboard.press("Escape")
@@ -406,7 +409,7 @@ def main():
                 page.evaluate("const c=document.querySelector('.mobile-story-card');scrollTo(0,scrollY+c.getBoundingClientRect().top-innerHeight*.72)")
                 page.wait_for_timeout(750)
                 drag(w * .55, h * .85, w * .55, h * .24)
-                reopened = check(page, f"{prefix}: first arrival opens again after reload", "String(WoodStoryController.current?.number)==='1'")
+                reopened = check(page, f"{prefix}: first arrival opens again after reload", "String(WoodStoryController.current?.number)==='2'")
                 if reopened:
                     page.wait_for_function("WoodStoryController.phase==='open'")
                     page.locator(".mobile-viewer-close").click()
@@ -427,7 +430,7 @@ def main():
                 if motion == "no-preference":
                     expansion_motion()
                 # Every chart has the same buttons, last-step Close and swipe.
-                for number in range(1, 7):
+                for number in range(2, 7):
                     card = open_card(number)
                     count = page.evaluate("WoodStoryController.current.count")
                     check(page, f"{prefix}: chart {number} focus is in dialog", "WoodStoryController.dialog.contains(document.activeElement)")
@@ -469,19 +472,19 @@ def main():
                 check(page, f"{prefix}: desktop restores six original graphics", "document.querySelectorAll('.chapter > .graphic').length===6&&document.querySelectorAll('.graphic').length===6")
                 page.set_viewport_size({"width": w, "height": h})
                 page.wait_for_timeout(600)
-                check(page, f"{prefix}: returning mobile stays closed", "!WoodStoryController.current&&document.querySelectorAll('.mobile-story-card').length===6")
+                check(page, f"{prefix}: returning mobile stays closed", "!WoodStoryController.current&&document.querySelectorAll('.mobile-story-card').length===5")
                 check(page, f"{prefix}: no horizontal page overflow", "document.documentElement.scrollWidth<=innerWidth+1")
                 if w == 390 and h == 844:
                     load(reset=True)
-                    open_card(1)
+                    open_card(2)
                     page.locator(".mobile-viewer-close").click()
                     closed()
-                    page.evaluate("const c=WoodStoryController.records[1].card;scrollTo(0,scrollY+c.getBoundingClientRect().top-innerHeight*.30-60)")
+                    page.evaluate("const c=WoodStoryController.records[2].card;scrollTo(0,scrollY+c.getBoundingClientRect().top-innerHeight*.30-60)")
                     page.wait_for_timeout(800)
                     check(page, f"{prefix}: keyboard continuation starts on restored launch button", "document.activeElement.matches('.mobile-story-open')")
                     page.keyboard.press("PageDown")
                     page.wait_for_timeout(700)
-                    check(page, f"{prefix}: PageDown after closing opens the next card", "String(WoodStoryController.current?.number)==='2'")
+                    check(page, f"{prefix}: PageDown after closing opens the next card", "String(WoodStoryController.current?.number)==='3'")
                 results.append({"check": prefix + ": page errors", "passed": not errors, "errors": errors})
             except Exception as error:
                 results.append({"check": prefix + ": execution", "passed": False, "error": str(error)})

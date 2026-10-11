@@ -27,6 +27,7 @@
     step: 'Step',
     keyWord: 'key word',
     keyNote: 'Repeated words are skipped',
+    listSteps: ['Step 1 of 3', 'Step 2 of 3', 'Step 3 of 3'],
     decodedMessage: 'The decoded message',
     swipeHint: 'Scroll to explore · or use the buttons'
   };
@@ -86,6 +87,8 @@
       this.root.setAttribute('role', 'group');
       this.root.setAttribute('aria-label', label.label);
       const header = this.node('div', 'cw-head');
+      this.stepTag = this.node('div', 'cw-step-tag');
+      this.stepTag.hidden = true;
       this.title = this.node('div', 'cw-title');
       this.title.setAttribute('aria-live', 'polite');
       const legend = this.node('div', 'cw-legend');
@@ -94,7 +97,7 @@
         item.append(this.node('i', 'cw-swatch ' + state), document.createTextNode(label[state]));
         legend.append(item);
       });
-      header.append(this.title, legend);
+      header.append(this.stepTag, this.title, legend);
       this.scene = this.node('div', 'cw-scene');
       this.source = this.node('div', 'cw-source');
       this.source.setAttribute('role', 'img');
@@ -387,6 +390,10 @@
       this.root.dataset.finale = '';
       this.host.dataset.walkthroughStage = String(stage);
       this.title.textContent = this.labels.stages[stage];
+      // Stages 1 to 6 illustrate the article's three numbered operations.
+      const listStep = stage >= 1 && stage <= 6 ? this.labels.listSteps[Math.floor((stage - 1) / 2)] : '';
+      this.stepTag.textContent = listStep || '';
+      this.stepTag.hidden = !listStep;
       this.counter.textContent = (stage + 1) + ' / 8';
       this.counter.setAttribute('aria-label', this.labels.step + ' ' + (stage + 1) + ': ' + this.labels.stages[stage]);
       this.previous.disabled = stage === 0;

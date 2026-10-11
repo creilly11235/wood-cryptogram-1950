@@ -1084,6 +1084,10 @@
     {
       "en": "\"Scroll to explore · or use the buttons\"",
       "de": "\"Scrollen oder die Tasten verwenden\""
+    },
+    {
+      "en": "listSteps:[\"Step 1 of 3\",\"Step 2 of 3\",\"Step 3 of 3\"]",
+      "de": "listSteps:[\"Schritt 1 von 3\",\"Schritt 2 von 3\",\"Schritt 3 von 3\"]"
     }
   ]
 }
