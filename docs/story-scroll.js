@@ -1,5 +1,6 @@
-/* Desktop follows the reading column. Mobile offers one preview card per
-   chapter, opening into a button/swipe-driven dialog on its first arrival. */
+/* Desktop follows the reading column. On mobile the cipher walkthrough stays
+   pinned above its prose and follows it too; later chapters offer one preview
+   card each, opening into a button/swipe-driven dialog on first arrival. */
 (() => {
   'use strict';
 
@@ -90,8 +91,39 @@
       suppressAutoUntil = performance.now() + duration;
     }
     function rememberPositions() {
-      records.forEach(record => { record.previousTop = record.card.getBoundingClientRect().top; });
+      records.forEach(record => { if (!record.pinned) record.previousTop = record.card.getBoundingClientRect().top; });
       lastY = window.scrollY;
+    }
+    // Each prose element carries the stage it explains. The graphic only
+    // changes as the reader moves from one passage to the next, so nothing
+    // moves while a passage is being read. A sequence ("1 2") is still
+    // accepted and shows its first stage going forward, its last going back.
+    function walkSequence(target) {
+      return target.dataset.walkStage.trim().split(/\s+/).map(Number).filter(Number.isFinite);
+    }
+    // On phones the passages are cards that rise over the full-screen graphic;
+    // a card takes over its stage as it enters the lower part of the screen.
+    function walkLine() {
+      return innerHeight * (mobile.matches ? .88 : .55);
+    }
+    function fadeCards(record) {
+      const focal = innerHeight * (innerWidth > innerHeight ? .8 : .72);
+      record.cards.forEach(card => {
+        const box = card.getBoundingClientRect();
+        const distance = Math.abs((box.top + box.bottom) / 2 - focal) / innerHeight;
+        const opacity = Math.max(0, Math.min(1, 1 - (distance - .14) / .18));
+        card.style.opacity = opacity.toFixed(3);
+      });
+    }
+    function playWalk(record, index, forward, preferred) {
+      record.walkIndex = index;
+      const target = record.walkTargets[index];
+      const sequence = walkSequence(target);
+      if (!sequence.length) return;
+      let start = forward ? 0 : sequence.length - 1;
+      if (sequence.includes(preferred)) start = sequence.indexOf(preferred);
+      record.graphic.showStage(sequence[start]);
+      record.walkTargets.forEach((item, i) => item.classList.toggle('is-walk-active', i === index));
     }
 
     const dialog = node('dialog', 'mobile-story-dialog');
@@ -134,6 +166,8 @@
       const graphic = new api.Graphic(el);
       graphic.visible = false;
       const number = chapter.dataset.ch;
+      const pinned = Boolean(graphic.walkthrough);
+      chapter.classList.toggle('pinned-chapter', pinned);
       const card = node('section', 'mobile-story-card');
       card.dataset.chapter = number;
       const preview = node('div', 'mobile-story-preview');
@@ -151,8 +185,9 @@
         title: el.querySelector('.gbar .ct')?.textContent.trim() || '',
         stage: 0, count: graphic.walkthrough ? 8 : steps.length,
         opened: visited.has(number), completed: false, previousTop: Infinity,
-        renderMode: null, desktopState: null, desktopStage: -1,
-        walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')],
+        renderMode: null, desktopState: null, pinned,
+        walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')], walkIndex: null, walkPreferred: undefined,
+        cards: [...chapter.querySelectorAll('.pin > .text [data-walk-stage]')],
       };
       card.dataset.stages = String(record.count);
       detail.textContent = labels.steps(record.count);
@@ -166,18 +201,21 @@
       const progress = el.querySelector('.progress');
       if (progress) progress.innerHTML = steps.map(() => '<i></i>').join('');
       if (graphic.walkthrough) {
-        // The shared mobile viewer owns swipes; desktop buttons follow prose.
+        // The buttons follow the prose: a stage within the current passage
+        // shows at once; any other scrolls to the passage that explains it.
         graphic.walkthrough.onNavigate = index => {
-          if (mobile.matches) {
-            if (current === record) setStage(record, index);
+          const targetIndex = record.walkTargets.findIndex(item => walkSequence(item).includes(index));
+          if (targetIndex < 0) return;
+          if (targetIndex === record.walkIndex) {
+            playWalk(record, targetIndex, true, index);
             return;
           }
-          const target = record.walkTargets.find(item => Number(item.dataset.walkStage) === index);
-          if (!target) return;
-          const following = record.walkTargets.find(item => Number(item.dataset.walkStage) === index + 1);
+          const target = record.walkTargets[targetIndex];
+          const following = record.walkTargets[targetIndex + 1];
           const box = target.getBoundingClientRect();
           const inset = following ? Math.min(32, (following.getBoundingClientRect().top - box.top) / 2) : 32;
-          window.scrollTo({top: window.scrollY + box.top - innerHeight * .55 + inset, behavior: reduced.matches ? 'instant' : 'smooth'});
+          record.walkPreferred = index;
+          window.scrollTo({top: window.scrollY + box.top - walkLine() + inset, behavior: reduced.matches ? 'instant' : 'smooth'});
           schedule();
         };
       }
@@ -201,6 +239,7 @@
     }
 
     function updateControls(record) {
+      if (record.pinned) return;
       const label = record.completed ? labels.replay : record.opened ? labels.resume : labels.explore;
       labelButton(record.launch, '', 'expand');
       record.launch.setAttribute('aria-label', `${label}: ${record.title}`);
@@ -357,7 +396,7 @@
 
     async function open(recordOrNumber, source) {
       const record = typeof recordOrNumber === 'object' ? recordOrNumber : records.find(item => item.number === String(recordOrNumber));
-      if (!record || current || !mobile.matches) return;
+      if (!record || record.pinned || current || !mobile.matches) return;
       suppressAuto();
       returnFocus = source || record.launch;
       visited.add(record.number);
@@ -452,12 +491,8 @@
       // A toolbar resize must not dismiss the viewer or change its selected step.
       if (transition && widthChanged) transition.finish();
       records.forEach(record => {
-        if (mobile.matches) {
-          if (!record.card.isConnected) {
-            const wood = record.steps.find(step => step.dataset.s === 'wood');
-            if (record.graphic.walkthrough && wood) wood.before(record.card);
-            else record.steps[record.steps.length - 1].after(record.card);
-          }
+        if (mobile.matches && !record.pinned) {
+          if (!record.card.isConnected) record.steps[record.steps.length - 1].after(record.card);
           if (current !== record && record.el.parentNode !== record.preview) record.preview.append(record.el);
           if (record.renderMode !== 'mobile') setStage(record, record.stage, true);
         } else {
@@ -465,10 +500,12 @@
             record.home.after(record.el);
             record.card.remove();
           }
-          if (record.renderMode !== 'desktop') {
-            record.renderMode = 'desktop';
+          const mode = mobile.matches ? 'pinned' : 'desktop';
+          if (record.renderMode !== mode) {
+            record.renderMode = mode;
             record.desktopState = null;
-            record.desktopStage = -1;
+            record.walkIndex = null;
+            if (mode === 'desktop') record.cards.forEach(card => { card.style.opacity = ''; });
           }
         }
       });
@@ -477,7 +514,7 @@
         // scene's prose in the desktop column, rather than an obsolete offset.
         const record = desktopReturn.record;
         const target = record.graphic.walkthrough
-          ? record.walkTargets.find(item => Number(item.dataset.walkStage) === desktopReturn.stage)
+          ? record.walkTargets.find(item => walkSequence(item).includes(desktopReturn.stage))
           : record.steps[desktopReturn.stage];
         if (target) {
           target.setAttribute('tabindex', '-1');
@@ -503,27 +540,31 @@
 
     function update() {
       framePending = false;
-      if (!mobile.matches) {
-        records.forEach(record => {
-          let index = 0;
-          record.steps.forEach((step, i) => { if (step.getBoundingClientRect().top <= innerHeight * .55) index = i; });
-          const state = record.steps[index].dataset.s;
-          if (record.desktopState !== state) {
-            record.desktopState = state;
-            record.graphic.go(state);
-            describe(record, index);
-            if (!record.graphic.visible) record.graphic.pause();
+      records.forEach(record => {
+        if (mobile.matches && !record.pinned) return;
+        let index = 0;
+        record.steps.forEach((step, i) => { if (step.getBoundingClientRect().top <= innerHeight * .55) index = i; });
+        const state = record.steps[index].dataset.s;
+        if (record.desktopState !== state) {
+          record.desktopState = state;
+          record.graphic.go(state);
+          describe(record, index);
+          if (!record.graphic.visible) record.graphic.pause();
+        }
+        if (record.graphic.walkthrough) {
+          if (mobile.matches) fadeCards(record);
+          const line = walkLine();
+          let walkIndex = 0;
+          record.walkTargets.forEach((target, i) => { if (target.getBoundingClientRect().top <= line) walkIndex = i; });
+          if (record.walkIndex !== walkIndex) {
+            const forward = record.walkIndex === null || walkIndex > record.walkIndex;
+            // A requested stage is kept until the passage that holds it is reached.
+            const preferred = record.walkPreferred;
+            if (preferred === undefined || walkSequence(record.walkTargets[walkIndex]).includes(preferred)) record.walkPreferred = undefined;
+            playWalk(record, walkIndex, forward, preferred);
           }
-          if (record.graphic.walkthrough) {
-            let stage = 0;
-            record.walkTargets.forEach(target => { if (target.getBoundingClientRect().top <= innerHeight * .55) stage = Number(target.dataset.walkStage); });
-            if (record.desktopStage !== stage) {
-              record.desktopStage = stage;
-              record.graphic.showStage(stage);
-            }
-          }
-        });
-      }
+        }
+      });
       updateVisibility();
     }
     function schedule() {
@@ -541,6 +582,7 @@
       const line = innerHeight * .30;
       let arrival = null;
       records.forEach(record => {
+        if (record.pinned) return;
         const box = record.card.getBoundingClientRect();
         if (!arrival && eligible && delta > 0 && !visited.has(record.number) && box.top <= line &&
             (record.previousTop > line || box.bottom > line)) arrival = record;

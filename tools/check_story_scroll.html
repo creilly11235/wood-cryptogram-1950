@@ -10,8 +10,8 @@
   #status { font-weight: 700; } #results { max-width: 90ch; }
 </style>
 <h1>Story navigation regression check</h1>
-<p>Serve the repository over HTTP and open this page. It tests the real article’s mobile cards,
-  full-screen viewer and desktop scroll sequence. Use
+<p>Serve the repository over HTTP and open this page. It tests the real article’s pinned cipher
+  walkthrough, mobile cards, full-screen viewer and desktop scroll sequence. Use
   <code>?width=320&amp;height=568&amp;lang=de</code> for another viewport or language.
   Native touch and automatic-entry tests live in <code>check_story_viewer.py</code>.</p>
 <nav id="sizes"></nav>
@@ -66,6 +66,30 @@ frame.addEventListener('load', async () => {
       'Six original graphics serve every stage and both layouts');
     check(doc.querySelectorAll('.cw').length === 1, 'One walkthrough serves every cipher stage');
     check(doc.querySelectorAll('.story-run').length === 0, 'No mobile scroll runway remains');
+    const lastStage = target => target.dataset.walkStage.trim().split(/\s+/).at(-1);
+    async function walkthroughFollowsProse(label) {
+      // Both layouts: each passage selects its stage(s), the final one after a reading pause.
+      const targets = [...chapters[0].querySelectorAll('[data-walk-stage]')];
+      const line = height * (mobile ? .88 : .55);
+      for (const target of [...targets, ...targets.slice(0, -1).reverse()]) {
+        const place = target.getBoundingClientRect();
+        // Phones centre the card on its focal line; desktop crosses the trigger line.
+        win.scrollTo({ top: win.scrollY + (mobile ? (place.top + place.bottom) / 2 - height * .72 : place.top - line + 15), behavior: 'instant' });
+        await settle();
+        await until(() => walk.dataset.stage === lastStage(target), `${label}: scroll did not reach stage ${lastStage(target)}`, 6000);
+        check(target.classList.contains('is-walk-active') && doc.querySelectorAll('.is-walk-active').length === 1,
+          `${label}: the passage for stage ${lastStage(target)} is marked as current`);
+        const box = graphics[0].getBoundingClientRect(), prose = chapters[0].querySelector('.text').getBoundingClientRect();
+        if (mobile && !target.closest('.pin')) {
+          // The introduction reads before the graphic arrives; it only needs to keep its stage.
+          check(box.top > 0, `${label}: stage ${lastStage(target)} reads before the graphic takes the screen`);
+        } else {
+          check(box.width > 0 && box.bottom > 0 && box.top < height && (mobile ? box.top >= -1 && Number(getComputedStyle(target).opacity) > .9 : box.left >= prose.right - 1),
+            `${label}: stage ${lastStage(target)} shows with the graphic ${mobile ? 'behind a fully visible card' : 'visible to the right'}`);
+        }
+        overflow(label);
+      }
+    }
     async function settle() {
       await pause(160);
       let stable = 0, last = win.scrollY;
@@ -97,16 +121,17 @@ frame.addEventListener('load', async () => {
     }
     if (mobile) {
       check(!!api, 'Mobile viewer controller is initialized');
+      check(graphics[0].parentElement.matches('.chapter > .pin') && getComputedStyle(graphics[0]).position === 'sticky',
+        'The cipher walkthrough stays pinned in its chapter instead of a card');
+      await walkthroughFollowsProse('Mobile chapter 1');
       const cards = [...doc.querySelectorAll('.mobile-story-card')];
-      check(cards.length === 6 && cards.every((card, i) => card.querySelector('.graphic') === graphics[i]),
-        'Each card starts with its original graphic');
-      check(cards[0].previousElementSibling?.dataset.s === 'method' && cards[0].nextElementSibling?.dataset.s === 'wood',
-        'First card sits immediately before Wood and his clues');
-      check(cards.slice(1).every((card, i) => card.previousElementSibling === [...chapters[i + 1].querySelectorAll('.step[data-s]')].at(-1)),
-        'Later cards follow their chapter’s narrative');
+      check(cards.length === 5 && cards.every((card, i) => card.querySelector('.graphic') === graphics[i + 1]),
+        'Each later chapter’s card starts with its original graphic');
+      check(cards.every((card, i) => card.previousElementSibling === [...chapters[i + 1].querySelectorAll('.step[data-s]')].at(-1)),
+        'Cards follow their chapter’s narrative');
       const dialog = doc.querySelector('.mobile-story-dialog');
-      for (let i = 0; i < cards.length; i++) {
-        const card = cards[i];
+      for (let i = 1; i <= cards.length; i++) {
+        const card = cards[i - 1];
         card.scrollIntoView({ block: 'center', behavior: 'instant' });
         await settle();
         check(!dialog.open, `Chapter ${i + 1}: a programmatic jump does not open the viewer`);
@@ -131,8 +156,7 @@ frame.addEventListener('load', async () => {
           await until(() => api.current?.stage === stage, `Chapter ${i + 1}: Next did not reach ${stage}`);
           viewerGeometry(`Chapter ${i + 1}, stage ${stage + 1}`);
           check(graphics[i].isConnected && dialog.contains(graphics[i]), `Chapter ${i + 1}, stage ${stage + 1}: graphic stays in the viewer`);
-          if (!i) check(walk.dataset.stage === String(stage), `Walkthrough presents stage ${stage + 1}`);
-          else check(graphics[i].dataset.state === chapters[i].querySelectorAll('.step[data-s]')[stage].dataset.s,
+          check(graphics[i].dataset.state === chapters[i].querySelectorAll('.step[data-s]')[stage].dataset.s,
             `Chapter ${i + 1}: navigation presents the matching chart state`);
         }
         check(dialog.querySelector('.mobile-viewer-next').textContent.trim().includes(language === 'de' ? 'Schließen' : 'Close'),
@@ -169,22 +193,23 @@ frame.addEventListener('load', async () => {
       frame.style.width = '1440px'; frame.style.height = '900px';
       await pause(500);
       check(!dialog.open && !api.current && doc.body.style.position !== 'fixed', 'Switching to desktop closes the viewer and releases document scrolling');
-      check(graphics.every(graphic => graphic.parentElement.classList.contains('chapter')), 'Switching to desktop returns every graphic beside its prose');
+      check(graphics.every(graphic => graphic.parentElement.matches('.chapter, .chapter > .pin')), 'Switching to desktop returns every graphic beside its prose');
       frame.style.width = `${width}px`; frame.style.height = `${height}px`;
       await pause(500);
-      check(doc.querySelectorAll('.mobile-story-card').length === 6 && !dialog.open, 'Returning to mobile restores six cards without opening one');
+      check(doc.querySelectorAll('.mobile-story-card').length === 5 && !dialog.open, 'Returning to mobile restores five cards without opening one');
     } else {
-      check(graphics.every(graphic => graphic.parentElement.classList.contains('chapter')), 'Desktop graphics stay directly beside their reading columns');
-      for (let i = 0; i < chapters.length; i++) {
-        const targets = [...chapters[i].querySelectorAll(i ? '.step[data-s]' : '[data-walk-stage]')];
+      check(graphics.every(graphic => graphic.parentElement.matches('.chapter, .chapter > .pin')), 'Desktop graphics stay directly beside their reading columns');
+      await walkthroughFollowsProse('Desktop chapter 1');
+      for (let i = 1; i < chapters.length; i++) {
+        const targets = [...chapters[i].querySelectorAll('.step[data-s]')];
         for (const target of [...targets, ...targets.slice(0, -1).reverse()]) {
           win.scrollTo({ top: win.scrollY + target.getBoundingClientRect().top - height * .55 + 15, behavior: 'instant' });
           await settle();
-          await until(() => i ? graphics[i].dataset.state === target.dataset.s : walk.dataset.stage === target.dataset.walkStage,
-            `Desktop chapter ${i + 1}: scroll did not reach ${target.dataset.s || target.dataset.walkStage}`);
+          await until(() => graphics[i].dataset.state === target.dataset.s,
+            `Desktop chapter ${i + 1}: scroll did not reach ${target.dataset.s}`);
           const box = graphics[i].getBoundingClientRect(), prose = chapters[i].querySelector('.text').getBoundingClientRect();
           check(box.width > 0 && box.bottom > 0 && box.top < height && box.left >= prose.right - 1,
-            `Desktop chapter ${i + 1}: scroll selects ${target.dataset.s || target.dataset.walkStage} with the graphic visible to the right`);
+            `Desktop chapter ${i + 1}: scroll selects ${target.dataset.s} with the graphic visible to the right`);
           overflow(`Desktop chapter ${i + 1}`);
         }
       }

@@ -42,10 +42,29 @@ body,
 }
 
 /* Give the three operations enough reading room to follow their animation. */
-.chapter[data-ch="1"] .step[data-s="method"] ol li[data-walk-stage] {
+.chapter[data-ch="1"] .step[data-s="method"] ol li {
   padding-block: 8px;
   margin-bottom: 1em;
 }
+.chapter[data-ch="1"] .step[data-s="method"] ol li p { margin: 0; }
+.chapter[data-ch="1"] .step[data-s="method"] ol li p + p { margin-top: .7em; }
+
+/* The passage driving the animation carries a thin mark in the margin, so
+   a reader can see which sentence the graphic is illustrating. */
+.step[data-walk-stage], .step [data-walk-stage] { position: relative; }
+.step[data-walk-stage]::before, .step [data-walk-stage]::before {
+  content: "";
+  position: absolute;
+  top: .3em;
+  bottom: .3em;
+  left: -16px;
+  width: 2px;
+  background: var(--candle);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.step[data-walk-stage].is-walk-active::before, .step [data-walk-stage].is-walk-active::before { opacity: 1; }
+.step ol > li:has(.is-walk-active)::marker { color: var(--candle); }
 
 .step .cipher,
 .step code,
@@ -67,6 +86,18 @@ figure img {
   .step {
     min-height: calc(var(--story-viewport-height) * .52);
   }
+
+  /* The pinned wrapper exists for phones; the desktop grid sees through it. */
+  .chapter > .pin { display: contents; }
+  .chapter > .text.text-before,
+  .chapter > .pin > .text,
+  .chapter > .text.text-after { grid-column: 1; }
+  .chapter > .pin > .graphic { grid-column: 2; grid-row: 1 / span 3; }
+  .chapter > .text.text-before { padding-bottom: 0; }
+  .chapter > .pin > .text { padding-block: 0; }
+  .chapter > .text.text-after { padding-top: 0; }
+  .chapter > .text.text-before > .step:last-child,
+  .chapter > .pin > .text > .step:last-child { min-height: calc(var(--story-viewport-height) * .52); }
 
   /* The final paragraph must leave room for its full-height sticky neighbor.
      Otherwise the chapter boundary pushes the chart up before it can be read. */
@@ -90,10 +121,96 @@ figure img {
   .gbar .ct { font-size: 1rem; line-height: 1.3; }
   .progress { display: flex; flex: none; gap: 5px; align-items: center; margin-left: auto; }
   .gcap span:empty, .sub:empty { display: none; }
+
+  /* The cipher walkthrough fills the screen and holds while the passages
+     that explain it rise over its lower part one at a time, news-graphic style. */
+  .chapter.pinned-chapter > .pin { position: relative; }
+  .chapter.pinned-chapter > .pin > .graphic {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: auto;
+    max-width: none;
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    margin-inline: calc(-1 * var(--story-gutter));
+    padding: max(10px, env(safe-area-inset-top, 0px)) var(--story-gutter) var(--card-space);
+    border: 0;
+    background: var(--room);
+    --card-space: 42svh;
+  }
+  .chapter.pinned-chapter > .pin > .text {
+    display: flow-root; /* keeps the last card's spacing inside the pinned run */
+    position: relative;
+    z-index: 2;
+    margin-top: -38svh;
+    /* The graphic holds on the plain cipher for a screen's worth of scrolling
+       after the introduction has gone, then the first card rises into view. */
+    padding-block: 66svh 0;
+    pointer-events: none;
+  }
+  .chapter.pinned-chapter > .text.text-before { padding-bottom: 0; }
+  .chapter.pinned-chapter > .text.text-before > .step { padding-bottom: 8px; }
+  .chapter.pinned-chapter > .text.text-after { padding-top: 32px; }
+  .pinned-chapter .pin .step { padding: 0; }
+  .pinned-chapter .pin .step + .step { padding-top: 0; }
+  .pinned-chapter .pin .step ol { padding: 0; margin: 0; }
+  .pinned-chapter .pin .step ul { margin: 0; }
+  .chapter.pinned-chapter > .pin .step ol > li { list-style: none; padding: 0; margin: 0; }
+  /* Every passage in the pinned run is one card, spaced a screen apart.
+     The graphic's "Step n of 3" line carries the numbering here. */
+  .pinned-chapter .pin > .text .step [data-walk-stage] {
+    display: block;
+    margin: 0 auto 64svh;
+    padding: 16px 18px;
+    max-width: 560px;
+    border: 1px solid var(--veil-2);
+    border-radius: 3px;
+    background: rgb(250 251 252 / 96%);
+    box-shadow: 0 6px 24px rgb(31 44 48 / 8%);
+    pointer-events: auto;
+    will-change: opacity;
+  }
+  .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child { margin-bottom: 72svh; }
+  .pinned-chapter .pin .step h2 { font-size: 1.5rem; margin-bottom: 12px; }
+  .pinned-chapter .pin .step p:last-child, .pinned-chapter .pin .step li:last-child { margin-bottom: 0; }
+  .pinned-chapter .pin .step p { margin: 0; }
+  .pinned-chapter .pin [data-walk-stage]::before, .pinned-chapter .pin .step[data-walk-stage]::before { display: none; }
+  .chapter.pinned-chapter .gbar { margin-bottom: 4px; padding-bottom: 6px; }
+  .pinned-chapter .cw-controls,
+  .pinned-chapter .cw-swipe-hint { display: none; }
+  .pinned-chapter .cw { padding: 8px 0 4px; gap: 8px; }
+  .pinned-chapter .cw-scene { container-type: size; }
+  .pinned-chapter .cw-source-letter,
+  .pinned-chapter .cw-card { width: min(100%, 44px); height: clamp(32px, calc((100cqh - 78px) / 3), 46px); }
+  .pinned-chapter .cw-source-grid { gap: clamp(8px, 4cqh, 16px) 5px; }
+  .pinned-chapter .cw-grid { gap: clamp(6px, 3cqh, 12px) 5px; }
+  .pinned-chapter .cw-source-letter,
+  .pinned-chapter .cw-face { font-size: clamp(20px, 6.5cqw, 28px); }
+  .pinned-chapter .cw-word { font-size: clamp(10.5px, 3cqw, 12.5px); }
+  .pinned-chapter .cw-prayer { font-size: clamp(17px, 5cqw, 21px); max-width: 32ch; }
+  .pinned-chapter .cw-single { width: 64px; height: 72px; font-size: 44px; }
+  .pinned-chapter .cw[data-stage="4"] .cw-single { width: 36px; height: 40px; font-size: 26px; }
+  .pinned-chapter .cw-message-reading { font-size: clamp(22px, 7cqw, 30px); }
 }
 @media (max-width: 360px) {
   .scrolly { --story-gutter: 20px; }
 }
 @media (max-width: 900px) and (orientation: landscape) {
+  .chapter.pinned-chapter > .pin > .graphic { --card-space: 30svh; }
+  .chapter.pinned-chapter > .pin > .text { margin-top: -26svh; padding-top: 52svh; }
   .gbar { margin-bottom: 5px; padding-bottom: 5px; }
+  .pinned-chapter .cw { padding-top: 4px; gap: 4px; }
+  .pinned-chapter .cw-legend { display: none; }
+  .pinned-chapter .cw-step-tag { margin-bottom: 1px; }
+  .pinned-chapter .cw-title { margin-bottom: 2px; }
+  .pinned-chapter .cw-source-letter,
+  .pinned-chapter .cw-card { height: clamp(22px, calc((100cqh - 58px) / 3), 40px); }
+  .pinned-chapter .cw-face, .pinned-chapter .cw-source-letter { font-size: 18px; }
+  .pinned-chapter .cw-word { font-size: 10.5px; }
+  .pinned-chapter .cw-pair { gap: 2px; }
+  .pinned-chapter .cw-source-grid, .pinned-chapter .cw-grid { gap: 3px 5px; }
+  .pinned-chapter .cw-prayer { font-size: 16px; line-height: 1.4; max-width: 46ch; }
+  .pinned-chapter .cw-single { width: 48px; height: 54px; font-size: 34px; }
 }

@@ -68,8 +68,8 @@
     },
     {
       "kind": "span",
-      "en": "I · The cipher",
-      "de": "I · Der Geheimtext"
+      "en": "I · Decoding the cipher",
+      "de": "I · Den Geheimtext entschlüsseln"
     },
     {
       "kind": "attr",
@@ -93,28 +93,43 @@
     },
     {
       "kind": "p",
-      "en": "The idea came from the psychologist Robert Thouless, who had published an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) two years earlier. It contained enciphered messages whose keys only he knew, and one of them used a system meant to be unbreakable without the key:",
-      "de": "Die Idee stammte von dem Psychologen Robert Thouless, der in einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) verschlüsselte Botschaften veröffentlichte, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte:"
+      "en": "The idea came from the psychologist Robert Thouless, who had published an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) two years earlier. It contained enciphered messages whose keys only he knew, and one of them used a system meant to be unbreakable without the key.",
+      "de": "Die Idee stammte von dem Psychologen Robert Thouless, der in einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) verschlüsselte Botschaften veröffentlichte, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte."
     },
     {
       "kind": "li",
-      "en": "Pick a passage of text as the key, skipping any word that has already appeared.",
-      "de": "Man wählt eine Textpassage als Schlüssel und überspringt jedes Wort, das schon vorgekommen ist."
-    },
-    {
-      "kind": "li",
-      "en": "Turn each word into a single letter by adding up its letters (A=1 to Z=26), divide by 26, and take the remainder (1 is A, 25 is Y, 0 is Z).",
-      "de": "Jedes Wort wird zu einem Buchstaben. Man addiert seine Buchstabenwerte (A=1 bis Z=26), teilt durch 26 und nimmt den Rest (1 ist A, 25 ist Y, 0 ist Z)."
-    },
-    {
-      "kind": "li",
-      "en": "Use that key letter to shift one message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way.",
-      "de": "Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln verschiebt man in die Gegenrichtung."
+      "en": "The key is a passage of text, read word by word, skipping any word that has already appeared.",
+      "de": "Der Schlüssel ist eine Textpassage, Wort für Wort gelesen, wobei jedes Wort übersprungen wird, das schon vorgekommen ist."
     },
     {
       "kind": "p",
-      "en": "Each key word supplies the shift for one message letter, so a 21-letter message needs 21 distinct key words. This is the method Wood adopted for his own test.",
-      "de": "Jedes Schlüsselwort liefert die Verschiebung für einen Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter. Dieses Verfahren übernahm Wood für seinen eigenen Test."
+      "en": "Each key word pairs with one letter of the message, so a 21-letter message needs 21 distinct key words.",
+      "de": "Jedes Schlüsselwort gehört zu einem Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter."
+    },
+    {
+      "kind": "p",
+      "en": "Each word becomes a single letter. The first pair is the cipher letter F and the key word Unser.",
+      "de": "Jedes Wort wird zu einem Buchstaben. Das erste Paar ist der Geheimtextbuchstabe F und das Schlüsselwort Unser."
+    },
+    {
+      "kind": "p",
+      "en": "The letters of the word are added up (A=1 to Z=26) and divided by 26, and the remainder gives the letter (1 is A, 25 is Y, 0 is Z). Unser adds up to 77, which leaves 25, so its letter is Y.",
+      "de": "Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26) und durch 26 geteilt, und der Rest ergibt den Buchstaben (1 ist A, 25 ist Y, 0 ist Z). Unser ergibt 77, der Rest ist 25, sein Buchstabe ist also Y."
+    },
+    {
+      "kind": "p",
+      "en": "That key letter shifts one message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way, so Y moves F back 24 places.",
+      "de": "Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln geht es in die Gegenrichtung, Y rückt F also um 24 Stellen zurück."
+    },
+    {
+      "kind": "p",
+      "en": "F lands on H, the first letter of the hidden message.",
+      "de": "F landet auf H, dem ersten Buchstaben der verborgenen Botschaft."
+    },
+    {
+      "kind": "p",
+      "en": "The same happens for all 21 letters and the message reads out. This is the method Wood adopted for his own test.",
+      "de": "Dasselbe geschieht mit allen 21 Buchstaben, und die Botschaft erscheint. Dieses Verfahren übernahm Wood für seinen eigenen Test."
     },
     {
       "kind": "attr",
@@ -1084,6 +1099,10 @@
     {
       "en": "\"Scroll to explore · or use the buttons\"",
       "de": "\"Scrollen oder die Tasten verwenden\""
+    },
+    {
+      "en": "listSteps:[\"Step 1 of 3\",\"Step 2 of 3\",\"Step 3 of 3\"]",
+      "de": "listSteps:[\"Schritt 1 von 3\",\"Schritt 2 von 3\",\"Schritt 3 von 3\"]"
     }
   ]
 }
