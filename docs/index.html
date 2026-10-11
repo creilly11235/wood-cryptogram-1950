@@ -525,7 +525,7 @@ function Graphic(el){
     const walk=new CipherWalkthrough(host,{ct:CT,pt:PT,reduced,labels:{
       label:"How the cipher becomes a message",encoded:"Encoded",decoded:"Decoded",
       stages:["The 21-letter cipher","The key passage","One key word for every cipher letter","Start with F and Unser","Add the letters in Unser","Use Y to shift F back 24 places","The first decoded letter is H","Repeat for all 21 letters"],
-      previous:"Previous",next:"Next",replay:"Replay",keyNote:"Repeated words are skipped",encryptedMessage:"The encrypted message",keyLabel:"The key",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y means a shift of 24 (A = 0)",shift:"Back 24",firstDecoded:"The message begins",step:"Step",keyWord:"key word",decodedMessage:"The decoded message",swipeHint:"Scroll to explore · or use the buttons"
+      previous:"Previous",next:"Next",replay:"Replay",encryptedMessage:"The encrypted message",keyLabel:"The key",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y means a shift of 24 (A = 0)",shift:"Back 24",firstDecoded:"The message begins",step:"Step",keyWord:"key word",decodedMessage:"The decoded message",swipeHint:"Scroll to explore · or use the buttons"
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};

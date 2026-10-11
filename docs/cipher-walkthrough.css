@@ -33,9 +33,7 @@
 .cw-prayer{margin:0 auto;max-width:29ch;font-size:clamp(19px,4.5cqw,24px);line-height:1.65;text-align:center;text-wrap:pretty}
 .cw-prayer-word{display:inline-block}
 .cw-prayer-word.is-repeat{color:var(--bone-2,#5b646e);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--bone-2,#5b646e)}
-.cw-scene-label{margin:0 auto 12px;color:var(--bone-2,#5b646e);font-size:12px;line-height:1.45;text-align:center}
-.cw-source .cw-scene-label{margin:14px auto 0}
-.cw-key-note{margin:15px auto 0;max-width:39ch;color:var(--bone-2,#5b646e);font-size:12px;line-height:1.45;text-align:center;text-wrap:balance}
+.cw-scene-label{margin:14px auto 0;color:var(--bone-2,#5b646e);font-size:12px;line-height:1.45;text-align:center}
 .cw-pair{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
 .cw-card{perspective:360px;flex:none}
 .cw-card-turn{position:relative;width:100%;height:100%;transform-style:preserve-3d}
@@ -80,7 +78,7 @@
   .cw{padding:12px;gap:10px;max-height:none}
   .cw-legend{font-size:11px;gap:16px}.cw-swatch{width:10px;height:12px;border-radius:2px}
   .cw-source-grid,.cw-grid{gap:10px 4px}.cw-source-letter,.cw-card{width:35px;height:37px}.cw-source-letter,.cw-face{font-size:23px;border-radius:4px}
-  .cw-pair{gap:4px}.cw-word{font-size:10.5px}.cw-prayer{font-size:18px;line-height:1.55;max-width:31ch}.cw-key-note{font-size:11px;line-height:1.35;margin-top:9px}
+  .cw-pair{gap:4px}.cw-word{font-size:10.5px}.cw-prayer{font-size:18px;line-height:1.55;max-width:31ch}.cw-scene-label{font-size:11px;margin-top:9px}
   .cw-single{width:59px;height:68px;font-size:42px}.cw-focus{gap:12px}.cw-focus-pair{gap:6px}.cw-focus-word{font-size:16px}
   .cw[data-stage="4"] .cw-focus{gap:10px}.cw[data-stage="4"] .cw-single{width:32px;height:36px;font-size:24px}.cw[data-stage="4"] .cw-focus-word{font-size:12px}
   .cw-math{gap:10px}.cw-term{gap:4px;min-width:18px}.cw-term-letter{font-size:12px}.cw-term-value{font-size:16px}.cw-plus,.cw-equals{font-size:12px;padding-top:13px}.cw-total{font-size:22px;padding-top:11px}.cw-reduction{font-size:12px}
@@ -90,7 +88,7 @@
 @media(max-width:360px){
   .cw{padding:8px;gap:6px}.cw-legend{font-size:10px}
   .cw-source-grid,.cw-grid{gap:5px 3px}.cw-source-letter,.cw-card{width:30px;height:29px}.cw-source-letter,.cw-face{font-size:19px}.cw-pair{gap:2px}.cw-word{font-size:10px;letter-spacing:-.025em}
-  .cw-prayer{font-size:15px;line-height:1.4}.cw-key-note{margin-top:7px;font-size:10px}
+  .cw-prayer{font-size:15px;line-height:1.4}.cw-scene-label{margin-top:7px;font-size:10px}
   .cw[data-stage="4"] .cw-focus{gap:6px}.cw[data-stage="4"] .cw-focus-pair{gap:2px}.cw[data-stage="4"] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-stage="4"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
   .cw-controls{padding-top:5px}.cw-previous,.cw-next{min-height:32px}
 }
@@ -103,7 +101,7 @@
     .cw-source-grid,.cw-grid{gap:6px 4px}
     .cw-source-letter,.cw-card{width:32px;height:31px}.cw-source-letter,.cw-face{font-size:21px}
     .cw-pair{gap:3px}.cw-word{font-size:10.5px}
-    .cw-prayer{font-size:15px;line-height:1.4}.cw-key-note{margin-top:7px;font-size:10.5px}
+    .cw-prayer{font-size:15px;line-height:1.4}.cw-scene-label{margin-top:7px;font-size:10.5px}
     .cw-single{width:52px;height:60px;font-size:36px}.cw-focus,.cw-result,.cw-shift{gap:10px}
     .cw[data-stage="4"] .cw-focus{gap:6px}.cw[data-stage="4"] .cw-focus-pair{gap:2px}
     .cw[data-stage="4"] .cw-single{width:26px;height:28px;font-size:21px}

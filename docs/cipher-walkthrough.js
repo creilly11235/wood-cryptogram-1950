@@ -26,7 +26,6 @@
     firstDecoded: 'The message begins',
     step: 'Step',
     keyWord: 'key word',
-    keyNote: 'Repeated words are skipped',
     encryptedMessage: 'The encrypted message',
     keyLabel: 'The key',
     decodedMessage: 'The decoded message',
@@ -130,7 +129,7 @@
         seen.add(token);
       });
       this.prayer.append(document.createTextNode(' …'));
-      this.keyphrase.append(this.node('div', 'cw-scene-label', label.keyLabel), this.prayer, this.node('div', 'cw-key-note', label.keyNote));
+      this.keyphrase.append(this.prayer, this.node('div', 'cw-scene-label', label.keyLabel));
 
       this.grid = this.node('div', 'cw-grid');
       this.grid.setAttribute('role', 'list');

@@ -526,7 +526,7 @@ function Graphic(el){
     const walk=new CipherWalkthrough(host,{ct:CT,pt:PT,reduced,labels:{
       label:"Vom Geheimtext zur Botschaft",encoded:"Verschlüsselt",decoded:"Entschlüsselt",
       stages:["Der Geheimtext: 21 Buchstaben","Der Schlüsseltext","Ein Schlüsselwort pro Buchstabe","Start mit F und Unser","Die Buchstabenwerte von Unser addieren","Mit Y: F um 24 Stellen zurück","Der erste Klartextbuchstabe: H","Für alle 21 Buchstaben wiederholen"],
-      previous:"Zurück",next:"Weiter",replay:"Wiederholen",keyNote:"Wiederholte Wörter auslassen",encryptedMessage:"Die verschlüsselte Nachricht",keyLabel:"Der Schlüssel",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y verschiebt um 24 Stellen (A = 0)",shift:"24 zurück",firstDecoded:"Die Botschaft beginnt",step:"Schritt",keyWord:"Schlüsselwort",decodedMessage:"Die entschlüsselte Botschaft",swipeHint:"Scrollen oder die Tasten verwenden"
+      previous:"Zurück",next:"Weiter",replay:"Wiederholen",encryptedMessage:"Die verschlüsselte Nachricht",keyLabel:"Der Schlüssel",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y verschiebt um 24 Stellen (A = 0)",shift:"24 zurück",firstDecoded:"Die Botschaft beginnt",step:"Schritt",keyWord:"Schlüsselwort",decodedMessage:"Die entschlüsselte Botschaft",swipeHint:"Scrollen oder die Tasten verwenden"
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};
