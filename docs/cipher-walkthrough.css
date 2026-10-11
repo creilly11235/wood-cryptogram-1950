@@ -33,6 +33,8 @@
 .cw-prayer{margin:0 auto;max-width:29ch;font-size:clamp(19px,4.5cqw,24px);line-height:1.65;text-align:center;text-wrap:pretty}
 .cw-prayer-word{display:inline-block}
 .cw-prayer-word.is-repeat{color:var(--bone-2,#5b646e);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--bone-2,#5b646e)}
+.cw-scene-label{margin:0 auto 12px;color:var(--bone-2,#5b646e);font-size:12px;line-height:1.45;text-align:center}
+.cw-source .cw-scene-label{margin:14px auto 0}
 .cw-key-note{margin:15px auto 0;max-width:39ch;color:var(--bone-2,#5b646e);font-size:12px;line-height:1.45;text-align:center;text-wrap:balance}
 .cw-pair{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
 .cw-card{perspective:360px;flex:none}

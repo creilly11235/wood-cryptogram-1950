@@ -118,8 +118,8 @@
     },
     {
       "kind": "p",
-      "en": "F lands on H, the first letter of the hidden message.",
-      "de": "F landet auf H, dem ersten Buchstaben der verborgenen Botschaft."
+      "en": "F shifts to H, the first letter of the hidden message.",
+      "de": "F wird zu H verschoben, dem ersten Buchstaben der verborgenen Botschaft."
     },
     {
       "kind": "p",
@@ -675,6 +675,31 @@
       "kind": "p",
       "en": "<strong class=\"cipher-token decoded\">Hier bin ich. Totsiens. T.E.W.</strong>",
       "de": "<strong class=\"cipher-token decoded\">Hier bin ich. Totsiens. T.E.W.</strong>"
+    },
+    {
+      "kind": "li",
+      "en": "Here",
+      "de": ""
+    },
+    {
+      "kind": "li",
+      "en": "am",
+      "de": ""
+    },
+    {
+      "kind": "li",
+      "en": "I",
+      "de": ""
+    },
+    {
+      "kind": "li",
+      "en": "Goodbye",
+      "de": "Auf Wiedersehen"
+    },
+    {
+      "kind": "li",
+      "en": "Wood’s initials",
+      "de": "Woods Initialen"
     }
   ],
   "js": [
@@ -1013,6 +1038,14 @@
     {
       "en": "\"Scroll to explore · or use the buttons\"",
       "de": "\"Scrollen oder die Tasten verwenden\""
+    },
+    {
+      "en": "\"The encrypted message\"",
+      "de": "\"Die verschlüsselte Nachricht\""
+    },
+    {
+      "en": "\"The key\"",
+      "de": "\"Der Schlüssel\""
     }
   ]
 }

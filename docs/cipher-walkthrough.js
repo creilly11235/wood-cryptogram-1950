@@ -27,6 +27,8 @@
     step: 'Step',
     keyWord: 'key word',
     keyNote: 'Repeated words are skipped',
+    encryptedMessage: 'The encrypted message',
+    keyLabel: 'The key',
     decodedMessage: 'The decoded message',
     swipeHint: 'Scroll to explore · or use the buttons'
   };
@@ -104,7 +106,7 @@
         sourceGrid.append(card);
         return card;
       });
-      this.source.append(sourceGrid);
+      this.source.append(sourceGrid, this.node('div', 'cw-scene-label', label.encryptedMessage));
 
       this.keyphrase = this.node('div', 'cw-keyphrase');
       this.prayer = this.node('div', 'cw-prayer');
@@ -128,7 +130,7 @@
         seen.add(token);
       });
       this.prayer.append(document.createTextNode(' …'));
-      this.keyphrase.append(this.prayer, this.node('div', 'cw-key-note', label.keyNote));
+      this.keyphrase.append(this.node('div', 'cw-scene-label', label.keyLabel), this.prayer, this.node('div', 'cw-key-note', label.keyNote));
 
       this.grid = this.node('div', 'cw-grid');
       this.grid.setAttribute('role', 'list');
