@@ -702,7 +702,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["Jeder Buchrücken steht für ein Buch","Jede mögliche Startposition wurde ausprobiert"],"plants":["Bestes Ergebnis in 97 von 100 Tests","Ein Punkt = ein Test"],"english":["12 zufällige Geheimtexte wurden höher bewertet","Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Englische Wortliste","Wortlisten in sieben Sprachen"],"prayer":["Deutsche Bibel","Rumänische Bibel","Übrige 11 Ergebnisse","Höhere Wortbewertung →"],"church":["Kirchlicher Wortlaut: Vater unser","Lutherbibel: Unser Vater"],"reading":["Deutsch · Hier bin ich","Afrikaans · Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
+  const mobileCopy={"shelves":["Jeder Buchrücken steht für ein Buch","Jede mögliche Startposition wurde ausprobiert"],"plants":["Bestes Ergebnis in 97 von 100 Tests","Ein Punkt = ein Test"],"english":["12 zufällige Geheimtexte wurden höher bewertet","Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Gruppiert mit einer englischen Wortliste","Gruppiert mit Wortlisten in sieben Sprachen"],"prayer":["Deutsche Bibel","Rumänische Bibel","Übrige 11 Ergebnisse","Höhere Wortbewertung →"],"church":["Kirchlicher Wortlaut: Vater unser","Lutherbibel: Unser Vater"],"reading":["Deutsch · Hier bin ich","Afrikaans · Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -740,23 +740,26 @@ function Graphic(el){
     // The arranged rows use larger cards, so the letters grow as they move.
     const short=p.h<360,big=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),bigH=big*1.2,rowStep=bigH+big*.35,head=size*2;
     const lineWidth=PLANT_DE.length*tile+(PLANT_DE.length-1)*gap,left=p.x+(p.w-lineWidth)/2;
-    // Short panels keep the lower rows clear of the text card over the graphic.
-    const top=p.y+height/2+4,blockTop=p.y+Math.max(height+16,p.h*.2),free=(p.y+p.h-blockTop)*(short?.8:1);
     const layouts=IDEA.map(([text])=>cardRows(text,p.w,big));
-    const need=layouts.map(l=>head+l.rows*rowStep),total=need.reduce((a,b)=>a+b,0);
+    const need=layouts.map(l=>head+l.rows*rowStep-big*.35);
+    // The undivided row and the two grouped rows stack evenly, centred in
+    // the panel. Short panels keep the stack clear of the text card below.
+    const room=p.h*(short?.7:1),content=height+need[0]+need[1];
+    const spacing=Math.max(8,Math.min(big*1.6,(room-content)/4));
+    const startY=p.y+Math.max(4,(room-content-2*spacing)/2);
     const move=progress(IDEA_MOVE,700),fade=progress(IDEA_MOVE,400);
-    let block=blockTop;
+    const top=startY+height/2;
+    let block=startY+height+spacing;
     [null,...IDEA].forEach((entry,r)=>{
       let targets=null,baseY=top,restY=top;
       if(entry){
-        const layout=layouts[r-1],blockH=free*need[r-1]/total;targets=layout.positions;
-        const centre=block+head+(blockH-head)/2;
-        baseY=centre-(layout.rows-1)*rowStep/2;restY=centre;
+        const layout=layouts[r-1];targets=layout.positions;
+        baseY=block+head+bigH/2;restY=baseY+(layout.rows-1)*rowStep/2;
         ctx.save();ctx.globalAlpha=sceneAlpha*fade;
         label(mobileCopy.idea[r-1],W/2,block+size*1.1,p.w,size,muted,"center");
-        if(r===2)line(p.x,block,p.x+p.w,block,pale);
+        if(r===2)line(p.x,block-spacing/2,p.x+p.w,block-spacing/2,pale);
         ctx.restore();
-        block+=blockH;
+        block+=need[r-1]+spacing;
       }
       [...PLANT_DE].forEach((c,i)=>{
         const x0=left+i*(tile+gap),y0=restY;
