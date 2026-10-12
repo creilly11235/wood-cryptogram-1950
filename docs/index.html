@@ -57,11 +57,12 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero .byline{display:grid;justify-items:center;gap:2px;font:var(--t-note);color:var(--bone-2);margin:24px 0 0}
 .hero .hero-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 20px;margin:6px 0 0;font:var(--t-note)}
 .hero .hero-links a{display:inline-flex;align-items:center;min-height:44px;padding-block:8px}
-/* The ciphertext stays at the top of the screen while the opening scrolls
-   beneath it, decoding as the reader goes. */
+/* The ciphertext holds in the middle of the screen while the opening scrolls
+   beneath it, decoding as the reader goes. The script measures the figure
+   and sets --hero-h so the row sits centred. */
 .reveal-track{position:relative;margin-top:12px}
-.reveal-hold{height:70svh}
-.cipher-row{--tw:28px;position:sticky;top:var(--hero-stick-top,env(safe-area-inset-top,0px));z-index:3;margin:0;padding:6px 0 12px;display:flex;flex-direction:column;align-items:center;background:var(--room)}
+.reveal-hold{height:calc(70svh + var(--hero-extra,0px))}
+.cipher-row{--tw:28px;position:sticky;top:max(var(--hero-stick-top,env(safe-area-inset-top,0px)),calc((100svh - var(--hero-h,0px)) / 2));z-index:3;margin:0;padding:6px 0 12px;display:flex;flex-direction:column;align-items:center;background:var(--room)}
 .cipher-row.is-stuck{border-bottom:1px solid var(--veil)}
 .cipher-row .intro{font:var(--t-note);color:var(--bone-2);margin:0 0 14px}
 .cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:8px 12px}
@@ -188,7 +189,7 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="story-layout.css?v=26">
+<link rel="stylesheet" href="story-layout.css?v=27">
 <link rel="stylesheet" href="cipher-cards.css?v=25">
 <link rel="stylesheet" href="cipher-walkthrough.css?v=28">
 <link rel="stylesheet" href="story-graphics.css?v=24">
@@ -241,7 +242,7 @@ footer p{margin:0 0 .7em}
 <section class="step" data-s="method" data-cap="Each distinct key word supplies one shift. TO sums to 35, giving key letter I, and message letter T enciphers to B.">
 <ol>
 <li>
-<p data-walk-stage="1">The key is a passage of text, taken from a book and read word by word.</p>
+<p data-walk-stage="1">The key is a passage of text taken from a book, and each word of it is used in turn.</p>
 <p data-walk-stage="2">Any word that has already appeared is skipped, so each key word is used only once. Here the second “to”, “be” and “the” drop out.</p>
 <p data-walk-stage="3">Each key word pairs with one letter of the message, so the 14 letters of THERE IS NO DEATH need 14 distinct key words.</p>
 </li>
@@ -482,7 +483,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=29"></script>
+<script src="cipher-walkthrough.js?v=30"></script>
 <script>
 (function(){
 "use strict";
@@ -1017,8 +1018,8 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="story-scroll.js?v=24"></script>
-<script src="hero-reveal.js?v=24"></script>
+<script src="story-scroll.js?v=25"></script>
+<script src="hero-reveal.js?v=25"></script>
 <script src="cipher-tokens.js?v=25"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom

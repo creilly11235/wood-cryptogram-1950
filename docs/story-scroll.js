@@ -59,6 +59,22 @@
         walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')], walkIndex: null, walkPreferred: undefined,
         cards: [...chapter.querySelectorAll('.pin > .text [data-walk-stage]')],
       };
+      if (!graphic.walkthrough) {
+        // On phones the next section rises to meet the graphic, so the
+        // chapter learns how much empty panel sits below the drawing.
+        const body = el.querySelector('.gbody') || el;
+        // A chapter with no closing text hands the measure to the next one,
+        // whose opening text rises to meet this graphic instead.
+        const next = chapter.querySelector('.text-after') ? null : chapter.nextElementSibling;
+        const measureTail = () => {
+          const tail = el.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom - 28;
+          const value = Number.isFinite(tail) && tail > 0 ? Math.round(tail) + 'px' : '';
+          chapter.style.setProperty('--walk-tail', value);
+          if (next) next.style.setProperty('--walk-tail-prev', value);
+        };
+        new ResizeObserver(() => requestAnimationFrame(measureTail)).observe(el);
+        measureTail();
+      }
       if (graphic.walkthrough) {
         // The buttons follow the prose: a stage within the current passage
         // shows at once; any other scrolls to the passage that explains it.

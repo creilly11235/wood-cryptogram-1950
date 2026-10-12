@@ -78,8 +78,8 @@
     },
     {
       "kind": "li",
-      "en": "The key is a passage of text, taken from a book and read word by word.",
-      "de": "Der Schlüssel ist eine Textpassage, einem Buch entnommen und Wort für Wort gelesen."
+      "en": "The key is a passage of text taken from a book, and each word of it is used in turn.",
+      "de": "Der Schlüssel ist eine Textpassage aus einem Buch, und jedes ihrer Wörter kommt der Reihe nach zum Einsatz."
     },
     {
       "kind": "p",

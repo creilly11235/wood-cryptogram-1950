@@ -1,4 +1,4 @@
-/* The ciphertext at the top of the article pins to the top of the screen
+/* The ciphertext at the top of the article pins to the middle of the screen
    and decodes as the reader scrolls: the letters turn to their decoded
    values, regroup into words, and each word gains a gloss. Then it lets go
    and the opening continues. */
@@ -80,14 +80,30 @@
     if ((stage >= 2) !== inWords) { inWords = stage >= 2; regroup(inWords); }
     figure.dataset.stage = String(stage);
   }
+  // The row sticks centred on the screen, so the stylesheet needs its height.
+  // When the page opens with the row above that line it is held there from
+  // the start, and the hold beneath it grows by the same distance so the
+  // reveal still takes a full hold of scrolling.
+  function measure() {
+    figure.style.setProperty('--hero-h', figure.offsetHeight + 'px');
+    const top = parseFloat(getComputedStyle(figure).top) || 0;
+    const trackTop = track.getBoundingClientRect().top + scrollY;
+    track.style.setProperty('--hero-extra', Math.max(0, top - trackTop) + 'px');
+  }
+  // How far the row has been held before any scrolling, if the page opens
+  // with it above its sticking line.
+  function held(top, box) {
+    return Math.max(0, top - (box.top + scrollY));
+  }
   function update() {
     framePending = false;
     const top = parseFloat(getComputedStyle(figure).top) || 0;
     const box = track.getBoundingClientRect();
-    const scrolled = top - box.top;
+    const start = held(top, box);
+    const scrolled = top - box.top - start;
     // The cipher stays pinned through the hold beneath it, and the reveal
     // finishes before the opening's text arrives.
-    const range = Math.max(1, box.height - figure.offsetHeight);
+    const range = Math.max(1, box.height - figure.offsetHeight - start);
     const progress = scrolled / range;
     figure.classList.toggle('is-stuck', scrolled > 0 && progress < 1);
     const stage = progress < .08 ? 0 : progress < .42 ? 1 : progress < .66 ? 2 : 3;
@@ -99,8 +115,9 @@
     requestAnimationFrame(update);
   }
   addEventListener('scroll', schedule, {passive: true});
-  addEventListener('resize', schedule, {passive: true});
-  document.fonts?.ready.then(schedule);
+  addEventListener('resize', () => { measure(); schedule(); }, {passive: true});
+  document.fonts?.ready.then(() => { measure(); schedule(); });
   figure.dataset.stage = '0';
+  measure();
   update();
 })();

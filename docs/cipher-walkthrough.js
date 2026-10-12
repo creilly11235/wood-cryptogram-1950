@@ -468,6 +468,8 @@
       let from = null;
       let wordOrigins = [];
       let repeatOrigins = [];
+      let cipherOrigins = [];
+      if (previous === 8 && stage === 9 && !this.message.hidden) cipherOrigins = this.messageLetters.map(letter => letter.getBoundingClientRect());
       if (previous === 3) from = this.pairs[0].getBoundingClientRect();
       else if (previous === 5 && stage === 6) from = this.focusCard.getBoundingClientRect();
       else if (previous === 4 || previous === 5) from = this.focusPair.getBoundingClientRect();
@@ -620,9 +622,20 @@
         if (this.reduced) this.revealMessage();
         else this.later(() => this.revealMessage(), glide ? 3700 : 3500);
       } else if (stage === 9) {
+        // Coming from the finished cipher, its cards glide down into the
+        // overview while the message and the key fade in above them.
+        const glide = cipherOrigins.length > 0 && !this.reduced;
         this.overview.querySelectorAll('.cw-ov-block').forEach((section, index) => {
+          if (glide && index === 2) return;
           this.animate(section, [{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 400, delay: index * 140, fill: 'backwards'});
         });
+        if (glide) {
+          this.overview.querySelectorAll('.cw-ov-letter.encoded').forEach((letter, index) => {
+            this.moveFrom(letter, cipherOrigins[index], 650, index * 12);
+          });
+          const label = this.overview.querySelector('.cw-ov-block:nth-child(3) .cw-scene-label');
+          if (label) this.animate(label, [{opacity: 0}, {opacity: 1}], {duration: 400, delay: 500, fill: 'backwards'});
+        }
       }
     }
 
