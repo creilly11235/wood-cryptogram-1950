@@ -573,7 +573,7 @@ function Graphic(el){
   const fadeIn=node=>{if(instant||!node.animate)return;node.animate([{opacity:0},{opacity:1}],{duration:FADE,easing:"ease-out"});};
   let W=1,H=1,DPR=1;
   const color=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  let ink,muted,blue,teal,pale,background,gridGray,decodedBg,decodedFg,decodedBorder;
+  let ink,muted,blue,teal,pale,background,gridGray,decodedBg,decodedFg,decodedBorder,encodedBg,encodedFg,encodedBorder;
   const serif='"Libre Caslon Text", Georgia, serif',mono='"Courier Prime", monospace';
   const font=(size,code=false)=>`${size}px ${code?mono:serif}`;
   function text(s,x,y,size=14,c=ink,align="left",code=false){
@@ -638,7 +638,7 @@ function Graphic(el){
       case "shelves":break;
       case "plants":strip(EN_PLANT_MSG,"reading");legendItems([["97 an erster Stelle",blue],["3 nicht an erster Stelle",gridGray]]);break;
       case "englishResults":strip(JUNK[0],"junk");legendItems([["Zufällige Geheimtexte",muted],["Woods bestes Ergebnis",blue]]);break;
-      case "idea":strip(PLANT_DE,"reading");break;
+      case "idea":strip("","reading");break;
       case "bibles":break;
       case "prayer":strip(instant?PT:CT,instant?"reading":"cipher");break;
       case "church":strip(PT,"reading");break;
@@ -713,15 +713,57 @@ function Graphic(el){
       row.forEach(([word,w])=>{[...word].forEach((c,i)=>{const at=left+i*(tile+gap);reveal(delay+index++*40,()=>{ctx.fillStyle=decodedBg;ctx.strokeStyle=decodedBorder;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(at+.5,rowY-height/2+.5,tile-1,height-1,3);ctx.fill();ctx.stroke();line(at+2,rowY+height/2-2,at+tile-2,rowY+height/2-2,decodedBorder,1.5);text(c,at+tile/2,rowY,size,decodedFg,"center",true);});});left+=w+wordGap;});
     });
   }
-  // The same test message under two word lists: a label, then the letters as
-  // cards grouped into words, in each half of the panel.
-  function ideaScene(p,tile,size){
-    [["VERS TE HT GE WIS SEM IN DER",0],["VERSTEHT GEWISSE MINDER",380]].forEach(([s,delay],i)=>{
-      const top=p.y+p.h*i/2,half=p.h/2,head=size*2.2;
-      label(mobileCopy.idea[i],W/2,top+size*1.1,p.w,size,muted,"center");
-      letterCards(s,p.x,top+head+(half-head)/2,p.w,tile,delay);
+  // The same test message under two word lists. Three identical rows of the
+  // undivided letters flip from cipher to reading, then the lower two rows
+  // arrange themselves into the words each list finds.
+  const IDEA=[["VERS TE HT GE WIS SEM IN DER"],["VERSTEHT GEWISSE MINDER"]],IDEA_FLIP=700,IDEA_MOVE=1500,IDEA_END=2600;
+  function cardRows(s,width,tile){
+    const words=s.split(" "),gap=Math.max(2,tile*.1),wordGap=tile*.55,rows=[[]];let used=0;
+    words.forEach(word=>{const w=word.length*tile+(word.length-1)*gap;if(used&&used+wordGap+w>width){rows.push([]);used=0;}rows[rows.length-1].push([word,w]);used+=(used?wordGap:0)+w;});
+    const positions=[];
+    rows.forEach((row,r)=>{const rowWidth=row.reduce((sum,[,w])=>sum+w,0)+wordGap*(row.length-1);let left=Math.max(0,(width-rowWidth)/2);
+      row.forEach(([word,w])=>{[...word].forEach((c,i)=>positions.push({c,x:left+i*(tile+gap),row:r}));left+=w+wordGap;});});
+    return {positions,rows:rows.length};
+  }
+  function card(c,x,y,tile,height,size,flip){
+    const kind=flip<.5?"encoded":"decoded",sx=Math.max(.04,Math.abs(1-2*flip));
+    ctx.save();ctx.translate(x+tile/2,y);ctx.scale(sx,1);
+    ctx.fillStyle=kind==="encoded"?encodedBg:decodedBg;ctx.strokeStyle=kind==="encoded"?encodedBorder:decodedBorder;ctx.lineWidth=1;
+    ctx.beginPath();ctx.roundRect(-tile/2+.5,-height/2+.5,tile-1,height-1,3);ctx.fill();ctx.stroke();
+    if(kind==="decoded")line(-tile/2+2,height/2-2,tile/2-2,height/2-2,decodedBorder,1.5);
+    text(c,0,0,size,kind==="encoded"?encodedFg:decodedFg,"center",true);
+    ctx.restore();
+  }
+  function ideaScene(p,size){
+    const tile=Math.min(isMobilePanel()?30:26,p.w/23.2),gap=Math.max(2,tile*.1),height=tile*1.2;
+    // The arranged rows use larger cards, so the letters grow as they move.
+    const short=p.h<360,big=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),bigH=big*1.2,rowStep=bigH+big*.35,head=size*2;
+    const lineWidth=PLANT_DE.length*tile+(PLANT_DE.length-1)*gap,left=p.x+(p.w-lineWidth)/2;
+    // Short panels keep the lower rows clear of the text card over the graphic.
+    const top=p.y+height/2+4,blockTop=p.y+Math.max(height+16,p.h*.2),free=(p.y+p.h-blockTop)*(short?.8:1);
+    const layouts=IDEA.map(([text])=>cardRows(text,p.w,big));
+    const need=layouts.map(l=>head+l.rows*rowStep),total=need.reduce((a,b)=>a+b,0);
+    const move=progress(IDEA_MOVE,700),fade=progress(IDEA_MOVE,400);
+    let block=blockTop;
+    [null,...IDEA].forEach((entry,r)=>{
+      let targets=null,baseY=top,restY=top;
+      if(entry){
+        const layout=layouts[r-1],blockH=free*need[r-1]/total;targets=layout.positions;
+        const centre=block+head+(blockH-head)/2;
+        baseY=centre-(layout.rows-1)*rowStep/2;restY=centre;
+        ctx.save();ctx.globalAlpha=sceneAlpha*fade;
+        label(mobileCopy.idea[r-1],W/2,block+size*1.1,p.w,size,muted,"center");
+        if(r===2)line(p.x,block,p.x+p.w,block,pale);
+        ctx.restore();
+        block+=blockH;
+      }
+      [...PLANT_DE].forEach((c,i)=>{
+        const x0=left+i*(tile+gap),y0=restY;
+        let x=x0,y=y0,at=tile;
+        if(targets){const t=targets[i];x=x0+(p.x+t.x-x0)*move;y=y0+(baseY+t.row*rowStep-y0)*move;at=tile+(big-tile)*move;}
+        ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,at,at*1.2,at*.62,progress(IDEA_FLIP+i*25,320));ctx.restore();
+      });
     });
-    line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);
   }
   function slipRow(i,paint){
     if(i>=SLIP_ROWS[state])return;
@@ -769,7 +811,7 @@ function Graphic(el){
         [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+24,13,muted,"center",true));
         wrap(mobileCopy.english[2],cx,p.y+p.h-13,p.w,15,muted,"center");break;
       }
-      case "idea":ideaScene(p,Math.min(30,p.w/13.5,p.h/12),short?14:16);break;
+      case "idea":ideaScene(p,short?14:16);break;
       case "bibles":{
         const cols=W<500?2:4,nrows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/nrows;
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*60,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,4);ctx.fill();ctx.stroke();line(x+8,y+8,x+8,y+dy-8,muted,1.5);label(name,x+16,y+dy/2,dx-24,16,ink);}));break;
@@ -870,7 +912,7 @@ function Graphic(el){
         label("Ähnlichkeit mit Englisch →",cx,plotY+plotHeight-8,p.w,12,muted,"center");
         break;
       }
-      case "idea":ideaScene(p,Math.min(26,p.w/24,p.h/13),compact?12:fs);break;
+      case "idea":ideaScene(p,compact?12:fs);break;
       case "bibles":{
         const cols=W<330?3:W<420?4:5,rows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/rows;
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*75,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;
@@ -931,6 +973,7 @@ function Graphic(el){
     cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);
     ink=color("--bone")||"#242a2c";muted=color("--bone-2")||"#64707b";blue=color("--candle")||"#276b86";teal=color("--af")||"#568b82";pale=color("--veil")||"#dce2e4";background=color("--room")||"#fafbfc";gridGray=color("--dot-s")||"#c6ced6";dirty=true;
     decodedBg=color("--cipher-decoded-bg");decodedFg=color("--cipher-decoded-fg");decodedBorder=color("--cipher-decoded-border");
+    encodedBg=color("--cipher-encoded-bg");encodedFg=color("--cipher-encoded-fg");encodedBorder=color("--cipher-encoded-border");
     // Resizing clears the bitmap. Paint the current paused scene in this same
     // frame so returning to the preview cannot briefly expose an empty canvas.
     if(W>1&&H>1)draw();
@@ -953,6 +996,7 @@ function Graphic(el){
     const before=elapsed;elapsed=Math.max(0,(pausedAt||now)-started);
     // Marks appear at their recorded values; animation never invents new scores.
     if(!instant&&before<1050+SETTLE&&elapsed!==before)dirty=true;
+    if(state==="idea"&&!instant&&before<IDEA_END+SETTLE&&elapsed!==before)dirty=true;
     if(state==="prayer"&&!instant&&lastLetter<21){
       let n=0;[...tiles.children].forEach((t,i)=>{
         const turn=Math.max(0,Math.min(1,(elapsed-i*90)/320)),decoded=turn>=.5;
