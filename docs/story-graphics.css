@@ -47,6 +47,8 @@
   .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .tiles{
     flex:none;width:100%;max-width:none;gap:2px;margin-bottom:14px;
   }
+  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .sub{gap:1px;margin-top:-6px;margin-bottom:8px}
+  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .sub span{font-size:10px}
   .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .tiles .t{
     height:25px;aspect-ratio:auto;border-radius:2px;font-size:clamp(10px,2.9vw,15px);
   }

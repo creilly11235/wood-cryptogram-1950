@@ -288,7 +288,7 @@ footer p{margin:0 0 .7em}
 </div></div>
 <div class="text">
 <section class="step" data-s="trap" data-walk-stage="1" data-cap="Veranschaulichung: Frei gewählte Schlüssel können aus demselben Geheimtext jede dieser Botschaften mit 21 Buchstaben erzeugen.">
-<p>Jeder dieser drei Sätze entsteht aus Woods 21 Buchstaben mit einem anderen frei gewählten Schlüssel. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte, erst recht nicht bei einem so kurzen Text.</p>
+<p>Jeder dieser Sätze entsteht aus Woods 21 Buchstaben mit einem anderen frei gewählten Schlüssel, dessen Schlüsselbuchstaben unter den Karten stehen. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte, erst recht nicht bei einem so kurzen Text.</p>
 </section>
 <section class="step" data-s="shelves" data-walk-stage="2" data-cap="129 Bücher lieferten 28,6 Millionen mögliche Schlüssel. Jeder Buchrücken steht für ein Buch.">
 <p>Wood hatte allerdings etwas Wichtiges verraten. Sein Schlüssel bestand aus aufeinanderfolgenden Wörtern eines veröffentlichten Buchs, also ließ sich eine Sammlung von Büchern durchsuchen, ein Anfangswort nach dem anderen. Jeder Buchrücken hier steht für eines der 129 Bücher dieser ersten Suche.</p>
@@ -487,6 +487,10 @@ const CT="FVAMINTKFXXWATBOIZVVX",PT="HIERBINICHTOTSIENSTEW";
 /* Source: harness/wood35/out_gate.jsonl, the 129-book planted-message check.
    The three zero-based indexes are the tests whose known reading was not first. */
 const EN_MISS=[37,55,66],EN_PLANT_MSG="THEFORMOFTHEUNKNOWNMI";
+// Three readable sentences a freely chosen key can draw from the same 21 letters,
+// each shown with the key letters (A = no shift) that would produce it.
+const TRAP_MSGS=["THE ANSWER IS NOT HERE YET","WE WILL MEET AT DAWN TODAY","PLEASE KEEP THIS KEY SAFE"],TRAP_PERIOD=3400;
+const trapKey=s=>[...s.replace(/ /g,"")].map((c,i)=>String.fromCharCode(65+(CT.charCodeAt(i)-c.charCodeAt(0)+26)%26)).join("");
 const JUNK=["UNTONEASACRISTEALSBYR"];
 /* Source: harness/wood35/out_expanded.jsonl, 3,977 texts. Each EN_NULLX value
    is the best score from one of 100 random ciphertexts; EN_WOOD is Wood's best.
@@ -539,7 +543,7 @@ function Graphic(el){
   const self=this,cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
   const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
   const legend=el.querySelector(".legend");
-  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0;
+  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,revealBase=0;
   // A scene change cross-fades from the last painted frame, and the new
   // scene's own reveals wait for the fade, so nothing snaps into place.
   const snap=document.createElement("canvas"),snapCtx=snap.getContext("2d"),FADE=360,SETTLE=160;
@@ -572,7 +576,7 @@ function Graphic(el){
   const isMobilePanel=()=>matchMedia("(max-width:900px) and (orientation:portrait)").matches;
   function panel(){const h=isMobilePanel()?Math.max(0,H-12):Math.min(H,322);return{x:5,y:(H-h)/2,w:W-10,h};}
   const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
-  function progress(delay=0,duration=400){return instant?1:ease((elapsed-sceneDelay-delay)/duration);}
+  function progress(delay=0,duration=400){return instant?1:ease((elapsed-revealBase-sceneDelay-delay)/duration);}
   function reveal(delay,paint,duration=400){ctx.save();ctx.globalAlpha=sceneAlpha*(.18+.82*progress(delay,duration));paint();ctx.restore();}
   function wrap(s,x,y,max,size=13,c=muted,align="left",lines=2){
     ctx.font=font(size);const words=s.split(" "),out=[];let current="";
@@ -601,10 +605,15 @@ function Graphic(el){
     if(stripSig&&stripSig!==s+kind)fadeIn(tiles);stripSig=s+kind;
     sub.replaceChildren();
   }
+  function subLetters(s){sub.replaceChildren(...[...s].map(c=>{const span=document.createElement("span");span.textContent=c;return span;}));}
+  // The trap cycles through its sentences: each fades out with its key letters
+  // and the next fades in, all from the frame clock so pausing holds it.
+  function trapShow(index){trapIndex=index;const msg=TRAP_MSGS[index];strip(msg.replace(/ /g,""),"reading");subLetters(trapKey(msg));revealBase=instant?0:index*TRAP_PERIOD;}
+  function trapFade(){if(instant)return 1;const phase=elapsed%TRAP_PERIOD;return Math.min(1,phase/320,(TRAP_PERIOD-phase)/260);}
   function configure(){
-    legend.replaceChildren();strip(CT);lastLetter=-1;
+    legend.replaceChildren();strip(CT);lastLetter=-1;trapIndex=-1;revealBase=0;tiles.style.opacity="";sub.style.opacity="";
     switch(state){
-      case "trap":break;
+      case "trap":trapShow(0);break;
       case "shelves":break;
       case "plants":strip(EN_PLANT_MSG,"reading");legendItems([["97 an erster Stelle",blue],["3 nicht an erster Stelle",gridGray]]);break;
       case "englishResults":strip(JUNK[0],"junk");legendItems([["Zufällige Geheimtexte",muted],["Woods bestes Ergebnis",blue]]);break;
@@ -678,7 +687,7 @@ function Graphic(el){
     let left=x;parts.forEach((word,i)=>{ctx.font=font(fitted,true);const w=ctx.measureText(word).width+8;
       reveal(delay+i*85,()=>{ctx.fillStyle=decodedBg;ctx.beginPath();ctx.roundRect(left,y-fitted/2-6,w,fitted+12,3);ctx.fill();line(left+2,y+fitted/2+5,left+w-2,y+fitted/2+5,decodedBorder,1.5);text(word,left+w/2,y,fitted,decodedFg,"center",true);});left+=w+gap;});
   }
-  const mobileCopy={"trap":["Mit frei gewähltem Schlüssel","Mit einem anderen Schlüssel","Lesbar heißt noch nicht richtig"],"shelves":["Jeder Buchrücken steht für ein Buch","Jede mögliche Startposition wurde ausprobiert"],"plants":["Bestes Ergebnis in 97 von 100 Tests","Ein Punkt = ein Test"],"english":["12 zufällige Geheimtexte wurden höher bewertet","Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Englische Wortliste","Wortlisten in sieben Sprachen"],"prayer":["Deutsche Bibel","Rumänische Bibel","Übrige 11 Ergebnisse","Höhere Wortbewertung →"],"church":["Kirchlicher Wortlaut: Vater unser","Lutherbibel: Unser Vater"],"reading":["Deutsch · Hier bin ich","Afrikaans · Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
+  const mobileCopy={"shelves":["Jeder Buchrücken steht für ein Buch","Jede mögliche Startposition wurde ausprobiert"],"plants":["Bestes Ergebnis in 97 von 100 Tests","Ein Punkt = ein Test"],"english":["12 zufällige Geheimtexte wurden höher bewertet","Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Englische Wortliste","Wortlisten in sieben Sprachen"],"prayer":["Deutsche Bibel","Rumänische Bibel","Übrige 11 Ergebnisse","Höhere Wortbewertung →"],"church":["Kirchlicher Wortlaut: Vater unser","Lutherbibel: Unser Vater"],"reading":["Deutsch · Hier bin ich","Afrikaans · Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
 
   // Full-screen phone scenes keep labels on their own lines. The canvas takes
   // the space left by the caption and cipher strip, including short landscapes.
@@ -689,6 +698,16 @@ function Graphic(el){
     let index=0;
     rows.forEach((row,r)=>{let left=x;const rowY=y+(r-(rows.length-1)/2)*(size+24);
       row.forEach(([word,w])=>{const at=left;reveal(delay+index++*85,()=>{ctx.fillStyle=decodedBg;ctx.beginPath();ctx.roundRect(at,rowY-size/2-7,w,size+14,4);ctx.fill();line(at+2,rowY+size/2+6,at+w-2,rowY+size/2+6,decodedBorder,2);text(word,at+w/2,rowY,size,decodedFg,"center",true);});left+=w+gap;});
+    });
+  }
+  // A sentence as decoded letter cards, one card per letter, words kept whole
+  // and each row centred. Cards reveal left to right from the given delay.
+  function letterCards(s,x,y,width,tile,delay){
+    const words=s.split(" "),gap=Math.max(2,tile*.1),wordGap=tile*.55,rows=[[]];let used=0;
+    words.forEach(word=>{const w=word.length*tile+(word.length-1)*gap;if(used&&used+wordGap+w>width){rows.push([]);used=0;}rows[rows.length-1].push([word,w]);used+=(used?wordGap:0)+w;});
+    const height=tile*1.2,size=tile*.62;let index=0;
+    rows.forEach((row,r)=>{const rowWidth=row.reduce((sum,[,w])=>sum+w,0)+wordGap*(row.length-1);let left=x+Math.max(0,(width-rowWidth)/2);const rowY=y+(r-(rows.length-1)/2)*(height+tile*.5);
+      row.forEach(([word,w])=>{[...word].forEach((c,i)=>{const at=left+i*(tile+gap);reveal(delay+index++*40,()=>{ctx.fillStyle=decodedBg;ctx.strokeStyle=decodedBorder;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(at+.5,rowY-height/2+.5,tile-1,height-1,3);ctx.fill();ctx.stroke();line(at+2,rowY+height/2-2,at+tile-2,rowY+height/2-2,decodedBorder,1.5);text(c,at+tile/2,rowY,size,decodedFg,"center",true);});});left+=w+wordGap;});
     });
   }
   function slipRow(i,paint){
@@ -708,8 +727,11 @@ function Graphic(el){
   function drawMobile(){
     const p=panel(),cx=W/2,short=p.h<300,wideShort=W>500&&p.h<220;
     switch(state){
-      case "trap":
-        mobileRows([["THE ANSWER IS NOT HERE YET",mobileCopy.trap[0],ink,"decoded"],["WE WILL MEET AT DAWN TODAY",mobileCopy.trap[1],ink,"decoded"],["PLEASE KEEP THIS KEY SAFE",mobileCopy.trap[2],ink,"decoded"]]);break;
+      case "trap":{
+        ctx.save();ctx.globalAlpha*=trapFade();
+        letterCards(TRAP_MSGS[Math.max(0,trapIndex)],p.x,p.y+p.h/2,p.w,Math.min(36,p.w/11.5),120);
+        ctx.restore();break;
+      }
       case "shelves":{
         const top=p.y+(wideShort?35:58),bottom=p.y+p.h-(wideShort?33:55);
         wrap(mobileCopy.shelves[0],cx,p.y+(wideShort?13:19),p.w,17,ink,"center");
@@ -807,7 +829,9 @@ function Graphic(el){
     const p=panel(),cx=W/2,compact=p.h<190,fs=W<360?13:15;
     switch(state){
       case "trap":{
-        rows([["THE ANSWER IS NOT HERE YET","Mit frei gewähltem Schlüssel",ink,true,"decoded"],["WE WILL MEET AT DAWN TODAY","Mit einem anderen Schlüssel",ink,true,"decoded"],["PLEASE KEEP THIS KEY SAFE","Lesbar heißt noch nicht richtig",ink,true,"decoded"]]);break;
+        ctx.save();ctx.globalAlpha*=trapFade();
+        letterCards(TRAP_MSGS[Math.max(0,trapIndex)],p.x,p.y+p.h/2,p.w,Math.min(30,p.w/14),120);
+        ctx.restore();break;
       }
       case "shelves":{
         bookshelves({x:p.x,y:p.y+30,w:p.w,h:Math.max(1,p.h-55)});
@@ -926,6 +950,12 @@ function Graphic(el){
     const before=elapsed;elapsed=Math.max(0,(pausedAt||now)-started);
     // Marks appear at their recorded values; animation never invents new scores.
     if(!instant&&before<1050+SETTLE&&elapsed!==before)dirty=true;
+    if(state==="trap"&&!instant){
+      const index=Math.floor(elapsed/TRAP_PERIOD)%TRAP_MSGS.length;
+      if(index!==trapIndex)trapShow(index);
+      tiles.style.opacity=sub.style.opacity=String(trapFade());
+      if(elapsed!==before)dirty=true;
+    }
     if(state==="prayer"&&!instant&&lastLetter<21){
       let n=0;[...tiles.children].forEach((t,i)=>{
         const turn=Math.max(0,Math.min(1,(elapsed-i*90)/320)),decoded=turn>=.5;

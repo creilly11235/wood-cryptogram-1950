@@ -183,8 +183,8 @@
     },
     {
       "kind": "p",
-      "en": "Each of these three sentences comes from Wood’s 21 letters under a different freely chosen key. A readable sentence on its own would not tell you whether it was Wood’s, particularly one this short.",
-      "de": "Jeder dieser drei Sätze entsteht aus Woods 21 Buchstaben mit einem anderen frei gewählten Schlüssel. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte, erst recht nicht bei einem so kurzen Text."
+      "en": "Each of these sentences comes from Wood’s 21 letters under a different freely chosen key, shown as the key letters beneath the cards. A readable sentence on its own would not tell you whether it was Wood’s, particularly one this short.",
+      "de": "Jeder dieser Sätze entsteht aus Woods 21 Buchstaben mit einem anderen frei gewählten Schlüssel, dessen Schlüsselbuchstaben unter den Karten stehen. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte, erst recht nicht bei einem so kurzen Text."
     },
     {
       "kind": "attr",
@@ -802,18 +802,6 @@
     {
       "en": "\"No match\"",
       "de": "\"Kein Treffer\""
-    },
-    {
-      "en": "\"A freely chosen key can produce this\"",
-      "de": "\"Mit frei gewähltem Schlüssel\""
-    },
-    {
-      "en": "\"Another key can produce this too\"",
-      "de": "\"Mit einem anderen Schlüssel\""
-    },
-    {
-      "en": "\"Readable words alone are not enough\"",
-      "de": "\"Lesbar heißt noch nicht richtig\""
     },
     {
       "en": "\"Each spine represents one book\"",
