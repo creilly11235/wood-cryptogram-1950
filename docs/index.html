@@ -292,7 +292,7 @@ footer p{margin:0 0 .7em}
 </div></div>
 <div class="text">
 <section class="step" data-s="trap" data-walk-stage="1" data-cap="Illustration: a freely chosen key makes Wood’s 21 letters read THE ANSWER IS NOT HERE YET.">
-<p>This sentence comes from Wood’s 21 letters under a freely chosen key, shown as the key letters beneath the cards. It reads well enough, and the key that produces it is gibberish.</p>
+<p>This sentence comes from Wood’s 21 letters under a freely chosen key. It reads well enough, and the key that produces it is gibberish.</p>
 </section>
 <section class="step" data-s="trap2" data-walk-stage="2" data-cap="Illustration: a second freely chosen key makes the same 21 letters read WE WILL MEET AT DAWN TODAY.">
 <p>A second key turns the same 21 letters into a second sentence. Nothing in the cipher itself prefers one reading over the other.</p>
@@ -358,9 +358,8 @@ footer p{margin:0 0 .7em}
 <section class="step" data-s="church" data-walk-stage="2" data-cap="The familiar church prayer begins Vater unser; the Luther Bible begins Unser Vater. Their different word orders produce different keys.">
 <p>The exact wording mattered. An earlier search had tried the German Lord’s Prayer in its familiar church form, beginning “Vater unser”, and found nothing. The Luther Bible’s “Unser Vater in dem Himmel” produces a different key from the very first word.</p>
 </section>
-<section class="step" data-s="reading" data-walk-stage="3" data-cap="Hier bin ich: German for Here I am. Totsiens: Afrikaans for Goodbye. TEW: Wood’s initials.">
-<p>Separated into words, the letters read <strong class="cipher-token decoded">Hier bin ich. Totsiens. T.E.W.</strong></p>
-<p>“Hier bin ich” is German for “Here I am”, “Totsiens” is Afrikaans for “Goodbye”, and T.E.W. are Wood’s initials.</p>
+<section class="step" data-s="reading" data-walk-stage="3" data-cap="Hier bin ich is German for Here I am, Totsiens is Afrikaans for Goodbye and TEW are Wood’s initials.">
+<p>Separated into words, the letters read Hier bin ich, Totsiens and T.E.W. The first is German for “Here I am”, the second is Afrikaans for “Goodbye”, and the initials are Wood’s own.</p>
 </section>
 </div></div>
 <div class="text text-after">
@@ -700,7 +699,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","","Higher word score →"],"church":["Church wording “Vater unser”","Luther Bible “Unser Vater”"],"reading":["German · Here I am","Afrikaans · Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
+  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","","Higher word score →"],"church":["Church wording “Vater unser”","Luther Bible “Unser Vater”"],"reading":["German for Here I am","Afrikaans for Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -726,6 +725,19 @@ function Graphic(el){
     if(kind==="decoded")line(-tile/2+2,height/2-2,tile/2-2,height/2-2,decodedBorder,1.5);
     text(kind==="encoded"?back:c,0,0,size,kind==="encoded"?encodedFg:decodedFg,"center",true);
     ctx.restore();
+  }
+  // The message as three card groups, each with its meaning beneath.
+  function readingCards(p,tile,size,room=p.h){
+    const height=tile*1.2,rowStep=height+tile*.35,groups=[["HIER BIN ICH"],["TOTSIENS"],["T E W"]].map(([text])=>cardRows(text,p.w,tile));
+    const need=groups.map(l=>l.rows*rowStep-tile*.35+size*1.9),content=need.reduce((a,b)=>a+b,0);
+    const spacing=Math.max(10,Math.min(tile*1.6,(room-content)/4));
+    let block=p.y+Math.max(2,(room-content-spacing*2)/2);
+    groups.forEach((layout,r)=>{
+      const centreY=block+height/2+(layout.rows-1)*rowStep/2;
+      layout.positions.forEach((t,i)=>reveal(r*190+i*30,()=>card(t.c,p.x+t.x,centreY+(t.row-(layout.rows-1)/2)*rowStep,tile,height,tile*.62,1)));
+      reveal(r*190+200,()=>label(mobileCopy.reading[r],W/2,block+layout.rows*rowStep-tile*.35+size*1.1,p.w,size,muted,"center"));
+      block+=need[r]+spacing;
+    });
   }
   // The 13 leading Bible readings ranked best to worst, one lollipop each.
   function rankedScores(p,nameWidth,size,scoreSize,axisSize){
@@ -826,7 +838,7 @@ function Graphic(el){
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*60,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,4);ctx.fill();ctx.stroke();line(x+8,y+8,x+8,y+dy-8,muted,1.5);label(name,x+16,y+dy/2,dx-24,16,ink);}));break;
       }
       case "prayer":{
-        rankedScores(p,W<360?92:108,short?12:14,short?11:12,short?11:12);break;
+        rankedScores(isMobilePanel()?{...p,h:p.h*.84}:p,W<360?92:108,short?12:14,short?11:12,short?11:12);break;
       }
       case "church":{
         // Two keys from two wordings: the church prayer gives nothing
@@ -843,12 +855,7 @@ function Graphic(el){
           block+=need[r]+spacing;
         });break;
       }
-      case "reading":{
-        if(wideShort){
-          ["Hier bin ich.","Totsiens.","T.E.W."].forEach((phrase,i)=>reveal(i*190,()=>{const y=p.y+p.h/3*(i+.5);label(phrase,p.x+12,y,p.w*.48,30,decodedFg);wrap(mobileCopy.reading[i],p.x+p.w*.54,y,p.w*.44,17,muted);}));break;
-        }
-        ["Hier bin ich.","Totsiens.","T.E.W."].forEach((phrase,i)=>reveal(i*190,()=>{const y=p.y+p.h/3*(i+.5);label(phrase,cx,y-(short?13:19),p.w,short?28:34,decodedFg,"center");wrap(mobileCopy.reading[i],cx,y+(short?21:28),p.w,17,muted,"center");}));break;
-      }
+      case "reading":readingCards(p,Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),short?14:16,p.h*(short?.7:1));break;
       case "checks":mobileRows(mobileCopy.checks.slice(1).map(detail=>[mobileCopy.checks[0],detail,blue]));break;
       case "luck":{
         wrap(mobileCopy.luck[0],cx,p.y+(wideShort?13:22),p.w,17,ink,"center");grid(500,i=>i<7,{x:p.x,y:p.y+(wideShort?32:58),w:p.w,h:Math.max(24,p.h-(wideShort?64:113))},W<500?20:40,4);wrap(mobileCopy.luck[1],cx,p.y+p.h-(wideShort?12:23),p.w,15,muted,"center");break;
@@ -912,7 +919,7 @@ function Graphic(el){
         }));break;
       }
       case "prayer":{
-        rankedScores(p,W<400?94:116,12,11,11);break;
+        {const low=p.h<300;rankedScores(low?{...p,h:p.h*.72}:p,W<400?94:116,low?10:12,low?9:11,low?9:11);break;}
       }
       case "church":{
         const tile=Math.min(26,p.w/13.5),height=tile*1.2,rowStep=height+tile*.35,head=28;
@@ -926,10 +933,7 @@ function Graphic(el){
           block+=need[r]+spacing;
         });break;
       }
-      case "reading":{
-        const items=[["Hier bin ich.","German · Here I am"],["Totsiens.","Afrikaans · Goodbye"],["T.E.W.","Wood’s initials"]],gap=p.h/3;
-        items.forEach(([phrase,meaning],i)=>reveal(i*190,()=>{const y=p.y+gap*(i+.5),small=gap<65;label(phrase,cx,y-(small?8:13),p.w,small?21:28,decodedFg,"center");label(meaning,cx,y+(small?15:21),p.w,small?11:13,muted,"center");}));break;
-      }
+      case "reading":{const low=p.h<300;readingCards(p,Math.min(26,p.w/13.5,p.h/(low?16:12)),13,p.h*(low?.72:1));break;}
       case "checks":{
         rows([["21 / 21 letters","Reproduced by the standalone verifier",blue],["21 / 21 letters","Independently reproduced by Astra",blue],["21 / 21 letters","Checked against the original ciphertext",blue]]);break;
       }

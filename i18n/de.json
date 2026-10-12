@@ -263,18 +263,13 @@
     },
     {
       "kind": "attr",
-      "en": "Hier bin ich: German for Here I am. Totsiens: Afrikaans for Goodbye. TEW: Wood’s initials.",
-      "de": "Hier bin ich: Deutsch. Totsiens: Afrikaans für Auf Wiedersehen. TEW: Woods Initialen."
+      "en": "Hier bin ich is German for Here I am, Totsiens is Afrikaans for Goodbye and TEW are Wood’s initials.",
+      "de": "Hier bin ich ist Deutsch, Totsiens ist Afrikaans für Auf Wiedersehen und TEW sind Woods Initialen."
     },
     {
       "kind": "p",
-      "en": "Separated into words, the letters read <strong class=\"cipher-token decoded\">Hier bin ich. Totsiens. T.E.W.</strong>",
-      "de": "In Wörter aufgeteilt lauten die Buchstaben <strong class=\"cipher-token decoded\">Hier bin ich. Totsiens. T.E.W.</strong>"
-    },
-    {
-      "kind": "p",
-      "en": "“Hier bin ich” is German for “Here I am”, “Totsiens” is Afrikaans for “Goodbye”, and T.E.W. are Wood’s initials.",
-      "de": "„Hier bin ich“ ist Deutsch, „Totsiens“ bedeutet auf Afrikaans „Auf Wiedersehen“, und T.E.W. sind Woods Initialen."
+      "en": "Separated into words, the letters read Hier bin ich, Totsiens and T.E.W. The first is German for “Here I am”, the second is Afrikaans for “Goodbye”, and the initials are Wood’s own.",
+      "de": "In Wörter aufgeteilt lauten die Buchstaben Hier bin ich, Totsiens und T.E.W. Das erste ist Deutsch, das zweite bedeutet auf Afrikaans „Auf Wiedersehen“, und die Initialen sind Woods eigene."
     },
     {
       "kind": "p",
@@ -642,11 +637,6 @@
       "de": "Nr."
     },
     {
-      "kind": "p",
-      "en": "<strong class=\"cipher-token decoded\">Hier bin ich. Totsiens. T.E.W.</strong>",
-      "de": "<strong class=\"cipher-token decoded\">Hier bin ich. Totsiens. T.E.W.</strong>"
-    },
-    {
       "kind": "li",
       "en": "Here",
       "de": ""
@@ -683,8 +673,8 @@
     },
     {
       "kind": "p",
-      "en": "This sentence comes from Wood’s 21 letters under a freely chosen key, shown as the key letters beneath the cards. It reads well enough, and the key that produces it is gibberish.",
-      "de": "Dieser Satz entsteht aus Woods 21 Buchstaben mit einem frei gewählten Schlüssel, der als Schlüsselbuchstaben unter den Karten steht. Er liest sich gut genug, und der Schlüssel, der ihn erzeugt, ist Kauderwelsch."
+      "en": "This sentence comes from Wood’s 21 letters under a freely chosen key. It reads well enough, and the key that produces it is gibberish.",
+      "de": "Dieser Satz entsteht aus Woods 21 Buchstaben mit einem frei gewählten Schlüssel. Er liest sich gut genug, und der Schlüssel, der ihn erzeugt, ist Kauderwelsch."
     },
     {
       "kind": "attr",
@@ -837,12 +827,12 @@
       "de": "\"Lutherbibel „Unser Vater“\""
     },
     {
-      "en": "\"German · Here I am\"",
-      "de": "\"Deutsch · Hier bin ich\""
+      "en": "\"German for Here I am\"",
+      "de": "\"Deutsch, Hier bin ich\""
     },
     {
-      "en": "\"Afrikaans · Goodbye\"",
-      "de": "\"Afrikaans · Auf Wiedersehen\""
+      "en": "\"Afrikaans for Goodbye\"",
+      "de": "\"Afrikaans für Auf Wiedersehen\""
     },
     {
       "en": "\"Wood’s initials\"",
