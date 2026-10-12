@@ -757,15 +757,15 @@ function Graphic(el){
   // A run of cipher cards flips to its reading, then the cards slide into
   // the words of that reading. Both layouts centre on centreY and the cards
   // keep one size throughout. Returns the number of rows the block spans.
+  const groupFive=s=>s.replace(/ /g,"").match(/.{1,5}/g).join(" ");
   const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300;
   function cardStory(text,cipher,p,tile,centreY,delay=0){
-    const letters=text.replace(/ /g,""),gap=Math.max(2,tile*.1),height=tile*1.2,rowStep=height+tile*.35;
-    const cols=Math.max(1,Math.floor((p.w+gap)/(tile+gap))),gridRows=Math.ceil(letters.length/cols);
-    const target=cardRows(text,p.w,tile),rows=Math.max(gridRows,target.rows);
+    const letters=text.replace(/ /g,""),height=tile*1.2,rowStep=height+tile*.35;
+    // The cipher starts in the same groups of five the hero uses.
+    const start=cardRows(groupFive(letters),p.w,tile),target=cardRows(text,p.w,tile),rows=Math.max(start.rows,target.rows);
     const move=progress(CARD_MOVE+delay,700);
     [...letters].forEach((c,i)=>{
-      const row=Math.floor(i/cols),inRow=Math.min(cols,letters.length-row*cols),rowWidth=inRow*tile+(inRow-1)*gap;
-      const x0=p.x+(p.w-rowWidth)/2+(i%cols)*(tile+gap),y0=centreY+(row-(gridRows-1)/2)*rowStep;
+      const f=start.positions[i],x0=p.x+f.x,y0=centreY+(f.row-(start.rows-1)/2)*rowStep;
       const t=target.positions[i],x1=p.x+t.x,y1=centreY+(t.row-(target.rows-1)/2)*rowStep;
       const x=x0+(x1-x0)*move,y=y0+(y1-y0)*move;
       ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,tile,height,tile*.62,progress(CARD_FLIP+delay+i*25,320),cipher[i]||c);ctx.restore();
@@ -776,7 +776,7 @@ function Graphic(el){
     // Two readings of the same cipher. Each block flips the cipher cards to
     // the test message, then groups them as that word list does.
     const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=size*1.7;
-    const rowsFor=text=>{const gap=Math.max(2,tile*.1),cols=Math.max(1,Math.floor((p.w+gap)/(tile+gap)));return Math.max(Math.ceil(PLANT_DE.length/cols),cardRows(text,p.w,tile).rows);};
+    const rowsFor=text=>Math.max(cardRows(groupFive(text),p.w,tile).rows,cardRows(text,p.w,tile).rows);
     const need=IDEA.map(([text])=>head+rowsFor(text)*rowStep-tile*.35);
     const room=p.h*(short?.7:1),content=need[0]+need[1];
     const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
@@ -844,7 +844,7 @@ function Graphic(el){
         // Two keys from two wordings: the church prayer gives nothing
         // readable, the Luther Bible gives the message.
         const tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=(short?14:16)*2;
-        const rowsOf=[["SXFFFLOEPTPPQMAVDXEUR"],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
+        const rowsOf=[[groupFive("SXFFFLOEPTPPQMAVDXEUR")],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
         const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),room=p.h*(short?.7:1),content=need[0]+need[1];
         const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
         let block=p.y+Math.max(4,(room-content-spacing)/2);
@@ -923,7 +923,7 @@ function Graphic(el){
       }
       case "church":{
         const tile=Math.min(26,p.w/13.5),height=tile*1.2,rowStep=height+tile*.35,head=28;
-        const rowsOf=[["SXFFFLOEPTPPQMAVDXEUR"],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
+        const rowsOf=[[groupFive("SXFFFLOEPTPPQMAVDXEUR")],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
         const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),content=need[0]+need[1],spacing=Math.max(12,Math.min(tile*2.2,(p.h-content)/3));
         let block=p.y+Math.max(4,(p.h-content-spacing)/2);
         rowsOf.forEach((layout,r)=>{
