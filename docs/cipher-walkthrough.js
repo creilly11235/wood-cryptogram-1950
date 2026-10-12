@@ -1,50 +1,75 @@
 /* The article controls the nine steps; buttons also let a reader explore them.
+   The example is Thouless's own from 1948, THERE IS NO DEATH enciphered with
+   the opening of Hamlet's soliloquy, worked in the enciphering direction.
    Animation is presentational. Every step has a complete reduced-motion view. */
 (() => {
   'use strict';
 
   const DEFAULT_LABELS = {
-    label: 'How the cipher becomes a message',
-    encoded: 'Encoded',
-    decoded: 'Decoded',
+    label: 'How a message becomes a cipher',
+    encoded: 'Cipher',
+    decoded: 'Message',
     stages: [
-      'The 21-letter cipher',
+      'The 14-letter message',
       'The key is a passage from a book',
       'Repeated words are skipped',
-      'One key word for every cipher letter',
-      'Start with F and Unser',
-      'Add the letters in Unser',
-      'Use Y to shift F back 24 places',
-      'The first decoded letter is H',
-      'Repeat for all 21 letters'
+      'One key word for every letter',
+      'Start with T and To',
+      'Add the letters in To',
+      'Use I to shift T forward 8 places',
+      'The first cipher letter is B',
+      'Repeat for all 14 letters'
     ],
     previous: 'Previous',
     next: 'Next',
     replay: 'Replay',
-    keyReduction: '77 − (2 × 26) = 25 → Y',
-    shiftKey: 'Y means a shift of 24 (A = 0)',
-    shift: 'Back 24',
-    firstDecoded: 'The message begins',
+    keyReduction: '35 − 26 = 9 → I',
+    shiftKey: 'I means a shift of 8 (A = 0)',
+    shift: 'Forward 8',
+    firstDecoded: 'The ciphertext begins',
     step: 'Step',
     keyWord: 'key word',
-    encryptedMessage: 'The encrypted message',
+    encryptedMessage: 'The message',
     keyLabel: 'The key',
-    decodedMessage: 'The decoded message',
+    decodedMessage: 'The ciphertext',
     swipeHint: 'Scroll to explore · or use the buttons'
   };
 
   class CipherWalkthrough {
     constructor(host, options = {}) {
       this.host = host;
-      this.ct = options.ct || 'FVAMINTKFXXWATBOIZVVX';
-      this.pt = options.pt || 'HIERBINICHTOTSIENSTEW';
-      this.words = (options.words || [
-        'Unser', 'Vater', 'in', 'dem', 'Himmel', 'Dein', 'Name',
-        'werde', 'geheiligt', 'Reich', 'komme', 'Wille', 'geschehe', 'auf',
-        'Erden', 'wie', 'im', 'täglich', 'Brot', 'gib', 'uns'
-      ]).map(word => typeof word === 'string' ? word : word[0]);
-      if (this.ct.length !== 21 || this.pt.length !== 21 || this.words.length !== 21) {
-        throw new Error('CipherWalkthrough requires 21 cipher letters, key words and decoded letters.');
+      // The message as spoken, the key passage as printed, and the cipher
+      // Thouless's arithmetic gives (his printed version ends in B, a slip).
+      this.messageWords = options.messageWords || ['THERE', 'IS', 'NO', 'DEATH'];
+      this.passage = options.passage || [
+        'To', 'be,', 'or', 'not', 'to', 'be,', 'that', 'is', 'the', 'question.',
+        'Whether', '’tis', 'nobler', 'in', 'the', 'mind', 'to', 'suffer'
+      ];
+      this.passageLang = options.passageLang || 'en';
+      this.groups = options.groups || ['BNKNA', 'JYCWY', 'RWGD'];
+      this.pt = this.messageWords.join('');
+      this.ct = this.groups.join('');
+      const seen = new Set();
+      this.keyWords = [];
+      this.passage.forEach(word => {
+        const token = this.letters(word);
+        if (!seen.has(token)) this.keyWords.push(word.replace(/[.,;!?]+$/g, ''));
+        seen.add(token);
+      });
+      this.words = this.keyWords.slice(0, this.pt.length);
+      if (this.ct.length !== this.pt.length || this.words.length !== this.pt.length) {
+        throw new Error('CipherWalkthrough needs one key word and one cipher letter per message letter.');
+      }
+      // The first pair, worked in full on screen.
+      const first = this.letters(this.words[0]);
+      this.firstTerms = first.split('').map(letter => [letter, letter.charCodeAt(0) - 64]);
+      this.firstSum = this.firstTerms.reduce((total, term) => total + term[1], 0);
+      this.firstKey = String.fromCharCode(65 + (this.firstSum - 1) % 26);
+      this.firstShift = (this.firstSum - 1) % 26;
+      this.firstPlain = this.pt[0];
+      this.firstCipher = this.ct[0];
+      if (String.fromCharCode(65 + (this.firstPlain.charCodeAt(0) - 65 + this.firstShift) % 26) !== this.firstCipher) {
+        throw new Error('CipherWalkthrough: the first cipher letter does not follow from the key word.');
       }
       this.labels = Object.assign({}, DEFAULT_LABELS, options.labels || {});
       this.reduced = Boolean(options.reduced);
@@ -75,6 +100,10 @@
       this.resizeObserver.observe(this.scene);
     }
 
+    letters(word) {
+      return word.normalize('NFKD').toUpperCase().replace(/[^A-Z]/g, '');
+    }
+
     node(tag, className, text) {
       const element = document.createElement(tag);
       if (className) element.className = className;
@@ -98,31 +127,31 @@
       this.scene = this.node('div', 'cw-scene');
       this.source = this.node('div', 'cw-source');
       this.source.setAttribute('role', 'img');
-      this.source.setAttribute('aria-label', label.encoded + ': ' + this.ct);
+      this.source.setAttribute('aria-label', label.decoded + ': ' + this.messageWords.join(' '));
       const sourceGrid = this.node('div', 'cw-source-grid');
       sourceGrid.setAttribute('aria-hidden', 'true');
-      this.sourceLetters = this.ct.split('').map(letter => {
-        const card = this.node('span', 'cw-source-letter encoded', letter);
-        sourceGrid.append(card);
-        return card;
+      this.sourceLetters = [];
+      this.messageWords.forEach(word => {
+        const group = this.node('span', 'cw-source-word');
+        word.split('').forEach(letter => {
+          const card = this.node('span', 'cw-source-letter decoded', letter);
+          this.sourceLetters.push(card);
+          group.append(card);
+        });
+        sourceGrid.append(group);
       });
       this.source.append(this.node('div', 'cw-scene-label', label.encryptedMessage), sourceGrid);
 
       this.keyphrase = this.node('div', 'cw-keyphrase');
       this.prayer = this.node('div', 'cw-prayer');
-      this.prayer.lang = 'de';
+      this.prayer.lang = this.passageLang;
       this.prayer.setAttribute('translate', 'no');
-      const prayerWords = [
-        'Unser', 'Vater', 'in', 'dem', 'Himmel!', 'Dein', 'Name', 'werde',
-        'geheiligt.', 'Dein', 'Reich', 'komme.', 'Dein', 'Wille', 'geschehe',
-        'auf', 'Erden', 'wie', 'im', 'Himmel.', 'Unser', 'täglich', 'Brot', 'gib', 'uns'
-      ];
       const seen = new Set();
       this.prayerUnique = [];
       this.prayerRepeats = [];
-      prayerWords.forEach((word, index) => {
+      this.passage.forEach((word, index) => {
         if (index) this.prayer.append(document.createTextNode(' '));
-        const token = word.toLocaleLowerCase('de').replace(/[.!]/g, '');
+        const token = this.letters(word);
         const repeated = seen.has(token);
         const span = this.node('span', 'cw-prayer-word' + (repeated ? ' is-repeat' : ''), word);
         (repeated ? this.prayerRepeats : this.prayerUnique).push(span);
@@ -141,7 +170,7 @@
         const card = this.node('div', 'cw-card');
         card.setAttribute('aria-hidden', 'true');
         const turn = this.node('div', 'cw-card-turn');
-        turn.append(this.node('span', 'cw-face encoded', letter), this.node('span', 'cw-face decoded', this.pt[index]));
+        turn.append(this.node('span', 'cw-face decoded', this.pt[index]), this.node('span', 'cw-face cw-back encoded', letter));
         card.append(turn);
         pair.append(card, this.node('span', 'cw-word', this.words[index]));
         this.grid.append(pair);
@@ -150,17 +179,17 @@
 
       this.focus = this.node('div', 'cw-focus');
       this.focusPair = this.node('div', 'cw-focus-pair');
-      this.focusCard = this.node('div', 'cw-single encoded', 'F');
-      this.focusPair.append(this.focusCard, this.node('span', 'cw-focus-word', 'Unser'));
+      this.focusCard = this.node('div', 'cw-single decoded', this.firstPlain);
+      this.focusPair.append(this.focusCard, this.node('span', 'cw-focus-word', this.words[0]));
       this.math = this.node('div', 'cw-math');
       const sum = this.node('div', 'cw-sum');
-      ['U', 'N', 'S', 'E', 'R'].forEach((letter, index) => {
+      this.firstTerms.forEach(([letter, value], index) => {
         if (index) sum.append(this.node('span', 'cw-plus', '+'));
         const term = this.node('span', 'cw-term');
-        term.append(this.node('span', 'cw-term-letter', letter), this.node('b', 'cw-term-value', [21, 14, 19, 5, 18][index]));
+        term.append(this.node('span', 'cw-term-letter', letter), this.node('b', 'cw-term-value', String(value)));
         sum.append(term);
       });
-      sum.append(this.node('span', 'cw-equals', '='), this.node('strong', 'cw-total', '77'));
+      sum.append(this.node('span', 'cw-equals', '='), this.node('strong', 'cw-total', String(this.firstSum)));
       const reduction = this.node('div', 'cw-reduction');
       label.keyReduction.split('→').forEach((part, index) => {
         if (index) reduction.append(this.node('span', 'cw-reduction-arrow', '→'));
@@ -171,41 +200,35 @@
 
       this.shift = this.node('div', 'cw-shift');
       const shiftCards = this.node('div', 'cw-shift-cards');
-      this.shiftFrom = this.node('div', 'cw-single encoded', 'F');
+      this.shiftFrom = this.node('div', 'cw-single decoded', this.firstPlain);
       const arrow = this.node('div', 'cw-arrow');
       const arrowLine = this.node('span', 'cw-arrow-line');
       arrowLine.setAttribute('aria-hidden', 'true');
       arrow.append(this.node('span', 'cw-arrow-label', label.shift), arrowLine);
-      this.shiftTo = this.node('div', 'cw-single decoded', 'H');
+      this.shiftTo = this.node('div', 'cw-single encoded', this.firstCipher);
       shiftCards.append(this.shiftFrom, arrow, this.shiftTo);
       this.shift.append(this.node('div', 'cw-shift-key', label.shiftKey), shiftCards);
 
       this.result = this.node('div', 'cw-result');
-      this.resultCard = this.node('div', 'cw-single decoded', 'H');
+      this.resultCard = this.node('div', 'cw-single encoded', this.firstCipher);
       this.result.append(this.node('div', 'cw-result-label', label.firstDecoded), this.resultCard);
       this.message = this.node('div', 'cw-message');
       this.message.setAttribute('role', 'group');
       this.message.setAttribute('aria-label', label.decodedMessage);
       this.message.setAttribute('translate', 'no');
       this.message.setAttribute('role', 'img');
-      this.message.setAttribute('aria-label', 'Hier bin ich. Totsiens. T.E.W.');
-      // The 21 decoded letters stay on their cards, regrouped into words; the
-      // punctuation sits between them with no width until the cards fade.
+      this.message.setAttribute('aria-label', this.groups.join(' '));
+      // The cipher letters stay on their cards, regrouped in fives the way
+      // Thouless printed them.
       this.messageLetters = [];
-      [
-        {letters: 'HIER', lang: 'de'}, {letters: 'BIN', lang: 'de'}, {letters: 'ICH', lang: 'de', after: '.'},
-        {letters: 'TOTSIENS', lang: 'af', after: '.'}, {letters: 'TEW', dotted: true}
-      ].forEach(word => {
-        const group = this.node('span', 'cw-msg-word');
-        if (word.lang) group.lang = word.lang;
-        word.letters.split('').forEach(letter => {
-          const card = this.node('span', 'cw-msg-letter decoded', letter);
+      this.groups.forEach(group => {
+        const row = this.node('span', 'cw-msg-word');
+        group.split('').forEach(letter => {
+          const card = this.node('span', 'cw-msg-letter encoded', letter);
           this.messageLetters.push(card);
-          group.append(card);
-          if (word.dotted) group.append(this.node('span', 'cw-msg-punct', '.'));
+          row.append(card);
         });
-        if (word.after) group.append(this.node('span', 'cw-msg-punct', word.after));
-        this.message.append(group);
+        this.message.append(row);
       });
       this.scene.append(this.source, this.keyphrase, this.grid, this.focus, this.shift, this.result, this.message);
 
@@ -356,7 +379,7 @@
       this.messageLetters.forEach((letter, index) => {
         const rect = letter.getBoundingClientRect();
         const origin = origins[index];
-        const ghost = this.node('span', 'cw-finale-letter cw-msg-letter decoded', letter.textContent);
+        const ghost = this.node('span', 'cw-finale-letter cw-msg-letter encoded', letter.textContent);
         ghost.setAttribute('aria-hidden', 'true');
         Object.assign(ghost.style, {
           left: (rect.left - scene.left) + 'px', top: (rect.top - scene.top) + 'px',
@@ -378,8 +401,6 @@
         this.message.removeAttribute('aria-hidden');
         this.ghosts.forEach(ghost => this.animate(ghost, [{opacity: 1}, {opacity: 0}], {duration: 180}));
       }, 1000);
-      // Settled, the cards fade behind the letters, the spacing tightens and
-      // the punctuation appears, all as stylesheet transitions.
       this.later(() => this.settleMessage(), 1500);
     }
 
@@ -423,13 +444,13 @@
       this.result.hidden = stage !== 7;
       this.message.hidden = true;
       this.message.setAttribute('aria-hidden', 'true');
-      this.shiftTo.textContent = 'H';
-      this.shiftTo.classList.add('decoded');
-      this.shiftTo.classList.remove('encoded');
+      this.shiftTo.textContent = this.firstCipher;
+      this.shiftTo.classList.add('encoded');
+      this.shiftTo.classList.remove('decoded');
       this.pairs.forEach((pair, index) => {
-        pair.classList.remove('is-decoded');
+        pair.classList.remove('is-flipped');
         pair.querySelector('.cw-word').removeAttribute('aria-hidden');
-        pair.setAttribute('aria-label', `${this.labels.encoded}: ${this.ct[index]}; ${this.labels.keyWord}: ${this.words[index]}`);
+        pair.setAttribute('aria-label', `${this.labels.decoded}: ${this.pt[index]}; ${this.labels.keyWord}: ${this.words[index]}`);
       });
       if (stage === 0) {
         if (previous > 0) this.animate(this.source, [{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'translateY(0)'}]);
@@ -477,26 +498,27 @@
         });
         this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
       } else if (stage === 6) {
-        // From the sum, the F card travels to its place on the left and the
-        // rest of the scene follows; the count down starts once it has landed.
+        // From the sum, the message card travels to its place on the left and
+        // the rest of the scene follows; the count starts once it has landed.
         const glide = previous === 5 && Boolean(from) && !this.reduced;
         const settle = glide ? 420 : 0;
         if (glide) {
           this.moveFrom(this.shiftFrom, from, 520);
-          this.shift.querySelectorAll('.cw-shift-key, .cw-arrow, .cw-single.decoded').forEach(element => {
+          this.shift.querySelectorAll('.cw-shift-key, .cw-arrow, .cw-single.encoded').forEach(element => {
             this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350, delay: 300, fill: 'backwards'});
           });
         } else {
           this.animate(this.shift, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
         }
         if (!this.reduced) {
-          this.shiftTo.classList.replace('decoded', 'encoded');
-          this.shiftTo.textContent = 'F';
-          for (let step = 1; step <= 24; step++) {
+          this.shiftTo.classList.replace('encoded', 'decoded');
+          this.shiftTo.textContent = this.firstPlain;
+          const start = this.firstPlain.charCodeAt(0) - 65;
+          for (let step = 1; step <= this.firstShift; step++) {
             this.later(() => {
-              this.shiftTo.textContent = String.fromCharCode(65 + (5 - step + 26) % 26);
-              if (step === 24) {
-                this.shiftTo.classList.replace('encoded', 'decoded');
+              this.shiftTo.textContent = String.fromCharCode(65 + (start + step) % 26);
+              if (step === this.firstShift) {
+                this.shiftTo.classList.replace('decoded', 'encoded');
                 this.animate(this.shiftTo, [{transform: 'scale(.92)'}, {transform: 'scale(1)'}], {duration: 300});
               }
             }, settle + 250 + step * 43);
@@ -507,15 +529,15 @@
         else this.animate(this.resultCard, [{opacity: 0, transform: 'scale(.85)'}, {opacity: 1, transform: 'scale(1)'}]);
       } else if (stage === 8) {
         this.root.dataset.finale = 'flipping';
-        // Arriving from the previous step, the decoded H glides from the big
-        // card to its place in the grid before the other cards flip.
+        // Arriving from the previous step, the first cipher letter glides from
+        // the big card to its place in the grid before the other cards flip.
         const glide = Boolean(from) && !this.reduced;
         this.animate(this.grid, [{opacity: 0, transform: 'scale(.96)'}, {opacity: 1, transform: 'scale(1)'}], {duration: 400});
         this.pairs.forEach((pair, index) => {
           const word = pair.querySelector('.cw-word');
           const decode = () => {
-            pair.classList.add('is-decoded');
-            pair.setAttribute('aria-label', `${this.labels.decoded}: ${this.pt[index]}`);
+            pair.classList.add('is-flipped');
+            pair.setAttribute('aria-label', `${this.labels.encoded}: ${this.ct[index]}`);
             word.setAttribute('aria-hidden', 'true');
           };
           const flip = () => {

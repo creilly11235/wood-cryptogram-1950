@@ -53,13 +53,13 @@
     },
     {
       "kind": "attr",
-      "en": "Wood published a message and kept its book key secret, hoping to send the key back after his death.",
-      "de": "Wood veröffentlichte eine Botschaft und hielt ihren Buchschlüssel geheim. Er hoffte, ihn nach seinem Tod zurücksenden zu können."
+      "en": "Wood kept his book key secret, hoping to send it back after his death. The method came from Thouless, who showed it on the sentence THERE IS NO DEATH.",
+      "de": "Wood hielt seinen Buchschlüssel geheim und hoffte, ihn nach seinem Tod zurückzusenden. Das Verfahren stammte von Thouless, der es am Satz THERE IS NO DEATH vorführte."
     },
     {
       "kind": "h2",
-      "en": "The puzzle",
-      "de": "Das Rätsel"
+      "en": "Thouless’s method",
+      "de": "Thouless’ Verfahren"
     },
     {
       "kind": "p",
@@ -68,13 +68,13 @@
     },
     {
       "kind": "p",
-      "en": "The idea came from the psychologist Robert Thouless, who had published an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) two years earlier. It contained enciphered messages whose keys only he knew, and one of them used a system meant to be unbreakable without the key.",
-      "de": "Die Idee stammte von dem Psychologen Robert Thouless, der in einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) verschlüsselte Botschaften veröffentlichte, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte."
+      "en": "The idea came from the psychologist Robert Thouless, who had published an article titled “A Test of Survival” (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) two years earlier. It contained enciphered messages whose keys only he knew, and one of them used a system meant to be unbreakable without the key. He showed how it works on a short example, the sentence THERE IS NO DEATH enciphered with Hamlet’s “To be or not to be” speech as the key.",
+      "de": "Die Idee stammte von dem Psychologen Robert Thouless, der in einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) verschlüsselte Botschaften veröffentlichte, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte. Wie es funktioniert, zeigte er an einem kurzen Beispiel, dem Satz THERE IS NO DEATH, verschlüsselt mit Hamlets „To be or not to be“-Monolog als Schlüssel."
     },
     {
       "kind": "attr",
-      "en": "Each distinct key word supplies one shift. UNSER sums to 77, giving key letter Y; cipher F decrypts to H.",
-      "de": "Jedes verschiedene Schlüsselwort liefert eine Verschiebung. UNSER ergibt die Summe 77 und damit den Schlüsselbuchstaben Y; Geheimtext F wird zu H entschlüsselt."
+      "en": "Each distinct key word supplies one shift. TO sums to 35, giving key letter I, and message letter T enciphers to B.",
+      "de": "Jedes verschiedene Schlüsselwort liefert eine Verschiebung. TO ergibt die Summe 35 und damit den Schlüsselbuchstaben I, und der Klartextbuchstabe T wird zu B verschlüsselt."
     },
     {
       "kind": "li",
@@ -83,38 +83,38 @@
     },
     {
       "kind": "p",
-      "en": "Any word that has already appeared is skipped, so each key word is used only once.",
-      "de": "Jedes Wort, das schon vorgekommen ist, wird übersprungen, sodass jedes Schlüsselwort nur einmal verwendet wird."
+      "en": "Any word that has already appeared is skipped, so each key word is used only once. Here the second “to”, “be” and “the” drop out.",
+      "de": "Jedes Wort, das schon vorgekommen ist, wird übersprungen, sodass jedes Schlüsselwort nur einmal verwendet wird. Hier fallen das zweite „to“, „be“ und „the“ weg."
     },
     {
       "kind": "p",
-      "en": "Each key word pairs with one letter of the message, so a 21-letter message needs 21 distinct key words.",
-      "de": "Jedes Schlüsselwort gehört zu einem Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter."
+      "en": "Each key word pairs with one letter of the message, so the 14 letters of THERE IS NO DEATH need 14 distinct key words.",
+      "de": "Jedes Schlüsselwort gehört zu einem Buchstaben der Botschaft. Die 14 Buchstaben von THERE IS NO DEATH brauchen also 14 verschiedene Schlüsselwörter."
     },
     {
       "kind": "p",
-      "en": "Each word becomes a single letter. The first pair is the cipher letter F and the key word Unser.",
-      "de": "Jedes Wort wird zu einem Buchstaben. Das erste Paar ist der Geheimtextbuchstabe F und das Schlüsselwort Unser."
+      "en": "Each word becomes a single letter. The first pair is the message letter T and the key word To.",
+      "de": "Jedes Wort wird zu einem Buchstaben. Das erste Paar ist der Klartextbuchstabe T und das Schlüsselwort To."
     },
     {
       "kind": "p",
-      "en": "The letters of the word are added up (A=1 to Z=26) and divided by 26, and the remainder gives the letter (1 is A, 25 is Y, 0 is Z). Unser adds up to 77, which leaves 25, so its letter is Y.",
-      "de": "Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26) und durch 26 geteilt, und der Rest ergibt den Buchstaben (1 ist A, 25 ist Y, 0 ist Z). Unser ergibt 77, der Rest ist 25, sein Buchstabe ist also Y."
+      "en": "The letters of the word are added up (A=1 to Z=26) and divided by 26, and the remainder gives the letter (1 is A, 25 is Y, 0 is Z). To adds up to 35, which leaves 9, so its letter is I.",
+      "de": "Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26) und durch 26 geteilt, und der Rest ergibt den Buchstaben (1 ist A, 25 ist Y, 0 ist Z). To ergibt 35, der Rest ist 9, sein Buchstabe ist also I."
     },
     {
       "kind": "p",
-      "en": "That key letter shifts one message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way, so Y moves F back 24 places.",
-      "de": "Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln geht es in die Gegenrichtung, Y rückt F also um 24 Stellen zurück."
+      "en": "That key letter shifts the message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. I moves T forward 8 places.",
+      "de": "Dieser Schlüsselbuchstabe verschiebt den Klartextbuchstaben im Alphabet, wobei A keine Verschiebung bedeutet, B eine Stelle, C zwei und so weiter, nach Z geht es bei A weiter. I verschiebt T um 8 Stellen vorwärts."
     },
     {
       "kind": "p",
-      "en": "F shifts to H, the first letter of the hidden message.",
-      "de": "F wird zu H verschoben, dem ersten Buchstaben der verborgenen Botschaft."
+      "en": "T becomes B, the first letter of the ciphertext.",
+      "de": "Aus T wird B, der erste Buchstabe des Geheimtexts."
     },
     {
       "kind": "p",
-      "en": "The same happens for all 21 letters and the message reads out. This is the method Wood adopted for his own test.",
-      "de": "Dasselbe geschieht mit allen 21 Buchstaben, und die Botschaft erscheint. Dieses Verfahren übernahm Wood für seinen eigenen Test."
+      "en": "The same happens for all 14 letters and the ciphertext reads out in groups of five. Decoding runs the same steps in reverse, and this is the method Wood adopted for his own test. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.",
+      "de": "Dasselbe geschieht mit allen 14 Buchstaben, und der Geheimtext erscheint in Fünfergruppen. Die Entschlüsselung durchläuft dieselben Schritte rückwärts, und dieses Verfahren übernahm Wood für seinen eigenen Test. Thouless’ gedruckte Fassung endet auf B statt auf D, ein Fehler, auf den der Artikel später zurückkommt."
     },
     {
       "kind": "attr",
@@ -930,40 +930,40 @@
       "de": "\"Ähnlichkeit mit Englisch →\""
     },
     {
-      "en": "\"How the cipher becomes a message\"",
-      "de": "\"Vom Geheimtext zur Botschaft\""
+      "en": "\"How a message becomes a cipher\"",
+      "de": "\"Von der Botschaft zum Geheimtext\""
     },
     {
-      "en": "\"Encoded\"",
-      "de": "\"Verschlüsselt\""
+      "en": "\"Cipher\"",
+      "de": "\"Geheimtext\""
     },
     {
-      "en": "\"Decoded\"",
-      "de": "\"Entschlüsselt\""
+      "en": "\"Message\"",
+      "de": "\"Botschaft\""
     },
     {
-      "en": "\"One key word for every cipher letter\"",
+      "en": "\"One key word for every letter\"",
       "de": "\"Ein Schlüsselwort pro Buchstabe\""
     },
     {
-      "en": "\"Start with F and Unser\"",
-      "de": "\"Start mit F und Unser\""
+      "en": "\"Start with T and To\"",
+      "de": "\"Start mit T und To\""
     },
     {
-      "en": "\"Add the letters in Unser\"",
-      "de": "\"Die Buchstabenwerte von Unser addieren\""
+      "en": "\"Add the letters in To\"",
+      "de": "\"Die Buchstabenwerte von To addieren\""
     },
     {
-      "en": "\"Use Y to shift F back 24 places\"",
-      "de": "\"Mit Y: F um 24 Stellen zurück\""
+      "en": "\"Use I to shift T forward 8 places\"",
+      "de": "\"Mit I: T um 8 Stellen vorwärts\""
     },
     {
-      "en": "\"The first decoded letter is H\"",
-      "de": "\"Der erste Klartextbuchstabe: H\""
+      "en": "\"The first cipher letter is B\"",
+      "de": "\"Der erste Geheimtextbuchstabe: B\""
     },
     {
-      "en": "\"Repeat for all 21 letters\"",
-      "de": "\"Für alle 21 Buchstaben wiederholen\""
+      "en": "\"Repeat for all 14 letters\"",
+      "de": "\"Für alle 14 Buchstaben wiederholen\""
     },
     {
       "en": "\"Next\"",
@@ -974,16 +974,16 @@
       "de": "\"Wiederholen\""
     },
     {
-      "en": "\"Y means a shift of 24 (A = 0)\"",
-      "de": "\"Y verschiebt um 24 Stellen (A = 0)\""
+      "en": "\"I means a shift of 8 (A = 0)\"",
+      "de": "\"I verschiebt um 8 Stellen (A = 0)\""
     },
     {
-      "en": "\"Back 24\"",
-      "de": "\"24 zurück\""
+      "en": "\"Forward 8\"",
+      "de": "\"8 vorwärts\""
     },
     {
-      "en": "\"The message begins\"",
-      "de": "\"Die Botschaft beginnt\""
+      "en": "\"The ciphertext begins\"",
+      "de": "\"Der Geheimtext beginnt\""
     },
     {
       "en": "\"Step\"",
@@ -994,8 +994,8 @@
       "de": "\"Schlüsselwort\""
     },
     {
-      "en": "\"The 21-letter cipher\"",
-      "de": "\"Der Geheimtext: 21 Buchstaben\""
+      "en": "\"The 14-letter message\"",
+      "de": "\"Die Botschaft: 14 Buchstaben\""
     },
     {
       "en": "\"The key passage\"",
@@ -1010,20 +1010,24 @@
       "de": "\"Zurück\""
     },
     {
-      "en": "\"The decoded message\"",
-      "de": "\"Die entschlüsselte Botschaft\""
+      "en": "\"The ciphertext\"",
+      "de": "\"Der Geheimtext\""
     },
     {
       "en": "\"Scroll to explore · or use the buttons\"",
       "de": "\"Scrollen oder die Tasten verwenden\""
     },
     {
-      "en": "\"The encrypted message\"",
-      "de": "\"Die verschlüsselte Nachricht\""
+      "en": "\"The message\"",
+      "de": "\"Die Botschaft\""
     },
     {
       "en": "\"The key\"",
       "de": "\"Der Schlüssel\""
+    },
+    {
+      "en": "\"35 − 26 = 9 → I\"",
+      "de": "\"35 − 26 = 9 → I\""
     }
   ]
 }

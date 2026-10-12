@@ -191,7 +191,7 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="../story-layout.css?v=24">
 <link rel="stylesheet" href="../cipher-cards.css?v=25">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=24">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=25">
 <link rel="stylesheet" href="../story-graphics.css?v=24">
 </head>
 <body>
@@ -224,10 +224,10 @@ footer p{margin:0 0 .7em}
 <main class="scrolly">
 <section class="chapter" data-ch="1">
 <div class="text text-before">
-<section class="step" data-s="summary" data-walk-stage="0" data-cap="Wood veröffentlichte eine Botschaft und hielt ihren Buchschlüssel geheim. Er hoffte, ihn nach seinem Tod zurücksenden zu können." id="the-puzzle">
-<h2>Das Rätsel</h2>
+<section class="step" data-s="summary" data-walk-stage="0" data-cap="Wood hielt seinen Buchschlüssel geheim und hoffte, ihn nach seinem Tod zurückzusenden. Das Verfahren stammte von Thouless, der es am Satz THERE IS NO DEATH vorführte." id="thouless-method">
+<h2>Thouless’ Verfahren</h2>
 <p>Sein Plan beruhte darauf, den Schlüssel geheim zu halten. Würde ein Medium ihn nach seinem Tod übermitteln, wäre das, so hoffte er, ein Hinweis darauf, dass etwas von ihm fortlebte.</p>
-<p>Die Idee stammte von dem Psychologen Robert Thouless, der in einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) verschlüsselte Botschaften veröffentlichte, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte.</p>
+<p>Die Idee stammte von dem Psychologen Robert Thouless, der in einem Artikel mit dem Titel „A Test of Survival“ (<em>Proceedings of the Society for Psychical Research</em> 48, 1948) verschlüsselte Botschaften veröffentlichte, deren Schlüssel nur er kannte. Eine davon nutzte ein Verfahren, das ohne den Schlüssel unknackbar sein sollte. Wie es funktioniert, zeigte er an einem kurzen Beispiel, dem Satz THERE IS NO DEATH, verschlüsselt mit Hamlets „To be or not to be“-Monolog als Schlüssel.</p>
 </section>
 </div>
 <div class="pin">
@@ -238,23 +238,23 @@ footer p{margin:0 0 .7em}
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
-<section class="step" data-s="method" data-cap="Jedes verschiedene Schlüsselwort liefert eine Verschiebung. UNSER ergibt die Summe 77 und damit den Schlüsselbuchstaben Y; Geheimtext F wird zu H entschlüsselt.">
+<section class="step" data-s="method" data-cap="Jedes verschiedene Schlüsselwort liefert eine Verschiebung. TO ergibt die Summe 35 und damit den Schlüsselbuchstaben I, und der Klartextbuchstabe T wird zu B verschlüsselt.">
 <ol>
 <li>
 <p data-walk-stage="1">Der Schlüssel ist eine Textpassage, einem Buch entnommen und Wort für Wort gelesen.</p>
-<p data-walk-stage="2">Jedes Wort, das schon vorgekommen ist, wird übersprungen, sodass jedes Schlüsselwort nur einmal verwendet wird.</p>
-<p data-walk-stage="3">Jedes Schlüsselwort gehört zu einem Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter.</p>
+<p data-walk-stage="2">Jedes Wort, das schon vorgekommen ist, wird übersprungen, sodass jedes Schlüsselwort nur einmal verwendet wird. Hier fallen das zweite „to“, „be“ und „the“ weg.</p>
+<p data-walk-stage="3">Jedes Schlüsselwort gehört zu einem Buchstaben der Botschaft. Die 14 Buchstaben von THERE IS NO DEATH brauchen also 14 verschiedene Schlüsselwörter.</p>
 </li>
 <li>
-<p data-walk-stage="4">Jedes Wort wird zu einem Buchstaben. Das erste Paar ist der Geheimtextbuchstabe F und das Schlüsselwort Unser.</p>
-<p data-walk-stage="5">Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26) und durch 26 geteilt, und der Rest ergibt den Buchstaben (1 ist A, 25 ist Y, 0 ist Z). Unser ergibt 77, der Rest ist 25, sein Buchstabe ist also Y.</p>
+<p data-walk-stage="4">Jedes Wort wird zu einem Buchstaben. Das erste Paar ist der Klartextbuchstabe T und das Schlüsselwort To.</p>
+<p data-walk-stage="5">Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26) und durch 26 geteilt, und der Rest ergibt den Buchstaben (1 ist A, 25 ist Y, 0 ist Z). To ergibt 35, der Rest ist 9, sein Buchstabe ist also I.</p>
 </li>
 <li>
-<p data-walk-stage="6">Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln geht es in die Gegenrichtung, Y rückt F also um 24 Stellen zurück.</p>
-<p data-walk-stage="7">F wird zu H verschoben, dem ersten Buchstaben der verborgenen Botschaft.</p>
+<p data-walk-stage="6">Dieser Schlüsselbuchstabe verschiebt den Klartextbuchstaben im Alphabet, wobei A keine Verschiebung bedeutet, B eine Stelle, C zwei und so weiter, nach Z geht es bei A weiter. I verschiebt T um 8 Stellen vorwärts.</p>
+<p data-walk-stage="7">Aus T wird B, der erste Buchstabe des Geheimtexts.</p>
 </li>
 </ol>
-<p data-walk-stage="8">Dasselbe geschieht mit allen 21 Buchstaben, und die Botschaft erscheint. Dieses Verfahren übernahm Wood für seinen eigenen Test.</p>
+<p data-walk-stage="8">Dasselbe geschieht mit allen 14 Buchstaben, und der Geheimtext erscheint in Fünfergruppen. Die Entschlüsselung durchläuft dieselben Schritte rückwärts, und dieses Verfahren übernahm Wood für seinen eigenen Test. Thouless’ gedruckte Fassung endet auf B statt auf D, ein Fehler, auf den der Artikel später zurückkommt.</p>
 </section>
 </div></div>
 <div class="text text-after">
@@ -476,7 +476,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=24"></script>
+<script src="../cipher-walkthrough.js?v=25"></script>
 <script>
 (function(){
 "use strict";
@@ -525,10 +525,10 @@ function Graphic(el){
     el.classList.add("walkthrough-graphic");
     const host=document.createElement("div");host.className="cipher-walkthrough-host";
     el.querySelector(".gbody").replaceChildren(host);
-    const walk=new CipherWalkthrough(host,{ct:CT,pt:PT,reduced,labels:{
-      label:"Vom Geheimtext zur Botschaft",encoded:"Verschlüsselt",decoded:"Entschlüsselt",
-      stages:["Der Geheimtext: 21 Buchstaben","Der Schlüsseltext","Wiederholte Wörter werden übersprungen","Ein Schlüsselwort pro Buchstabe","Start mit F und Unser","Die Buchstabenwerte von Unser addieren","Mit Y: F um 24 Stellen zurück","Der erste Klartextbuchstabe: H","Für alle 21 Buchstaben wiederholen"],
-      previous:"Zurück",next:"Weiter",replay:"Wiederholen",encryptedMessage:"Die verschlüsselte Nachricht",keyLabel:"Der Schlüssel",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y verschiebt um 24 Stellen (A = 0)",shift:"24 zurück",firstDecoded:"Die Botschaft beginnt",step:"Schritt",keyWord:"Schlüsselwort",decodedMessage:"Die entschlüsselte Botschaft",swipeHint:"Scrollen oder die Tasten verwenden"
+    const walk=new CipherWalkthrough(host,{reduced,labels:{
+      label:"Von der Botschaft zum Geheimtext",encoded:"Geheimtext",decoded:"Botschaft",
+      stages:["Die Botschaft: 14 Buchstaben","Der Schlüsseltext","Wiederholte Wörter werden übersprungen","Ein Schlüsselwort pro Buchstabe","Start mit T und To","Die Buchstabenwerte von To addieren","Mit I: T um 8 Stellen vorwärts","Der erste Geheimtextbuchstabe: B","Für alle 14 Buchstaben wiederholen"],
+      previous:"Zurück",next:"Weiter",replay:"Wiederholen",encryptedMessage:"Die Botschaft",keyLabel:"Der Schlüssel",keyReduction:"35 − 26 = 9 → I",shiftKey:"I verschiebt um 8 Stellen (A = 0)",shift:"8 vorwärts",firstDecoded:"Der Geheimtext beginnt",step:"Schritt",keyWord:"Schlüsselwort",decodedMessage:"Der Geheimtext",swipeHint:"Scrollen oder die Tasten verwenden"
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};
