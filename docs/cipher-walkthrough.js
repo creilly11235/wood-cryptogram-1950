@@ -1,4 +1,4 @@
-/* The article controls the nine steps; buttons also let a reader explore them.
+/* The article controls the ten steps; buttons also let a reader explore them.
    The example is Thouless's own from 1948, THERE IS NO DEATH enciphered with
    the opening of Hamlet's soliloquy, worked in the enciphering direction.
    Animation is presentational. Every step has a complete reduced-motion view. */
@@ -18,7 +18,8 @@
       'Add the letters in To',
       'Use I to shift T forward 8 places',
       'The first cipher letter is B',
-      'Repeat for all 14 letters'
+      'Repeat for all 14 letters',
+      'Message, key and cipher together'
     ],
     previous: 'Previous',
     next: 'Next',
@@ -31,7 +32,7 @@
     keyWord: 'key word',
     encryptedMessage: 'The message',
     keyLabel: 'The key',
-    decodedMessage: 'The ciphertext',
+    decodedMessage: 'The cipher',
     swipeHint: 'Scroll to explore · or use the buttons'
   };
 
@@ -221,6 +222,7 @@
       // The cipher letters stay on their cards, regrouped in fives the way
       // Thouless printed them.
       this.messageLetters = [];
+      this.message.append(this.node('div', 'cw-scene-label cw-msg-label', label.decodedMessage));
       this.groups.forEach(group => {
         const row = this.node('span', 'cw-msg-word');
         group.split('').forEach(letter => {
@@ -230,7 +232,40 @@
         });
         this.message.append(row);
       });
-      this.scene.append(this.source, this.keyphrase, this.grid, this.focus, this.shift, this.result, this.message);
+      // The last step shows the whole system at once: message, key and cipher.
+      this.overview = this.node('div', 'cw-overview');
+      const block = (title, body) => {
+        const section = this.node('div', 'cw-ov-block');
+        section.append(this.node('div', 'cw-scene-label', title), body);
+        this.overview.append(section);
+      };
+      const cards = (groups, kind) => {
+        const holder = this.node('div', 'cw-ov-cards');
+        holder.setAttribute('aria-hidden', 'true');
+        groups.forEach(group => {
+          const word = this.node('span', 'cw-ov-word');
+          group.split('').forEach(letter => word.append(this.node('span', 'cw-ov-letter ' + kind, letter)));
+          holder.append(word);
+        });
+        return holder;
+      };
+      block(label.encryptedMessage, cards(this.messageWords, 'decoded'));
+      const passage = this.node('div', 'cw-ov-passage');
+      passage.lang = this.passageLang;
+      passage.setAttribute('translate', 'no');
+      const used = new Set();
+      this.passage.forEach((word, index) => {
+        if (index) passage.append(document.createTextNode(' '));
+        const token = this.letters(word);
+        passage.append(this.node('span', 'cw-prayer-word' + (used.has(token) ? ' is-repeat' : ''), word));
+        used.add(token);
+      });
+      passage.append(document.createTextNode(' …'));
+      block(label.keyLabel, passage);
+      block(label.decodedMessage, cards(this.groups, 'encoded'));
+      this.overview.setAttribute('role', 'img');
+      this.overview.setAttribute('aria-label', label.encryptedMessage + ': ' + this.messageWords.join(' ') + '. ' + label.keyLabel + ': ' + this.passage.join(' ') + '. ' + label.decodedMessage + ': ' + this.groups.join(' '));
+      this.scene.append(this.source, this.keyphrase, this.grid, this.focus, this.shift, this.result, this.message, this.overview);
 
       const controls = this.node('div', 'cw-controls');
       this.previous = this.node('button', 'cw-previous', label.previous);
@@ -239,7 +274,7 @@
       this.counter = this.node('span', 'cw-step-count');
       this.next = this.node('button', 'cw-next', label.next);
       this.next.type = 'button';
-      this.next.addEventListener('click', () => this.stage === 8 ? this.replay() : this.choose(this.stage + 1));
+      this.next.addEventListener('click', () => this.stage === 9 ? this.replay() : this.choose(this.stage + 1));
       controls.append(this.previous, this.counter, this.next);
       this.root.append(header, this.scene, controls);
       this.host.replaceChildren(this.root);
@@ -278,7 +313,7 @@
         // Vertical motion belongs to the page; a deliberate horizontal swipe
         // chooses one step through the same navigation callback as the buttons.
         if (Math.abs(dx) < 45 || Math.abs(dx) <= 1.5 * Math.abs(dy)) return;
-        const stage = Math.max(0, Math.min(8, this.stage + (dx < 0 ? 1 : -1)));
+        const stage = Math.max(0, Math.min(9, this.stage + (dx < 0 ? 1 : -1)));
         if (stage !== this.stage) this.choose(stage);
       }, options);
     }
@@ -427,7 +462,7 @@
     }
 
     go(stage, options = {}) {
-      stage = Math.max(0, Math.min(8, Number(stage) || 0));
+      stage = Math.max(0, Math.min(9, Number(stage) || 0));
       if (this.destroyed || (stage === this.stage && !options.force)) return;
       const previous = this.stage;
       let from = null;
@@ -454,10 +489,10 @@
       this.root.dataset.finale = '';
       this.root.dataset.intro = '';
       this.host.dataset.walkthroughStage = String(stage);
-      this.counter.textContent = (stage + 1) + ' / 9';
+      this.counter.textContent = (stage + 1) + ' / 10';
       this.counter.setAttribute('aria-label', this.labels.step + ' ' + (stage + 1) + ': ' + this.labels.stages[stage]);
       this.previous.disabled = stage === 0;
-      this.next.textContent = stage === 8 ? this.labels.replay : this.labels.next;
+      this.next.textContent = stage === 9 ? this.labels.replay : this.labels.next;
       this.source.hidden = stage !== 0;
       this.keyphrase.hidden = stage !== 1 && stage !== 2;
       this.grid.hidden = stage !== 3 && stage !== 8;
@@ -465,6 +500,7 @@
       this.math.hidden = stage !== 5;
       this.shift.hidden = stage !== 6;
       this.result.hidden = stage !== 7;
+      this.overview.hidden = stage !== 9;
       this.message.hidden = true;
       this.message.setAttribute('aria-hidden', 'true');
       this.shiftTo.textContent = this.firstCipher;
@@ -583,6 +619,10 @@
         });
         if (this.reduced) this.revealMessage();
         else this.later(() => this.revealMessage(), glide ? 3700 : 3500);
+      } else if (stage === 9) {
+        this.overview.querySelectorAll('.cw-ov-block').forEach((section, index) => {
+          this.animate(section, [{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 400, delay: index * 140, fill: 'backwards'});
+        });
       }
     }
 

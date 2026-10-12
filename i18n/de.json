@@ -113,8 +113,8 @@
     },
     {
       "kind": "p",
-      "en": "The same happens for all 14 letters and the ciphertext reads out in groups of five. Decoding runs the same steps in reverse, and this is the method Wood adopted for his own test. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.",
-      "de": "Dasselbe geschieht mit allen 14 Buchstaben, und der Geheimtext erscheint in Fünfergruppen. Die Entschlüsselung durchläuft dieselben Schritte rückwärts, und dieses Verfahren übernahm Wood für seinen eigenen Test. Thouless’ gedruckte Fassung endet auf B statt auf D, ein Fehler, auf den der Artikel später zurückkommt."
+      "en": "The same happens for all 14 letters and the cipher reads out in groups of five. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.",
+      "de": "Dasselbe geschieht mit allen 14 Buchstaben, und der Geheimtext erscheint in Fünfergruppen. Thouless’ gedruckte Fassung endet auf B statt auf D, ein Fehler, auf den der Artikel später zurückkommt."
     },
     {
       "kind": "attr",
@@ -165,16 +165,6 @@
       "kind": "p",
       "en": "If the key letters could be chosen freely, the same ciphertext could be made to say any message of the same length.",
       "de": "Könnte man die Schlüsselbuchstaben frei wählen, ließe sich derselbe Geheimtext in jede beliebige Botschaft gleicher Länge verwandeln."
-    },
-    {
-      "kind": "attr",
-      "en": "Illustration: freely chosen keys can make the same ciphertext produce any of these 21-letter messages.",
-      "de": "Veranschaulichung: Frei gewählte Schlüssel können aus demselben Geheimtext jede dieser Botschaften mit 21 Buchstaben erzeugen."
-    },
-    {
-      "kind": "p",
-      "en": "Each of these sentences comes from Wood’s 21 letters under a different freely chosen key, shown as the key letters beneath the cards. A readable sentence on its own would not tell you whether it was Wood’s, particularly one this short.",
-      "de": "Jeder dieser Sätze entsteht aus Woods 21 Buchstaben mit einem anderen frei gewählten Schlüssel, dessen Schlüsselbuchstaben unter den Karten stehen. Ein lesbarer Satz allein würde nicht zeigen, ob er tatsächlich von Wood stammte, erst recht nicht bei einem so kurzen Text."
     },
     {
       "kind": "attr",
@@ -690,6 +680,41 @@
       "kind": "li",
       "en": "Wood’s initials",
       "de": "Woods Initialen"
+    },
+    {
+      "kind": "p",
+      "en": "Seen together, the message, the key and the cipher are the whole system. Anyone holding the key can run the steps backwards and read the message, and without it there is nothing to work from. This is the method Wood adopted for his own test.",
+      "de": "Zusammen betrachtet bilden Botschaft, Schlüssel und Geheimtext das ganze System. Wer den Schlüssel hat, kann die Schritte rückwärts durchlaufen und die Botschaft lesen, und ohne ihn gibt es nichts, woran man ansetzen könnte. Dieses Verfahren übernahm Wood für seinen eigenen Test."
+    },
+    {
+      "kind": "attr",
+      "en": "Illustration: a freely chosen key makes Wood’s 21 letters read THE ANSWER IS NOT HERE YET.",
+      "de": "Illustration: Ein frei gewählter Schlüssel lässt Woods 21 Buchstaben THE ANSWER IS NOT HERE YET ergeben."
+    },
+    {
+      "kind": "p",
+      "en": "This sentence comes from Wood’s 21 letters under a freely chosen key, shown as the key letters beneath the cards. It reads well enough, and the key that produces it is gibberish.",
+      "de": "Dieser Satz entsteht aus Woods 21 Buchstaben mit einem frei gewählten Schlüssel, der als Schlüsselbuchstaben unter den Karten steht. Er liest sich gut genug, und der Schlüssel, der ihn erzeugt, ist Kauderwelsch."
+    },
+    {
+      "kind": "attr",
+      "en": "Illustration: a second freely chosen key makes the same 21 letters read WE WILL MEET AT DAWN TODAY.",
+      "de": "Illustration: Ein zweiter frei gewählter Schlüssel lässt dieselben 21 Buchstaben WE WILL MEET AT DAWN TODAY ergeben."
+    },
+    {
+      "kind": "p",
+      "en": "A second key turns the same 21 letters into a second sentence. Nothing in the cipher itself prefers one reading over the other.",
+      "de": "Ein zweiter Schlüssel macht aus denselben 21 Buchstaben einen zweiten Satz. Nichts im Geheimtext selbst spricht für die eine oder die andere Lesung."
+    },
+    {
+      "kind": "attr",
+      "en": "Illustration: a third freely chosen key makes the same 21 letters read PLEASE KEEP THIS KEY SAFE.",
+      "de": "Illustration: Ein dritter frei gewählter Schlüssel lässt dieselben 21 Buchstaben PLEASE KEEP THIS KEY SAFE ergeben."
+    },
+    {
+      "kind": "p",
+      "en": "A third is just as readable. A sentence on its own would not tell you whether it was Wood’s, particularly one this short, so the key has to come from somewhere that can be checked.",
+      "de": "Ein dritter liest sich genauso gut. Ein Satz für sich allein verrät nicht, ob er von Wood stammt, zumal ein so kurzer, also muss der Schlüssel von einer Stelle kommen, die sich überprüfen lässt."
     }
   ],
   "js": [
@@ -1010,7 +1035,7 @@
       "de": "\"Zurück\""
     },
     {
-      "en": "\"The ciphertext\"",
+      "en": "\"The cipher\"",
       "de": "\"Der Geheimtext\""
     },
     {
@@ -1028,6 +1053,10 @@
     {
       "en": "\"35 − 26 = 9 → I\"",
       "de": "\"35 − 26 = 9 → I\""
+    },
+    {
+      "en": "\"Message, key and cipher together\"",
+      "de": "\"Botschaft, Schlüssel und Geheimtext zusammen\""
     }
   ]
 }

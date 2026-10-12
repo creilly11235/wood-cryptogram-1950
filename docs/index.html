@@ -190,7 +190,7 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="story-layout.css?v=25">
 <link rel="stylesheet" href="cipher-cards.css?v=25">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=27">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=28">
 <link rel="stylesheet" href="story-graphics.css?v=24">
 </head>
 <body>
@@ -254,7 +254,8 @@ footer p{margin:0 0 .7em}
 <p data-walk-stage="7">T becomes B, the first letter of the ciphertext.</p>
 </li>
 </ol>
-<p data-walk-stage="8">The same happens for all 14 letters and the ciphertext reads out in groups of five. Decoding runs the same steps in reverse, and this is the method Wood adopted for his own test. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.</p>
+<p data-walk-stage="8">The same happens for all 14 letters and the cipher reads out in groups of five. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.</p>
+<p data-walk-stage="9">Seen together, the message, the key and the cipher are the whole system. Anyone holding the key can run the steps backwards and read the message, and without it there is nothing to work from. This is the method Wood adopted for his own test.</p>
 </section>
 </div></div>
 <div class="text text-after">
@@ -284,16 +285,22 @@ footer p{margin:0 0 .7em}
 <canvas></canvas><div class="legend"></div><p class="beatcap"></p>
 </div></div>
 <div class="text">
-<section class="step" data-s="trap" data-walk-stage="1" data-cap="Illustration: freely chosen keys can make the same ciphertext produce any of these 21-letter messages.">
-<p>Each of these sentences comes from Wood’s 21 letters under a different freely chosen key, shown as the key letters beneath the cards. A readable sentence on its own would not tell you whether it was Wood’s, particularly one this short.</p>
+<section class="step" data-s="trap" data-walk-stage="1" data-cap="Illustration: a freely chosen key makes Wood’s 21 letters read THE ANSWER IS NOT HERE YET.">
+<p>This sentence comes from Wood’s 21 letters under a freely chosen key, shown as the key letters beneath the cards. It reads well enough, and the key that produces it is gibberish.</p>
 </section>
-<section class="step" data-s="shelves" data-walk-stage="2" data-cap="129 books supplied 28.6 million candidate keys. Each book spine represents one book.">
+<section class="step" data-s="trap2" data-walk-stage="2" data-cap="Illustration: a second freely chosen key makes the same 21 letters read WE WILL MEET AT DAWN TODAY.">
+<p>A second key turns the same 21 letters into a second sentence. Nothing in the cipher itself prefers one reading over the other.</p>
+</section>
+<section class="step" data-s="trap3" data-walk-stage="3" data-cap="Illustration: a third freely chosen key makes the same 21 letters read PLEASE KEEP THIS KEY SAFE.">
+<p>A third is just as readable. A sentence on its own would not tell you whether it was Wood’s, particularly one this short, so the key has to come from somewhere that can be checked.</p>
+</section>
+<section class="step" data-s="shelves" data-walk-stage="4" data-cap="129 books supplied 28.6 million candidate keys. Each book spine represents one book.">
 <p>Wood had given away one important thing, though. His key came from consecutive words in a published book, so a collection of books could be searched, one starting word at a time. Each spine here is one of the 129 books in that first search.</p>
 </section>
-<section class="step" data-s="plants" data-walk-stage="3" data-cap="The correct message ranked first in 97 of 100 known test ciphers. Each dot is one test.">
+<section class="step" data-s="plants" data-walk-stage="5" data-cap="The correct message ranked first in 97 of 100 known test ciphers. Each dot is one test.">
 <p>Before searching for Wood’s message, we ran 100 test ciphers with known answers through the same code. Each decryption was scored by how much it resembled English, and the correct message came out on top in 97 of the 100 tests.</p>
 </section>
-<section class="step" data-s="englishResults" data-walk-stage="4" data-cap="Each grey dot is the best result for one of 100 random ciphertexts. Twelve scored higher than Wood’s best result, marked in blue.">
+<section class="step" data-s="englishResults" data-walk-stage="6" data-cap="Each grey dot is the best result for one of 100 random ciphertexts. Twelve scored higher than Wood’s best result, marked in blue.">
 <p>Wood’s message produced nothing readable, even after the search grew to 3,977 texts. Run on 100 random strings of 21 letters instead, the same search found a result in 12 of them that scored higher than anything it had found for Wood’s message.</p>
 </section>
 </div></div>
@@ -475,7 +482,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=27"></script>
+<script src="cipher-walkthrough.js?v=28"></script>
 <script>
 (function(){
 "use strict";
@@ -485,7 +492,7 @@ const CT="FVAMINTKFXXWATBOIZVVX",PT="HIERBINICHTOTSIENSTEW";
 const EN_MISS=[37,55,66],EN_PLANT_MSG="THEFORMOFTHEUNKNOWNMI";
 // Three readable sentences a freely chosen key can draw from the same 21 letters,
 // each shown with the key letters (A = no shift) that would produce it.
-const TRAP_MSGS=["THE ANSWER IS NOT HERE YET","WE WILL MEET AT DAWN TODAY","PLEASE KEEP THIS KEY SAFE"],TRAP_PERIOD=3400;
+const TRAP_MSGS=["THE ANSWER IS NOT HERE YET","WE WILL MEET AT DAWN TODAY","PLEASE KEEP THIS KEY SAFE"],TRAP_STATES={trap:0,trap2:1,trap3:2};
 const trapKey=s=>[...s.replace(/ /g,"")].map((c,i)=>String.fromCharCode(65+(CT.charCodeAt(i)-c.charCodeAt(0)+26)%26)).join("");
 const JUNK=["UNTONEASACRISTEALSBYR"];
 /* Source: harness/wood35/out_expanded.jsonl, 3,977 texts. Each EN_NULLX value
@@ -526,8 +533,8 @@ function Graphic(el){
     el.querySelector(".gbody").replaceChildren(host);
     const walk=new CipherWalkthrough(host,{reduced,labels:{
       label:"How a message becomes a cipher",encoded:"Cipher",decoded:"Message",
-      stages:["The 14-letter message","The key passage","Repeated words are skipped","One key word for every letter","Start with T and To","Add the letters in To","Use I to shift T forward 8 places","The first cipher letter is B","Repeat for all 14 letters"],
-      previous:"Previous",next:"Next",replay:"Replay",encryptedMessage:"The message",keyLabel:"The key",keyReduction:"35 − 26 = 9 → I",shiftKey:"I means a shift of 8",shift:"Forward 8",firstDecoded:"The ciphertext begins",step:"Step",keyWord:"key word",decodedMessage:"The ciphertext",swipeHint:"Scroll to explore · or use the buttons"
+      stages:["The 14-letter message","The key passage","Repeated words are skipped","One key word for every letter","Start with T and To","Add the letters in To","Use I to shift T forward 8 places","The first cipher letter is B","Repeat for all 14 letters","Message, key and cipher together"],
+      previous:"Previous",next:"Next",replay:"Replay",encryptedMessage:"The message",keyLabel:"The key",keyReduction:"35 − 26 = 9 → I",shiftKey:"I means a shift of 8",shift:"Forward 8",firstDecoded:"The ciphertext begins",step:"Step",keyWord:"key word",decodedMessage:"The cipher",swipeHint:"Scroll to explore · or use the buttons"
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};
@@ -535,16 +542,12 @@ function Graphic(el){
     // chapter learns how much empty graphic sits below it at the last stage.
     const chapter=el.closest(".chapter");
     const measureTail=()=>{
-      if(!chapter||walk.stage!==8)return;
-      const message=walk.message,wasHidden=message.hidden;
-      message.hidden=false;
-      const letters=[...message.querySelectorAll(".cw-msg-letter")];
-      const bottom=Math.max(...letters.map(letter=>letter.getBoundingClientRect().bottom));
-      message.hidden=wasHidden;
+      if(!chapter||walk.stage!==9)return;
+      const bottom=walk.overview.getBoundingClientRect().bottom;
       const tail=el.getBoundingClientRect().bottom-bottom-28;
       if(Number.isFinite(tail)&&tail>0)chapter.style.setProperty("--walk-tail",Math.round(tail)+"px");
     };
-    this.showStage=stage=>{walk.go(stage);if(stage===8)requestAnimationFrame(measureTail);};
+    this.showStage=stage=>{walk.go(stage);if(stage===9)requestAnimationFrame(measureTail);};
     new ResizeObserver(()=>requestAnimationFrame(measureTail)).observe(el);
     this.pause=()=>walk.pause();this.resume=()=>walk.resume();
     this.replay=()=>walk.replay();this.frame=()=>{};
@@ -618,12 +621,11 @@ function Graphic(el){
   function subLetters(s){sub.replaceChildren(...[...s].map(c=>{const span=document.createElement("span");span.textContent=c;return span;}));}
   // The trap cycles through its sentences: each fades out with its key letters
   // and the next fades in, all from the frame clock so pausing holds it.
-  function trapShow(index){trapIndex=index;const msg=TRAP_MSGS[index];strip(msg.replace(/ /g,""),"reading");subLetters(trapKey(msg));revealBase=instant?0:index*TRAP_PERIOD;}
-  function trapFade(){if(instant)return 1;const phase=elapsed%TRAP_PERIOD;return Math.min(1,phase/320,(TRAP_PERIOD-phase)/260);}
+  function trapShow(index){trapIndex=index;const msg=TRAP_MSGS[index];strip(msg.replace(/ /g,""),"reading");subLetters(trapKey(msg));revealBase=0;}
   function configure(){
     legend.replaceChildren();strip(CT);lastLetter=-1;trapIndex=-1;revealBase=0;tiles.style.opacity="";sub.style.opacity="";
     switch(state){
-      case "trap":trapShow(0);break;
+      case "trap":case "trap2":case "trap3":trapShow(TRAP_STATES[state]);break;
       case "shelves":break;
       case "plants":strip(EN_PLANT_MSG,"reading");legendItems([["97 found first",blue],["3 not found first",gridGray]]);break;
       case "englishResults":strip(JUNK[0],"junk");legendItems([["Random ciphertexts",muted],["Wood’s best result",blue]]);break;
@@ -729,8 +731,8 @@ function Graphic(el){
   function drawMobile(){
     const p=panel(),cx=W/2,short=p.h<300,wideShort=W>500&&p.h<220;
     switch(state){
-      case "trap":{
-        ctx.save();ctx.globalAlpha*=trapFade();
+      case "trap":case "trap2":case "trap3":{
+        ctx.save();
         letterCards(TRAP_MSGS[Math.max(0,trapIndex)],p.x,p.y+p.h/2,p.w,Math.min(36,p.w/11.5),120);
         ctx.restore();break;
       }
@@ -827,8 +829,8 @@ function Graphic(el){
     if(isMobilePanel()){drawMobile();return;}
     const p=panel(),cx=W/2,compact=p.h<190,fs=W<360?13:15;
     switch(state){
-      case "trap":{
-        ctx.save();ctx.globalAlpha*=trapFade();
+      case "trap":case "trap2":case "trap3":{
+        ctx.save();
         letterCards(TRAP_MSGS[Math.max(0,trapIndex)],p.x,p.y+p.h/2,p.w,Math.min(30,p.w/14),120);
         ctx.restore();break;
       }
@@ -942,12 +944,6 @@ function Graphic(el){
     const before=elapsed;elapsed=Math.max(0,(pausedAt||now)-started);
     // Marks appear at their recorded values; animation never invents new scores.
     if(!instant&&before<1050+SETTLE&&elapsed!==before)dirty=true;
-    if(state==="trap"&&!instant){
-      const index=Math.floor(elapsed/TRAP_PERIOD)%TRAP_MSGS.length;
-      if(index!==trapIndex)trapShow(index);
-      tiles.style.opacity=sub.style.opacity=String(trapFade());
-      if(elapsed!==before)dirty=true;
-    }
     if(state==="prayer"&&!instant&&lastLetter<21){
       let n=0;[...tiles.children].forEach((t,i)=>{
         const turn=Math.max(0,Math.min(1,(elapsed-i*90)/320)),decoded=turn>=.5;
