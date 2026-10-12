@@ -171,7 +171,6 @@ figure img {
   .pinned-chapter .cw-prayer { font-size: clamp(17px, 5cqw, 21px); max-width: 32ch; }
   .pinned-chapter .cw-single { width: 64px; height: 72px; font-size: 44px; }
   .pinned-chapter .cw[data-stage="5"] .cw-single { width: 36px; height: 40px; font-size: 26px; }
-  .pinned-chapter .cw-message-reading { font-size: clamp(22px, 7cqw, 30px); }
 }
 @media (max-width: 360px) {
   .scrolly { --story-gutter: 20px; }

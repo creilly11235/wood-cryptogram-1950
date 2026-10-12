@@ -187,17 +187,26 @@
       this.message.setAttribute('role', 'group');
       this.message.setAttribute('aria-label', label.decodedMessage);
       this.message.setAttribute('translate', 'no');
-      this.reading = this.node('p', 'cw-message-reading');
-      this.messageLines = [
-        ['Hier bin ich.', 'de'], ['Totsiens.', 'af'], ['T.E.W.', '']
-      ].map(([text, lang], index) => {
-        const line = this.node('span', 'cw-message-line', text);
-        if (lang) line.lang = lang;
-        if (index) this.reading.append(document.createTextNode(' '));
-        this.reading.append(line);
-        return line;
+      this.message.setAttribute('role', 'img');
+      this.message.setAttribute('aria-label', 'Hier bin ich. Totsiens. T.E.W.');
+      // The 21 decoded letters stay on their cards, regrouped into words; the
+      // punctuation sits between them with no width until the cards fade.
+      this.messageLetters = [];
+      [
+        {letters: 'HIER', lang: 'de'}, {letters: 'BIN', lang: 'de'}, {letters: 'ICH', lang: 'de', after: '.'},
+        {letters: 'TOTSIENS', lang: 'af', after: '.'}, {letters: 'TEW', dotted: true}
+      ].forEach(word => {
+        const group = this.node('span', 'cw-msg-word');
+        if (word.lang) group.lang = word.lang;
+        word.letters.split('').forEach(letter => {
+          const card = this.node('span', 'cw-msg-letter decoded', letter);
+          this.messageLetters.push(card);
+          group.append(card);
+          if (word.dotted) group.append(this.node('span', 'cw-msg-punct', '.'));
+        });
+        if (word.after) group.append(this.node('span', 'cw-msg-punct', word.after));
+        this.message.append(group);
       });
-      this.message.append(this.reading);
       this.scene.append(this.source, this.keyphrase, this.grid, this.focus, this.shift, this.result, this.message);
 
       const controls = this.node('div', 'cw-controls');
@@ -303,6 +312,7 @@
       this.message.hidden = false;
       this.message.removeAttribute('aria-hidden');
       this.root.dataset.finale = 'settled';
+      this.message.offsetWidth;
       this.counter.setAttribute('aria-label', this.labels.step + ' 9: ' + this.labels.decodedMessage);
     }
 
@@ -312,39 +322,20 @@
         this.settleMessage();
         return;
       }
-      const origins = this.pairs.map(pair => {
-        const range = document.createRange();
-        range.selectNodeContents(pair.querySelector('.cw-face.decoded'));
-        return range.getBoundingClientRect();
-      });
+      const origins = this.pairs.map(pair => pair.querySelector('.cw-card').getBoundingClientRect());
       this.message.hidden = false;
       this.message.setAttribute('aria-hidden', 'true');
       this.root.dataset.finale = 'moving';
-      const destinations = [];
-      this.messageLines.forEach(line => {
-        const text = line.firstChild;
-        for (let index = 0; index < text.length; index++) {
-          const letter = text.textContent[index];
-          if (!/[a-z]/i.test(letter)) continue;
-          const range = document.createRange();
-          range.setStart(text, index);
-          range.setEnd(text, index + 1);
-          destinations.push({letter, rect: range.getBoundingClientRect()});
-        }
-      });
       const scene = this.scene.getBoundingClientRect();
-      const font = getComputedStyle(this.reading);
-      // Fly only the 21 original letters. Spacing, case and punctuation resolve
-      // into real, selectable text; there are no permanent letter wrappers.
-      destinations.forEach(({letter, rect}, index) => {
+      // Each card flies from its grid position to its place in the words.
+      this.messageLetters.forEach((letter, index) => {
+        const rect = letter.getBoundingClientRect();
         const origin = origins[index];
-        const ghost = this.node('span', 'cw-finale-letter', letter);
+        const ghost = this.node('span', 'cw-finale-letter cw-msg-letter decoded', letter.textContent);
         ghost.setAttribute('aria-hidden', 'true');
         Object.assign(ghost.style, {
           left: (rect.left - scene.left) + 'px', top: (rect.top - scene.top) + 'px',
-          width: rect.width + 'px', height: rect.height + 'px',
-          fontFamily: font.fontFamily, fontSize: font.fontSize, fontWeight: font.fontWeight,
-          lineHeight: rect.height + 'px'
+          width: rect.width + 'px', height: rect.height + 'px'
         });
         this.scene.append(ghost);
         this.ghosts.add(ghost);
@@ -354,16 +345,17 @@
           {opacity: 0, transform: `translate(${dx}px, ${dy}px) scale(${origin.width / rect.width}, ${origin.height / rect.height})`},
           {opacity: 1, offset: .12},
           {opacity: 1, transform: 'translate(0, 0) scale(1)'}
-        ], {duration: 800, delay: index * 10, fill: 'backwards'});
+        ], {duration: 700, delay: index * 12, fill: 'backwards'});
       });
       this.animate(this.grid, [{opacity: 1}, {opacity: 0}], {duration: 220});
       this.later(() => {
         this.root.dataset.finale = 'revealing';
         this.message.removeAttribute('aria-hidden');
-        this.animate(this.reading, [{opacity: 0}, {opacity: 1}], {duration: 180});
         this.ghosts.forEach(ghost => this.animate(ghost, [{opacity: 1}, {opacity: 0}], {duration: 180}));
-      }, 1030);
-      this.later(() => this.settleMessage(), 1220);
+      }, 1000);
+      // Settled, the cards fade behind the letters, the spacing tightens and
+      // the punctuation appears, all as stylesheet transitions.
+      this.later(() => this.settleMessage(), 1500);
     }
 
     go(stage, options = {}) {
@@ -376,6 +368,7 @@
       if (previous === 3) from = this.pairs[0].getBoundingClientRect();
       else if (previous === 4 || previous === 5) from = this.focusPair.getBoundingClientRect();
       else if (previous === 6) from = this.shiftTo.getBoundingClientRect();
+      else if (previous === 7) from = this.resultCard.getBoundingClientRect();
       else if (previous === 2 && stage === 3) {
         wordOrigins = this.prayerUnique.map(word => word.getBoundingClientRect());
         repeatOrigins = this.prayerRepeats.map(word => ({
@@ -476,22 +469,31 @@
         else this.animate(this.resultCard, [{opacity: 0, transform: 'scale(.85)'}, {opacity: 1, transform: 'scale(1)'}]);
       } else if (stage === 8) {
         this.root.dataset.finale = 'flipping';
+        // Arriving from the previous step, the decoded H glides from the big
+        // card to its place in the grid before the other cards flip.
+        const glide = Boolean(from) && !this.reduced;
         this.animate(this.grid, [{opacity: 0, transform: 'scale(.96)'}, {opacity: 1, transform: 'scale(1)'}], {duration: 400});
         this.pairs.forEach((pair, index) => {
-          const flip = () => {
+          const word = pair.querySelector('.cw-word');
+          const decode = () => {
             pair.classList.add('is-decoded');
             pair.setAttribute('aria-label', `${this.labels.decoded}: ${this.pt[index]}`);
-            const turn = pair.querySelector('.cw-card-turn');
-            this.animate(turn, [{transform: 'rotateY(0deg)'}, {transform: 'rotateY(180deg)'}], {duration: 420, easing: 'cubic-bezier(.4,0,.2,1)'});
-            const word = pair.querySelector('.cw-word');
             word.setAttribute('aria-hidden', 'true');
-            this.animate(word, [{opacity: 1}, {opacity: 0}], {delay: 420, duration: 160, fill: 'backwards'});
           };
-          if (this.reduced) flip();
-          else this.later(flip, 450 + index * 110);
+          const flip = () => {
+            decode();
+            this.animate(pair.querySelector('.cw-card-turn'), [{transform: 'rotateY(0deg)'}, {transform: 'rotateY(180deg)'}], {duration: 420, easing: 'cubic-bezier(.4,0,.2,1)'});
+            this.animate(word, [{opacity: 1}, {opacity: 0}], {duration: 420});
+          };
+          if (this.reduced) decode();
+          else if (glide && index === 0) {
+            decode();
+            this.moveFrom(pair.querySelector('.cw-card'), from, 520);
+            this.animate(word, [{opacity: 1}, {opacity: 0}], {duration: 520});
+          } else this.later(flip, (glide ? 640 : 450) + index * 110);
         });
         if (this.reduced) this.revealMessage();
-        else this.later(() => this.revealMessage(), 3500);
+        else this.later(() => this.revealMessage(), glide ? 3700 : 3500);
       }
     }
 
