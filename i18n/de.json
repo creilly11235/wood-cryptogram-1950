@@ -811,14 +811,6 @@
       "de": "\"Gruppiert mit Wortlisten in sieben Sprachen\""
     },
     {
-      "en": "\"German Bible\"",
-      "de": "\"Deutsche Bibel\""
-    },
-    {
-      "en": "\"Romanian Bible\"",
-      "de": "\"Rumänische Bibel\""
-    },
-    {
       "en": "\"Church wording “Vater unser”\"",
       "de": "\"Kirchliche Fassung „Vater unser“\""
     },
@@ -1017,6 +1009,10 @@
     {
       "en": "\"Message, key and cipher together\"",
       "de": "\"Botschaft, Schlüssel und Geheimtext zusammen\""
+    },
+    {
+      "en": "\"Best readings from 19 Bibles\"",
+      "de": "\"Beste Lesarten aus 19 Bibeln\""
     }
   ]
 }

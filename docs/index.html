@@ -515,6 +515,7 @@ const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* Small, responsive charts use the recorded results directly. Dot positions in
    the recovery and signature grids show counts, not a chronological ordering. */
 /* Source: harness/wood35t/PREREG.md, one full Bible per language (Latin Vulgate). */
+const TOP_LANGUAGES=["German","Romanian","Danish","Danish","Danish","Polish","Esperanto","Icelandic","German","Spanish","Afrikaans","French","Afrikaans"];
 const BIBLE_LANGUAGES=["Latin","French","German","Italian","Spanish","Portuguese","Dutch","Danish","Swedish","Norwegian","Icelandic","Esperanto","Finnish","Hungarian","Polish","Czech","Romanian","Afrikaans","Maori"];
 // Schematic covers: varied bindings suggest a mixed library. These cosmetic
 // choices are seeded once, so animation, resizing and revisits stay consistent.
@@ -699,7 +700,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","","Higher word score →"],"church":["Church wording “Vater unser”","Luther Bible “Unser Vater”"],"reading":["German for Here I am","Afrikaans for Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
+  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["Best readings from 19 Bibles","Higher word score →"],"church":["Church wording “Vater unser”","Luther Bible “Unser Vater”"],"reading":["German for Here I am","Afrikaans for Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -743,16 +744,17 @@ function Graphic(el){
   function rankedScores(p,nameWidth,size,scoreSize,axisSize){
     const scoreWidth=scoreSize*4.2,left=p.x+nameWidth,right=p.x+p.w-scoreWidth;
     const min=-1.75,max=-1.2,map=v=>left+(v-min)/(max-min)*(right-left);
-    const bottom=p.y+p.h-axisSize*3.2,top=p.y+4,dy=(bottom-top)/TOP.length;
+    const bottom=p.y+p.h-axisSize*3.2,top=p.y+size*2.2,dy=(bottom-top)/TOP.length;
+    label(mobileCopy.prayer[0],W/2,p.y+size*.7,p.w,size,muted,"center");
     [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,top,x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+axisSize*1.1,axisSize,muted,"center",true);});
     line(left,bottom,right,bottom,muted);
     TOP.forEach(([,value],i)=>{
-      const y=top+dy*(i+.5),c=i?muted:blue,name=i<2?mobileCopy.prayer[i]:String(i+1);
-      label(name,i<2?p.x:left-size*.8,y,nameWidth-size*.6,size,i?muted:blue,i<2?"left":"right");
-      reveal(i?80+i*60:420,()=>{line(left,y,map(value),y,c,i?1.5:2);outlineDot(map(value),y,i?3.5:5,c);});
-      text(value.toFixed(3).replace("-","−"),p.x+p.w,y,scoreSize,c,"right",true);
+      const y=top+dy*(i+.5),c=i?muted:blue,grow=progress(i*70,500);
+      label(TOP_LANGUAGES[i],left-size*.8,y,nameWidth-size*.6,size,c,"right");
+      if(grow>0){const end=left+(map(value)-left)*grow;line(left,y,end,y,c,i?1.5:2);dot(end,y,i?3.5:5,c);}
+      reveal(i*70+300,()=>text(value.toFixed(3).replace("-","−"),p.x+p.w,y,scoreSize,c,"right",true));
     });
-    label(mobileCopy.prayer[3],W/2,p.y+p.h-axisSize*.6,p.w,axisSize+1,muted,"center");
+    label(mobileCopy.prayer[1],W/2,p.y+p.h-axisSize*.6,p.w,axisSize+1,muted,"center");
   }
   // A run of cipher cards flips to its reading, then the cards slide into
   // the words of that reading. Both layouts centre on centreY and the cards
