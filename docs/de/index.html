@@ -995,7 +995,8 @@ function Graphic(el){
     if(W<2||H<2)return;
     const before=elapsed;elapsed=Math.max(0,(pausedAt||now)-started);
     // Marks appear at their recorded values; animation never invents new scores.
-    if(!instant&&before<1050+SETTLE&&elapsed!==before)dirty=true;
+    // Keep painting until the slowest staggered reveal (the card rows) has finished.
+    if(!instant&&before<1700+SETTLE&&elapsed!==before)dirty=true;
     if(state==="idea"&&!instant&&before<IDEA_END+SETTLE&&elapsed!==before)dirty=true;
     if(state==="prayer"&&!instant&&lastLetter<21){
       let n=0;[...tiles.children].forEach((t,i)=>{
