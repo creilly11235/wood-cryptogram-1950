@@ -198,7 +198,7 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="../story-layout.css?v=27">
 <link rel="stylesheet" href="../cipher-cards.css?v=25">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=29">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="../story-graphics.css?v=26">
 </head>
 <body>
@@ -576,7 +576,7 @@ function Graphic(el){
   const fadeIn=node=>{if(instant||!node.animate)return;node.animate([{opacity:0},{opacity:1}],{duration:FADE,easing:"ease-out"});};
   let W=1,H=1,DPR=1;
   // The lowest mark painted this frame, so the page can rise to meet the drawing.
-  let inkBottom=0,inkTail=-1;
+  let inkBottom=0,inkTail=-1,inkKey="";
   const mark=y=>{if(y>inkBottom)inkBottom=y;};
   const color=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   let ink,muted,blue,teal,pale,background,gridGray,decodedBg,decodedFg,decodedBorder,encodedBg,encodedFg,encodedBorder;
@@ -589,7 +589,7 @@ function Graphic(el){
   function label(s,x,y,max,size=14,c=ink,align="left",code=false){text(s,x,y,fit(s,max,size,code),c,align,code);}
   // Helper labels share one size and colour with the walkthrough's scene labels.
   const CAP=12;
-  function caption(s,y){label(s,W/2,y,W-10,CAP,muted,"center");}
+  function caption(s,y,lines=1){wrap(s,W/2,y,W-10,CAP,muted,"center",lines);}
   function cipherText(s,x,y,max,size=14,kind="decoded"){
     const fitted=fit(s,max-14,size,true);ctx.font=font(fitted,true);
     const width=ctx.measureText(s).width+12,height=fitted+12,left=x-5,top=y-height/2;
@@ -783,10 +783,10 @@ function Graphic(el){
     });
     return rows;
   }
-  function ideaScene(p){
+  function ideaScene(p,tile){
     // Two readings of the same cipher. Each block flips the cipher cards to
     // the test message, then groups them as that word list does.
-    const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=CAP*2.8;
+    const short=p.h<360,height=tile*1.2,rowStep=height+tile*.35,head=CAP*2.8;
     const rowsFor=text=>Math.max(cardRows(groupFive(text),p.w,tile).rows,cardRows(text,p.w,tile).rows);
     const need=IDEA.map(([text])=>head+rowsFor(text)*rowStep-tile*.35);
     const room=p.h*(short?.7:1),content=need[0]+need[1];
@@ -824,26 +824,36 @@ function Graphic(el){
     }
     if(sceneAlpha>=1)fading=false;
     ctx.globalAlpha=sceneAlpha;
-    inkBottom=0;
     try{paintScene();}finally{ctx.globalAlpha=1;}
-    // A legend already sits at the foot; otherwise the empty canvas below the
-    // last mark is space the next passage can use.
-    const tail=legend.childElementCount?0:Math.max(0,Math.round(H-inkBottom));
+    measureInk();
+  }
+  // The empty canvas below the scene's lowest mark is space the next passage
+  // can use. It is measured once per scene and size from the finished frame,
+  // painted invisibly, so the page never shifts while a scene is animating
+  // or while the previous one is still fading out.
+  function measureInk(){
+    const key=state+" "+W+"x"+H;
+    if(fading||key===inkKey)return;
+    const keep=[instant,sceneAlpha];instant=true;sceneAlpha=0;inkBottom=0;
+    ctx.save();ctx.globalAlpha=0;try{paintScene();}finally{ctx.restore();[instant,sceneAlpha]=keep;}
+    inkKey=key;
+    const tail=Math.max(0,Math.round(H-inkBottom));
     if(tail!==inkTail){inkTail=tail;el.dispatchEvent(new Event("inktail"));}
   }
   function paintScene(){
     // Portrait phones get the full-screen scenes; a landscape phone is short
     // and wide, like the desktop column, so it shares the column layout.
     const m=isMobilePanel(),p=panel(),cx=W/2,short=p.h<300;
-    const tileFor=(tall,wide=tall)=>Math.min(m?30:26,p.w/13.5,p.h/(short?tall:wide));
+    // Card size from the panel: the divisor for a short panel, then for a tall one.
+    const tileFor=(tall,wide,limit=300)=>Math.min(m?30:26,p.w/13.5,p.h/(p.h<limit?tall:wide));
     switch(state){
       case "trap":case "trap2":case "trap3":
         cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(m?36:30,p.w/(m?11.5:14)),p.y+p.h/2);break;
       case "shelves":
-        caption(copy.shelves[0],p.y+10);
+        caption(copy.shelves[0],p.y+10,2);
         bookshelves({x:p.x,y:p.y+32,w:p.w,h:Math.max(1,p.h-44)});break;
       case "plants":{
-        caption(copy.plants[0],p.y+10);
+        caption(copy.plants[0],p.y+10,2);
         const gw=Math.min(p.w,p.h*(m?1.4:1.6));
         grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+32,w:gw,h:Math.max(24,p.h-44)},!m&&p.h<190?20:10,m?6:5);break;
       }
@@ -862,7 +872,7 @@ function Graphic(el){
         [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+(m?24:18),CAP,muted,"center",true));
         caption(copy.english[1],plotY+plotHeight-10);break;
       }
-      case "idea":ideaScene(p);break;
+      case "idea":ideaScene(p,tileFor(18,15,360));break;
       case "bibles":{
         const cols=m?(W<500?2:4):W<330?3:W<420?4:5,nrows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/nrows;
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*70,()=>{
@@ -879,7 +889,7 @@ function Graphic(el){
       case "church":{
         // Two keys from two wordings: the church prayer gives nothing
         // readable, the Luther Bible gives the message.
-        const tile=tileFor(18,15),height=tile*1.2,rowStep=height+tile*.35,head=CAP*2.8;
+        const tile=tileFor(m?18:14,m?15:1),height=tile*1.2,rowStep=height+tile*.35,head=CAP*2.8;
         const rowsOf=[[groupFive("SXFFFLOEPTPPQMAVDXEUR")],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
         const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),room=p.h*(short?.7:1),content=need[0]+need[1];
         const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
@@ -891,13 +901,13 @@ function Graphic(el){
           block+=need[r]+spacing;
         });break;
       }
-      case "reading":readingCards(p,tileFor(16,12),p.h*(short?.7:1));break;
+      case "reading":readingCards(p,tileFor(m?18:16,m?15:12),p.h*(short?.7:1));break;
       case "checks":{
         const items=copy.checks.slice(1).map(detail=>[copy.checks[0],detail,blue]);
         if(m)mobileRows(items);else rows(items);break;
       }
       case "luck":{
-        caption(copy.luck[0],p.y+10);
+        caption(copy.luck[0],p.y+10,2);
         grid(500,i=>i<7,{x:p.x,y:p.y+32,w:p.w,h:Math.max(24,p.h-58)},m?(W<500?20:40):p.h<190?50:25,m?4:3.4);
         caption(copy.luck[1],p.y+p.h-10);break;
       }
@@ -976,7 +986,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=28"></script>
+<script src="../story-scroll.js?v=29"></script>
 <script src="../hero-reveal.js?v=25"></script>
 <script src="../cipher-tokens.js?v=25"></script>
 <script>
