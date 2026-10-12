@@ -702,7 +702,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["Jeder Buchrücken steht für ein Buch","Jede mögliche Startposition wurde ausprobiert"],"plants":["Bestes Ergebnis in 97 von 100 Tests","Ein Punkt = ein Test"],"english":["12 zufällige Geheimtexte wurden höher bewertet","Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Gruppiert mit einer englischen Wortliste","Gruppiert mit Wortlisten in sieben Sprachen"],"prayer":["Deutsche Bibel","Rumänische Bibel","Übrige 11 Ergebnisse","Höhere Wortbewertung →"],"church":["Kirchlicher Wortlaut: Vater unser","Lutherbibel: Unser Vater"],"reading":["Deutsch · Hier bin ich","Afrikaans · Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
+  const mobileCopy={"shelves":["Ein Testbestand von 129 Büchern"],"plants":["Bestes Ergebnis in 97 von 100 Tests","Ein Punkt = ein Test"],"english":["12 zufällige Geheimtexte wurden höher bewertet","Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Gruppiert mit einer englischen Wortliste","Gruppiert mit Wortlisten in sieben Sprachen"],"prayer":["Deutsche Bibel","Rumänische Bibel","Übrige 11 Ergebnisse","Höhere Wortbewertung →"],"church":["Kirchlicher Wortlaut: Vater unser","Lutherbibel: Unser Vater"],"reading":["Deutsch · Hier bin ich","Afrikaans · Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -792,10 +792,9 @@ function Graphic(el){
         ctx.restore();break;
       }
       case "shelves":{
-        const top=p.y+(wideShort?35:58),bottom=p.y+p.h-(wideShort?33:55);
-        wrap(mobileCopy.shelves[0],cx,p.y+(wideShort?13:19),p.w,17,ink,"center");
-        bookshelves({x:p.x,y:top,w:p.w,h:Math.max(1,bottom-top)});
-        wrap(mobileCopy.shelves[1],cx,p.y+p.h-(wideShort?12:21),p.w,15,muted,"center");break;
+        const top=p.y+(wideShort?30:48),bottom=p.y+p.h-(wideShort?8:16);
+        label(mobileCopy.shelves[0],cx,p.y+(wideShort?12:18),p.w,wideShort?14:16,muted,"center");
+        bookshelves({x:p.x,y:top,w:p.w,h:Math.max(1,bottom-top)});break;
       }
       case "plants":{
         wrap(mobileCopy.plants[0],cx,p.y+(wideShort?13:19),p.w,18,ink,"center");
@@ -890,9 +889,8 @@ function Graphic(el){
         ctx.restore();break;
       }
       case "shelves":{
-        bookshelves({x:p.x,y:p.y+30,w:p.w,h:Math.max(1,p.h-55)});
-        label("Jeder Buchrücken steht für ein Buch",cx,p.y+10,p.w,fs,ink,"center");
-        label("Jede mögliche Startposition wurde ausprobiert",cx,p.y+p.h-9,p.w,13,muted,"center");break;
+        bookshelves({x:p.x,y:p.y+30,w:p.w,h:Math.max(1,p.h-40)});
+        label("Ein Testbestand von 129 Büchern",cx,p.y+10,p.w,13,muted,"center");break;
       }
       case "plants":{
         const numberY=p.y+13;label("Bestes Ergebnis in 97 von 100 Tests",cx,numberY,p.w,fs,ink,"center");

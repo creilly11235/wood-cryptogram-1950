@@ -701,7 +701,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["Each spine represents one book","Every possible starting point was tried"],"plants":["Top result in 97 of 100 tests","Each dot is one known-message test"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","Other 11 readings","Higher word score →"],"church":["Church wording: Vater unser","Luther Bible: Unser Vater"],"reading":["German · Here I am","Afrikaans · Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
+  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["Top result in 97 of 100 tests","Each dot is one known-message test"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","Other 11 readings","Higher word score →"],"church":["Church wording: Vater unser","Luther Bible: Unser Vater"],"reading":["German · Here I am","Afrikaans · Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -791,10 +791,9 @@ function Graphic(el){
         ctx.restore();break;
       }
       case "shelves":{
-        const top=p.y+(wideShort?35:58),bottom=p.y+p.h-(wideShort?33:55);
-        wrap(mobileCopy.shelves[0],cx,p.y+(wideShort?13:19),p.w,17,ink,"center");
-        bookshelves({x:p.x,y:top,w:p.w,h:Math.max(1,bottom-top)});
-        wrap(mobileCopy.shelves[1],cx,p.y+p.h-(wideShort?12:21),p.w,15,muted,"center");break;
+        const top=p.y+(wideShort?30:48),bottom=p.y+p.h-(wideShort?8:16);
+        label(mobileCopy.shelves[0],cx,p.y+(wideShort?12:18),p.w,wideShort?14:16,muted,"center");
+        bookshelves({x:p.x,y:top,w:p.w,h:Math.max(1,bottom-top)});break;
       }
       case "plants":{
         wrap(mobileCopy.plants[0],cx,p.y+(wideShort?13:19),p.w,18,ink,"center");
@@ -889,9 +888,8 @@ function Graphic(el){
         ctx.restore();break;
       }
       case "shelves":{
-        bookshelves({x:p.x,y:p.y+30,w:p.w,h:Math.max(1,p.h-55)});
-        label("Each spine represents one book",cx,p.y+10,p.w,fs,ink,"center");
-        label("Every possible starting point was tried",cx,p.y+p.h-9,p.w,13,muted,"center");break;
+        bookshelves({x:p.x,y:p.y+30,w:p.w,h:Math.max(1,p.h-40)});
+        label("A test set of 129 books",cx,p.y+10,p.w,13,muted,"center");break;
       }
       case "plants":{
         const numberY=p.y+13;label("Top result in 97 of 100 tests",cx,numberY,p.w,fs,ink,"center");
