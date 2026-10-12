@@ -84,6 +84,9 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .scrolly{max-width:1184px;margin:0 auto;padding-inline:24px}
 .chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start}
 .chapter+.chapter{border-top:1px solid var(--veil-2)}
+/* A chapter that opens without a heading runs on from the one before it. */
+.chapter+.chapter:not(:has(h2)){border-top:0}
+.chapter+.chapter:not(:has(h2))>.text-before{padding-top:0}
 .graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
 .gbody{display:flex;flex-direction:column;flex:1;min-height:0}
 .replay:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
@@ -637,7 +640,7 @@ function Graphic(el){
       case "trap":case "trap2":case "trap3":trapShow(TRAP_STATES[state]);break;
       case "shelves":break;
       case "plants":strip(EN_PLANT_MSG,"reading");legendItems([["Top result matched",blue],["Top result did not match",gridGray]]);break;
-      case "englishResults":strip(JUNK[0],"junk");legendItems([["Random ciphertexts",muted],["Wood’s best result",blue]]);break;
+      case "englishResults":strip(JUNK[0],"junk");legendItems([]);break;
       case "idea":strip("","reading");break;
       case "bibles":break;
       case "prayer":strip(instant?PT:CT,instant?"reading":"cipher");break;
@@ -806,9 +809,9 @@ function Graphic(el){
         const dy=Math.max(1.8,Math.min(18,(bottom-top)/Math.max(...counts))),r=Math.min(4.6,dy*.39,(right-left)/bins*.34);
         points.forEach((pt,i)=>reveal(i*3,()=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted),300));
         line(left,bottom+3,right,bottom+3,pale);const wx=map(EN_WOOD);
-        reveal(430,()=>{line(wx,top-10,wx,bottom+3,blue,1.5);outlineDot(wx,bottom+3,5.5,blue);});
-        wrap(mobileCopy.english[0],cx,p.y+(compact?13:22),p.w,17,ink,"center",2);
-        text(mobileCopy.english[1],wx-7,top-(compact?18:22),15,blue,"right",true);
+        reveal(430,()=>{line(wx,top-8,wx,bottom+3,blue,1.5);dot(wx,top-8,4.5,blue);});
+        label(mobileCopy.english[0],cx,p.y+(compact?12:18),p.w,compact?14:16,muted,"center");
+        text(mobileCopy.english[1],wx,top-(compact?22:26),15,blue,"center",true);
         [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+24,13,muted,"center",true));
         wrap(mobileCopy.english[2],cx,p.y+p.h-13,p.w,15,muted,"center");break;
       }
@@ -903,10 +906,9 @@ function Graphic(el){
         const dy=Math.min(10,(bottom-top)/Math.max(...counts)),r=Math.min(3.8,dy*.39,(right-left)/bins*.34);
         points.forEach((pt,i)=>reveal(i*3,()=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted),300));
         line(left,bottom+3,right,bottom+3,pale);
-        const wx=map(EN_WOOD);reveal(430,()=>{line(wx,top-7,wx,bottom+3,blue,1.5);outlineDot(wx,bottom+3,4.5,blue);});
-        const woodLabel="Wood −13.937",woodSide=wx>cx?"right":"left",woodX=woodSide==="right"?wx-7:wx+7;
-        label(woodLabel,woodX,plotY+33,p.w*.64,13,blue,woodSide,true);
-        label("12 random ciphertexts scored higher",cx,plotY+10,p.w,12,ink,"center");
+        const wx=map(EN_WOOD);reveal(430,()=>{line(wx,top-7,wx,bottom+3,blue,1.5);dot(wx,top-7,3.8,blue);});
+        text("Wood −13.937",wx,plotY+30,13,blue,"center",true);
+        label("12 random ciphertexts scored higher",cx,plotY+10,p.w,13,muted,"center");
         text("−15.0",map(-15),bottom+18,12,muted,"center",true);text("−14.0",map(-14),bottom+18,12,muted,"center",true);text("−13.25",map(-13.25),bottom+18,12,muted,"center",true);
         label("English-likeness score →",cx,plotY+plotHeight-8,p.w,12,muted,"center");
         break;
