@@ -192,7 +192,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="story-layout.css?v=27">
 <link rel="stylesheet" href="cipher-cards.css?v=25">
 <link rel="stylesheet" href="cipher-walkthrough.css?v=28">
-<link rel="stylesheet" href="story-graphics.css?v=24">
+<link rel="stylesheet" href="story-graphics.css?v=25">
 </head>
 <body>
 
@@ -299,7 +299,7 @@ footer p{margin:0 0 .7em}
 <p>Wood had given away one important thing, though. His key came from consecutive words in a published book, so a collection of books could be searched, one starting word at a time. Each spine here is one of the 129 books in that first search.</p>
 </section>
 <section class="step" data-s="plants" data-walk-stage="5" data-cap="The correct message ranked first in 97 of 100 known test ciphers. Each dot is one test.">
-<p>Before searching for Wood’s message, we ran 100 test ciphers with known answers through the same code. Each decryption was scored by how much it resembled English, and the correct message came out on top in 97 of the 100 tests.</p>
+<p>To test the search method we ran 100 ciphers with known answers through the same code and scored every decryption by how much it resembled English. The correct message came out on top in 97 of the 100 tests.</p>
 </section>
 <section class="step" data-s="englishResults" data-walk-stage="6" data-cap="Each grey dot is the best result for one of 100 random ciphertexts. Twelve scored higher than Wood’s best result, marked in blue.">
 <p>Wood’s message produced nothing readable, even after the search grew to 3,977 texts. Run on 100 random strings of 21 letters instead, the same search found a result in 12 of them that scored higher than anything it had found for Wood’s message.</p>
@@ -636,7 +636,7 @@ function Graphic(el){
     switch(state){
       case "trap":case "trap2":case "trap3":trapShow(TRAP_STATES[state]);break;
       case "shelves":break;
-      case "plants":strip(EN_PLANT_MSG,"reading");legendItems([["97 found first",blue],["3 not found first",gridGray]]);break;
+      case "plants":strip(EN_PLANT_MSG,"reading");legendItems([["Top result matched",blue],["Top result did not match",gridGray]]);break;
       case "englishResults":strip(JUNK[0],"junk");legendItems([["Random ciphertexts",muted],["Wood’s best result",blue]]);break;
       case "idea":strip("","reading");break;
       case "bibles":break;
@@ -701,7 +701,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["Top result in 97 of 100 tests","Each dot is one known-message test"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","Other 11 readings","Higher word score →"],"church":["Church wording: Vater unser","Luther Bible: Unser Vater"],"reading":["German · Here I am","Afrikaans · Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
+  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","Other 11 readings","Higher word score →"],"church":["Church wording: Vater unser","Luther Bible: Unser Vater"],"reading":["German · Here I am","Afrikaans · Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -796,9 +796,8 @@ function Graphic(el){
         bookshelves({x:p.x,y:top,w:p.w,h:Math.max(1,bottom-top)});break;
       }
       case "plants":{
-        wrap(mobileCopy.plants[0],cx,p.y+(wideShort?13:19),p.w,18,ink,"center");
-        const gw=Math.min(p.w,p.h*1.4);grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+(wideShort?32:51),w:gw,h:Math.max(24,p.h-(wideShort?64:102))},10,6);
-        wrap(mobileCopy.plants[1],cx,p.y+p.h-(wideShort?12:21),p.w,15,muted,"center");break;
+        label(mobileCopy.plants[0],cx,p.y+(wideShort?12:18),p.w,wideShort?14:16,muted,"center");
+        const gw=Math.min(p.w,p.h*1.4);grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+(wideShort?30:48),w:gw,h:Math.max(24,p.h-(wideShort?40:64))},10,6);break;
       }
       case "englishResults":{
         const left=p.x+20,right=p.x+p.w-20,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
@@ -892,10 +891,9 @@ function Graphic(el){
         label("A test set of 129 books",cx,p.y+10,p.w,13,muted,"center");break;
       }
       case "plants":{
-        const numberY=p.y+13;label("Top result in 97 of 100 tests",cx,numberY,p.w,fs,ink,"center");
+        label("100 test ciphers with known answers",cx,p.y+10,p.w,13,muted,"center");
         const gw=Math.min(p.w,p.h*1.6),columns=p.h<190?20:10;
-        grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+31,w:gw,h:p.h-49},columns,5);
-        label("Each dot is one known-message test",cx,p.y+p.h-9,p.w,12,muted,"center");break;
+        grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+30,w:gw,h:p.h-40},columns,5);break;
       }
       case "englishResults":{
         const left=p.x+9,right=p.x+p.w-9,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);

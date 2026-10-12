@@ -183,8 +183,8 @@
     },
     {
       "kind": "p",
-      "en": "Before searching for Wood’s message, we ran 100 test ciphers with known answers through the same code. Each decryption was scored by how much it resembled English, and the correct message came out on top in 97 of the 100 tests.",
-      "de": "Bevor wir nach Woods Botschaft suchten, ließen wir 100 Testbotschaften mit bekanntem Klartext durch denselben Code laufen. Jede Entschlüsselung wurde danach bewertet, wie sehr sie Englisch ähnelte, und in 97 von 100 Tests erhielt die richtige Botschaft die höchste Bewertung."
+      "en": "To test the search method we ran 100 ciphers with known answers through the same code and scored every decryption by how much it resembled English. The correct message came out on top in 97 of the 100 tests.",
+      "de": "Um das Suchverfahren zu prüfen, ließen wir 100 Geheimtexte mit bekanntem Klartext durch denselben Code laufen und bewerteten jede Entschlüsselung danach, wie sehr sie Englisch ähnelte. In 97 von 100 Tests erhielt die richtige Botschaft die höchste Bewertung."
     },
     {
       "kind": "attr",
@@ -795,12 +795,12 @@
       "de": "\"Maori\""
     },
     {
-      "en": "\"97 found first\"",
-      "de": "\"97 an erster Stelle\""
+      "en": "\"Top result matched\"",
+      "de": "\"Bestes Ergebnis stimmte\""
     },
     {
-      "en": "\"3 not found first\"",
-      "de": "\"3 nicht an erster Stelle\""
+      "en": "\"Top result did not match\"",
+      "de": "\"Bestes Ergebnis stimmte nicht\""
     },
     {
       "en": "\"Random ciphertexts\"",
@@ -823,12 +823,8 @@
       "de": "\"Ein Testbestand von 129 Büchern\""
     },
     {
-      "en": "\"Top result in 97 of 100 tests\"",
-      "de": "\"Bestes Ergebnis in 97 von 100 Tests\""
-    },
-    {
-      "en": "\"Each dot is one known-message test\"",
-      "de": "\"Ein Punkt = ein Test\""
+      "en": "\"100 test ciphers with known answers\"",
+      "de": "\"100 Geheimtexte mit bekanntem Klartext\""
     },
     {
       "en": "\"Wood −13.937\"",
