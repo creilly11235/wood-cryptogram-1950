@@ -701,7 +701,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["Ein Testbestand von 129 Büchern"],"plants":["100 Geheimtexte mit bekanntem Klartext"],"english":["12 zufällige Geheimtexte wurden höher bewertet","Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Gruppiert mit einer englischen Wortliste","Gruppiert mit Wortlisten in sieben Sprachen"],"prayer":["Beste Lesarten aus 19 Bibeln","Höhere Wortbewertung →"],"church":["Kirchliche Fassung „Vater unser“","Lutherbibel „Unser Vater“"],"reading":["Deutsch, Hier bin ich","Afrikaans für Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
+  const mobileCopy={"shelves":["Ein Testbestand von 129 Büchern"],"plants":["100 Geheimtexte mit bekanntem Klartext"],"english":["Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Gruppiert mit einer englischen Wortliste","Gruppiert mit Wortlisten in sieben Sprachen"],"prayer":["Beste Lesarten aus 19 Bibeln","Höhere Wortbewertung →"],"church":["Kirchliche Fassung „Vater unser“","Lutherbibel „Unser Vater“"],"reading":["Deutsch, Hier bin ich","Afrikaans für Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -778,7 +778,7 @@ function Graphic(el){
   function ideaScene(p,size){
     // Two readings of the same cipher. Each block flips the cipher cards to
     // the test message, then groups them as that word list does.
-    const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=size*1.7;
+    const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=size*2.6;
     const rowsFor=text=>Math.max(cardRows(groupFive(text),p.w,tile).rows,cardRows(text,p.w,tile).rows);
     const need=IDEA.map(([text])=>head+rowsFor(text)*rowStep-tile*.35);
     const room=p.h*(short?.7:1),content=need[0]+need[1];
@@ -824,16 +824,17 @@ function Graphic(el){
       }
       case "englishResults":{
         const left=p.x+20,right=p.x+p.w-20,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
-        const compact=p.h<250,bottom=p.y+p.h-(compact?55:65),top=p.y+(compact?57:95),bins=27,counts=Array(bins).fill(0),points=[];
+        // On a small phone the text card covers the panel's foot, so the chart keeps clear of it.
+        const q=isMobilePanel()&&p.h<360?{...p,h:p.h*.9}:p;
+        const compact=q.h<250,bottom=q.y+q.h-(compact?55:65),top=q.y+(compact?40:62),bins=27,counts=Array(bins).fill(0),points=[];
         EN_NULLX.forEach(value=>{const bin=Math.max(0,Math.min(bins-1,Math.floor((value-min)/(max-min)*bins)));points.push({value,row:counts[bin]++});});
         const dy=Math.max(1.8,Math.min(18,(bottom-top)/Math.max(...counts))),r=Math.min(4.6,dy*.39,(right-left)/bins*.34);
         points.forEach((pt,i)=>reveal(i*3,()=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted),300));
         line(left,bottom+3,right,bottom+3,pale);const wx=map(EN_WOOD);
         reveal(430,()=>{line(wx,top-8,wx,bottom+3,blue,1.5);dot(wx,top-8,4.5,blue);});
-        label(mobileCopy.english[0],cx,p.y+(compact?12:18),p.w,compact?14:16,muted,"center");
-        text(mobileCopy.english[1],wx,top-(compact?22:26),15,blue,"center",true);
+        text(mobileCopy.english[0],wx,top-(compact?22:26),15,blue,"center",true);
         [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+24,13,muted,"center",true));
-        wrap(mobileCopy.english[2],cx,p.y+p.h-13,p.w,15,muted,"center");break;
+        wrap(mobileCopy.english[1],cx,q.y+q.h-13,q.w,15,muted,"center");break;
       }
       case "idea":ideaScene(p,short?14:16);break;
       case "bibles":{
@@ -846,7 +847,7 @@ function Graphic(el){
       case "church":{
         // Two keys from two wordings: the church prayer gives nothing
         // readable, the Luther Bible gives the message.
-        const tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=(short?14:16)*2;
+        const tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=(short?14:16)*2.6;
         const rowsOf=[[groupFive("SXFFFLOEPTPPQMAVDXEUR")],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
         const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),room=p.h*(short?.7:1),content=need[0]+need[1];
         const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
@@ -901,15 +902,14 @@ function Graphic(el){
       }
       case "englishResults":{
         const left=p.x+9,right=p.x+p.w-9,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
-        const plotHeight=Math.min(p.h,230),plotY=p.y+(p.h-plotHeight)/2;
-        const bottom=plotY+plotHeight-45,top=plotY+48,bins=27,counts=Array(bins).fill(0),points=[];
+        const plotHeight=Math.min(p.h<300?p.h*.74:p.h,230),plotY=p.y+(p.h<300?0:(p.h-plotHeight)/2);
+        const bottom=plotY+plotHeight-45,top=plotY+30,bins=27,counts=Array(bins).fill(0),points=[];
         EN_NULLX.forEach(value=>{const bin=Math.max(0,Math.min(bins-1,Math.floor((value-min)/(max-min)*bins)));points.push({value,row:counts[bin]++});});
         const dy=Math.min(10,(bottom-top)/Math.max(...counts)),r=Math.min(3.8,dy*.39,(right-left)/bins*.34);
         points.forEach((pt,i)=>reveal(i*3,()=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted),300));
         line(left,bottom+3,right,bottom+3,pale);
         const wx=map(EN_WOOD);reveal(430,()=>{line(wx,top-7,wx,bottom+3,blue,1.5);dot(wx,top-7,3.8,blue);});
-        text("Wood −13,937",wx,plotY+30,13,blue,"center",true);
-        label("12 zufällige Geheimtexte wurden höher bewertet",cx,plotY+10,p.w,13,muted,"center");
+        text("Wood −13,937",wx,plotY+12,13,blue,"center",true);
         text("−15.0",map(-15),bottom+18,12,muted,"center",true);text("−14.0",map(-14),bottom+18,12,muted,"center",true);text("−13.25",map(-13.25),bottom+18,12,muted,"center",true);
         label("Ähnlichkeit mit Englisch →",cx,plotY+plotHeight-8,p.w,12,muted,"center");
         break;
@@ -925,10 +925,10 @@ function Graphic(el){
         {const low=p.h<300;rankedScores(low?{...p,h:p.h*.72}:p,W<400?94:116,low?10:12,low?9:11,low?9:11);break;}
       }
       case "church":{
-        const tile=Math.min(26,p.w/13.5),height=tile*1.2,rowStep=height+tile*.35,head=28;
+        const low=p.h<300,tile=Math.min(26,p.w/13.5,low?p.h/14:p.h),height=tile*1.2,rowStep=height+tile*.35,head=low?28:34,room=p.h*(low?.72:1);
         const rowsOf=[[groupFive("SXFFFLOEPTPPQMAVDXEUR")],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
-        const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),content=need[0]+need[1],spacing=Math.max(12,Math.min(tile*2.2,(p.h-content)/3));
-        let block=p.y+Math.max(4,(p.h-content-spacing)/2);
+        const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),content=need[0]+need[1],spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
+        let block=p.y+Math.max(4,(room-content-spacing)/2);
         rowsOf.forEach((layout,r)=>{
           label(["Kirchliche Fassung „Vater unser“","Lutherbibel „Unser Vater“"][r],cx,block+13,p.w,13,muted,"center");
           const centreY=block+head+height/2+(layout.rows-1)*rowStep/2;
