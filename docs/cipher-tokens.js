@@ -21,7 +21,15 @@
         run.append(card);
       } else {
         run = null;
-        fragment.append(document.createTextNode(character));
+        if (character === ' ') {
+          // A fixed gap between groups, so word spacing does not depend on the prose font.
+          const gap = document.createElement('span');
+          gap.className = 'cipher-gap';
+          gap.textContent = ' ';
+          fragment.append(gap);
+        } else {
+          fragment.append(document.createTextNode(character));
+        }
       }
     }
     // Short runs (cipher groups, words) stay whole; a long unbroken string may wrap.

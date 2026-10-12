@@ -12,6 +12,7 @@ td .cipher-token{min-width:1.65em;padding:.12em .18em .16em}
 /* A tiled token is a run of small cards in the text; the wrapper itself is plain. */
 .cipher-token.is-tiled,.step p .cipher-token.is-tiled,td .cipher-token.is-tiled{display:inline;background:none;border:0;box-shadow:none;padding:0;min-width:0;border-radius:0;font-size:1em;line-height:inherit;word-spacing:0;white-space:normal}
 .cipher-token.is-tiled .cipher-run.is-whole{white-space:nowrap}
-.cipher-token.is-tiled .t{display:inline-grid;place-items:center;aspect-ratio:auto;width:1.2em;height:1.4em;margin:0 .5px;padding-top:.06em;font-size:.78em;line-height:1;vertical-align:middle;transition:none}
+.cipher-token.is-tiled .t{display:inline-grid;place-items:center;aspect-ratio:auto;width:1.54em;height:1.92em;margin:0 .5px;padding-top:.09em;font-size:.7em;line-height:1;vertical-align:middle;transition:none}
+.cipher-token.is-tiled .cipher-gap{display:inline-block;width:.45em}
 td .cipher-token.is-tiled .t{margin:0}
 

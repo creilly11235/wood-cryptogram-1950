@@ -190,7 +190,7 @@ footer p{margin:0 0 .7em}
 .endmatter h2{margin-top:0}
 </style>
 <link rel="stylesheet" href="../story-layout.css?v=24">
-<link rel="stylesheet" href="../cipher-cards.css?v=24">
+<link rel="stylesheet" href="../cipher-cards.css?v=25">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=24">
 <link rel="stylesheet" href="../story-graphics.css?v=24">
 </head>
@@ -691,26 +691,8 @@ function Graphic(el){
       });
     }
   }
-  function words(s,x,y,width,size,delay){
-    const parts=s.split(" "),gap=5;let fitted=size;ctx.font=font(fitted,true);
-    const total=()=>parts.reduce((sum,word)=>sum+ctx.measureText(word).width+8,0)+(parts.length-1)*gap;
-    while(total()>width&&fitted>10){fitted-=.5;ctx.font=font(fitted,true);}
-    let left=x;parts.forEach((word,i)=>{ctx.font=font(fitted,true);const w=ctx.measureText(word).width+8;
-      reveal(delay+i*85,()=>{ctx.fillStyle=decodedBg;ctx.beginPath();ctx.roundRect(left,y-fitted/2-6,w,fitted+12,3);ctx.fill();line(left+2,y+fitted/2+5,left+w-2,y+fitted/2+5,decodedBorder,1.5);text(word,left+w/2,y,fitted,decodedFg,"center",true);});left+=w+gap;});
-  }
   const mobileCopy={"shelves":["Jeder Buchrücken steht für ein Buch","Jede mögliche Startposition wurde ausprobiert"],"plants":["Bestes Ergebnis in 97 von 100 Tests","Ein Punkt = ein Test"],"english":["12 zufällige Geheimtexte wurden höher bewertet","Wood −13,937","Ähnlichkeit mit Englisch →"],"idea":["Englische Wortliste","Wortlisten in sieben Sprachen"],"prayer":["Deutsche Bibel","Rumänische Bibel","Übrige 11 Ergebnisse","Höhere Wortbewertung →"],"church":["Kirchlicher Wortlaut: Vater unser","Lutherbibel: Unser Vater"],"reading":["Deutsch · Hier bin ich","Afrikaans · Auf Wiedersehen","Woods Initialen"],"checks":["21 / 21 Buchstaben","Vom eigenständigen Prüfskript reproduziert","Von Astra unabhängig reproduziert","Mit dem ursprünglichen Geheimtext abgeglichen"],"luck":["500 zufällige Signaturen aus drei Buchstaben","7 Signaturen mit Treffern · ein Punkt je Signatur"],"slip":["Summe: 75","Thouless druckte stattdessen U","Der letzte Geheimtextbuchstabe: D","Das veröffentlichte Beispiel endet auf B"]};
 
-  // Full-screen phone scenes keep labels on their own lines. The canvas takes
-  // the space left by the caption and cipher strip, including short landscapes.
-  function mobileWords(s,x,y,width,size,delay){
-    const parts=s.split(" "),gap=7,rows=[[]];ctx.font=font(size,true);
-    let used=0;
-    parts.forEach(word=>{const w=ctx.measureText(word).width+12;if(used&&used+gap+w>width){rows.push([]);used=0;}rows[rows.length-1].push([word,w]);used+=(used?gap:0)+w;});
-    let index=0;
-    rows.forEach((row,r)=>{let left=x;const rowY=y+(r-(rows.length-1)/2)*(size+24);
-      row.forEach(([word,w])=>{const at=left;reveal(delay+index++*85,()=>{ctx.fillStyle=decodedBg;ctx.beginPath();ctx.roundRect(at,rowY-size/2-7,w,size+14,4);ctx.fill();line(at+2,rowY+size/2+6,at+w-2,rowY+size/2+6,decodedBorder,2);text(word,at+w/2,rowY,size,decodedFg,"center",true);});left+=w+gap;});
-    });
-  }
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
   function letterCards(s,x,y,width,tile,delay){
@@ -720,6 +702,16 @@ function Graphic(el){
     rows.forEach((row,r)=>{const rowWidth=row.reduce((sum,[,w])=>sum+w,0)+wordGap*(row.length-1);let left=x+Math.max(0,(width-rowWidth)/2);const rowY=y+(r-(rows.length-1)/2)*(height+tile*.5);
       row.forEach(([word,w])=>{[...word].forEach((c,i)=>{const at=left+i*(tile+gap);reveal(delay+index++*40,()=>{ctx.fillStyle=decodedBg;ctx.strokeStyle=decodedBorder;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(at+.5,rowY-height/2+.5,tile-1,height-1,3);ctx.fill();ctx.stroke();line(at+2,rowY+height/2-2,at+tile-2,rowY+height/2-2,decodedBorder,1.5);text(c,at+tile/2,rowY,size,decodedFg,"center",true);});});left+=w+wordGap;});
     });
+  }
+  // The same test message under two word lists: a label, then the letters as
+  // cards grouped into words, in each half of the panel.
+  function ideaScene(p,tile,size){
+    [["VERS TE HT GE WIS SEM IN DER",0],["VERSTEHT GEWISSE MINDER",380]].forEach(([s,delay],i)=>{
+      const top=p.y+p.h*i/2,half=p.h/2,head=size*2.2;
+      label(mobileCopy.idea[i],W/2,top+size*1.1,p.w,size,muted,"center");
+      letterCards(s,p.x,top+head+(half-head)/2,p.w,tile,delay);
+    });
+    line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);
   }
   function slipRow(i,paint){
     if(i>=SLIP_ROWS[state])return;
@@ -767,10 +759,7 @@ function Graphic(el){
         [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+24,13,muted,"center",true));
         wrap(mobileCopy.english[2],cx,p.y+p.h-13,p.w,15,muted,"center");break;
       }
-      case "idea":{
-        ["VERS TE HT GE WIS SEM IN DER","VERSTEHT GEWISSE MINDER"].forEach((s,i)=>{const top=p.y+p.h*i/2,half=p.h/2;wrap(mobileCopy.idea[i],p.x,top+11,p.w,short?16:18,i?ink:muted);mobileWords(s,p.x,top+half/2+14,p.w,short?15:18,i*380);});
-        line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
-      }
+      case "idea":ideaScene(p,Math.min(30,p.w/13.5,p.h/12),short?14:16);break;
       case "bibles":{
         const cols=W<500?2:4,nrows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/nrows;
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*60,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,4);ctx.fill();ctx.stroke();line(x+8,y+8,x+8,y+dy-8,muted,1.5);label(name,x+16,y+dy/2,dx-24,16,ink);}));break;
@@ -871,14 +860,7 @@ function Graphic(el){
         label("Ähnlichkeit mit Englisch →",cx,plotY+plotHeight-8,p.w,12,muted,"center");
         break;
       }
-      case "idea":{
-        const y1=p.y+p.h*.25,y2=p.y+p.h*.75;
-        label("Englische Wortliste",p.x,y1-18,p.w,fs,muted);
-        words("VERS TE HT GE WIS SEM IN DER",p.x,y1+12,p.w,W<360?12:16,0);
-        line(p.x,p.y+p.h*.5,p.x+p.w,p.y+p.h*.5,pale);
-        label("Wortlisten in sieben Sprachen",p.x,y2-18,p.w,fs,ink);
-        words("VERSTEHT GEWISSE MINDER",p.x,y2+12,p.w,W<360?13:18,380);break;
-      }
+      case "idea":ideaScene(p,Math.min(26,p.w/24,p.h/13),compact?12:fs);break;
       case "bibles":{
         const cols=W<330?3:W<420?4:5,rows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/rows;
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*75,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;
@@ -989,7 +971,7 @@ window.WoodStory={Graphic,reduced};
 </script>
 <script src="../story-scroll.js?v=24"></script>
 <script src="../hero-reveal.js?v=24"></script>
-<script src="../cipher-tokens.js?v=24"></script>
+<script src="../cipher-tokens.js?v=25"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */
