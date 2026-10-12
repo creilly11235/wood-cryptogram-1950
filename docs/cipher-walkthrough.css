@@ -96,7 +96,7 @@
 @media(max-width:900px){
   .cw-swipe-hint{display:block}
   .cw{padding:12px;gap:10px;max-height:none}
-  .cw-legend{font-size:11px;gap:16px}.cw-swatch{width:10px;height:12px;border-radius:2px}
+  .cw-legend{gap:16px}.cw-swatch{width:10px;height:12px;border-radius:2px}
   .cw-source-grid,.cw-grid{gap:10px 4px}.cw-source-letter,.cw-card,.cw-msg-letter{width:35px;height:37px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:23px;border-radius:4px}
   .cw-pair{gap:4px}.cw-word{font-size:10.5px}.cw-prayer{font-size:18px;line-height:1.55;max-width:31ch}
   .cw-single{width:59px;height:68px;font-size:42px}.cw-focus{gap:12px}.cw-focus-pair{gap:6px}.cw-focus-word{font-size:16px}
@@ -106,7 +106,7 @@
   .cw-controls{padding-top:8px}.cw-previous,.cw-next{min-height:36px;min-width:66px;font-size:12px;padding-inline:11px}
 }
 @media(max-width:360px){
-  .cw{padding:8px;gap:6px}.cw-legend{font-size:10px}
+  .cw{padding:8px;gap:6px}
   .cw-source-grid,.cw-grid{gap:5px 3px}.cw-source-letter,.cw-card,.cw-msg-letter{width:30px;height:29px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:19px}.cw-pair{gap:2px}.cw-word{font-size:10px;letter-spacing:-.025em}
   .cw-prayer{font-size:15px;line-height:1.4}
   .cw[data-stage="5"] .cw-focus{gap:6px}.cw[data-stage="5"] .cw-focus-pair{gap:2px}.cw[data-stage="5"] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-stage="5"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
@@ -117,7 +117,6 @@
 @media(min-width:361px){
   @container walkthrough-space (max-height:320px){
     .cw{padding:8px;gap:6px}
-    .cw-legend{font-size:10px}
     .cw-source-grid,.cw-grid{gap:6px 4px}
     .cw-source-letter,.cw-card,.cw-msg-letter{width:32px;height:31px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:21px}
     .cw-pair{gap:3px}.cw-word{font-size:10.5px}

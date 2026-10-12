@@ -62,7 +62,7 @@
       if (!graphic.walkthrough) {
         // On phones the next section rises to meet the graphic, so the
         // chapter learns how much empty panel sits below the drawing.
-        const body = el.querySelector('.gbody') || el;
+        const canvas = el.querySelector('canvas'), legend = el.querySelector('.legend');
         // A chapter with no closing text hands the measure to the next one,
         // whose opening text rises to meet this graphic instead.
         const next = chapter.querySelector('.text-after') ? null : chapter.nextElementSibling;
@@ -72,12 +72,16 @@
           after.classList.add('run-on');
         }
         const measureTail = () => {
-          const tail = el.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom - 28;
+          // The drawing ends at its lowest mark, or at the legend when one shows.
+          const foot = legend && legend.childElementCount ? legend.getBoundingClientRect().bottom
+            : canvas.getBoundingClientRect().bottom - (graphic.inkTail ? graphic.inkTail() : 0);
+          const tail = el.getBoundingClientRect().bottom - foot - 28;
           const value = Number.isFinite(tail) && tail > 0 ? Math.round(tail) + 'px' : '';
           chapter.style.setProperty('--walk-tail', value);
           if (next) next.style.setProperty('--walk-tail-prev', value);
         };
         new ResizeObserver(() => requestAnimationFrame(measureTail)).observe(el);
+        el.addEventListener('inktail', measureTail);
         measureTail();
       }
       if (graphic.walkthrough) {

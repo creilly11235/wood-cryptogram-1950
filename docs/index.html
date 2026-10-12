@@ -95,6 +95,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .replay{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin-top:8px;padding:8px 14px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:2px;cursor:pointer;max-width:100%}
 .replay:hover{border-color:var(--candle);color:var(--bone)}
 .tiles{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;max-width:680px}
+.tiles:empty{display:none}
 .comparison-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:8px;font:var(--t-note);color:var(--bone-2)}
 .comparison-heading:first-child{padding-top:0}
 .comparison-count{font:var(--t-data);white-space:nowrap}
@@ -196,8 +197,8 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="story-layout.css?v=27">
 <link rel="stylesheet" href="cipher-cards.css?v=25">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=28">
-<link rel="stylesheet" href="story-graphics.css?v=25">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=29">
+<link rel="stylesheet" href="story-graphics.css?v=26">
 </head>
 <body>
 
@@ -573,15 +574,21 @@ function Graphic(el){
   let fading=false,sceneDelay=0,sceneAlpha=1,stripSig="";
   const fadeIn=node=>{if(instant||!node.animate)return;node.animate([{opacity:0},{opacity:1}],{duration:FADE,easing:"ease-out"});};
   let W=1,H=1,DPR=1;
+  // The lowest mark painted this frame, so the page can rise to meet the drawing.
+  let inkBottom=0,inkTail=-1;
+  const mark=y=>{if(y>inkBottom)inkBottom=y;};
   const color=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   let ink,muted,blue,teal,pale,background,gridGray,decodedBg,decodedFg,decodedBorder,encodedBg,encodedFg,encodedBorder;
   const serif='"Libre Caslon Text", Georgia, serif',mono='"Courier Prime", monospace';
   const font=(size,code=false)=>`${size}px ${code?mono:serif}`;
   function text(s,x,y,size=14,c=ink,align="left",code=false){
-    ctx.font=font(size,code);ctx.fillStyle=c;ctx.textAlign=align;ctx.textBaseline="middle";ctx.fillText(s,x,y);
+    ctx.font=font(size,code);ctx.fillStyle=c;ctx.textAlign=align;ctx.textBaseline="middle";ctx.fillText(s,x,y);mark(y+size*.6);
   }
   function fit(s,max,size=14,code=false){ctx.font=font(size,code);while(size>10&&ctx.measureText(s).width>max){size-=.5;ctx.font=font(size,code);}return size;}
   function label(s,x,y,max,size=14,c=ink,align="left",code=false){text(s,x,y,fit(s,max,size,code),c,align,code);}
+  // Helper labels share one size and colour with the walkthrough's scene labels.
+  const CAP=12;
+  function caption(s,y){label(s,W/2,y,W-10,CAP,muted,"center");}
   function cipherText(s,x,y,max,size=14,kind="decoded"){
     const fitted=fit(s,max-14,size,true);ctx.font=font(fitted,true);
     const width=ctx.measureText(s).width+12,height=fitted+12,left=x-5,top=y-height/2;
@@ -591,10 +598,10 @@ function Graphic(el){
     if(kind==="decoded")line(left+3,top+height-2.5,left+width-3,top+height-2.5,decodedBorder,2);
     text(s,x+1,y,fitted,kind==="decoded"?decodedFg:background,"left",true);
   }
-  function line(x1,y1,x2,y2,c=pale,width=1){ctx.strokeStyle=c;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
-  function dot(x,y,r,c=muted){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,Math.max(.4,r),0,Math.PI*2);ctx.fill();}
+  function line(x1,y1,x2,y2,c=pale,width=1){ctx.strokeStyle=c;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();mark(Math.max(y1,y2)+width);}
+  function dot(x,y,r,c=muted){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,Math.max(.4,r),0,Math.PI*2);ctx.fill();mark(y+r);}
   function outlineDot(x,y,r,c=blue){ctx.fillStyle=background;ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,Math.max(.4,r),0,Math.PI*2);ctx.fill();ctx.stroke();}
-  function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
+  function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);mark(y+h);}
   // Portrait phones get the full-screen scenes; a landscape phone is short and wide, like the desktop column.
   const isMobilePanel=()=>matchMedia("(max-width:900px) and (orientation:portrait)").matches;
   function panel(){const h=isMobilePanel()?Math.max(0,H-12):Math.min(H,322);return{x:5,y:(H-h)/2,w:W-10,h};}
@@ -614,7 +621,7 @@ function Graphic(el){
       if(i)line(p.x,p.y+gap*i,p.x+p.w,p.y+gap*i,pale);
       if(item[4])cipherText(item[0],p.x+5,headingY,p.w-8,14,item[4]);
       else label(item[0],p.x+5,headingY,p.w-10,compact?13:16,item[2]||ink,"left",/^[A-Z0-9\s+→×=\/.…]+$/.test(item[0]));
-      wrap(item[1],p.x+5,detailY,p.w-10,compact?11:12,muted,"left",compact?1:2);
+      wrap(item[1],p.x+5,detailY,p.w-10,CAP,muted,"left",compact?1:2);
     }));
   }
   function legendItems(items){
@@ -700,7 +707,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["Best readings from 19 Bibles","Higher word score →"],"church":["Church wording “Vater unser”","Luther Bible “Unser Vater”"],"reading":["German for Here I am","Afrikaans for Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
+  const copy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["Best readings from 19 Bibles","Higher word score →"],"church":["Church wording “Vater unser”","Luther Bible “Unser Vater”"],"reading":["German for Here I am","Afrikaans for Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -725,18 +732,19 @@ function Graphic(el){
     ctx.beginPath();ctx.roundRect(-tile/2+.5,-height/2+.5,tile-1,height-1,3);ctx.fill();ctx.stroke();
     if(kind==="decoded")line(-tile/2+2,height/2-2,tile/2-2,height/2-2,decodedBorder,1.5);
     text(kind==="encoded"?back:c,0,0,size,kind==="encoded"?encodedFg:decodedFg,"center",true);
-    ctx.restore();
+    ctx.restore();mark(y+height/2);
   }
   // The message as three card groups, each with its meaning beneath.
-  function readingCards(p,tile,size,room=p.h){
+  function readingCards(p,tile,room=p.h){
+    const size=CAP;
     const height=tile*1.2,rowStep=height+tile*.35,groups=[["HIER BIN ICH"],["TOTSIENS"],["T E W"]].map(([text])=>cardRows(text,p.w,tile));
-    const need=groups.map(l=>l.rows*rowStep-tile*.35+size*1.9),content=need.reduce((a,b)=>a+b,0);
+    const need=groups.map(l=>l.rows*rowStep-tile*.35+size*2.4),content=need.reduce((a,b)=>a+b,0);
     const spacing=Math.max(10,Math.min(tile*1.6,(room-content)/4));
     let block=p.y+Math.max(2,(room-content-spacing*2)/2);
     groups.forEach((layout,r)=>{
       const centreY=block+height/2+(layout.rows-1)*rowStep/2;
       layout.positions.forEach((t,i)=>reveal(r*190+i*30,()=>card(t.c,p.x+t.x,centreY+(t.row-(layout.rows-1)/2)*rowStep,tile,height,tile*.62,1)));
-      reveal(r*190+200,()=>label(mobileCopy.reading[r],W/2,block+layout.rows*rowStep-tile*.35+size*1.1,p.w,size,muted,"center"));
+      reveal(r*190+200,()=>caption(copy.reading[r],block+layout.rows*rowStep-tile*.35+size*1.6));
       block+=need[r]+spacing;
     });
   }
@@ -744,8 +752,8 @@ function Graphic(el){
   function rankedScores(p,nameWidth,size,scoreSize,axisSize){
     const scoreWidth=scoreSize*4.2,left=p.x+nameWidth,right=p.x+p.w-scoreWidth;
     const min=-1.75,max=-1.2,map=v=>left+(v-min)/(max-min)*(right-left);
-    const bottom=p.y+p.h-axisSize*3.2,top=p.y+size*2.2,dy=(bottom-top)/TOP.length;
-    label(mobileCopy.prayer[0],W/2,p.y+size*.7,p.w,size,muted,"center");
+    const bottom=p.y+p.h-axisSize*3.2,top=p.y+CAP*2.2,dy=(bottom-top)/TOP.length;
+    caption(copy.prayer[0],p.y+CAP*.7);
     [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,top,x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+axisSize*1.1,axisSize,muted,"center",true);});
     line(left,bottom,right,bottom,muted);
     TOP.forEach(([,value],i)=>{
@@ -754,7 +762,7 @@ function Graphic(el){
       if(grow>0){const end=left+(map(value)-left)*grow;line(left,y,end,y,c,i?1.5:2);dot(end,y,i?3.5:5,c);}
       reveal(i*70+300,()=>text(value.toFixed(3).replace("-","−"),p.x+p.w,y,scoreSize,c,"right",true));
     });
-    label(mobileCopy.prayer[1],W/2,p.y+p.h-axisSize*.6,p.w,axisSize+1,muted,"center");
+    caption(copy.prayer[1],p.y+p.h-CAP*.6);
   }
   // A run of cipher cards flips to its reading, then the cards slide into
   // the words of that reading. Both layouts centre on centreY and the cards
@@ -774,10 +782,10 @@ function Graphic(el){
     });
     return rows;
   }
-  function ideaScene(p,size){
+  function ideaScene(p){
     // Two readings of the same cipher. Each block flips the cipher cards to
     // the test message, then groups them as that word list does.
-    const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=size*2.6;
+    const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=CAP*2.8;
     const rowsFor=text=>Math.max(cardRows(groupFive(text),p.w,tile).rows,cardRows(text,p.w,tile).rows);
     const need=IDEA.map(([text])=>head+rowsFor(text)*rowStep-tile*.35);
     const room=p.h*(short?.7:1),content=need[0]+need[1];
@@ -786,7 +794,7 @@ function Graphic(el){
     let block=p.y+4;
     IDEA.forEach(([text],r)=>{
       ctx.save();ctx.globalAlpha=sceneAlpha*fade;
-      label(mobileCopy.idea[r],W/2,block+size*1.1,p.w,size,muted,"center");
+      caption(copy.idea[r],block+CAP);
       ctx.restore();
       const rows=rowsFor(text),centreY=block+head+height/2+(rows-1)*rowStep/2;
       cardStory(text,CHURCH,p,tile,centreY);
@@ -804,76 +812,9 @@ function Graphic(el){
       if(i)line(p.x,p.y+gap*i,p.x+p.w,p.y+gap*i,pale);
       if(kind)cipherText(heading,p.x+5,y-offset,p.w-5,18,kind);
       else wrap(heading,p.x,y-offset,p.w,gap<85?17:19,c,"left",2);
-      wrap(detail,p.x,y+offset,p.w,gap<85?14:15,muted,"left",2);
+      wrap(detail,p.x,y+offset,p.w,CAP,muted,"left",2);
     }));
   }
-  function drawMobile(){
-    const p=panel(),cx=W/2,short=p.h<300,wideShort=W>500&&p.h<220;
-    switch(state){
-      case "trap":case "trap2":case "trap3":
-        cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(36,p.w/11.5),p.y+p.h/2);break;
-      case "shelves":{
-        const top=p.y+(wideShort?30:48),bottom=p.y+p.h-(wideShort?8:16);
-        label(mobileCopy.shelves[0],cx,p.y+(wideShort?12:18),p.w,wideShort?14:16,muted,"center");
-        bookshelves({x:p.x,y:top,w:p.w,h:Math.max(1,bottom-top)});break;
-      }
-      case "plants":{
-        label(mobileCopy.plants[0],cx,p.y+(wideShort?12:18),p.w,wideShort?14:16,muted,"center");
-        const gw=Math.min(p.w,p.h*1.4);grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+(wideShort?30:48),w:gw,h:Math.max(24,p.h-(wideShort?40:64))},10,6);break;
-      }
-      case "englishResults":{
-        const left=p.x+20,right=p.x+p.w-20,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
-        // On a small phone the text card covers the panel's foot, so the chart keeps clear of it.
-        const q=isMobilePanel()&&p.h<360?{...p,h:p.h*.9}:p;
-        const compact=q.h<250,bottom=q.y+q.h-(compact?55:65),top=q.y+(compact?40:62),bins=27,counts=Array(bins).fill(0),points=[];
-        EN_NULLX.forEach(value=>{const bin=Math.max(0,Math.min(bins-1,Math.floor((value-min)/(max-min)*bins)));points.push({value,row:counts[bin]++});});
-        const dy=Math.max(1.8,Math.min(18,(bottom-top)/Math.max(...counts))),r=Math.min(4.6,dy*.39,(right-left)/bins*.34);
-        points.forEach((pt,i)=>reveal(i*3,()=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted),300));
-        line(left,bottom+3,right,bottom+3,pale);const wx=map(EN_WOOD);
-        reveal(430,()=>{line(wx,top-8,wx,bottom+3,blue,1.5);dot(wx,top-8,4.5,blue);});
-        text(mobileCopy.english[0],wx,top-(compact?22:26),15,blue,"center",true);
-        [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+24,13,muted,"center",true));
-        wrap(mobileCopy.english[1],cx,q.y+q.h-13,q.w,15,muted,"center");break;
-      }
-      case "idea":ideaScene(p,short?14:16);break;
-      case "bibles":{
-        const cols=W<500?2:4,nrows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/nrows;
-        BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*60,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,4);ctx.fill();ctx.stroke();line(x+8,y+8,x+8,y+dy-8,muted,1.5);label(name,x+16,y+dy/2,dx-24,16,ink);}));break;
-      }
-      case "prayer":{
-        rankedScores(isMobilePanel()?{...p,h:p.h*.84}:p,W<360?92:108,short?12:14,short?11:12,short?11:12);break;
-      }
-      case "church":{
-        // Two keys from two wordings: the church prayer gives nothing
-        // readable, the Luther Bible gives the message.
-        const tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=(short?14:16)*2.6;
-        const rowsOf=[[groupFive("SXFFFLOEPTPPQMAVDXEUR")],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
-        const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),room=p.h*(short?.7:1),content=need[0]+need[1];
-        const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
-        let block=p.y+Math.max(4,(room-content-spacing)/2);
-        rowsOf.forEach((layout,r)=>{
-          label(mobileCopy.church[r],W/2,block+(short?14:16)*1.1,p.w,short?14:16,muted,"center");
-          const centreY=block+head+height/2+(layout.rows-1)*rowStep/2;
-          layout.positions.forEach((t,i)=>reveal((r?420:120)+i*20,()=>card(t.c,p.x+t.x,centreY+(t.row-(layout.rows-1)/2)*rowStep,tile,height,tile*.62,1)));
-          block+=need[r]+spacing;
-        });break;
-      }
-      case "reading":readingCards(p,Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),short?14:16,p.h*(short?.7:1));break;
-      case "checks":mobileRows(mobileCopy.checks.slice(1).map(detail=>[mobileCopy.checks[0],detail,blue]));break;
-      case "luck":{
-        wrap(mobileCopy.luck[0],cx,p.y+(wideShort?13:22),p.w,17,ink,"center");grid(500,i=>i<7,{x:p.x,y:p.y+(wideShort?32:58),w:p.w,h:Math.max(24,p.h-(wideShort?64:113))},W<500?20:40,4);wrap(mobileCopy.luck[1],cx,p.y+p.h-(wideShort?12:23),p.w,15,muted,"center");break;
-      }
-      case "slipSum":case "slipKey":case "slip":{
-        const gap=p.h/3;
-        slipRow(0,()=>{const y=p.y+gap*.5;label("SUFFER",cx,y-(short?22:33),p.w,short?18:21,ink,"center",true);label("19 + 21 + 6 + 6 + 5 + 18",cx,y-1,p.w,short?16:18,ink,"center",true);text(mobileCopy.slip[0],cx,y+(short?21:29),short?16:18,ink,"center");});
-        if(SLIP_ROWS[state]>1)line(p.x,p.y+gap,p.x+p.w,p.y+gap,pale);
-        slipRow(1,()=>{const y=p.y+gap*1.5;label("75 = 2 × 26 + 23 → W",cx,y-(short?16:22),p.w,20,ink,"center",true);wrap(mobileCopy.slip[1],cx,y+(short?19:24),p.w,16,muted,"center");});
-        if(SLIP_ROWS[state]>2)line(p.x,p.y+gap*2,p.x+p.w,p.y+gap*2,pale);
-        slipRow(2,()=>{const y=p.y+gap*2.5;wrap(mobileCopy.slip[2],p.x,y-(short?17:25),p.w-53,17,ink,"left",2);wrap(mobileCopy.slip[3],p.x,y+(short?19:24),p.w-53,15,muted,"left",2);cipherText("D",p.x+p.w-32,y,32,26,"encoded");});break;
-      }
-    }
-  }
-
   function draw(){
     dirty=false;ctx.clearRect(0,0,W,H);
     sceneAlpha=fading?ease(elapsed/FADE):1;
@@ -882,75 +823,99 @@ function Graphic(el){
     }
     if(sceneAlpha>=1)fading=false;
     ctx.globalAlpha=sceneAlpha;
+    inkBottom=0;
     try{paintScene();}finally{ctx.globalAlpha=1;}
+    // A legend already sits at the foot; otherwise the empty canvas below the
+    // last mark is space the next passage can use.
+    const tail=legend.childElementCount?0:Math.max(0,Math.round(H-inkBottom));
+    if(tail!==inkTail){inkTail=tail;el.dispatchEvent(new Event("inktail"));}
   }
   function paintScene(){
-    if(isMobilePanel()){drawMobile();return;}
-    const p=panel(),cx=W/2,compact=p.h<190,fs=W<360?13:15;
+    // Portrait phones get the full-screen scenes; a landscape phone is short
+    // and wide, like the desktop column, so it shares the column layout.
+    const m=isMobilePanel(),p=panel(),cx=W/2,short=p.h<300;
+    const tileFor=(tall,wide=tall)=>Math.min(m?30:26,p.w/13.5,p.h/(short?tall:wide));
     switch(state){
       case "trap":case "trap2":case "trap3":
-        cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(30,p.w/14),p.y+p.h/2);break;
-      case "shelves":{
-        bookshelves({x:p.x,y:p.y+30,w:p.w,h:Math.max(1,p.h-40)});
-        label("A test set of 129 books",cx,p.y+10,p.w,13,muted,"center");break;
-      }
+        cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(m?36:30,p.w/(m?11.5:14)),p.y+p.h/2);break;
+      case "shelves":
+        caption(copy.shelves[0],p.y+10);
+        bookshelves({x:p.x,y:p.y+32,w:p.w,h:Math.max(1,p.h-44)});break;
       case "plants":{
-        label("100 test ciphers with known answers",cx,p.y+10,p.w,13,muted,"center");
-        const gw=Math.min(p.w,p.h*1.6),columns=p.h<190?20:10;
-        grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+30,w:gw,h:p.h-40},columns,5);break;
+        caption(copy.plants[0],p.y+10);
+        const gw=Math.min(p.w,p.h*(m?1.4:1.6));
+        grid(100,i=>!EN_MISS.includes(i),{x:cx-gw/2,y:p.y+32,w:gw,h:Math.max(24,p.h-44)},!m&&p.h<190?20:10,m?6:5);break;
       }
       case "englishResults":{
-        const left=p.x+9,right=p.x+p.w-9,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
-        const plotHeight=Math.min(p.h<300?p.h*.74:p.h,230),plotY=p.y+(p.h<300?0:(p.h-plotHeight)/2);
-        const bottom=plotY+plotHeight-45,top=plotY+30,bins=27,counts=Array(bins).fill(0),points=[];
+        const pad=m?20:9,left=p.x+pad,right=p.x+p.w-pad,min=-15.25,max=-13.1,map=v=>left+(v-min)/(max-min)*(right-left);
+        // On a small phone the text card covers the panel's foot, so the chart keeps clear of it.
+        const plotHeight=m?p.h*(p.h<360?.9:1):Math.min(short?p.h*.74:p.h,230),plotY=p.y+(m||short?0:(p.h-plotHeight)/2);
+        const compact=plotHeight<250,top=plotY+(m?(compact?40:62):30),bottom=plotY+plotHeight-(m?(compact?55:65):45);
+        const bins=27,counts=Array(bins).fill(0),points=[];
         EN_NULLX.forEach(value=>{const bin=Math.max(0,Math.min(bins-1,Math.floor((value-min)/(max-min)*bins)));points.push({value,row:counts[bin]++});});
-        const dy=Math.min(10,(bottom-top)/Math.max(...counts)),r=Math.min(3.8,dy*.39,(right-left)/bins*.34);
+        const dy=Math.max(1.8,Math.min(m?18:10,(bottom-top)/Math.max(...counts))),r=Math.min(m?4.6:3.8,dy*.39,(right-left)/bins*.34);
         points.forEach((pt,i)=>reveal(i*3,()=>dot(map(pt.value),bottom-(pt.row+.5)*dy,r,muted),300));
-        line(left,bottom+3,right,bottom+3,pale);
-        const wx=map(EN_WOOD);reveal(430,()=>{line(wx,top-7,wx,bottom+3,blue,1.5);dot(wx,top-7,3.8,blue);});
-        text("Wood −13.937",wx,plotY+12,13,blue,"center",true);
-        text("−15.0",map(-15),bottom+18,12,muted,"center",true);text("−14.0",map(-14),bottom+18,12,muted,"center",true);text("−13.25",map(-13.25),bottom+18,12,muted,"center",true);
-        label("English-likeness score →",cx,plotY+plotHeight-8,p.w,12,muted,"center");
-        break;
+        line(left,bottom+3,right,bottom+3,pale);const wx=map(EN_WOOD);
+        reveal(430,()=>{line(wx,top-8,wx,bottom+3,blue,1.5);dot(wx,top-8,m?4.5:3.8,blue);});
+        text(copy.english[0],wx,top-(m?24:18),CAP,blue,"center",true);
+        [[-15,"−15.0"],[-14,"−14.0"],[-13.25,"−13.25"]].forEach(([value,tick])=>text(tick,map(value),bottom+(m?24:18),CAP,muted,"center",true));
+        caption(copy.english[1],plotY+plotHeight-10);break;
       }
-      case "idea":ideaScene(p,compact?12:fs);break;
+      case "idea":ideaScene(p);break;
       case "bibles":{
-        const cols=W<330?3:W<420?4:5,rows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/rows;
-        BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*75,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;
-          ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,3);ctx.fill();ctx.stroke();line(x+7,y+7,x+7,y+dy-7,muted,1.5);label(name,x+13,y+dy/2,dx-21,12,ink);
+        const cols=m?(W<500?2:4):W<330?3:W<420?4:5,nrows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/nrows;
+        BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*70,()=>{
+          const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;
+          ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,3);ctx.fill();ctx.stroke();mark(y+dy);
+          line(x+7,y+7,x+7,y+dy-7,muted,1.5);label(name,x+13,y+dy/2,dx-21,m?16:CAP,ink);
         }));break;
       }
       case "prayer":{
-        {const low=p.h<300;rankedScores(low?{...p,h:p.h*.72}:p,W<400?94:116,low?10:12,low?9:11,low?9:11);break;}
+        // The chart keeps clear of the phone's text card and of a short landscape panel.
+        const room=m?.84:short?.72:1;
+        rankedScores({...p,h:p.h*room},W<400?94:112,short&&!m?10:CAP,short&&!m?9:11,short&&!m?9:11);break;
       }
       case "church":{
-        const low=p.h<300,tile=Math.min(26,p.w/13.5,low?p.h/14:p.h),height=tile*1.2,rowStep=height+tile*.35,head=low?28:34,room=p.h*(low?.72:1);
+        // Two keys from two wordings: the church prayer gives nothing
+        // readable, the Luther Bible gives the message.
+        const tile=tileFor(18,15),height=tile*1.2,rowStep=height+tile*.35,head=CAP*2.8;
         const rowsOf=[[groupFive("SXFFFLOEPTPPQMAVDXEUR")],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
-        const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),content=need[0]+need[1],spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
+        const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),room=p.h*(short?.7:1),content=need[0]+need[1];
+        const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
         let block=p.y+Math.max(4,(room-content-spacing)/2);
         rowsOf.forEach((layout,r)=>{
-          label(["Church wording “Vater unser”","Luther Bible “Unser Vater”"][r],cx,block+13,p.w,13,muted,"center");
+          caption(copy.church[r],block+CAP);
           const centreY=block+head+height/2+(layout.rows-1)*rowStep/2;
           layout.positions.forEach((t,i)=>reveal((r?420:120)+i*20,()=>card(t.c,p.x+t.x,centreY+(t.row-(layout.rows-1)/2)*rowStep,tile,height,tile*.62,1)));
           block+=need[r]+spacing;
         });break;
       }
-      case "reading":{const low=p.h<300;readingCards(p,Math.min(26,p.w/13.5,p.h/(low?16:12)),13,p.h*(low?.72:1));break;}
+      case "reading":readingCards(p,tileFor(16,12),p.h*(short?.7:1));break;
       case "checks":{
-        rows([["21 / 21 letters","Reproduced by the standalone verifier",blue],["21 / 21 letters","Independently reproduced by Astra",blue],["21 / 21 letters","Checked against the original ciphertext",blue]]);break;
+        const items=copy.checks.slice(1).map(detail=>[copy.checks[0],detail,blue]);
+        if(m)mobileRows(items);else rows(items);break;
       }
       case "luck":{
-        label("500 random three-letter signatures",cx,p.y+10,p.w,fs,ink,"center");
-        grid(500,i=>i<7,{x:p.x,y:p.y+30,w:p.w,h:p.h-51},p.h<190?50:25,3.4);
-        label("7 signatures with matches · one dot per signature",cx,p.y+p.h-9,p.w,12,muted,"center");break;
+        caption(copy.luck[0],p.y+10);
+        grid(500,i=>i<7,{x:p.x,y:p.y+32,w:p.w,h:Math.max(24,p.h-58)},m?(W<500?20:40):p.h<190?50:25,m?4:3.4);
+        caption(copy.luck[1],p.y+p.h-10);break;
       }
       case "slipSum":case "slipKey":case "slip":{
         const gap=p.h/3,small=gap<65;
-        slipRow(0,()=>{const y=p.y+gap*.5;label("SUFFER = 19 + 21 + 6 + 6 + 5 + 18",cx,y-10,p.w,small?11:14,ink,"center",true);label("Total: 75",cx,y+13,p.w,small?12:16,ink,"center");});
+        if(m){
+          slipRow(0,()=>{const y=p.y+gap*.5;label("SUFFER",cx,y-(short?22:33),p.w,short?18:21,ink,"center",true);label("19 + 21 + 6 + 6 + 5 + 18",cx,y-1,p.w,short?16:18,ink,"center",true);text(copy.slip[0],cx,y+(short?21:29),short?16:18,ink,"center");});
+        }else{
+          slipRow(0,()=>{const y=p.y+gap*.5;label("SUFFER = 19 + 21 + 6 + 6 + 5 + 18",cx,y-10,p.w,small?11:14,ink,"center",true);label(copy.slip[0],cx,y+13,p.w,small?12:16,ink,"center");});
+        }
         if(SLIP_ROWS[state]>1)line(p.x,p.y+gap,p.x+p.w,p.y+gap,pale);
-        slipRow(1,()=>{const y=p.y+gap*1.5;label("75 = 2 × 26 + 23 → W",cx,y-10,p.w,small?13:18,ink,"center",true);label("Thouless printed U instead",cx,y+14,p.w,small?11:12,muted,"center");});
+        slipRow(1,()=>{const y=p.y+gap*1.5;label("75 = 2 × 26 + 23 → W",cx,y-(m?(short?16:22):10),p.w,m?20:small?13:18,ink,"center",true);caption(copy.slip[1],y+(m?(short?19:24):14));});
         if(SLIP_ROWS[state]>2)line(p.x,p.y+gap*2,p.x+p.w,p.y+gap*2,pale);
-        slipRow(2,()=>{const y=p.y+gap*2.5;label("The final cipher letter: D",p.x,y-10,p.w-60,small?11:14,ink);label("The published example ends in B",p.x,y+13,p.w-60,small?10:12,muted);cipherText("D",p.x+p.w-32,y,32,22,"encoded");});break;
+        if(m){
+          slipRow(2,()=>{const y=p.y+gap*2.5;wrap(copy.slip[2],p.x,y-(short?17:25),p.w-53,17,ink,"left",2);wrap(copy.slip[3],p.x,y+(short?19:24),p.w-53,CAP,muted,"left",2);cipherText("D",p.x+p.w-32,y,32,26,"encoded");});
+        }else{
+          slipRow(2,()=>{const y=p.y+gap*2.5;label(copy.slip[2],p.x,y-10,p.w-60,small?11:14,ink);label(copy.slip[3],p.x,y+13,p.w-60,CAP,muted);cipherText("D",p.x+p.w-32,y,32,22,"encoded");});
+        }
+        break;
       }
     }
   }
@@ -975,6 +940,7 @@ function Graphic(el){
     sceneDelay=fading?SETTLE:0;
     state=next;this.state=next;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;
   };
+  this.inkTail=()=>Math.max(0,inkTail);
   this.pause=function(){if(!pausedAt){pausedAt=performance.now();this.frame(pausedAt);}};
   this.resume=function(){if(pausedAt){started+=performance.now()-pausedAt;pausedAt=0;}dirty=true;};
   // Before a chapter's first card arrives the scene waits on its opening
@@ -1009,7 +975,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="story-scroll.js?v=27"></script>
+<script src="story-scroll.js?v=28"></script>
 <script src="hero-reveal.js?v=25"></script>
 <script src="cipher-tokens.js?v=25"></script>
 <script>
