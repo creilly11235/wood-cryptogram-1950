@@ -519,7 +519,7 @@
           this.freezeSourceRows();
           this.root.dataset.intro = 'text';
           this.source.offsetWidth;
-          this.later(() => { this.root.dataset.intro = ''; }, previous < 0 ? 1100 : 800);
+          this.later(() => { this.root.dataset.intro = ''; }, previous < 0 || options.force ? 1400 : 800);
         }
       } else if (stage === 1) {
         this.prayerRepeats.forEach(word => { word.style.transitionDelay = '0ms'; });

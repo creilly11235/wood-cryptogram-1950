@@ -189,7 +189,7 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=25">
+<link rel="stylesheet" href="../story-layout.css?v=26">
 <link rel="stylesheet" href="../cipher-cards.css?v=25">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=28">
 <link rel="stylesheet" href="../story-graphics.css?v=24">
@@ -483,7 +483,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=28"></script>
+<script src="../cipher-walkthrough.js?v=29"></script>
 <script>
 (function(){
 "use strict";
@@ -549,6 +549,14 @@ function Graphic(el){
       if(Number.isFinite(tail)&&tail>0)chapter.style.setProperty("--walk-tail",Math.round(tail)+"px");
     };
     this.showStage=stage=>{walk.go(stage);if(stage===9)requestAnimationFrame(measureTail);};
+    // The first step plays as the panel comes into view, so the reader sees
+    // the sentence as text before the cards form around it.
+    const built=performance.now();let introSeen=false;
+    new IntersectionObserver(entries=>{
+      if(introSeen||!entries.some(entry=>entry.isIntersecting))return;
+      introSeen=true;
+      if(walk.stage===0&&performance.now()-built>1500)walk.replay();
+    },{threshold:.5}).observe(el);
     new ResizeObserver(()=>requestAnimationFrame(measureTail)).observe(el);
     this.pause=()=>walk.pause();this.resume=()=>walk.resume();
     this.replay=()=>walk.replay();this.frame=()=>{};
