@@ -140,7 +140,7 @@
         record.inView = visible;
         if (record.graphic.visible === visible) return;
         record.graphic.visible = visible;
-        if (visible) record.graphic.resume();
+        if (visible && !record.held) record.graphic.resume();
         else record.graphic.pause();
       });
     }
@@ -149,13 +149,20 @@
       framePending = false;
       const line = walkLine();
       records.forEach(record => {
-        let index = 0;
+        let index = -1;
         record.steps.forEach((step, i) => { if (step.getBoundingClientRect().top <= line) index = i; });
+        // Until the first card reaches the line the graphic holds its opening
+        // frame, so the animation plays when the card arrives, not on load.
+        const held = index < 0 && !!record.graphic.hold;
+        if (index < 0) index = 0;
         const state = record.steps[index].dataset.s;
-        if (record.state !== state) {
+        if (record.state !== state || record.held !== held) {
+          const restart = record.state === state && record.held && !held;
           record.state = state;
-          record.graphic.go(state);
+          record.held = held;
+          if (restart) record.graphic.restart(); else record.graphic.go(state);
           describe(record, index);
+          if (held) record.graphic.hold();
           if (!record.graphic.visible) record.graphic.pause();
         }
         if (mobile.matches) fadeCards(record);

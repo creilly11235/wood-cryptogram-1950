@@ -218,8 +218,8 @@
     },
     {
       "kind": "p",
-      "en": "The difference shows on the same German test message. An English word list breaks it into fragments, and word lists in seven languages recover VERSTEHT GEWISSE MINDER whole.",
-      "de": "Der Unterschied zeigt sich an derselben deutschen Testbotschaft. Eine englische Wortliste zerlegt sie in Bruchstücke, und Wortlisten in sieben Sprachen finden VERSTEHT GEWISSE MINDER im Ganzen wieder."
+      "en": "The difference shows on the same German test message. Grouping with an English word list breaks it into fragments, while grouping with word lists in seven languages recovers VERSTEHT GEWISSE MINDER correctly.",
+      "de": "Der Unterschied zeigt sich an derselben deutschen Testbotschaft. Mit einer englischen Wortliste zerfällt sie in Bruchstücke, während Wortlisten in sieben Sprachen VERSTEHT GEWISSE MINDER richtig wiederfinden."
     },
     {
       "kind": "attr",

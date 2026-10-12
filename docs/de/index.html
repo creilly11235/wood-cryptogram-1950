@@ -331,7 +331,7 @@ footer p{margin:0 0 .7em}
 </div></div>
 <div class="text">
 <section class="step" data-s="idea" data-walk-stage="1" data-cap="Dieselbe deutsche Testbotschaft: Eine englische Wortliste zerlegt sie in Fragmente; Wortlisten in sieben Sprachen erkennen VERSTEHT GEWISSE MINDER.">
-<p>Der Unterschied zeigt sich an derselben deutschen Testbotschaft. Eine englische Wortliste zerlegt sie in Bruchstücke, und Wortlisten in sieben Sprachen finden VERSTEHT GEWISSE MINDER im Ganzen wieder.</p>
+<p>Der Unterschied zeigt sich an derselben deutschen Testbotschaft. Mit einer englischen Wortliste zerfällt sie in Bruchstücke, während Wortlisten in sieben Sprachen VERSTEHT GEWISSE MINDER richtig wiederfinden.</p>
 </section>
 <section class="step" data-s="bibles" data-walk-stage="2" data-cap="Die gezielte Suche nahm Bibelübersetzungen in 19 Sprachen hinzu. Jedes Buch steht für eine Übersetzung.">
 <p>Außerdem brauchten wir eine gezielter ausgewählte Quelle. Wood hatte geschrieben, der Schlüssel stehe „in einem zugänglichen Buch“ in einer Fremdsprache, und kaum ein Buch ist zugänglicher als eine Bibel, also nahmen wir Übersetzungen in 19 Sprachen in die Suche auf.</p>
@@ -776,13 +776,13 @@ function Graphic(el){
   function ideaScene(p,size){
     // Two readings of the same cipher. Each block flips the cipher cards to
     // the test message, then groups them as that word list does.
-    const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=size*2;
+    const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=size*1.7;
     const rowsFor=text=>{const gap=Math.max(2,tile*.1),cols=Math.max(1,Math.floor((p.w+gap)/(tile+gap)));return Math.max(Math.ceil(PLANT_DE.length/cols),cardRows(text,p.w,tile).rows);};
     const need=IDEA.map(([text])=>head+rowsFor(text)*rowStep-tile*.35);
     const room=p.h*(short?.7:1),content=need[0]+need[1];
     const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
     const fade=progress(CARD_MOVE,400);
-    let block=p.y+Math.max(4,(room-content-spacing)/2);
+    let block=p.y+4;
     IDEA.forEach(([text],r)=>{
       ctx.save();ctx.globalAlpha=sceneAlpha*fade;
       label(mobileCopy.idea[r],W/2,block+size*1.1,p.w,size,muted,"center");
@@ -976,6 +976,10 @@ function Graphic(el){
   };
   this.pause=function(){if(!pausedAt){pausedAt=performance.now();this.frame(pausedAt);}};
   this.resume=function(){if(pausedAt){started+=performance.now()-pausedAt;pausedAt=0;}dirty=true;};
+  // Before a chapter's first card arrives the scene waits on its opening
+  // frame; the card's arrival starts the animation from the beginning.
+  this.hold=function(){started=performance.now();pausedAt=started;elapsed=0;instant=reduced;dirty=true;};
+  this.restart=function(){started=performance.now();pausedAt=0;elapsed=0;instant=reduced;dirty=true;};
   this.replay=function(){if(state!=="prayer")return;instant=reduced;started=performance.now();pausedAt=0;elapsed=0;lastLetter=21;strip("","reading");dirty=true;};
   this.frame=function(now){
     if(W<2||H<2)return;
@@ -1004,7 +1008,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=26"></script>
+<script src="../story-scroll.js?v=27"></script>
 <script src="../hero-reveal.js?v=25"></script>
 <script src="../cipher-tokens.js?v=25"></script>
 <script>
