@@ -195,6 +195,7 @@ footer p{margin:0 0 .7em}
 /* Sources conclude the reading without keeping a graphic pinned. */
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
+.endmatter+.chapter{border-top:1px solid var(--veil-2)}
 </style>
 <link rel="stylesheet" href="../story-layout.css?v=27">
 <link rel="stylesheet" href="../cipher-cards.css?v=25">
@@ -430,6 +431,22 @@ footer p{margin:0 0 .7em}
 <p>Suchen in Schmehs Blog und dessen Kommentaren, in Reddits r/codes und in den anderen Lösungsprotokollen von 2026 ergaben keine frühere Lösung von Woods Kryptogramm. Das beweist nicht, dass niemand zuvor darauf gekommen ist.</p>
 </section>
 </div></section>
+<section class="endmatter step" id="credits">
+<h2>Mitwirkende</h2>
+<p>Colin Reilly leitete das Projekt. Robert Thouless entwickelte das Verfahren, und Richard Beans Lösung von Thouless’ Botschaft B im Jahr 2019, gefunden durch eine computergestützte Büchersuche, zeigte genau, wie es funktioniert, und bereitete dem hier verwendeten Ansatz den Weg. Klaus Schmeh hielt das Rätsel im Gespräch und bestätigte die Lösung, und auch Richard Bean bestätigte die Lesart und half, diese Darstellung der Suche zu verbessern. Der Star der Vorstellung war Claude (Anthropic), das den Suchcode schrieb und den Schlüssel fand. GPT-6 Astra (OpenAI) prüfte das Ergebnis unabhängig.</p>
+<h3>Quellen</h3>
+<ul>
+<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020.</li>
+<li>Richard Bean und Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025.</li>
+<li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, 4. Oktober 2026.</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, 17. April 2017.</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">“Richard Bean solves another Top 50 crypto mystery”</a>, 16. August 2019.</li>
+<li>T. E. Wood, „A Further Test for Survival“, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, S. 105–106.</li>
+<li>R. H. Thouless, „A Test of Survival“, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the Society for Psychical Research</em> 48, Teil 175</a>, Juli 1948, S. 253–263.</li>
+<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Lutherbibel 1912, Matthäus 6</a>.</li>
+</ul>
+<p>Um die Entschlüsselung selbst zu prüfen, führen Sie <code>python3 harness/wood35t/verify_wood.py</code> aus <a href="https://github.com/creilly11235/wood-cryptogram-1950">dem Repository</a> aus. Der Code steht unter der MIT-Lizenz.</p>
+</section>
 <section class="chapter" data-ch="6">
 <div class="text text-before">
 <section class="step" id="the-correction">
@@ -463,23 +480,8 @@ footer p{margin:0 0 .7em}
 <p>Wood dagegen hielt sich korrekt an Thouless’ schriftliche Regel. Alle 21 seiner Schlüsselbuchstaben stimmen damit überein, und nach diesem Verfahren wurde seine Botschaft entschlüsselt.</p>
 </section>
 </div></section>
-<section class="endmatter step" id="credits">
-<h2>Mitwirkende</h2>
-<p>Colin Reilly leitete das Projekt. Robert Thouless entwickelte das Verfahren, und Richard Beans Lösung von Thouless’ Botschaft B im Jahr 2019, gefunden durch eine computergestützte Büchersuche, zeigte genau, wie es funktioniert, und bereitete dem hier verwendeten Ansatz den Weg. Klaus Schmeh hielt das Rätsel im Gespräch und bestätigte die Lösung, und auch Richard Bean bestätigte die Lesart und half, diese Darstellung der Suche zu verbessern. Der Star der Vorstellung war Claude (Anthropic), das den Suchcode schrieb und den Schlüssel fand. GPT-6 Astra (OpenAI) prüfte das Ergebnis unabhängig.</p>
-<h3>Quellen</h3>
-<ul>
-<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020.</li>
-<li>Richard Bean und Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025.</li>
-<li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, 4. Oktober 2026.</li>
-<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, 17. April 2017.</li>
-<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">“Richard Bean solves another Top 50 crypto mystery”</a>, 16. August 2019.</li>
-<li>T. E. Wood, „A Further Test for Survival“, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, S. 105–106.</li>
-<li>R. H. Thouless, „A Test of Survival“, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the Society for Psychical Research</em> 48, Teil 175</a>, Juli 1948, S. 253–263.</li>
-<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Lutherbibel 1912, Matthäus 6</a>.</li>
-</ul>
-</section></main>
+</main>
 <footer>
-<p>Um die Entschlüsselung selbst zu prüfen, führen Sie <code>python3 harness/wood35t/verify_wood.py</code> aus <a href="https://github.com/creilly11235/wood-cryptogram-1950">dem Repository</a> aus. Der Code steht unter der MIT-Lizenz.</p>
 <p>Sie sind Besucher Nr.&nbsp;<span class="counter" id="visits">------</span></p>
 <p class="small">Diese deutsche Fassung wurde mit KI-Unterstützung aus dem Englischen übersetzt und von einem zweiten KI-System gegengelesen, aber noch nicht von einem Muttersprachler geprüft. Hinweise auf Fehler sind willkommen, gern als <a href="https://github.com/creilly11235/wood-cryptogram-1950/issues">Issue auf GitHub</a>.</p>
 <p class="small">Besuche gezählt mit <a href="https://www.goatcounter.com/">GoatCounter</a>, ohne Cookies. Die Zahl wird alle paar Stunden aktualisiert.</p>
@@ -741,7 +743,7 @@ function Graphic(el){
     const height=tile*1.2,rowStep=height+tile*.35,groups=[["HIER BIN ICH"],["TOTSIENS"],["T E W"]].map(([text])=>cardRows(text,p.w,tile));
     const need=groups.map(l=>l.rows*rowStep-tile*.35+size*2.4),content=need.reduce((a,b)=>a+b,0);
     const spacing=Math.max(10,Math.min(tile*1.6,(room-content)/4));
-    let block=p.y+Math.max(2,(room-content-spacing*2)/2);
+    let block=p.y+4;
     groups.forEach((layout,r)=>{
       const centreY=block+height/2+(layout.rows-1)*rowStep/2;
       layout.positions.forEach((t,i)=>reveal(r*190+i*30,()=>card(t.c,p.x+t.x,centreY+(t.row-(layout.rows-1)/2)*rowStep,tile,height,tile*.62,1)));
@@ -766,18 +768,18 @@ function Graphic(el){
     caption(copy.prayer[1],p.y+p.h-CAP*.6);
   }
   // A run of cipher cards flips to its reading, then the cards slide into
-  // the words of that reading. Both layouts centre on centreY and the cards
-  // keep one size throughout. Returns the number of rows the block spans.
+  // the words of that reading. Both layouts share the same top edge and the
+  // cards keep one size throughout. Returns the number of rows the block spans.
   const groupFive=s=>s.replace(/ /g,"").match(/.{1,5}/g).join(" ");
   const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300;
-  function cardStory(text,cipher,p,tile,centreY,delay=0){
+  function cardStory(text,cipher,p,tile,top,delay=0){
     const letters=text.replace(/ /g,""),height=tile*1.2,rowStep=height+tile*.35;
     // The cipher starts in the same groups of five the hero uses.
     const start=cardRows(groupFive(letters),p.w,tile),target=cardRows(text,p.w,tile),rows=Math.max(start.rows,target.rows);
     const move=progress(CARD_MOVE+delay,700);
     [...letters].forEach((c,i)=>{
-      const f=start.positions[i],x0=p.x+f.x,y0=centreY+(f.row-(start.rows-1)/2)*rowStep;
-      const t=target.positions[i],x1=p.x+t.x,y1=centreY+(t.row-(target.rows-1)/2)*rowStep;
+      const f=start.positions[i],x0=p.x+f.x,y0=top+height/2+f.row*rowStep;
+      const t=target.positions[i],x1=p.x+t.x,y1=top+height/2+t.row*rowStep;
       const x=x0+(x1-x0)*move,y=y0+(y1-y0)*move;
       ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,tile,height,tile*.62,progress(CARD_FLIP+delay+i*25,320),cipher[i]||c);ctx.restore();
     });
@@ -797,8 +799,7 @@ function Graphic(el){
       ctx.save();ctx.globalAlpha=sceneAlpha*fade;
       caption(copy.idea[r],block+CAP);
       ctx.restore();
-      const rows=rowsFor(text),centreY=block+head+height/2+(rows-1)*rowStep/2;
-      cardStory(text,CHURCH,p,tile,centreY);
+      cardStory(text,CHURCH,p,tile,block+head);
       block+=need[r]+spacing;
     });
   }
@@ -848,7 +849,8 @@ function Graphic(el){
     const tileFor=(tall,wide,limit=300)=>Math.min(m?30:26,p.w/13.5,p.h/(p.h<limit?tall:wide));
     switch(state){
       case "trap":case "trap2":case "trap3":
-        cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(m?36:30,p.w/(m?11.5:14)),p.y+p.h/2);break;
+        // Eleven cards fit a row, so the last group of five and its lone letter share one.
+        cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(m?36:30,p.w/13.5),p.y+32);break;
       case "shelves":
         caption(copy.shelves[0],p.y+10,2);
         bookshelves({x:p.x,y:p.y+32,w:p.w,h:Math.max(1,p.h-44)});break;
@@ -893,7 +895,7 @@ function Graphic(el){
         const rowsOf=[[groupFive("SXFFFLOEPTPPQMAVDXEUR")],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
         const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),room=p.h*(short?.7:1),content=need[0]+need[1];
         const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
-        let block=p.y+Math.max(4,(room-content-spacing)/2);
+        let block=p.y+4;
         rowsOf.forEach((layout,r)=>{
           caption(copy.church[r],block+CAP);
           const centreY=block+head+height/2+(layout.rows-1)*rowStep/2;
@@ -986,7 +988,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=29"></script>
+<script src="../story-scroll.js?v=30"></script>
 <script src="../hero-reveal.js?v=25"></script>
 <script src="../cipher-tokens.js?v=25"></script>
 <script>
