@@ -1,4 +1,4 @@
-/* The article controls the eight steps; buttons also let a reader explore them.
+/* The article controls the nine steps; buttons also let a reader explore them.
    Animation is presentational. Every step has a complete reduced-motion view. */
 (() => {
   'use strict';
@@ -10,6 +10,7 @@
     stages: [
       'The 21-letter cipher',
       'The key is a passage from a book',
+      'Repeated words are skipped',
       'One key word for every cipher letter',
       'Start with F and Unser',
       'Add the letters in Unser',
@@ -64,7 +65,7 @@
         const rect = this.scene.getBoundingClientRect();
         const size = [rect.width, rect.height];
         if (this.lastSceneSize && size.some((value, index) => Math.abs(value - this.lastSceneSize[index]) > 1)) {
-          if (this.stage === 7 && ['moving', 'revealing'].includes(this.root.dataset.finale)) {
+          if (this.stage === 8 && ['moving', 'revealing'].includes(this.root.dataset.finale)) {
             this.cancel();
             this.settleMessage();
           }
@@ -129,7 +130,7 @@
         seen.add(token);
       });
       this.prayer.append(document.createTextNode(' …'));
-      this.keyphrase.append(this.prayer, this.node('div', 'cw-scene-label', label.keyLabel));
+      this.keyphrase.append(this.node('div', 'cw-scene-label', label.keyLabel), this.prayer);
 
       this.grid = this.node('div', 'cw-grid');
       this.grid.setAttribute('role', 'list');
@@ -206,7 +207,7 @@
       this.counter = this.node('span', 'cw-step-count');
       this.next = this.node('button', 'cw-next', label.next);
       this.next.type = 'button';
-      this.next.addEventListener('click', () => this.stage === 7 ? this.replay() : this.choose(this.stage + 1));
+      this.next.addEventListener('click', () => this.stage === 8 ? this.replay() : this.choose(this.stage + 1));
       controls.append(this.previous, this.counter, this.next);
       this.root.append(header, this.scene, controls);
       this.host.replaceChildren(this.root);
@@ -245,7 +246,7 @@
         // Vertical motion belongs to the page; a deliberate horizontal swipe
         // chooses one step through the same navigation callback as the buttons.
         if (Math.abs(dx) < 45 || Math.abs(dx) <= 1.5 * Math.abs(dy)) return;
-        const stage = Math.max(0, Math.min(7, this.stage + (dx < 0 ? 1 : -1)));
+        const stage = Math.max(0, Math.min(8, this.stage + (dx < 0 ? 1 : -1)));
         if (stage !== this.stage) this.choose(stage);
       }, options);
     }
@@ -295,18 +296,18 @@
     }
 
     settleMessage() {
-      if (this.destroyed || this.stage !== 7) return;
+      if (this.destroyed || this.stage !== 8) return;
       this.ghosts.forEach(ghost => ghost.remove());
       this.ghosts.clear();
       this.grid.hidden = true;
       this.message.hidden = false;
       this.message.removeAttribute('aria-hidden');
       this.root.dataset.finale = 'settled';
-      this.counter.setAttribute('aria-label', this.labels.step + ' 8: ' + this.labels.decodedMessage);
+      this.counter.setAttribute('aria-label', this.labels.step + ' 9: ' + this.labels.decodedMessage);
     }
 
     revealMessage() {
-      if (this.destroyed || this.stage !== 7) return;
+      if (this.destroyed || this.stage !== 8) return;
       if (this.reduced) {
         this.settleMessage();
         return;
@@ -366,16 +367,16 @@
     }
 
     go(stage, options = {}) {
-      stage = Math.max(0, Math.min(7, Number(stage) || 0));
+      stage = Math.max(0, Math.min(8, Number(stage) || 0));
       if (this.destroyed || (stage === this.stage && !options.force)) return;
       const previous = this.stage;
       let from = null;
       let wordOrigins = [];
       let repeatOrigins = [];
-      if (previous === 2) from = this.pairs[0].getBoundingClientRect();
-      else if (previous === 3 || previous === 4) from = this.focusPair.getBoundingClientRect();
-      else if (previous === 5) from = this.shiftTo.getBoundingClientRect();
-      else if (previous === 1 && stage === 2) {
+      if (previous === 3) from = this.pairs[0].getBoundingClientRect();
+      else if (previous === 4 || previous === 5) from = this.focusPair.getBoundingClientRect();
+      else if (previous === 6) from = this.shiftTo.getBoundingClientRect();
+      else if (previous === 2 && stage === 3) {
         wordOrigins = this.prayerUnique.map(word => word.getBoundingClientRect());
         repeatOrigins = this.prayerRepeats.map(word => ({
           rect: word.getBoundingClientRect(),
@@ -389,17 +390,17 @@
       this.root.dataset.stage = String(stage);
       this.root.dataset.finale = '';
       this.host.dataset.walkthroughStage = String(stage);
-      this.counter.textContent = (stage + 1) + ' / 8';
+      this.counter.textContent = (stage + 1) + ' / 9';
       this.counter.setAttribute('aria-label', this.labels.step + ' ' + (stage + 1) + ': ' + this.labels.stages[stage]);
       this.previous.disabled = stage === 0;
-      this.next.textContent = stage === 7 ? this.labels.replay : this.labels.next;
+      this.next.textContent = stage === 8 ? this.labels.replay : this.labels.next;
       this.source.hidden = stage !== 0;
-      this.keyphrase.hidden = stage !== 1;
-      this.grid.hidden = stage !== 2 && stage !== 7;
-      this.focus.hidden = stage !== 3 && stage !== 4;
-      this.math.hidden = stage !== 4;
-      this.shift.hidden = stage !== 5;
-      this.result.hidden = stage !== 6;
+      this.keyphrase.hidden = stage !== 1 && stage !== 2;
+      this.grid.hidden = stage !== 3 && stage !== 8;
+      this.focus.hidden = stage !== 4 && stage !== 5;
+      this.math.hidden = stage !== 5;
+      this.shift.hidden = stage !== 6;
+      this.result.hidden = stage !== 7;
       this.message.hidden = true;
       this.message.setAttribute('aria-hidden', 'true');
       this.shiftTo.textContent = 'H';
@@ -413,8 +414,15 @@
       if (stage === 0) {
         if (previous > 0) this.animate(this.source, [{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'translateY(0)'}]);
       } else if (stage === 1) {
-        this.animate(this.keyphrase, [{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 400});
+        this.prayerRepeats.forEach(word => { word.style.transitionDelay = '0ms'; });
+        if (previous !== 2) this.animate(this.keyphrase, [{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 400});
       } else if (stage === 2) {
+        // The strike-throughs belong to this step. Arriving from step 1 draws
+        // them in one after another; from anywhere else they are simply there.
+        const stagger = previous === 1 && !this.reduced;
+        this.prayerRepeats.forEach((word, index) => { word.style.transitionDelay = stagger ? (120 + index * 90) + 'ms' : '0ms'; });
+        if (previous !== 1) this.animate(this.keyphrase, [{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 400});
+      } else if (stage === 3) {
         if (wordOrigins.length && !this.reduced) {
           this.pairs.forEach((pair, index) => {
             this.moveFrom(pair.querySelector('.cw-word'), wordOrigins[index], 650);
@@ -427,7 +435,7 @@
             Object.assign(ghost.style, {
               position: 'absolute', left: (origin.rect.left - scene.left) + 'px', top: (origin.rect.top - scene.top) + 'px',
               width: origin.rect.width + 'px', height: origin.rect.height + 'px', font: origin.font,
-              color: origin.color, textDecoration: 'line-through', pointerEvents: 'none'
+              color: origin.color, pointerEvents: 'none'
             });
             this.scene.append(ghost);
             this.ghosts.add(ghost);
@@ -437,15 +445,15 @@
         } else {
           this.animate(this.grid, [{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'translateY(0)'}]);
         }
-      } else if (stage === 3) {
-        this.moveFrom(this.focusPair, from);
       } else if (stage === 4) {
+        this.moveFrom(this.focusPair, from);
+      } else if (stage === 5) {
         this.moveFrom(this.focusPair, from, 360);
         this.math.querySelectorAll('.cw-term, .cw-plus, .cw-equals, .cw-total').forEach((element, index) => {
           this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 320, delay: index * 55, fill: 'backwards'});
         });
         this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
-      } else if (stage === 5) {
+      } else if (stage === 6) {
         this.animate(this.shift, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
         if (!this.reduced) {
           this.shiftTo.classList.replace('decoded', 'encoded');
@@ -460,10 +468,10 @@
             }, 250 + step * 43);
           }
         }
-      } else if (stage === 6) {
-        if (previous === 5) this.moveFrom(this.resultCard, from);
-        else this.animate(this.resultCard, [{opacity: 0, transform: 'scale(.85)'}, {opacity: 1, transform: 'scale(1)'}]);
       } else if (stage === 7) {
+        if (previous === 6) this.moveFrom(this.resultCard, from);
+        else this.animate(this.resultCard, [{opacity: 0, transform: 'scale(.85)'}, {opacity: 1, transform: 'scale(1)'}]);
+      } else if (stage === 8) {
         this.root.dataset.finale = 'flipping';
         this.animate(this.grid, [{opacity: 0, transform: 'scale(.96)'}, {opacity: 1, transform: 'scale(1)'}], {duration: 400});
         this.pairs.forEach((pair, index) => {

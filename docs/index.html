@@ -189,10 +189,10 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="story-layout.css?v=23">
-<link rel="stylesheet" href="cipher-cards.css?v=23">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=23">
-<link rel="stylesheet" href="story-graphics.css?v=23">
+<link rel="stylesheet" href="story-layout.css?v=24">
+<link rel="stylesheet" href="cipher-cards.css?v=24">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=24">
+<link rel="stylesheet" href="story-graphics.css?v=24">
 </head>
 <body>
 
@@ -244,19 +244,20 @@ footer p{margin:0 0 .7em}
 <section class="step" data-s="method" data-cap="Each distinct key word supplies one shift. UNSER sums to 77, giving key letter Y; cipher F decrypts to H.">
 <ol>
 <li>
-<p data-walk-stage="1">The key is a passage of text, read word by word, skipping any word that has already appeared.</p>
-<p data-walk-stage="2">Each key word pairs with one letter of the message, so a 21-letter message needs 21 distinct key words.</p>
+<p data-walk-stage="1">The key is a passage of text, taken from a book and read word by word.</p>
+<p data-walk-stage="2">Any word that has already appeared is skipped, so each key word is used only once.</p>
+<p data-walk-stage="3">Each key word pairs with one letter of the message, so a 21-letter message needs 21 distinct key words.</p>
 </li>
 <li>
-<p data-walk-stage="3">Each word becomes a single letter. The first pair is the cipher letter F and the key word Unser.</p>
-<p data-walk-stage="4">The letters of the word are added up (A=1 to Z=26) and divided by 26, and the remainder gives the letter (1 is A, 25 is Y, 0 is Z). Unser adds up to 77, which leaves 25, so its letter is Y.</p>
+<p data-walk-stage="4">Each word becomes a single letter. The first pair is the cipher letter F and the key word Unser.</p>
+<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26) and divided by 26, and the remainder gives the letter (1 is A, 25 is Y, 0 is Z). Unser adds up to 77, which leaves 25, so its letter is Y.</p>
 </li>
 <li>
-<p data-walk-stage="5">That key letter shifts one message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way, so Y moves F back 24 places.</p>
-<p data-walk-stage="6">F shifts to H, the first letter of the hidden message.</p>
+<p data-walk-stage="6">That key letter shifts one message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. Decoding shifts the other way, so Y moves F back 24 places.</p>
+<p data-walk-stage="7">F shifts to H, the first letter of the hidden message.</p>
 </li>
 </ol>
-<p data-walk-stage="7">The same happens for all 21 letters and the message reads out. This is the method Wood adopted for his own test.</p>
+<p data-walk-stage="8">The same happens for all 21 letters and the message reads out. This is the method Wood adopted for his own test.</p>
 </section>
 </div></div>
 <div class="text text-after">
@@ -477,7 +478,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=23"></script>
+<script src="cipher-walkthrough.js?v=24"></script>
 <script>
 (function(){
 "use strict";
@@ -524,7 +525,7 @@ function Graphic(el){
     el.querySelector(".gbody").replaceChildren(host);
     const walk=new CipherWalkthrough(host,{ct:CT,pt:PT,reduced,labels:{
       label:"How the cipher becomes a message",encoded:"Encoded",decoded:"Decoded",
-      stages:["The 21-letter cipher","The key passage","One key word for every cipher letter","Start with F and Unser","Add the letters in Unser","Use Y to shift F back 24 places","The first decoded letter is H","Repeat for all 21 letters"],
+      stages:["The 21-letter cipher","The key passage","Repeated words are skipped","One key word for every cipher letter","Start with F and Unser","Add the letters in Unser","Use Y to shift F back 24 places","The first decoded letter is H","Repeat for all 21 letters"],
       previous:"Previous",next:"Next",replay:"Replay",encryptedMessage:"The encrypted message",keyLabel:"The key",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y means a shift of 24 (A = 0)",shift:"Back 24",firstDecoded:"The message begins",step:"Step",keyWord:"key word",decodedMessage:"The decoded message",swipeHint:"Scroll to explore · or use the buttons"
     }});
     this.walkthrough=walk;
@@ -944,8 +945,8 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="story-scroll.js?v=23"></script>
-<script src="hero-reveal.js?v=23"></script>
+<script src="story-scroll.js?v=24"></script>
+<script src="hero-reveal.js?v=24"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */

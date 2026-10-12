@@ -88,8 +88,13 @@
     },
     {
       "kind": "li",
-      "en": "The key is a passage of text, read word by word, skipping any word that has already appeared.",
-      "de": "Der Schlüssel ist eine Textpassage, Wort für Wort gelesen, wobei jedes Wort übersprungen wird, das schon vorgekommen ist."
+      "en": "The key is a passage of text, taken from a book and read word by word.",
+      "de": "Der Schlüssel ist eine Textpassage, einem Buch entnommen und Wort für Wort gelesen."
+    },
+    {
+      "kind": "p",
+      "en": "Any word that has already appeared is skipped, so each key word is used only once.",
+      "de": "Jedes Wort, das schon vorgekommen ist, wird übersprungen, sodass jedes Schlüsselwort nur einmal verwendet wird."
     },
     {
       "kind": "p",
@@ -1017,6 +1022,10 @@
     {
       "en": "\"The key passage\"",
       "de": "\"Der Schlüsseltext\""
+    },
+    {
+      "en": "\"Repeated words are skipped\"",
+      "de": "\"Wiederholte Wörter werden übersprungen\""
     },
     {
       "en": "\"Previous\"",

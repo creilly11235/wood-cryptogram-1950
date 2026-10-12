@@ -190,10 +190,10 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=23">
-<link rel="stylesheet" href="../cipher-cards.css?v=23">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=23">
-<link rel="stylesheet" href="../story-graphics.css?v=23">
+<link rel="stylesheet" href="../story-layout.css?v=24">
+<link rel="stylesheet" href="../cipher-cards.css?v=24">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=24">
+<link rel="stylesheet" href="../story-graphics.css?v=24">
 </head>
 <body>
 
@@ -244,19 +244,20 @@ footer p{margin:0 0 .7em}
 <section class="step" data-s="method" data-cap="Jedes verschiedene Schlüsselwort liefert eine Verschiebung. UNSER ergibt die Summe 77 und damit den Schlüsselbuchstaben Y; Geheimtext F wird zu H entschlüsselt.">
 <ol>
 <li>
-<p data-walk-stage="1">Der Schlüssel ist eine Textpassage, Wort für Wort gelesen, wobei jedes Wort übersprungen wird, das schon vorgekommen ist.</p>
-<p data-walk-stage="2">Jedes Schlüsselwort gehört zu einem Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter.</p>
+<p data-walk-stage="1">Der Schlüssel ist eine Textpassage, einem Buch entnommen und Wort für Wort gelesen.</p>
+<p data-walk-stage="2">Jedes Wort, das schon vorgekommen ist, wird übersprungen, sodass jedes Schlüsselwort nur einmal verwendet wird.</p>
+<p data-walk-stage="3">Jedes Schlüsselwort gehört zu einem Buchstaben der Botschaft. Eine Botschaft aus 21 Buchstaben braucht also 21 verschiedene Schlüsselwörter.</p>
 </li>
 <li>
-<p data-walk-stage="3">Jedes Wort wird zu einem Buchstaben. Das erste Paar ist der Geheimtextbuchstabe F und das Schlüsselwort Unser.</p>
-<p data-walk-stage="4">Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26) und durch 26 geteilt, und der Rest ergibt den Buchstaben (1 ist A, 25 ist Y, 0 ist Z). Unser ergibt 77, der Rest ist 25, sein Buchstabe ist also Y.</p>
+<p data-walk-stage="4">Jedes Wort wird zu einem Buchstaben. Das erste Paar ist der Geheimtextbuchstabe F und das Schlüsselwort Unser.</p>
+<p data-walk-stage="5">Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26) und durch 26 geteilt, und der Rest ergibt den Buchstaben (1 ist A, 25 ist Y, 0 ist Z). Unser ergibt 77, der Rest ist 25, sein Buchstabe ist also Y.</p>
 </li>
 <li>
-<p data-walk-stage="5">Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln geht es in die Gegenrichtung, Y rückt F also um 24 Stellen zurück.</p>
-<p data-walk-stage="6">F wird zu H verschoben, dem ersten Buchstaben der verborgenen Botschaft.</p>
+<p data-walk-stage="6">Dieser Schlüsselbuchstabe verschiebt einen Buchstaben der Botschaft im Alphabet. A bedeutet keine Verschiebung, B eine Stelle, C zwei und so weiter, von Z wieder zurück zu A. Beim Entschlüsseln geht es in die Gegenrichtung, Y rückt F also um 24 Stellen zurück.</p>
+<p data-walk-stage="7">F wird zu H verschoben, dem ersten Buchstaben der verborgenen Botschaft.</p>
 </li>
 </ol>
-<p data-walk-stage="7">Dasselbe geschieht mit allen 21 Buchstaben, und die Botschaft erscheint. Dieses Verfahren übernahm Wood für seinen eigenen Test.</p>
+<p data-walk-stage="8">Dasselbe geschieht mit allen 21 Buchstaben, und die Botschaft erscheint. Dieses Verfahren übernahm Wood für seinen eigenen Test.</p>
 </section>
 </div></div>
 <div class="text text-after">
@@ -478,7 +479,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=23"></script>
+<script src="../cipher-walkthrough.js?v=24"></script>
 <script>
 (function(){
 "use strict";
@@ -525,7 +526,7 @@ function Graphic(el){
     el.querySelector(".gbody").replaceChildren(host);
     const walk=new CipherWalkthrough(host,{ct:CT,pt:PT,reduced,labels:{
       label:"Vom Geheimtext zur Botschaft",encoded:"Verschlüsselt",decoded:"Entschlüsselt",
-      stages:["Der Geheimtext: 21 Buchstaben","Der Schlüsseltext","Ein Schlüsselwort pro Buchstabe","Start mit F und Unser","Die Buchstabenwerte von Unser addieren","Mit Y: F um 24 Stellen zurück","Der erste Klartextbuchstabe: H","Für alle 21 Buchstaben wiederholen"],
+      stages:["Der Geheimtext: 21 Buchstaben","Der Schlüsseltext","Wiederholte Wörter werden übersprungen","Ein Schlüsselwort pro Buchstabe","Start mit F und Unser","Die Buchstabenwerte von Unser addieren","Mit Y: F um 24 Stellen zurück","Der erste Klartextbuchstabe: H","Für alle 21 Buchstaben wiederholen"],
       previous:"Zurück",next:"Weiter",replay:"Wiederholen",encryptedMessage:"Die verschlüsselte Nachricht",keyLabel:"Der Schlüssel",keyReduction:"77 − (2 × 26) = 25 → Y",shiftKey:"Y verschiebt um 24 Stellen (A = 0)",shift:"24 zurück",firstDecoded:"Die Botschaft beginnt",step:"Schritt",keyWord:"Schlüsselwort",decodedMessage:"Die entschlüsselte Botschaft",swipeHint:"Scrollen oder die Tasten verwenden"
     }});
     this.walkthrough=walk;
@@ -945,8 +946,8 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=23"></script>
-<script src="../hero-reveal.js?v=23"></script>
+<script src="../story-scroll.js?v=24"></script>
+<script src="../hero-reveal.js?v=24"></script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */
