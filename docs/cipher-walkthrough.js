@@ -304,6 +304,30 @@
       ], {duration, delay, fill: delay ? 'backwards' : 'none'});
     }
 
+    // The words keep the lines they landed on: each line becomes a row
+    // before the cards fade, so tightening the spacing never rewraps them.
+    freezeMessageRows() {
+      const words = [...this.message.querySelectorAll('.cw-msg-word')];
+      if (!words.length || this.message.querySelector('.cw-msg-row')) return;
+      const tops = words.map(word => word.offsetTop);
+      let row = null, top = null;
+      words.forEach((word, index) => {
+        const wordTop = tops[index];
+        if (row === null || Math.abs(wordTop - top) > 1) {
+          row = this.node('span', 'cw-msg-row');
+          top = wordTop;
+          this.message.append(row);
+        }
+        row.append(word);
+      });
+    }
+
+    flattenMessageRows() {
+      this.message.querySelectorAll('.cw-msg-row').forEach(row => {
+        row.replaceWith(...row.childNodes);
+      });
+    }
+
     settleMessage() {
       if (this.destroyed || this.stage !== 8) return;
       this.ghosts.forEach(ghost => ghost.remove());
@@ -311,8 +335,9 @@
       this.grid.hidden = true;
       this.message.hidden = false;
       this.message.removeAttribute('aria-hidden');
-      this.root.dataset.finale = 'settled';
+      this.freezeMessageRows();
       this.message.offsetWidth;
+      this.root.dataset.finale = 'settled';
       this.counter.setAttribute('aria-label', this.labels.step + ' 9: ' + this.labels.decodedMessage);
     }
 
@@ -380,6 +405,7 @@
         }));
       }
       this.cancel();
+      this.flattenMessageRows();
       this.stage = stage;
       this.root.dataset.stage = String(stage);
       this.root.dataset.finale = '';
