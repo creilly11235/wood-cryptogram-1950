@@ -153,6 +153,11 @@ figure img {
   }
   .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child,
   .pinned-chapter .pin > .text > .step[data-walk-stage]:last-child { margin-bottom: 72svh; }
+  /* After the decoded message, the next section comes up to meet it: the
+     passage holds a little longer, and the text rises over the empty part of
+     the graphic (--walk-tail, measured by the walkthrough) before pushing it. */
+  .chapter.pinned-chapter[data-ch="1"] .pin > .text .step > p[data-walk-stage]:last-child { margin-bottom: calc(var(--walk-tail, 0px) + 60svh); }
+  .chapter.pinned-chapter[data-ch="1"] > .text.text-after { position: relative; z-index: 3; background: var(--room); margin-top: calc(-1 * var(--walk-tail, 0px)); padding-top: 0; }
   .pinned-chapter .pin > .text > .step[data-walk-stage] p + p { margin-top: .7em; }
   .pinned-chapter .pin .step p:last-child, .pinned-chapter .pin .step li:last-child { margin-bottom: 0; }
   .pinned-chapter .pin .step p { margin: 0; }

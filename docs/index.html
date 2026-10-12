@@ -534,7 +534,21 @@ function Graphic(el){
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};
-    this.showStage=stage=>walk.go(stage);
+    // On phones the next section rises to meet the decoded message, so the
+    // chapter learns how much empty graphic sits below it at the last stage.
+    const chapter=el.closest(".chapter");
+    const measureTail=()=>{
+      if(!chapter||walk.stage!==8)return;
+      const message=walk.message,wasHidden=message.hidden;
+      message.hidden=false;
+      const letters=[...message.querySelectorAll(".cw-msg-letter")];
+      const bottom=Math.max(...letters.map(letter=>letter.getBoundingClientRect().bottom));
+      message.hidden=wasHidden;
+      const tail=el.getBoundingClientRect().bottom-bottom-28;
+      if(Number.isFinite(tail)&&tail>0)chapter.style.setProperty("--walk-tail",Math.round(tail)+"px");
+    };
+    this.showStage=stage=>{walk.go(stage);if(stage===8)requestAnimationFrame(measureTail);};
+    new ResizeObserver(()=>requestAnimationFrame(measureTail)).observe(el);
     this.pause=()=>walk.pause();this.resume=()=>walk.resume();
     this.replay=()=>walk.replay();this.frame=()=>{};
     return;
