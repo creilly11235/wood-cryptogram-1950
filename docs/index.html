@@ -188,9 +188,9 @@ footer p{margin:0 0 .7em}
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 </style>
-<link rel="stylesheet" href="story-layout.css?v=24">
+<link rel="stylesheet" href="story-layout.css?v=25">
 <link rel="stylesheet" href="cipher-cards.css?v=25">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=25">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=27">
 <link rel="stylesheet" href="story-graphics.css?v=24">
 </head>
 <body>
@@ -475,7 +475,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=25"></script>
+<script src="cipher-walkthrough.js?v=27"></script>
 <script>
 (function(){
 "use strict";
@@ -527,7 +527,7 @@ function Graphic(el){
     const walk=new CipherWalkthrough(host,{reduced,labels:{
       label:"How a message becomes a cipher",encoded:"Cipher",decoded:"Message",
       stages:["The 14-letter message","The key passage","Repeated words are skipped","One key word for every letter","Start with T and To","Add the letters in To","Use I to shift T forward 8 places","The first cipher letter is B","Repeat for all 14 letters"],
-      previous:"Previous",next:"Next",replay:"Replay",encryptedMessage:"The message",keyLabel:"The key",keyReduction:"35 − 26 = 9 → I",shiftKey:"I means a shift of 8 (A = 0)",shift:"Forward 8",firstDecoded:"The ciphertext begins",step:"Step",keyWord:"key word",decodedMessage:"The ciphertext",swipeHint:"Scroll to explore · or use the buttons"
+      previous:"Previous",next:"Next",replay:"Replay",encryptedMessage:"The message",keyLabel:"The key",keyReduction:"35 − 26 = 9 → I",shiftKey:"I means a shift of 8",shift:"Forward 8",firstDecoded:"The ciphertext begins",step:"Step",keyWord:"key word",decodedMessage:"The ciphertext",swipeHint:"Scroll to explore · or use the buttons"
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};

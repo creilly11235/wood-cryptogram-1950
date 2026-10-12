@@ -24,7 +24,7 @@
     next: 'Next',
     replay: 'Replay',
     keyReduction: '35 − 26 = 9 → I',
-    shiftKey: 'I means a shift of 8 (A = 0)',
+    shiftKey: 'I means a shift of 8',
     shift: 'Forward 8',
     firstDecoded: 'The ciphertext begins',
     step: 'Step',
@@ -345,6 +345,28 @@
       });
     }
 
+    // The text keeps the lines its cards will take, so forming the cards
+    // never rewraps the sentence.
+    freezeSourceRows() {
+      const words = [...this.source.querySelectorAll('.cw-source-word')];
+      const grid = this.source.querySelector('.cw-source-grid');
+      if (!words.length || grid.querySelector('.cw-source-row')) return;
+      const tops = words.map(word => word.offsetTop);
+      let row = null, top = null;
+      words.forEach((word, index) => {
+        if (row === null || Math.abs(tops[index] - top) > 1) {
+          row = this.node('span', 'cw-source-row');
+          top = tops[index];
+          grid.append(row);
+        }
+        row.append(word);
+      });
+    }
+
+    flattenSourceRows() {
+      this.source.querySelectorAll('.cw-source-row').forEach(row => row.replaceWith(...row.childNodes));
+    }
+
     flattenMessageRows() {
       this.message.querySelectorAll('.cw-msg-row').forEach(row => {
         row.replaceWith(...row.childNodes);
@@ -430,6 +452,7 @@
       this.stage = stage;
       this.root.dataset.stage = String(stage);
       this.root.dataset.finale = '';
+      this.root.dataset.intro = '';
       this.host.dataset.walkthroughStage = String(stage);
       this.counter.textContent = (stage + 1) + ' / 9';
       this.counter.setAttribute('aria-label', this.labels.step + ' ' + (stage + 1) + ': ' + this.labels.stages[stage]);
@@ -454,6 +477,14 @@
       });
       if (stage === 0) {
         if (previous > 0) this.animate(this.source, [{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'translateY(0)'}]);
+        // The sentence reads as text first, then the cards form around its letters.
+        if (!this.reduced) {
+          this.flattenSourceRows();
+          this.freezeSourceRows();
+          this.root.dataset.intro = 'text';
+          this.source.offsetWidth;
+          this.later(() => { this.root.dataset.intro = ''; }, previous < 0 ? 1100 : 800);
+        }
       } else if (stage === 1) {
         this.prayerRepeats.forEach(word => { word.style.transitionDelay = '0ms'; });
         if (previous !== 2) this.animate(this.keyphrase, [{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 400});
@@ -543,13 +574,11 @@
           const flip = () => {
             decode();
             this.animate(pair.querySelector('.cw-card-turn'), [{transform: 'rotateY(0deg)'}, {transform: 'rotateY(180deg)'}], {duration: 420, easing: 'cubic-bezier(.4,0,.2,1)'});
-            this.animate(word, [{opacity: 1}, {opacity: 0}], {duration: 420});
           };
           if (this.reduced) decode();
           else if (glide && index === 0) {
             decode();
             this.moveFrom(pair.querySelector('.cw-card'), from, 520);
-            this.animate(word, [{opacity: 1}, {opacity: 0}], {duration: 520});
           } else this.later(flip, (glide ? 640 : 450) + index * 110);
         });
         if (this.reduced) this.revealMessage();

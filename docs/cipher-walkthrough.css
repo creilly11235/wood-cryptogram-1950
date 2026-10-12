@@ -24,6 +24,8 @@
 .cw-msg-letter{display:grid;place-items:center;padding-top:.09em;border-radius:5px;box-sizing:border-box;font:400 clamp(20px,4.5cqw,28px)/1 var(--mono,monospace)}
 .cw[data-finale="moving"] .cw-message .cw-msg-letter{opacity:0}
 .cw[data-finale="moving"] .cw-grid,.cw[data-finale="revealing"] .cw-grid{opacity:0}
+/* On the last step the key words have done their work; only the cards flip. */
+.cw[data-stage="8"] .cw-word{display:none}
 .cw-finale-letter{position:absolute;display:block;text-align:center;white-space:nowrap;pointer-events:none;transform-origin:center;z-index:1}
 .cw[data-finale="revealing"] .cw-finale-letter{opacity:0}
 .cw-finale-letter.cw-msg-letter{display:grid;transition:none}
@@ -118,4 +120,15 @@
 @media(prefers-reduced-motion:reduce){.cw *,.cw *::before,.cw *::after{scroll-behavior:auto;transition:none}.cw-prayer-word.is-repeat,.cw-prayer-word.is-repeat::after{transition:none}}
 /* Cards inside a word group size from their height, since the group's width
    is indefinite and a percentage width would collapse them. */
-.cw .cw-source-word .cw-source-letter,.cw .cw-msg-word .cw-msg-letter{flex:none;width:auto;aspect-ratio:.92}
+.cw .cw-msg-word .cw-msg-letter{flex:none;width:auto;aspect-ratio:.92}
+.cw .cw-source-word .cw-source-letter{flex:none;width:var(--cw-src-w,48px);aspect-ratio:auto;transition:width .6s,height .6s,background-color .6s,border-color .6s,box-shadow .6s}
+@media(max-width:900px){.cw{--cw-src-w:35px}}
+@media(max-width:360px){.cw{--cw-src-w:30px}}
+@media(min-width:361px){@container walkthrough-space (max-height:320px){.cw{--cw-src-w:32px}}}
+/* The message first reads as plain text; the cards then form around the letters. */
+.cw-source-row{display:flex;flex:0 0 100%;justify-content:center;gap:inherit}
+.cw-source-grid,.cw-source-word{transition:gap .6s}
+.cw[data-intro="text"] .cw-source-grid{gap:10px .5em}
+.cw[data-intro="text"] .cw-source-word{gap:0}
+.cw[data-intro="text"] .cw-source-word .cw-source-letter{width:.68em;height:1.3em;background:transparent;border-color:transparent;box-shadow:none}
+@media(prefers-reduced-motion:reduce){.cw .cw-source-word .cw-source-letter,.cw-source-grid,.cw-source-word{transition:none}}
