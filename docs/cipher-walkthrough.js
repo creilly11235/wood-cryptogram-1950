@@ -106,7 +106,7 @@
         sourceGrid.append(card);
         return card;
       });
-      this.source.append(sourceGrid, this.node('div', 'cw-scene-label', label.encryptedMessage));
+      this.source.append(this.node('div', 'cw-scene-label', label.encryptedMessage), sourceGrid);
 
       this.keyphrase = this.node('div', 'cw-keyphrase');
       this.prayer = this.node('div', 'cw-prayer');
@@ -130,7 +130,7 @@
         seen.add(token);
       });
       this.prayer.append(document.createTextNode(' …'));
-      this.keyphrase.append(this.prayer, this.node('div', 'cw-scene-label', label.keyLabel));
+      this.keyphrase.append(this.node('div', 'cw-scene-label', label.keyLabel), this.prayer);
 
       this.grid = this.node('div', 'cw-grid');
       this.grid.setAttribute('role', 'list');
@@ -366,6 +366,7 @@
       let wordOrigins = [];
       let repeatOrigins = [];
       if (previous === 3) from = this.pairs[0].getBoundingClientRect();
+      else if (previous === 5 && stage === 6) from = this.focusCard.getBoundingClientRect();
       else if (previous === 4 || previous === 5) from = this.focusPair.getBoundingClientRect();
       else if (previous === 6) from = this.shiftTo.getBoundingClientRect();
       else if (previous === 7) from = this.resultCard.getBoundingClientRect();
@@ -450,7 +451,18 @@
         });
         this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
       } else if (stage === 6) {
-        this.animate(this.shift, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
+        // From the sum, the F card travels to its place on the left and the
+        // rest of the scene follows; the count down starts once it has landed.
+        const glide = previous === 5 && Boolean(from) && !this.reduced;
+        const settle = glide ? 420 : 0;
+        if (glide) {
+          this.moveFrom(this.shiftFrom, from, 520);
+          this.shift.querySelectorAll('.cw-shift-key, .cw-arrow, .cw-single.decoded').forEach(element => {
+            this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350, delay: 300, fill: 'backwards'});
+          });
+        } else {
+          this.animate(this.shift, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
+        }
         if (!this.reduced) {
           this.shiftTo.classList.replace('decoded', 'encoded');
           this.shiftTo.textContent = 'F';
@@ -461,7 +473,7 @@
                 this.shiftTo.classList.replace('encoded', 'decoded');
                 this.animate(this.shiftTo, [{transform: 'scale(.92)'}, {transform: 'scale(1)'}], {duration: 300});
               }
-            }, 250 + step * 43);
+            }, settle + 250 + step * 43);
           }
         }
       } else if (stage === 7) {
