@@ -85,9 +85,11 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .scrolly{max-width:1184px;margin:0 auto;padding-inline:24px}
 .chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start}
 .chapter+.chapter{border-top:1px solid var(--veil-2)}
-/* A chapter that opens without a heading runs on from the one before it. */
-.chapter+.chapter:not(:has(h2)){border-top:0}
-.chapter+.chapter:not(:has(h2))>.text-before{padding-top:0}
+/* A chapter that opens without a heading runs on from the one before it
+   (the scroll script marks the pair run-on and runs-on). */
+.chapter+.chapter:not(:has(h2)),.chapter.run-on{border-top:0}
+.chapter.run-on>.text.text-before{padding-top:0}
+.chapter.runs-on>.text.text-after,.chapter.runs-on>.text.text-after>.step:last-child{padding-bottom:0}
 .graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
 .gbody{display:flex;flex-direction:column;flex:1;min-height:0}
 .replay:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
@@ -351,7 +353,7 @@ footer p{margin:0 0 .7em}
 </div></div>
 <div class="text">
 <section class="step" data-s="prayer" data-walk-stage="1" data-cap="Die 13 führenden unterschiedlichen Ergebnisse der Bibelsuche nach Thouless’ Regel. Die deutsche Bibel erhält die höchste Bewertung und ergibt HIERBINICHTOTSIENSTEW.">
-<p>Nach Thouless’ Regel kam das höchstbewertete Ergebnis aus der deutschen Bibel, beginnend beim sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Es lag deutlich vor der rumänischen Bibel auf dem zweiten Platz, und die Entschlüsselung ergab <strong class="cipher-token decoded">HIERBINICHTOTSIENSTEW</strong>.</p>
+<p>Nach Thouless’ Regel kam das höchstbewertete Ergebnis aus der deutschen Bibel, beginnend beim sechsten Wort von Matthäus 6,9, dem Anfang des Vaterunsers. Es lag deutlich vor der rumänischen Bibel auf dem zweiten Platz, und die Entschlüsselung ergab:<br><strong class="cipher-token decoded">HIER BIN ICH TOTSIENS TEW</strong></p>
 </section>
 <section class="step" data-s="church" data-walk-stage="2" data-cap="Das vertraute kirchliche Gebet beginnt mit Vater unser; die Lutherbibel mit Unser Vater. Die unterschiedliche Wortfolge ergibt unterschiedliche Schlüssel.">
 <p>Auf den genauen Wortlaut kam es an. Eine frühere Suche hatte das deutsche Vaterunser mit dem vertrauten kirchlichen Anfang „Vater unser“ ausprobiert und nichts gefunden. Das „Unser Vater in dem Himmel“ der Lutherbibel ergibt schon ab dem ersten Wort einen anderen Schlüssel.</p>
@@ -498,7 +500,6 @@ const EN_MISS=[37,55,66],EN_PLANT_MSG="THEFORMOFTHEUNKNOWNMI";
 // Three readable sentences a freely chosen key can draw from the same 21 letters,
 // each shown with the key letters (A = no shift) that would produce it.
 const TRAP_MSGS=["THE ANSWER IS NOT HERE YET","WE WILL MEET AT DAWN TODAY","PLEASE KEEP THIS KEY SAFE"],TRAP_STATES={trap:0,trap2:1,trap3:2};
-const trapKey=s=>[...s.replace(/ /g,"")].map((c,i)=>String.fromCharCode(65+(CT.charCodeAt(i)-c.charCodeAt(0)+26)%26)).join("");
 const JUNK=["UNTONEASACRISTEALSBYR"];
 /* Source: harness/wood35/out_expanded.jsonl, 3,977 texts. Each EN_NULLX value
    is the best score from one of 100 random ciphertexts; EN_WOOD is Wood's best.
@@ -631,20 +632,19 @@ function Graphic(el){
     if(stripSig&&stripSig!==s+kind)fadeIn(tiles);stripSig=s+kind;
     sub.replaceChildren();
   }
-  function subLetters(s){sub.replaceChildren(...[...s].map(c=>{const span=document.createElement("span");span.textContent=c;return span;}));}
   // The trap cycles through its sentences: each fades out with its key letters
   // and the next fades in, all from the frame clock so pausing holds it.
-  function trapShow(index){trapIndex=index;const msg=TRAP_MSGS[index];strip(msg.replace(/ /g,""),"reading");subLetters(trapKey(msg));revealBase=0;}
+  function trapShow(index){trapIndex=index;strip("","reading");revealBase=0;}
   function configure(){
     legend.replaceChildren();strip(CT);lastLetter=-1;trapIndex=-1;revealBase=0;tiles.style.opacity="";sub.style.opacity="";
     switch(state){
       case "trap":case "trap2":case "trap3":trapShow(TRAP_STATES[state]);break;
-      case "shelves":break;
-      case "plants":strip(EN_PLANT_MSG,"reading");legendItems([["Bestes Ergebnis stimmte",blue],["Bestes Ergebnis stimmte nicht",gridGray]]);break;
-      case "englishResults":strip(JUNK[0],"junk");legendItems([]);break;
+      case "shelves":strip("","reading");break;
+      case "plants":strip("","reading");legendItems([["Bestes Ergebnis stimmte",blue],["Bestes Ergebnis stimmte nicht",gridGray]]);break;
+      case "englishResults":strip("","reading");legendItems([]);break;
       case "idea":strip("","reading");break;
-      case "bibles":break;
-      case "prayer":strip(instant?PT:CT,instant?"reading":"cipher");break;
+      case "bibles":strip("","reading");break;
+      case "prayer":strip("","reading");lastLetter=21;break;
       case "church":strip(PT,"reading");break;
       case "table":strip(PT,"reading");break;
       case "reading":strip(PT,"reading");break;
@@ -709,18 +709,9 @@ function Graphic(el){
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
-  function letterCards(s,x,y,width,tile,delay){
-    const words=s.split(" "),gap=Math.max(2,tile*.1),wordGap=tile*.55,rows=[[]];let used=0;
-    words.forEach(word=>{const w=word.length*tile+(word.length-1)*gap;if(used&&used+wordGap+w>width){rows.push([]);used=0;}rows[rows.length-1].push([word,w]);used+=(used?wordGap:0)+w;});
-    const height=tile*1.2,size=tile*.62;let index=0;
-    rows.forEach((row,r)=>{const rowWidth=row.reduce((sum,[,w])=>sum+w,0)+wordGap*(row.length-1);let left=x+Math.max(0,(width-rowWidth)/2);const rowY=y+(r-(rows.length-1)/2)*(height+tile*.5);
-      row.forEach(([word,w])=>{[...word].forEach((c,i)=>{const at=left+i*(tile+gap);reveal(delay+index++*40,()=>{ctx.fillStyle=decodedBg;ctx.strokeStyle=decodedBorder;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(at+.5,rowY-height/2+.5,tile-1,height-1,3);ctx.fill();ctx.stroke();line(at+2,rowY+height/2-2,at+tile-2,rowY+height/2-2,decodedBorder,1.5);text(c,at+tile/2,rowY,size,decodedFg,"center",true);});});left+=w+wordGap;});
-    });
-  }
-  // The same test message under two word lists. Three identical rows of the
-  // undivided letters flip from cipher to reading, then the lower two rows
-  // arrange themselves into the words each list finds.
-  const IDEA=[["VERS TE HT GE WIS SEM IN DER"],["VERSTEHT GEWISSE MINDER"]],IDEA_FLIP=700,IDEA_MOVE=1500,IDEA_END=2600;
+  // The same test message under two word lists, each grouped as that list
+  // reads it.
+  const IDEA=[["VERS TE HT GE WIS SEM IN DER"],["VERSTEHT GEWISSE MINDER"]];
   function cardRows(s,width,tile){
     const words=s.split(" "),gap=Math.max(2,tile*.1),wordGap=tile*.55,rows=[[]];let used=0;
     words.forEach(word=>{const w=word.length*tile+(word.length-1)*gap;if(used&&used+wordGap+w>width){rows.push([]);used=0;}rows[rows.length-1].push([word,w]);used+=(used?wordGap:0)+w;});
@@ -729,47 +720,50 @@ function Graphic(el){
       row.forEach(([word,w])=>{[...word].forEach((c,i)=>positions.push({c,x:left+i*(tile+gap),row:r}));left+=w+wordGap;});});
     return {positions,rows:rows.length};
   }
-  function card(c,x,y,tile,height,size,flip){
+  function card(c,x,y,tile,height,size,flip,back=c){
     const kind=flip<.5?"encoded":"decoded",sx=Math.max(.04,Math.abs(1-2*flip));
     ctx.save();ctx.translate(x+tile/2,y);ctx.scale(sx,1);
     ctx.fillStyle=kind==="encoded"?encodedBg:decodedBg;ctx.strokeStyle=kind==="encoded"?encodedBorder:decodedBorder;ctx.lineWidth=1;
     ctx.beginPath();ctx.roundRect(-tile/2+.5,-height/2+.5,tile-1,height-1,3);ctx.fill();ctx.stroke();
     if(kind==="decoded")line(-tile/2+2,height/2-2,tile/2-2,height/2-2,decodedBorder,1.5);
-    text(c,0,0,size,kind==="encoded"?encodedFg:decodedFg,"center",true);
+    text(kind==="encoded"?back:c,0,0,size,kind==="encoded"?encodedFg:decodedFg,"center",true);
     ctx.restore();
   }
+  // A run of cipher cards flips to its reading, then the cards slide into
+  // the words of that reading. Both layouts centre on centreY and the cards
+  // keep one size throughout. Returns the number of rows the block spans.
+  const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300;
+  function cardStory(text,cipher,p,tile,centreY,delay=0){
+    const letters=text.replace(/ /g,""),gap=Math.max(2,tile*.1),height=tile*1.2,rowStep=height+tile*.35;
+    const cols=Math.max(1,Math.floor((p.w+gap)/(tile+gap))),gridRows=Math.ceil(letters.length/cols);
+    const target=cardRows(text,p.w,tile),rows=Math.max(gridRows,target.rows);
+    const move=progress(CARD_MOVE+delay,700);
+    [...letters].forEach((c,i)=>{
+      const row=Math.floor(i/cols),inRow=Math.min(cols,letters.length-row*cols),rowWidth=inRow*tile+(inRow-1)*gap;
+      const x0=p.x+(p.w-rowWidth)/2+(i%cols)*(tile+gap),y0=centreY+(row-(gridRows-1)/2)*rowStep;
+      const t=target.positions[i],x1=p.x+t.x,y1=centreY+(t.row-(target.rows-1)/2)*rowStep;
+      const x=x0+(x1-x0)*move,y=y0+(y1-y0)*move;
+      ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,tile,height,tile*.62,progress(CARD_FLIP+delay+i*25,320),cipher[i]||c);ctx.restore();
+    });
+    return rows;
+  }
   function ideaScene(p,size){
-    const tile=Math.min(isMobilePanel()?30:26,p.w/23.2),gap=Math.max(2,tile*.1),height=tile*1.2;
-    // The arranged rows use larger cards, so the letters grow as they move.
-    const short=p.h<360,big=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),bigH=big*1.2,rowStep=bigH+big*.35,head=size*2;
-    const lineWidth=PLANT_DE.length*tile+(PLANT_DE.length-1)*gap,left=p.x+(p.w-lineWidth)/2;
-    const layouts=IDEA.map(([text])=>cardRows(text,p.w,big));
-    const need=layouts.map(l=>head+l.rows*rowStep-big*.35);
-    // The undivided row and the two grouped rows stack evenly, centred in
-    // the panel. Short panels keep the stack clear of the text card below.
-    const room=p.h*(short?.7:1),content=height+need[0]+need[1];
-    const spacing=Math.max(8,Math.min(big*1.6,(room-content)/4));
-    const startY=p.y+Math.max(4,(room-content-2*spacing)/2);
-    const move=progress(IDEA_MOVE,700),fade=progress(IDEA_MOVE,400);
-    const top=startY+height/2;
-    let block=startY+height+spacing;
-    [null,...IDEA].forEach((entry,r)=>{
-      let targets=null,baseY=top,restY=top;
-      if(entry){
-        const layout=layouts[r-1];targets=layout.positions;
-        baseY=block+head+bigH/2;restY=baseY+(layout.rows-1)*rowStep/2;
-        ctx.save();ctx.globalAlpha=sceneAlpha*fade;
-        label(mobileCopy.idea[r-1],W/2,block+size*1.1,p.w,size,muted,"center");
-        if(r===2)line(p.x,block-spacing/2,p.x+p.w,block-spacing/2,pale);
-        ctx.restore();
-        block+=need[r-1]+spacing;
-      }
-      [...PLANT_DE].forEach((c,i)=>{
-        const x0=left+i*(tile+gap),y0=restY;
-        let x=x0,y=y0,at=tile;
-        if(targets){const t=targets[i];x=x0+(p.x+t.x-x0)*move;y=y0+(baseY+t.row*rowStep-y0)*move;at=tile+(big-tile)*move;}
-        ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,at,at*1.2,at*.62,progress(IDEA_FLIP+i*25,320));ctx.restore();
-      });
+    // Two readings of the same cipher. Each block flips the cipher cards to
+    // the test message, then groups them as that word list does.
+    const short=p.h<360,tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=size*2;
+    const rowsFor=text=>{const gap=Math.max(2,tile*.1),cols=Math.max(1,Math.floor((p.w+gap)/(tile+gap)));return Math.max(Math.ceil(PLANT_DE.length/cols),cardRows(text,p.w,tile).rows);};
+    const need=IDEA.map(([text])=>head+rowsFor(text)*rowStep-tile*.35);
+    const room=p.h*(short?.7:1),content=need[0]+need[1];
+    const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
+    const fade=progress(CARD_MOVE,400);
+    let block=p.y+Math.max(4,(room-content-spacing)/2);
+    IDEA.forEach(([text],r)=>{
+      ctx.save();ctx.globalAlpha=sceneAlpha*fade;
+      label(mobileCopy.idea[r],W/2,block+size*1.1,p.w,size,muted,"center");
+      ctx.restore();
+      const rows=rowsFor(text),centreY=block+head+height/2+(rows-1)*rowStep/2;
+      cardStory(text,CHURCH,p,tile,centreY);
+      block+=need[r]+spacing;
     });
   }
   function slipRow(i,paint){
@@ -789,11 +783,8 @@ function Graphic(el){
   function drawMobile(){
     const p=panel(),cx=W/2,short=p.h<300,wideShort=W>500&&p.h<220;
     switch(state){
-      case "trap":case "trap2":case "trap3":{
-        ctx.save();
-        letterCards(TRAP_MSGS[Math.max(0,trapIndex)],p.x,p.y+p.h/2,p.w,Math.min(36,p.w/11.5),120);
-        ctx.restore();break;
-      }
+      case "trap":case "trap2":case "trap3":
+        cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(36,p.w/11.5),p.y+p.h/2);break;
       case "shelves":{
         const top=p.y+(wideShort?30:48),bottom=p.y+p.h-(wideShort?8:16);
         label(mobileCopy.shelves[0],cx,p.y+(wideShort?12:18),p.w,wideShort?14:16,muted,"center");
@@ -885,11 +876,8 @@ function Graphic(el){
     if(isMobilePanel()){drawMobile();return;}
     const p=panel(),cx=W/2,compact=p.h<190,fs=W<360?13:15;
     switch(state){
-      case "trap":case "trap2":case "trap3":{
-        ctx.save();
-        letterCards(TRAP_MSGS[Math.max(0,trapIndex)],p.x,p.y+p.h/2,p.w,Math.min(30,p.w/14),120);
-        ctx.restore();break;
-      }
+      case "trap":case "trap2":case "trap3":
+        cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(30,p.w/14),p.y+p.h/2);break;
       case "shelves":{
         bookshelves({x:p.x,y:p.y+30,w:p.w,h:Math.max(1,p.h-40)});
         label("Ein Testbestand von 129 Büchern",cx,p.y+10,p.w,13,muted,"center");break;
@@ -992,14 +980,14 @@ function Graphic(el){
   };
   this.pause=function(){if(!pausedAt){pausedAt=performance.now();this.frame(pausedAt);}};
   this.resume=function(){if(pausedAt){started+=performance.now()-pausedAt;pausedAt=0;}dirty=true;};
-  this.replay=function(){if(state!=="prayer")return;instant=reduced;started=performance.now();pausedAt=0;elapsed=0;lastLetter=-1;strip(instant?PT:CT,instant?"reading":"cipher");dirty=true;};
+  this.replay=function(){if(state!=="prayer")return;instant=reduced;started=performance.now();pausedAt=0;elapsed=0;lastLetter=21;strip("","reading");dirty=true;};
   this.frame=function(now){
     if(W<2||H<2)return;
     const before=elapsed;elapsed=Math.max(0,(pausedAt||now)-started);
     // Marks appear at their recorded values; animation never invents new scores.
     // Keep painting until the slowest staggered reveal (the card rows) has finished.
     if(!instant&&before<1700+SETTLE&&elapsed!==before)dirty=true;
-    if(state==="idea"&&!instant&&before<IDEA_END+SETTLE&&elapsed!==before)dirty=true;
+    if((state==="idea"||state.startsWith("trap"))&&!instant&&before<CARD_END+SETTLE&&elapsed!==before)dirty=true;
     if(state==="prayer"&&!instant&&lastLetter<21){
       let n=0;[...tiles.children].forEach((t,i)=>{
         const turn=Math.max(0,Math.min(1,(elapsed-i*90)/320)),decoded=turn>=.5;
@@ -1020,7 +1008,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=25"></script>
+<script src="../story-scroll.js?v=26"></script>
 <script src="../hero-reveal.js?v=25"></script>
 <script src="../cipher-tokens.js?v=25"></script>
 <script>

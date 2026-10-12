@@ -66,6 +66,11 @@
         // A chapter with no closing text hands the measure to the next one,
         // whose opening text rises to meet this graphic instead.
         const next = chapter.querySelector('.text-after') ? null : chapter.nextElementSibling;
+        const after = chapter.nextElementSibling;
+        if (after && after.classList.contains('chapter') && !after.querySelector('h2')) {
+          chapter.classList.add('runs-on');
+          after.classList.add('run-on');
+        }
         const measureTail = () => {
           const tail = el.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom - 28;
           const value = Number.isFinite(tail) && tail > 0 ? Math.round(tail) + 'px' : '';
