@@ -130,7 +130,7 @@
         seen.add(token);
       });
       this.prayer.append(document.createTextNode(' …'));
-      this.keyphrase.append(this.node('div', 'cw-scene-label', label.keyLabel), this.prayer);
+      this.keyphrase.append(this.prayer, this.node('div', 'cw-scene-label', label.keyLabel));
 
       this.grid = this.node('div', 'cw-grid');
       this.grid.setAttribute('role', 'list');
@@ -283,7 +283,7 @@
       this.ghosts.clear();
     }
 
-    moveFrom(element, rect, duration = 500) {
+    moveFrom(element, rect, duration = 500, delay = 0) {
       if (!rect || !rect.width || !rect.height || this.reduced) return;
       const destination = element.getBoundingClientRect();
       if (!destination.width || !destination.height) return;
@@ -292,7 +292,7 @@
       this.animate(element, [
         {transform: `translate(${dx}px, ${dy}px) scale(${rect.width / destination.width}, ${rect.height / destination.height})`},
         {transform: 'translate(0, 0) scale(1)'}
-      ], {duration});
+      ], {duration, delay, fill: delay ? 'backwards' : 'none'});
     }
 
     settleMessage() {
@@ -424,9 +424,12 @@
         if (previous !== 1) this.animate(this.keyphrase, [{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 400});
       } else if (stage === 3) {
         if (wordOrigins.length && !this.reduced) {
+          // The struck words fade first, then the kept words glide and shrink
+          // into their places, and only then do the cipher letters appear above.
+          const FADE = 260, GLIDE = 650;
           this.pairs.forEach((pair, index) => {
-            this.moveFrom(pair.querySelector('.cw-word'), wordOrigins[index], 650);
-            this.animate(pair.querySelector('.cw-card'), [{opacity: 0, transform: 'translateY(-6px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350, delay: 180 + index * 12, fill: 'backwards'});
+            this.moveFrom(pair.querySelector('.cw-word'), wordOrigins[index], GLIDE, FADE);
+            this.animate(pair.querySelector('.cw-card'), [{opacity: 0, transform: 'translateY(-6px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350, delay: FADE + GLIDE + index * 12, fill: 'backwards'});
           });
           const scene = this.scene.getBoundingClientRect();
           repeatOrigins.forEach(origin => {
@@ -439,8 +442,8 @@
             });
             this.scene.append(ghost);
             this.ghosts.add(ghost);
-            this.animate(ghost, [{opacity: 1}, {opacity: 0, transform: 'translateY(-8px)'}], {duration: 250, fill: 'forwards'});
-            this.later(() => { ghost.remove(); this.ghosts.delete(ghost); }, 270);
+            this.animate(ghost, [{opacity: 1}, {opacity: 0}], {duration: FADE, fill: 'forwards'});
+            this.later(() => { ghost.remove(); this.ghosts.delete(ghost); }, FADE + 20);
           });
         } else {
           this.animate(this.grid, [{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'translateY(0)'}]);

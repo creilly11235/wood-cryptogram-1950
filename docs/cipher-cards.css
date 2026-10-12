@@ -9,3 +9,9 @@
 td .cipher-token{min-width:1.65em;padding:.12em .18em .16em}
 .hero .answer .answer-message{border-radius:6px;padding:14px 16px 16px;line-height:1.4}
 @media(max-width:900px){.tiles .t{border-radius:2px}}
+/* A tiled token is a run of small cards in the text; the wrapper itself is plain. */
+.cipher-token.is-tiled,.step p .cipher-token.is-tiled,td .cipher-token.is-tiled{display:inline;background:none;border:0;box-shadow:none;padding:0;min-width:0;border-radius:0;font-size:1em;line-height:inherit;word-spacing:.12em;white-space:normal}
+.cipher-token.is-tiled .cipher-run.is-whole{white-space:nowrap}
+.cipher-token.is-tiled .t{display:inline-grid;place-items:center;aspect-ratio:auto;width:1.35em;height:1.6em;margin:0 1px;padding-top:.08em;font-size:.8em;line-height:1;vertical-align:-.42em;transition:none}
+td .cipher-token.is-tiled .t{margin:0}
+
