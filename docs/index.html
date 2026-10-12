@@ -358,10 +358,7 @@ footer p{margin:0 0 .7em}
 <section class="step" data-s="church" data-walk-stage="2" data-cap="The familiar church prayer begins Vater unser; the Luther Bible begins Unser Vater. Their different word orders produce different keys.">
 <p>The exact wording mattered. An earlier search had tried the German Lord’s Prayer in its familiar church form, beginning “Vater unser”, and found nothing. The Luther Bible’s “Unser Vater in dem Himmel” produces a different key from the very first word.</p>
 </section>
-<section class="step" data-s="table" data-walk-stage="3" data-cap="The first row worked through: UNSER sums to 77, key letter Y shifts by 24, and F decrypts to H. All 21 letters re-encrypt exactly.">
-<p>Take the first key word as an example. The letters of UNSER sum to 21+14+19+5+18 = 77, which leaves 25 after dividing by 26, so the key letter is Y. Y means a shift of 24, so cipher F goes back 24 places to H.</p>
-</section>
-<section class="step" data-s="reading" data-walk-stage="4" data-cap="Hier bin ich: German for Here I am. Totsiens: Afrikaans for Goodbye. TEW: Wood’s initials.">
+<section class="step" data-s="reading" data-walk-stage="3" data-cap="Hier bin ich: German for Here I am. Totsiens: Afrikaans for Goodbye. TEW: Wood’s initials.">
 <p>Separated into words, the letters read <strong class="cipher-token decoded">Hier bin ich. Totsiens. T.E.W.</strong></p>
 <p>“Hier bin ich” is German for “Here I am”, “Totsiens” is Afrikaans for “Goodbye”, and T.E.W. are Wood’s initials.</p>
 </section>
@@ -644,8 +641,7 @@ function Graphic(el){
       case "idea":strip("","reading");break;
       case "bibles":strip("","reading");break;
       case "prayer":strip("","reading");lastLetter=21;break;
-      case "church":strip(PT,"reading");break;
-      case "table":strip(PT,"reading");break;
+      case "church":strip("","reading");break;
       case "reading":strip(PT,"reading");break;
       case "checks":strip(PT,"reading");break;
       case "luck":strip(PT,"reading");legendItems([["A match",blue],["No match",gridGray]]);break;
@@ -704,7 +700,7 @@ function Graphic(el){
       });
     }
   }
-  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","Other 11 readings","Higher word score →"],"church":["Church wording: Vater unser","Luther Bible: Unser Vater"],"reading":["German · Here I am","Afrikaans · Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
+  const mobileCopy={"shelves":["A test set of 129 books"],"plants":["100 test ciphers with known answers"],"english":["12 random ciphertexts scored higher","Wood −13.937","English-likeness score →"],"idea":["Grouped with an English word list","Grouped with word lists in seven languages"],"prayer":["German Bible","Romanian Bible","","Higher word score →"],"church":["Church wording “Vater unser”","Luther Bible “Unser Vater”"],"reading":["German · Here I am","Afrikaans · Goodbye","Wood’s initials"],"checks":["21 / 21 letters","Reproduced by the standalone verifier","Independently reproduced by Astra","Checked against the original ciphertext"],"luck":["500 random three-letter signatures","7 signatures with matches · one dot per signature"],"slip":["Total: 75","Thouless printed U instead","The final cipher letter: D","The published example ends in B"]};
 
   // A sentence as decoded letter cards, one card per letter, words kept whole
   // and each row centred. Cards reveal left to right from the given delay.
@@ -712,7 +708,10 @@ function Graphic(el){
   // reads it.
   const IDEA=[["VERS TE HT GE WIS SEM IN DER"],["VERSTEHT GEWISSE MINDER"]];
   function cardRows(s,width,tile){
-    const words=s.split(" "),gap=Math.max(2,tile*.1),wordGap=tile*.55,rows=[[]];let used=0;
+    const gap=Math.max(2,tile*.1),wordGap=tile*.55,rows=[[]];let used=0;
+    // A run of letters wider than the row (an unreadable decrypt) wraps.
+    const fit=Math.max(1,Math.floor((width+gap)/(tile+gap)));
+    const words=s.split(" ").flatMap(word=>word.length<=fit?[word]:word.match(new RegExp(`.{1,${fit}}`,"g")));
     words.forEach(word=>{const w=word.length*tile+(word.length-1)*gap;if(used&&used+wordGap+w>width){rows.push([]);used=0;}rows[rows.length-1].push([word,w]);used+=(used?wordGap:0)+w;});
     const positions=[];
     rows.forEach((row,r)=>{const rowWidth=row.reduce((sum,[,w])=>sum+w,0)+wordGap*(row.length-1);let left=Math.max(0,(width-rowWidth)/2);
@@ -727,6 +726,21 @@ function Graphic(el){
     if(kind==="decoded")line(-tile/2+2,height/2-2,tile/2-2,height/2-2,decodedBorder,1.5);
     text(kind==="encoded"?back:c,0,0,size,kind==="encoded"?encodedFg:decodedFg,"center",true);
     ctx.restore();
+  }
+  // The 13 leading Bible readings ranked best to worst, one lollipop each.
+  function rankedScores(p,nameWidth,size,scoreSize,axisSize){
+    const scoreWidth=scoreSize*4.2,left=p.x+nameWidth,right=p.x+p.w-scoreWidth;
+    const min=-1.75,max=-1.2,map=v=>left+(v-min)/(max-min)*(right-left);
+    const bottom=p.y+p.h-axisSize*3.2,top=p.y+4,dy=(bottom-top)/TOP.length;
+    [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,top,x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+axisSize*1.1,axisSize,muted,"center",true);});
+    line(left,bottom,right,bottom,muted);
+    TOP.forEach(([,value],i)=>{
+      const y=top+dy*(i+.5),c=i?muted:blue,name=i<2?mobileCopy.prayer[i]:String(i+1);
+      label(name,i<2?p.x:left-size*.8,y,nameWidth-size*.6,size,i?muted:blue,i<2?"left":"right");
+      reveal(i?80+i*60:420,()=>{line(left,y,map(value),y,c,i?1.5:2);outlineDot(map(value),y,i?3.5:5,c);});
+      text(value.toFixed(3).replace("-","−"),p.x+p.w,y,scoreSize,c,"right",true);
+    });
+    label(mobileCopy.prayer[3],W/2,p.y+p.h-axisSize*.6,p.w,axisSize+1,muted,"center");
   }
   // A run of cipher cards flips to its reading, then the cards slide into
   // the words of that reading. Both layouts centre on centreY and the cards
@@ -812,33 +826,22 @@ function Graphic(el){
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*60,()=>{const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,4);ctx.fill();ctx.stroke();line(x+8,y+8,x+8,y+dy-8,muted,1.5);label(name,x+16,y+dy/2,dx-24,16,ink);}));break;
       }
       case "prayer":{
-        const compact=p.h<300,left=p.x+17,right=p.x+p.w-17,map=v=>left+(v+1.75)/.55*(right-left),bottom=p.y+p.h-(compact?48:59),gap=(p.h-(compact?58:82))/3;
-        const labelOffset=compact?18:35,rowOffset=compact?9:28;
-        [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,p.y+(compact?5:45),x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+21,14,muted,"center",true);});
-        line(left,bottom,right,bottom,muted);
-        [[TOP[0][1],blue],[TOP[1][1],muted]].forEach(([value,c],i)=>{const y=p.y+gap*(i+.5)+rowOffset;rect(p.x,y-labelOffset-12,p.w,22,background);label(mobileCopy.prayer[i],p.x,y-labelOffset,p.w-78,compact?16:18,c);text(value.toFixed(3).replace("-","−"),p.x+p.w,y-labelOffset,compact?13:15,c,"right",true);reveal(i?140:500,()=>{line(left,y,map(value),y,c,2);outlineDot(map(value),y,i?4.5:6,c);});});
-        const y=p.y+gap*2.5+rowOffset;rect(p.x,y-labelOffset-12,p.w,22,background);label(mobileCopy.prayer[2],p.x,y-labelOffset,p.w,compact?16:18,muted);
-        TOP.slice(2).forEach(([,score],i)=>reveal(i*25,()=>dot(map(score),y+(i%3-1)*(compact?5:8),3.5,muted)));
-        wrap(mobileCopy.prayer[3],cx,p.y+p.h-10,p.w,15,muted,"center");break;
+        rankedScores(p,W<360?92:108,short?12:14,short?11:12,short?11:12);break;
       }
       case "church":{
-        if(wideShort){
-          [CHURCH,PT].forEach((message,i)=>{const y=p.y+p.h*(i?.75:.25);wrap(mobileCopy.church[i],p.x,y,p.w*.46,18,i?ink:muted,"left",2);reveal(i?420:120,()=>cipherText(message,p.x+p.w*.51,y,p.w*.48,21));});
-          line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
-        }
-        [CHURCH,PT].forEach((message,i)=>{const y=p.y+p.h*(i?.75:.25);wrap(mobileCopy.church[i],p.x,y-33,p.w,18,i?ink:muted,"left",2);reveal(i?420:120,()=>cipherText(message,p.x+5,y+27,p.w-5,21));});
-        line(p.x,p.y+p.h/2,p.x+p.w,p.y+p.h/2,pale);break;
-      }
-      case "table":{
-        // Each row needs about 90px for its key line above the letters;
-        // shorter rows put the key and the letters side by side instead.
-        const gap=p.h/3,rowsOf=[["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]];
-        if(wideShort||gap<92){
-          const keySize=Math.min(21,gap*.3),tileSize=Math.min(24,gap*.38),tileW=Math.min(42,tileSize+18),x=p.x+p.w-tileW*2-62;
-          rowsOf.forEach(([key,cipher,plain],i)=>{const y=p.y+gap*(i+.5);if(i)line(p.x,p.y+gap*i,p.x+p.w,p.y+gap*i,pale);reveal(i*140,()=>{label(key,p.x,y,x-p.x-14,keySize,ink,"left",true);cipherText(cipher,x,y,tileW,tileSize,"encoded");text("→",x+tileW+26,y,tileSize,muted,"center");});reveal(i*140+250,()=>cipherText(plain,x+tileW+62,y,tileW,tileSize));});break;
-        }
-        const keySize=Math.min(21,gap*.2),tileSize=Math.min(28,gap*.27),up=gap*.26,down=gap*.24;
-        rowsOf.forEach(([key,cipher,plain],i)=>{const y=p.y+gap*(i+.5);if(i)line(p.x,p.y+gap*i,p.x+p.w,p.y+gap*i,pale);reveal(i*140,()=>{label(key,cx,y-up,p.w,keySize,ink,"center",true);cipherText(cipher,cx-58,y+down,42,tileSize,"encoded");text("→",cx,y+down,tileSize,muted,"center");});reveal(i*140+250,()=>cipherText(plain,cx+38,y+down,42,tileSize));});break;
+        // Two keys from two wordings: the church prayer gives nothing
+        // readable, the Luther Bible gives the message.
+        const tile=Math.min(isMobilePanel()?30:26,p.w/13.5,p.h/(short?18:15)),height=tile*1.2,rowStep=height+tile*.35,head=(short?14:16)*2;
+        const rowsOf=[["SXFFFLOEPTPPQMAVDXEUR"],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
+        const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),room=p.h*(short?.7:1),content=need[0]+need[1];
+        const spacing=Math.max(12,Math.min(tile*2.2,(room-content)/3));
+        let block=p.y+Math.max(4,(room-content-spacing)/2);
+        rowsOf.forEach((layout,r)=>{
+          label(mobileCopy.church[r],W/2,block+(short?14:16)*1.1,p.w,short?14:16,muted,"center");
+          const centreY=block+head+height/2+(layout.rows-1)*rowStep/2;
+          layout.positions.forEach((t,i)=>reveal((r?420:120)+i*20,()=>card(t.c,p.x+t.x,centreY+(t.row-(layout.rows-1)/2)*rowStep,tile,height,tile*.62,1)));
+          block+=need[r]+spacing;
+        });break;
       }
       case "reading":{
         if(wideShort){
@@ -909,29 +912,18 @@ function Graphic(el){
         }));break;
       }
       case "prayer":{
-        const nameWidth=W<400?94:130,scoreWidth=47,left=p.x+nameWidth,right=p.x+p.w-scoreWidth;
-        const min=-1.75,max=-1.2,map=v=>left+(v-min)/(max-min)*(right-left),bottom=p.y+p.h-43,dy=(p.h-55)/3;
-        [-1.7,-1.5,-1.3].forEach(value=>{const x=map(value);line(x,p.y+6,x,bottom,pale);text(value.toFixed(1).replace("-","−"),x,bottom+16,11,muted,"center",true);});
-        line(left,bottom,right,bottom,muted);
-        [["German Bible",TOP[0][1],blue],["Romanian Bible",TOP[1][1],muted]].forEach(([name,value,c],i)=>{const y=p.y+dy*(i+.5)+3;label(name,p.x,y,nameWidth-9,fs,c);reveal(i?140:500,()=>{line(left,y,map(value),y,c,1.5);outlineDot(map(value),y,i?3.5:5,c);});text(value.toFixed(3).replace("-","−"),p.x+p.w,y,12,c,"right",true);});
-        const y=p.y+dy*2.5+3;wrap("Other 11 readings",p.x,y,nameWidth-9,12,muted);TOP.slice(2).forEach(([,score],i)=>reveal(i*25,()=>dot(map(score),y+(i%3-1)*5,2.5,muted)));
-        label("Higher word score →",cx,p.y+p.h-8,p.w,12,muted,"center");
-        break;
+        rankedScores(p,W<400?94:116,12,11,11);break;
       }
       case "church":{
-        const y1=p.y+p.h*.27,y2=p.y+p.h*.73;
-        label("Church wording: Vater unser",p.x,y1-15,p.w,fs,muted);
-        reveal(120,()=>cipherText(CHURCH,p.x+5,y1+11,p.w-5,fs));
-        line(p.x,p.y+p.h*.5,p.x+p.w,p.y+p.h*.5,pale);
-        label("Luther Bible: Unser Vater",p.x,y2-15,p.w,fs,ink);
-        reveal(420,()=>cipherText(PT,p.x+5,y2+11,p.w-5,fs));break;
-      }
-      case "table":{
-
-        [["UNSER → 77 → Y","F","H"],["VATER → 66 → N","V","I"],["IN → 23 → W","A","E"]].forEach(([key,cipher,plain],i)=>{
-          const y=p.y+p.h/3*(i+.5),x=p.x+p.w-76;
-          if(i)line(p.x,p.y+p.h/3*i,p.x+p.w,p.y+p.h/3*i,pale);
-          reveal(i*140,()=>{label(key,p.x,y,p.w-95,fs,ink,"left",true);cipherText(cipher,x,y,24,fs,"encoded");text("→",x+31,y,fs,muted,"center");});reveal(i*140+250,()=>cipherText(plain,x+57,y,24,fs));
+        const tile=Math.min(26,p.w/13.5),height=tile*1.2,rowStep=height+tile*.35,head=28;
+        const rowsOf=[["SXFFFLOEPTPPQMAVDXEUR"],["HIER BIN ICH TOTSIENS TEW"]].map(([text])=>cardRows(text,p.w,tile));
+        const need=rowsOf.map(l=>head+l.rows*rowStep-tile*.35),content=need[0]+need[1],spacing=Math.max(12,Math.min(tile*2.2,(p.h-content)/3));
+        let block=p.y+Math.max(4,(p.h-content-spacing)/2);
+        rowsOf.forEach((layout,r)=>{
+          label(["Church wording “Vater unser”","Luther Bible “Unser Vater”"][r],cx,block+13,p.w,13,muted,"center");
+          const centreY=block+head+height/2+(layout.rows-1)*rowStep/2;
+          layout.positions.forEach((t,i)=>reveal((r?420:120)+i*20,()=>card(t.c,p.x+t.x,centreY+(t.row-(layout.rows-1)/2)*rowStep,tile,height,tile*.62,1)));
+          block+=need[r]+spacing;
         });break;
       }
       case "reading":{

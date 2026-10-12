@@ -263,16 +263,6 @@
     },
     {
       "kind": "attr",
-      "en": "The first row worked through: UNSER sums to 77, key letter Y shifts by 24, and F decrypts to H. All 21 letters re-encrypt exactly.",
-      "de": "Die erste Zeile durchgerechnet: UNSER ergibt 77, der Schlüsselbuchstabe Y verschiebt um 24, und F wird zu H entschlüsselt. Alle 21 Buchstaben lassen sich exakt zurückverschlüsseln."
-    },
-    {
-      "kind": "p",
-      "en": "Take the first key word as an example. The letters of UNSER sum to 21+14+19+5+18 = 77, which leaves 25 after dividing by 26, so the key letter is Y. Y means a shift of 24, so cipher F goes back 24 places to H.",
-      "de": "Am ersten Schlüsselwort lässt sich das nachvollziehen. Die Buchstabenwerte von UNSER ergeben 21+14+19+5+18 = 77. Bei der Division durch 26 bleibt der Rest 25, also ist der Schlüsselbuchstabe Y. Y verschiebt um 24 Stellen, daher wird der Geheimtextbuchstabe F um 24 Stellen zurück zu H verschoben."
-    },
-    {
-      "kind": "attr",
       "en": "Hier bin ich: German for Here I am. Totsiens: Afrikaans for Goodbye. TEW: Wood’s initials.",
       "de": "Hier bin ich: Deutsch. Totsiens: Afrikaans für Auf Wiedersehen. TEW: Woods Initialen."
     },
@@ -839,12 +829,12 @@
       "de": "\"Rumänische Bibel\""
     },
     {
-      "en": "\"Church wording: Vater unser\"",
-      "de": "\"Kirchlicher Wortlaut: Vater unser\""
+      "en": "\"Church wording “Vater unser”\"",
+      "de": "\"Kirchliche Fassung „Vater unser“\""
     },
     {
-      "en": "\"Luther Bible: Unser Vater\"",
-      "de": "\"Lutherbibel: Unser Vater\""
+      "en": "\"Luther Bible “Unser Vater”\"",
+      "de": "\"Lutherbibel „Unser Vater“\""
     },
     {
       "en": "\"German · Here I am\"",
@@ -901,10 +891,6 @@
     {
       "en": "\"Higher word score →\"",
       "de": "\"Höhere Wortbewertung →\""
-    },
-    {
-      "en": "\"Other 11 readings\"",
-      "de": "\"Übrige 11 Ergebnisse\""
     },
     {
       "en": "\"7 signatures with matches · one dot per signature\"",
