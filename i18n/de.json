@@ -98,8 +98,8 @@
     },
     {
       "kind": "p",
-      "en": "The letters of the word are added up (A=1 to Z=26), and 26 is taken off as often as it fits. What is left gives the letter (1 is A, 25 is Y, 26 is Z). To adds up to 35, which leaves 9, so its letter is I.",
-      "de": "Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26), und 26 wird so oft abgezogen, wie es geht. Was übrig bleibt, ergibt den Buchstaben (1 ist A, 25 ist Y, 26 ist Z). To ergibt 35, es bleibt 9, sein Buchstabe ist also I."
+      "en": "The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. What is left gives the letter (1 is A, 25 is Y, 26 is Z). To adds up to 35, which leaves 9, so its letter is I.",
+      "de": "Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26), und 26 wird so oft abgezogen, wie es ganz hineinpasst. Was übrig bleibt, ergibt den Buchstaben (1 ist A, 25 ist Y, 26 ist Z). To ergibt 35, es bleibt 9, sein Buchstabe ist also I."
     },
     {
       "kind": "p",
