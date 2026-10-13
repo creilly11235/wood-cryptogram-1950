@@ -86,7 +86,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .chapter+.chapter,.endmatter+.chapter{border-top:1px solid var(--veil-2)}
 /* A chapter that opens without a heading runs on from the one before it
    (the scroll script marks the pair run-on and runs-on). */
-.chapter+.chapter:not(:has(h2)),.chapter.run-on{border-top:0}
+.chapter+.chapter:not(:has(h2,h3)),.chapter.run-on{border-top:0}
 .chapter.run-on>.text.text-before{padding-top:0}
 .chapter.runs-on>.text.text-after,.chapter.runs-on>.text.text-after>.step:last-child{padding-bottom:0}
 .graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
@@ -372,6 +372,53 @@ footer p{margin:0 0 .7em}
 <button class="replay" type="button">Replay the decryption</button>
 <p>The key uses 21 distinct words, from “Unser” to “uns”. Four repeats are skipped (“Dein” twice, “Himmel” and “Unser” once each), and the ä in “täglich” is read as a.</p>
 <figure><img src="luther_1922_mt6_9-11.jpg" width="1272" height="538" alt="Matthew 6:9–11 in a 1922 printing of the 1912 Luther Bible" loading="lazy"><figcaption><a href="https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up">The key passage, Matthew 6:9–11, in a 1922 Berlin printing of the 1912 Luther Bible</a>, published by the British and Foreign Bible Society.</figcaption></figure>
+</section>
+</div></section>
+<section class="endmatter step try" id="try-it">
+<h2>Try Thouless’s method yourself</h2>
+<p>Type a message and choose a passage to serve as the key. The page enciphers it the way Thouless described, skipping any key word that has already appeared, so the passage needs one distinct word for every letter of the message.</p>
+<div class="try-form">
+<label class="try-label" for="try-message">Your message</label>
+<textarea id="try-message" class="try-input" rows="2" maxlength="300" spellcheck="false" autocomplete="off">THERE IS NO DEATH</textarea>
+<label class="try-label" for="try-preset">Your key</label>
+<select id="try-preset" class="try-input">
+<option value="hamlet">Hamlet’s soliloquy, the passage Thouless used</option>
+<option value="luther">The Lord’s Prayer in the 1912 Luther Bible, the passage Wood used</option>
+<option value="own">A passage of your own</option>
+</select>
+<textarea id="try-key" class="try-input" rows="4" spellcheck="false" autocomplete="off" aria-label="The key passage" translate="no"></textarea>
+</div>
+<div class="try-output">
+<p class="try-label">The message</p>
+<div class="try-cards try-plain" role="img" translate="no"></div>
+<p class="try-label">The key</p>
+<p class="try-passage" translate="no"></p>
+<p class="try-label">The cipher</p>
+<div class="try-cards try-cipher" role="img" translate="no"></div>
+<p class="try-status" aria-live="polite"></p>
+</div>
+<h3>The key, word by word</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">No.</th><th scope="col">Key word</th><th scope="col">Sum</th><th scope="col">Key</th><th scope="col">Plain → cipher</th></tr></thead><tbody translate="no"></tbody></table></div>
+</section>
+<section class="endmatter step" id="credits">
+<h2>Credits</h2>
+<p>The project was run by Colin Reilly. Robert Thouless designed the method, and Richard Bean’s 2019 solve of Thouless’s Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer, and Richard Bean also confirmed the reading and helped improve this account of the search. The star of the show was Claude (Anthropic), which wrote the search code and found the key. GPT-6 Astra (OpenAI) checked the result independently.</p>
+<h3>Sources</h3>
+<ul>
+<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020.</li>
+<li>Richard Bean and Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025.</li>
+<li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, October 4, 2026.</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, April 17, 2017.</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">“Richard Bean solves another Top 50 crypto mystery”</a>, August 16, 2019.</li>
+<li>T. E. Wood, “A Further Test for Survival”, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, pp. 105–106.</li>
+<li>R. H. Thouless, “A Test of Survival”, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the Society for Psychical Research</em> 48, part 175</a>, July 1948, pp. 253–263.</li>
+<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Luther Bible 1912, Matthew 6</a>.</li>
+</ul>
+<p>To check the decryption yourself, run <code>python3 harness/wood35t/verify_wood.py</code> from <a href="https://github.com/creilly11235/wood-cryptogram-1950">the repository</a>. The code is released under the MIT License.</p>
+</section>
+<section class="endmatter step" id="appendix">
+<h2>Appendix</h2>
+<p>What follows is the detail behind the solve, for readers who want to check it.</p>
 <h3>The key, word by word</h3>
 <div class="table-wrap"><table><thead><tr><th scope="col">No.</th><th scope="col">Key word</th><th scope="col">Sum</th><th scope="col">Key</th><th scope="col">Cipher → plain</th></tr></thead><tbody>
 <tr><td>1</td><td>Unser</td><td>77</td><td>Y</td><td><span class="cipher-token encoded">F</span> → <span class="cipher-token decoded">H</span></td></tr>
@@ -398,11 +445,10 @@ footer p{margin:0 0 .7em}
 </tbody></table></div>
 <p>All 21 letters decrypt correctly and re-encrypt to Wood’s original ciphertext.</p>
 </section>
-</div></section>
 <section class="chapter" data-ch="5">
 <div class="text text-before">
 <section class="step" id="how-it-was-checked">
-<h2>How it was checked</h2>
+<h3>How it was checked</h3>
 <p>Before sending the result to Klaus Schmeh, we checked the decryption in several ways.</p>
 </section>
 </div>
@@ -426,32 +472,14 @@ footer p{margin:0 0 .7em}
 <p>Astra’s <a href="https://github.com/creilly11235/wood-cryptogram-1950/blob/main/notes/astra/REVIEW_WOOD35.md">full review</a> of the decryption is in the repository.</p>
 <p>Each trial in the chance test had to split 18 letters cleanly into dictionary words of 3 to 10 letters. The run covered both versions of the arithmetic, with and without repeated words, and the matches for the random signatures (1.4%) were word salad.</p>
 <p>There are two caveats. TOTSIENS was added to the word list after the solve, and the test itself was designed after the hit, so it shows that the match is rare, which is not the same as proof.</p>
-<h3>Original sources</h3>
 <p>Scans of Wood’s 1950 article and Thouless’s 1948 article confirmed the ciphertext, the method, and Wood’s clues word for word. They also settled one detail we had been unsure of, that the rule “A means no shift” comes from Thouless’s own text and not from a later guess.</p>
-<h3>Checking for earlier solutions</h3>
 <p>Searches of Schmeh’s blog and its comments, Reddit’s r/codes, and the other 2026 solver logs turned up no earlier solution of Wood’s cryptogram, though that is not proof that nobody got there first.</p>
 </section>
 </div></section>
-<section class="endmatter step" id="credits">
-<h2>Credits</h2>
-<p>The project was run by Colin Reilly. Robert Thouless designed the method, and Richard Bean’s 2019 solve of Thouless’s Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer, and Richard Bean also confirmed the reading and helped improve this account of the search. The star of the show was Claude (Anthropic), which wrote the search code and found the key. GPT-6 Astra (OpenAI) checked the result independently.</p>
-<h3>Sources</h3>
-<ul>
-<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020.</li>
-<li>Richard Bean and Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025.</li>
-<li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, October 4, 2026.</li>
-<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, April 17, 2017.</li>
-<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">“Richard Bean solves another Top 50 crypto mystery”</a>, August 16, 2019.</li>
-<li>T. E. Wood, “A Further Test for Survival”, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, pp. 105–106.</li>
-<li>R. H. Thouless, “A Test of Survival”, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the Society for Psychical Research</em> 48, part 175</a>, July 1948, pp. 253–263.</li>
-<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Luther Bible 1912, Matthew 6</a>.</li>
-</ul>
-<p>To check the decryption yourself, run <code>python3 harness/wood35t/verify_wood.py</code> from <a href="https://github.com/creilly11235/wood-cryptogram-1950">the repository</a>. The code is released under the MIT License.</p>
-</section>
 <section class="chapter" data-ch="6">
 <div class="text text-before">
 <section class="step" id="the-correction">
-<h2>An error in the original example</h2>
+<h3>An error in the original example</h3>
 <p>While checking the method against the 1948 paper, we found an arithmetic slip in Thouless’s own worked example. It has been in print for 78 years, and as far as we can tell nobody has pointed it out.</p>
 <p>To show how his system works, Thouless enciphered <strong class="cipher-token decoded">THERE IS NO DEATH</strong> with Hamlet’s “To be or not to be” speech as the key. He printed the key letters <strong>IGGWW BG PI VNWNU</strong> and the ciphertext <strong class="cipher-token encoded">BNKNA JYCWY RWGB</strong>.</p>
 </section>
@@ -481,32 +509,6 @@ footer p{margin:0 0 .7em}
 <p>Wood, for his part, followed Thouless’s written rule correctly. All 21 of his key letters agree with it, and that is the method that decrypts his message.</p>
 </section>
 </div></section>
-<section class="endmatter step try" id="try-it">
-<h2>Try Thouless’s method yourself</h2>
-<p>Type a message and choose a passage to serve as the key. The page enciphers it the way Thouless described, skipping any key word that has already appeared, so the passage needs one distinct word for every letter of the message.</p>
-<div class="try-form">
-<label class="try-label" for="try-message">Your message</label>
-<textarea id="try-message" class="try-input" rows="2" maxlength="300" spellcheck="false" autocomplete="off">THERE IS NO DEATH</textarea>
-<label class="try-label" for="try-preset">Your key</label>
-<select id="try-preset" class="try-input">
-<option value="hamlet">Hamlet’s soliloquy, the passage Thouless used</option>
-<option value="luther">The Lord’s Prayer in the 1912 Luther Bible, the passage Wood used</option>
-<option value="own">A passage of your own</option>
-</select>
-<textarea id="try-key" class="try-input" rows="4" spellcheck="false" autocomplete="off" aria-label="The key passage" translate="no"></textarea>
-</div>
-<div class="try-output">
-<p class="try-label">The message</p>
-<div class="try-cards try-plain" role="img" translate="no"></div>
-<p class="try-label">The key</p>
-<p class="try-passage" translate="no"></p>
-<p class="try-label">The cipher</p>
-<div class="try-cards try-cipher" role="img" translate="no"></div>
-<p class="try-status" aria-live="polite"></p>
-</div>
-<h3>The key, word by word</h3>
-<div class="table-wrap"><table><thead><tr><th scope="col">No.</th><th scope="col">Key word</th><th scope="col">Sum</th><th scope="col">Key</th><th scope="col">Plain → cipher</th></tr></thead><tbody translate="no"></tbody></table></div>
-</section>
 </main>
 <footer>
 <p>You are visitor no. <span class="counter" id="visits">------</span></p>

@@ -477,19 +477,9 @@
       "de": "Zwei Einschränkungen: TOTSIENS wurde erst nach der Entschlüsselung in die Wortliste aufgenommen, und der Test wurde erst nach dem Treffer entworfen. Er zeigt also, dass der Treffer selten ist, was noch kein Beweis ist."
     },
     {
-      "kind": "h3",
-      "en": "Original sources",
-      "de": "Originalquellen"
-    },
-    {
       "kind": "p",
       "en": "Scans of Wood’s 1950 article and Thouless’s 1948 article confirmed the ciphertext, the method, and Wood’s clues word for word. They also settled one detail we had been unsure of, that the rule “A means no shift” comes from Thouless’s own text and not from a later guess.",
       "de": "Scans von Woods Artikel aus dem Jahr 1950 und Thouless’ Artikel von 1948 bestätigten den Geheimtext, das Verfahren und Woods Hinweise Wort für Wort. Sie klärten auch eine Frage, bei der wir unsicher gewesen waren: Die Regel „A bedeutet keine Verschiebung“ stammt aus Thouless’ eigenem Text und ist keine spätere Vermutung."
-    },
-    {
-      "kind": "h3",
-      "en": "Checking for earlier solutions",
-      "de": "Suche nach früheren Lösungen"
     },
     {
       "kind": "p",
@@ -699,7 +689,7 @@
     {
       "kind": "h2",
       "en": "Try Thouless’s method yourself",
-      "de": "Thouless’ Methode selbst ausprobieren"
+      "de": "Thouless’ Verfahren selbst ausprobieren"
     },
     {
       "kind": "p",
@@ -750,6 +740,16 @@
       "kind": "th",
       "en": "Plain → cipher",
       "de": "Klartext → Geheimtext"
+    },
+    {
+      "kind": "h2",
+      "en": "Appendix",
+      "de": "Anhang"
+    },
+    {
+      "kind": "p",
+      "en": "What follows is the detail behind the solve, for readers who want to check it.",
+      "de": "Es folgen die Einzelheiten hinter der Lösung, für Leser, die sie nachprüfen möchten."
     }
   ],
   "js": [
