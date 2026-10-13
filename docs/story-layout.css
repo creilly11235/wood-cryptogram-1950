@@ -159,6 +159,11 @@ the panel (--walk-tail, measured by the script) before pushing it. */
 @media (max-width: 360px) {
   .scrolly { --story-gutter: 20px; }
 }
+/* A mouse wheel covers ground faster than a thumb, so wide screens set the
+   cards further apart and each stage stays on screen longer. */
+@media (min-width: 901px) {
+  .pinned-chapter .pin > .text :is(.step [data-walk-stage], .step[data-walk-stage]) { margin-bottom: 100svh; }
+}
 /* A short phone screen keeps the chart readable by giving the cards a little
    less room and setting them in a slightly smaller size. */
 @media (max-width: 900px) and (max-height: 640px) and (orientation: portrait) {
