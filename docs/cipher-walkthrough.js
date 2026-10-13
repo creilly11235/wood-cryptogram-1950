@@ -69,7 +69,7 @@
       this.firstSum = this.firstTerms.reduce((total, term) => total + term[1], 0);
       this.firstKey = String.fromCharCode(65 + (this.firstSum - 1) % 26);
       this.firstShift = (this.firstSum - 1) % 26;
-      this.firstRemainder = this.firstSum % 26;
+      this.firstRemainder = ((this.firstSum - 1) % 26) + 1;
       this.firstPlain = this.pt[0];
       this.firstCipher = this.ct[0];
       if (String.fromCharCode(65 + (this.firstPlain.charCodeAt(0) - 65 + this.firstShift) % 26) !== this.firstCipher) {
@@ -325,7 +325,7 @@
         // Vertical motion belongs to the page; a deliberate horizontal swipe
         // chooses one step through the same navigation callback as the buttons.
         if (Math.abs(dx) < 45 || Math.abs(dx) <= 1.5 * Math.abs(dy)) return;
-        const stage = Math.max(0, Math.min(9, this.stage + (dx < 0 ? 1 : -1)));
+        const stage = Math.max(0, Math.min(10, this.stage + (dx < 0 ? 1 : -1)));
         if (stage !== this.stage) this.choose(stage);
       }, options);
     }
@@ -421,7 +421,7 @@
     }
 
     settleMessage() {
-      if (this.destroyed || this.stage !== 8) return;
+      if (this.destroyed || this.stage !== 9) return;
       this.ghosts.forEach(ghost => ghost.remove());
       this.ghosts.clear();
       this.grid.hidden = true;
@@ -430,11 +430,11 @@
       this.freezeMessageRows();
       this.message.offsetWidth;
       this.root.dataset.finale = 'settled';
-      this.counter.setAttribute('aria-label', this.labels.step + ' 9: ' + this.labels.decodedMessage);
+      this.counter.setAttribute('aria-label', this.labels.step + ' 10: ' + this.labels.decodedMessage);
     }
 
     revealMessage() {
-      if (this.destroyed || this.stage !== 8) return;
+      if (this.destroyed || this.stage !== 9) return;
       if (this.reduced) {
         this.settleMessage();
         return;
@@ -574,11 +574,14 @@
       } else if (stage === 4) {
         this.moveFrom(this.focusPair, from);
       } else if (stage === 5) {
-        this.moveFrom(this.focusPair, from, 360);
-        this.math.querySelectorAll('.cw-term, .cw-plus, .cw-equals, .cw-total').forEach((element, index) => {
-          this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 320, delay: index * 55, fill: 'backwards'});
-        });
-        this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
+        // Stepping back from the alphabet leaves the sum where it already is.
+        if (previous !== 6) {
+          this.moveFrom(this.focusPair, from, 360);
+          this.math.querySelectorAll('.cw-term, .cw-plus, .cw-equals, .cw-total').forEach((element, index) => {
+            this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 320, delay: index * 55, fill: 'backwards'});
+          });
+          this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
+        }
       } else if (stage === 6) {
         // The sum stays put; the alphabet counts up to the remainder one letter
         // at a time, and the sentence names the letter once the count lands.
