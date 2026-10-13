@@ -201,7 +201,7 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="story-layout.css?v=30">
 <link rel="stylesheet" href="cipher-cards.css?v=28">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=36">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=37">
 <link rel="stylesheet" href="story-graphics.css?v=27">
 <link rel="stylesheet" href="try-cipher.css?v=39">
 </head>
@@ -254,15 +254,16 @@ footer p{margin:0 0 .7em}
 </li>
 <li>
 <p data-walk-stage="4">Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word To.</p>
-<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. What is left gives the letter (1 is A, 25 is Y, 0 is Z). To adds up to 35, which leaves 9, so its letter is I.</p>
+<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. To adds up to 35, which leaves 9.</p>
+<p data-walk-stage="6">What is left names a letter by its place in the alphabet, where 1 is A, 25 is Y and 0 is Z. The 9th letter is I, so I is the key letter for T.</p>
 </li>
 <li>
-<p data-walk-stage="6">That key letter shifts the message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. I moves T forward 8 places.</p>
-<p data-walk-stage="7">T becomes B, the first letter of the ciphertext.</p>
+<p data-walk-stage="7">That key letter shifts the message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. I moves T forward 8 places.</p>
+<p data-walk-stage="8">T becomes B, the first letter of the ciphertext.</p>
 </li>
 </ol>
-<p data-walk-stage="8">The same happens for all 14 letters and the cipher is written in groups of five. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.</p>
-<p data-walk-stage="9">Seen together, the message, the key and the cipher are the whole system. Anyone holding the key can run the steps backwards and read the message, and without it there is nothing to work from. This is the method Wood adopted for his own test.</p>
+<p data-walk-stage="9">The same happens for all 14 letters and the cipher is written in groups of five. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.</p>
+<p data-walk-stage="10">Seen together, the message, the key and the cipher are the whole system. Anyone holding the key can run the steps backwards and read the message, and without it there is nothing to work from. This is the method Wood adopted for his own test.</p>
 </section>
 </div></div>
 <div class="text text-after">
@@ -537,7 +538,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=33"></script>
+<script src="cipher-walkthrough.js?v=34"></script>
 <script>
 (function(){
 "use strict";
@@ -588,7 +589,7 @@ function Graphic(el){
     el.querySelector(".gbody").replaceChildren(host);
     const walk=new CipherWalkthrough(host,{reduced,labels:{
       label:"How a message becomes a cipher",encoded:"Cipher",decoded:"Message",
-      stages:["The 14-letter message","The key passage","Repeated words are skipped","One key word for every letter","Start with T and To","Add the letters in To","Use I to shift T forward 8 places","The first cipher letter is B","Repeat for all 14 letters","Message, key and cipher together"],
+      stages:["The 14-letter message","The key passage","Repeated words are skipped","One key word for every letter","Start with T and To","Add the letters in To","The 9th letter is I","Use I to shift T forward 8 places","The first cipher letter is B","Repeat for all 14 letters","Message, key and cipher together"],
       previous:"Previous",next:"Next",replay:"Replay",encryptedMessage:"The message",keyLabel:"The key",keyReduction:"35 − 26 = 9",keyLetter:"I is the 9th letter",shiftKey:"I means a shift of 8",shift:"Forward 8",firstDecoded:"The ciphertext begins",step:"Step",keyWord:"key word",decodedMessage:"The cipher",swipeHint:"Scroll to explore · or use the buttons"
     }});
     this.walkthrough=walk;

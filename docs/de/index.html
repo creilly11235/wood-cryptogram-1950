@@ -202,7 +202,7 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="../story-layout.css?v=30">
 <link rel="stylesheet" href="../cipher-cards.css?v=28">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=36">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=37">
 <link rel="stylesheet" href="../story-graphics.css?v=27">
 <link rel="stylesheet" href="../try-cipher.css?v=39">
 </head>
@@ -254,15 +254,16 @@ footer p{margin:0 0 .7em}
 </li>
 <li>
 <p data-walk-stage="4">Jedem Buchstaben wird ein Wort aus dem Text zugeordnet. Das erste Paar ist der Klartextbuchstabe T und das Schlüsselwort To.</p>
-<p data-walk-stage="5">Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26), und 26 wird so oft abgezogen, wie es ganz hineinpasst. Was übrig bleibt, ergibt den Buchstaben (1 ist A, 25 ist Y, 0 ist Z). To ergibt 35, es bleibt 9, sein Buchstabe ist also I.</p>
+<p data-walk-stage="5">Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26), und 26 wird so oft abgezogen, wie es ganz hineinpasst. To ergibt 35, es bleibt 9.</p>
+<p data-walk-stage="6">Was übrig bleibt, benennt einen Buchstaben nach seiner Stelle im Alphabet, wobei 1 A ist, 25 Y und 0 Z. Der 9. Buchstabe ist I, also ist I der Schlüsselbuchstabe für T.</p>
 </li>
 <li>
-<p data-walk-stage="6">Dieser Schlüsselbuchstabe verschiebt den Klartextbuchstaben im Alphabet, wobei A keine Verschiebung bedeutet, B eine Stelle, C zwei und so weiter, nach Z geht es bei A weiter. I verschiebt T um 8 Stellen vorwärts.</p>
-<p data-walk-stage="7">Aus T wird B, der erste Buchstabe des Geheimtexts.</p>
+<p data-walk-stage="7">Dieser Schlüsselbuchstabe verschiebt den Klartextbuchstaben im Alphabet, wobei A keine Verschiebung bedeutet, B eine Stelle, C zwei und so weiter, nach Z geht es bei A weiter. I verschiebt T um 8 Stellen vorwärts.</p>
+<p data-walk-stage="8">Aus T wird B, der erste Buchstabe des Geheimtexts.</p>
 </li>
 </ol>
-<p data-walk-stage="8">Dasselbe geschieht mit allen 14 Buchstaben, und der Geheimtext wird in Fünfergruppen geschrieben. Thouless’ gedruckte Fassung endet auf B statt auf D, ein Fehler, auf den der Artikel später zurückkommt.</p>
-<p data-walk-stage="9">Zusammen betrachtet bilden Botschaft, Schlüssel und Geheimtext das ganze System. Wer den Schlüssel hat, kann die Schritte rückwärts durchlaufen und die Botschaft lesen, und ohne ihn gibt es nichts, woran man ansetzen könnte. Dieses Verfahren übernahm Wood für seinen eigenen Test.</p>
+<p data-walk-stage="9">Dasselbe geschieht mit allen 14 Buchstaben, und der Geheimtext wird in Fünfergruppen geschrieben. Thouless’ gedruckte Fassung endet auf B statt auf D, ein Fehler, auf den der Artikel später zurückkommt.</p>
+<p data-walk-stage="10">Zusammen betrachtet bilden Botschaft, Schlüssel und Geheimtext das ganze System. Wer den Schlüssel hat, kann die Schritte rückwärts durchlaufen und die Botschaft lesen, und ohne ihn gibt es nichts, woran man ansetzen könnte. Dieses Verfahren übernahm Wood für seinen eigenen Test.</p>
 </section>
 </div></div>
 <div class="text text-after">
@@ -538,7 +539,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=33"></script>
+<script src="../cipher-walkthrough.js?v=34"></script>
 <script>
 (function(){
 "use strict";
@@ -589,7 +590,7 @@ function Graphic(el){
     el.querySelector(".gbody").replaceChildren(host);
     const walk=new CipherWalkthrough(host,{reduced,labels:{
       label:"Von der Botschaft zum Geheimtext",encoded:"Geheimtext",decoded:"Botschaft",
-      stages:["Die Botschaft: 14 Buchstaben","Der Schlüsseltext","Wiederholte Wörter werden übersprungen","Ein Schlüsselwort pro Buchstabe","Start mit T und To","Die Buchstabenwerte von To addieren","Mit I: T um 8 Stellen vorwärts","Der erste Geheimtextbuchstabe: B","Für alle 14 Buchstaben wiederholen","Botschaft, Schlüssel und Geheimtext zusammen"],
+      stages:["Die Botschaft: 14 Buchstaben","Der Schlüsseltext","Wiederholte Wörter werden übersprungen","Ein Schlüsselwort pro Buchstabe","Start mit T und To","Die Buchstabenwerte von To addieren","Der 9. Buchstabe ist I","Mit I: T um 8 Stellen vorwärts","Der erste Geheimtextbuchstabe: B","Für alle 14 Buchstaben wiederholen","Botschaft, Schlüssel und Geheimtext zusammen"],
       previous:"Zurück",next:"Weiter",replay:"Wiederholen",encryptedMessage:"Die Botschaft",keyLabel:"Der Schlüssel",keyReduction:"35 − 26 = 9",keyLetter:"I ist der 9. Buchstabe",shiftKey:"I verschiebt um 8 Stellen",shift:"8 vorwärts",firstDecoded:"Der Geheimtext beginnt",step:"Schritt",keyWord:"Schlüsselwort",decodedMessage:"Der Geheimtext",swipeHint:"Scrollen oder die Tasten verwenden"
     }});
     this.walkthrough=walk;
