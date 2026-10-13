@@ -1,0 +1,67 @@
+/* The reader's own cipher at the end of the article. The panel fills the
+   screen the way the graphics do and sticks while the heading above it
+   scrolls away. Three steps sit inside it under the same muted helper
+   labels the graphics use, each locking when done and reopening from its
+   Back button at the left of the foot, where the button for the current
+   stage sits at the right. The letter cards are the article's own, and the
+   cipher's cards flip the way the walkthrough's do. A panel taller than
+   the screen locks with its foot at the bottom. The key table follows. */
+.try{--tw:28px}
+.try [hidden]{display:none!important}
+.try .try-panel{position:sticky;top:var(--try-top,0px);z-index:1;display:flex;flex-direction:column;min-height:100vh;min-height:100svh;margin:0;background:var(--room)}
+.try .try-body{flex:1 1 auto;min-height:0;padding-top:max(16px,env(safe-area-inset-top,0px))}
+.try .try-foot{flex:none;display:flex;flex-direction:column;gap:10px;padding:14px 0 max(18px,env(safe-area-inset-bottom,0px));border-top:1px solid var(--veil)}
+.try .try-actions{display:flex;justify-content:flex-end;align-items:center;gap:12px}
+.try .try-actions .try-prev{margin-right:auto}
+.try .try-step{margin:0 0 24px;transition:opacity .45s ease-out,transform .45s ease-out}
+.try .try-step.is-entering{opacity:0;transform:translateY(12px)}
+.try .try-label{display:block;font:var(--t-note);color:var(--bone-2);margin:0 0 8px}
+.try .try-input{display:block;width:100%;margin:0 0 14px;padding:10px 12px;border:1px solid var(--veil-2);border-radius:2px;background:#fff;color:var(--bone);font:var(--t-body);line-height:1.5;resize:vertical}
+.try select.try-input{min-height:44px;padding-block:0;cursor:pointer;text-overflow:ellipsis}
+.try .try-input:focus-visible,.try .try-word-input:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
+.try .try-button{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin:0;padding:8px 22px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:2px;cursor:pointer}
+.try .try-button:hover{border-color:var(--candle)}
+.try .try-button:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
+.try .try-button.is-primary{background:var(--bone);border-color:var(--bone);color:var(--room)}
+.try .try-button.is-primary::after{content:"";flex:none;width:7px;height:11px;margin-left:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 11'%3E%3Cpath d='M1 1l4.5 4.5L1 10' fill='none' stroke='%23fafbfc' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.try .try-button.is-primary:hover{background:var(--candle);border-color:var(--candle)}
+.try .try-button.is-primary:disabled::after{display:none}
+.try .try-button:disabled,.try .try-button.is-primary:disabled{background:transparent;color:var(--bone-2);border-color:var(--veil);cursor:default}
+.try .try-cards{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 12px;margin:0;min-height:calc(var(--tw) * 1.25)}
+.try .grp{display:flex;gap:3px}
+.try .t{width:var(--tw);height:calc(var(--tw) * 1.25);aspect-ratio:auto;font-size:calc(var(--tw) * .65);transition:none}
+.try .try-passage{margin:0 0 26px;font:var(--t-note);color:var(--bone);text-wrap:pretty}
+/* A repeated word is struck through the way the walkthrough strikes its own. */
+.try .try-word-src{position:relative}
+.try .try-word-src.is-repeat{color:var(--bone-2)}
+.try .try-word-src.is-repeat::after{content:"";position:absolute;left:0;right:0;top:calc(50% + .04em);height:1px;background:var(--bone-2)}
+/* One pair per letter: the letter card above its key word, grouped by message
+   word. On generate the word becomes its key letter, the card flips to the
+   cipher letter, and the cards then slide into groups of five below. */
+.try .try-pairs{display:flex;flex-wrap:wrap;align-items:flex-start;gap:14px 14px;margin:0}
+.try .try-pairs:empty{display:none}
+.try .try-group{display:flex;flex-wrap:wrap;align-items:flex-start;gap:4px}
+.try .try-pair{display:flex;flex-direction:column;align-items:center;min-width:var(--tw)}
+.try .try-card{display:block;position:relative;width:var(--tw);height:calc(var(--tw) * 1.25);perspective:360px}
+.try .try-card-turn{display:block;position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.try .is-flipped .try-card-turn{transform:rotateY(180deg)}
+.try .try-face{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.try .try-back{transform:rotateY(180deg)}
+.try .try-word{display:block;margin-top:5px;font:400 .75rem/1.25 var(--body);color:var(--bone);text-align:center;white-space:nowrap;min-height:1.25em}
+.try .try-word.is-key{font:400 .875rem/1.1 var(--mono);color:var(--bone-2)}
+.try .try-word-input{box-sizing:border-box;width:6.5ch;min-width:var(--tw);margin-top:5px;padding:5px 4px;border:1px solid var(--veil-2);border-radius:2px;background:#fff;color:var(--bone);font:400 .8125rem/1.3 var(--body);text-align:center}
+.try .try-word-input.is-duplicate{border-color:var(--ember)}
+.try .try-pairs.is-custom{gap:14px 10px}
+.try .try-status{font:var(--t-note);color:var(--bone-2);margin:0;max-width:52ch;text-wrap:pretty}
+.try .try-status:empty{display:none}
+/* The panel holds for most of a screen after it pins; the key table, once
+   there is one, rises over it from below the way the article's prose does. */
+.try .try-hold{position:relative;z-index:2;min-height:60vh;min-height:60svh;padding-top:30svh;pointer-events:none}
+.try .try-table{padding-top:32px;background:var(--room);pointer-events:auto;scroll-margin-top:var(--try-scroll-top,24px)}
+.try .try-table h3{margin-top:0}
+.try .try-table .table-wrap{margin-bottom:0}
+@media(max-width:900px){
+  .try .try-panel{margin-inline:calc(-1 * var(--story-gutter,24px));padding-inline:var(--story-gutter,24px)}
+}
+@media(max-width:600px){.try{--tw:clamp(20px,calc((100vw - 104px) / 11),26px)}.try .try-word{font-size:.6875rem}.try .try-word-input{width:6ch;font-size:.75rem}}
+@media(prefers-reduced-motion:reduce){.try .try-step,.try .try-card-turn{transition:none}}

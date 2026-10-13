@@ -86,7 +86,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .chapter+.chapter,.endmatter+.chapter{border-top:1px solid var(--veil-2)}
 /* A chapter that opens without a heading runs on from the one before it
    (the scroll script marks the pair run-on and runs-on). */
-.chapter+.chapter:not(:has(h2)),.chapter.run-on{border-top:0}
+.chapter+.chapter:not(:has(h2,h3)),.chapter.run-on{border-top:0}
 .chapter.run-on>.text.text-before{padding-top:0}
 .chapter.runs-on>.text.text-after,.chapter.runs-on>.text.text-after>.step:last-child{padding-bottom:0}
 .graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
@@ -200,6 +200,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="cipher-cards.css?v=25">
 <link rel="stylesheet" href="cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="story-graphics.css?v=26">
+<link rel="stylesheet" href="try-cipher.css?v=37">
 </head>
 <body>
 
@@ -254,15 +255,15 @@ footer p{margin:0 0 .7em}
 <p data-walk-stage="3">Each key word pairs with one letter of the message, so the 14 letters of THERE IS NO DEATH need 14 distinct key words.</p>
 </li>
 <li>
-<p data-walk-stage="4">Each word becomes a single letter. The first pair is the message letter T and the key word To.</p>
-<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26) and divided by 26, and the remainder gives the letter (1 is A, 25 is Y, 0 is Z). To adds up to 35, which leaves 9, so its letter is I.</p>
+<p data-walk-stage="4">Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word To.</p>
+<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. What is left gives the letter (1 is A, 25 is Y, 0 is Z). To adds up to 35, which leaves 9, so its letter is I.</p>
 </li>
 <li>
 <p data-walk-stage="6">That key letter shifts the message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. I moves T forward 8 places.</p>
 <p data-walk-stage="7">T becomes B, the first letter of the ciphertext.</p>
 </li>
 </ol>
-<p data-walk-stage="8">The same happens for all 14 letters and the cipher reads out in groups of five. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.</p>
+<p data-walk-stage="8">The same happens for all 14 letters and the cipher is written in groups of five. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.</p>
 <p data-walk-stage="9">Seen together, the message, the key and the cipher are the whole system. Anyone holding the key can run the steps backwards and read the message, and without it there is nothing to work from. This is the method Wood adopted for his own test.</p>
 </section>
 </div></div>
@@ -371,6 +372,76 @@ footer p{margin:0 0 .7em}
 <button class="replay" type="button">Replay the decryption</button>
 <p>The key uses 21 distinct words, from “Unser” to “uns”. Four repeats are skipped (“Dein” twice, “Himmel” and “Unser” once each), and the ä in “täglich” is read as a.</p>
 <figure><img src="luther_1922_mt6_9-11.jpg" width="1272" height="538" alt="Matthew 6:9–11 in a 1922 printing of the 1912 Luther Bible" loading="lazy"><figcaption><a href="https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up">The key passage, Matthew 6:9–11, in a 1922 Berlin printing of the 1912 Luther Bible</a>, published by the British and Foreign Bible Society.</figcaption></figure>
+</section>
+</div></section>
+<section class="endmatter step try" id="try-it">
+<h2>Try Thouless’s method yourself</h2>
+<p>Write a short message, give each of its letters a key word, and watch the cipher form the way it did for Thouless and Wood. The key can be a famous passage or words of your own, and no word is used twice.</p>
+<div class="try-panel" data-stage="message">
+<div class="try-body">
+<div class="try-step" data-step="message">
+<label class="try-label" for="try-message">Your secret message</label>
+<textarea id="try-message" class="try-input" rows="2" maxlength="70" spellcheck="false" autocomplete="off" autocapitalize="characters">THERE IS NO DEATH</textarea>
+<div class="try-cards try-plain" role="img" translate="no" hidden></div>
+</div>
+<div class="try-step" data-step="key" hidden>
+<label class="try-label" for="try-preset">Your key</label>
+<select id="try-preset" class="try-input">
+<option value="own">Words of your own, one for each letter</option>
+<hr>
+<option value="hamlet" selected>Hamlet’s soliloquy, Thouless’s own key</option>
+<option value="luther">The Lord’s Prayer in the 1912 Luther Bible, Wood’s key</option>
+<option value="gettysburg">The Gettysburg Address</option>
+<option value="genesis">Genesis, chapter 1, in the King James Bible</option>
+<option value="dickens">A Tale of Two Cities, the opening</option>
+<option value="sonnet">Shakespeare’s Sonnet 18</option>
+<option value="declaration">The Declaration of Independence, the opening</option>
+</select>
+<p class="try-passage" translate="no" hidden></p>
+<div class="try-pairs" translate="no"></div>
+</div>
+<div class="try-step" data-step="cipher" hidden>
+<p class="try-label">Your cipher</p>
+<div class="try-cards try-cipher" role="img" translate="no"></div>
+</div>
+</div>
+<div class="try-foot">
+<p class="try-status" aria-live="polite"></p>
+<div class="try-actions">
+<button class="try-button try-prev" type="button" data-act="back" hidden>Back</button>
+<button class="try-button try-prev" type="button" data-act="restart" hidden>Start again</button>
+<button class="try-button is-primary" type="button" data-act="message">Pick key phrase</button>
+<button class="try-button is-primary" type="button" data-act="generate" hidden>Generate the cipher</button>
+<button class="try-button is-primary" type="button" data-act="done" hidden>Done</button>
+</div>
+</div>
+</div>
+<div class="try-hold">
+<div class="try-table" hidden>
+<h3>The key, word by word</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">No.</th><th scope="col">Key word</th><th scope="col">Sum</th><th scope="col">Key</th><th scope="col">Plain → cipher</th></tr></thead><tbody translate="no"></tbody></table></div>
+</div>
+</div>
+</section>
+<section class="endmatter step" id="credits">
+<h2>Credits</h2>
+<p>The project was run by Colin Reilly. Robert Thouless designed the method, and Richard Bean’s 2019 solve of Thouless’s Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer, and Richard Bean also confirmed the reading and helped improve this account of the search. The star of the show was Claude (Anthropic), which wrote the search code and found the key. GPT-6 Astra (OpenAI) checked the result independently.</p>
+<h3>Sources</h3>
+<ul>
+<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020.</li>
+<li>Richard Bean and Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025.</li>
+<li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, October 4, 2026.</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, April 17, 2017.</li>
+<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">“Richard Bean solves another Top 50 crypto mystery”</a>, August 16, 2019.</li>
+<li>T. E. Wood, “A Further Test for Survival”, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, pp. 105–106.</li>
+<li>R. H. Thouless, “A Test of Survival”, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the Society for Psychical Research</em> 48, part 175</a>, July 1948, pp. 253–263.</li>
+<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Luther Bible 1912, Matthew 6</a>.</li>
+</ul>
+<p>To check the decryption yourself, run <code>python3 harness/wood35t/verify_wood.py</code> from <a href="https://github.com/creilly11235/wood-cryptogram-1950">the repository</a>. The code is released under the MIT License.</p>
+</section>
+<section class="endmatter step" id="appendix">
+<h2>Appendix</h2>
+<p>What follows is the detail behind the solve, for readers who want to check it.</p>
 <h3>The key, word by word</h3>
 <div class="table-wrap"><table><thead><tr><th scope="col">No.</th><th scope="col">Key word</th><th scope="col">Sum</th><th scope="col">Key</th><th scope="col">Cipher → plain</th></tr></thead><tbody>
 <tr><td>1</td><td>Unser</td><td>77</td><td>Y</td><td><span class="cipher-token encoded">F</span> → <span class="cipher-token decoded">H</span></td></tr>
@@ -397,11 +468,10 @@ footer p{margin:0 0 .7em}
 </tbody></table></div>
 <p>All 21 letters decrypt correctly and re-encrypt to Wood’s original ciphertext.</p>
 </section>
-</div></section>
 <section class="chapter" data-ch="5">
 <div class="text text-before">
 <section class="step" id="how-it-was-checked">
-<h2>How it was checked</h2>
+<h3>How it was checked</h3>
 <p>Before sending the result to Klaus Schmeh, we checked the decryption in several ways.</p>
 </section>
 </div>
@@ -425,32 +495,14 @@ footer p{margin:0 0 .7em}
 <p>Astra’s <a href="https://github.com/creilly11235/wood-cryptogram-1950/blob/main/notes/astra/REVIEW_WOOD35.md">full review</a> of the decryption is in the repository.</p>
 <p>Each trial in the chance test had to split 18 letters cleanly into dictionary words of 3 to 10 letters. The run covered both versions of the arithmetic, with and without repeated words, and the matches for the random signatures (1.4%) were word salad.</p>
 <p>There are two caveats. TOTSIENS was added to the word list after the solve, and the test itself was designed after the hit, so it shows that the match is rare, which is not the same as proof.</p>
-<h3>Original sources</h3>
 <p>Scans of Wood’s 1950 article and Thouless’s 1948 article confirmed the ciphertext, the method, and Wood’s clues word for word. They also settled one detail we had been unsure of, that the rule “A means no shift” comes from Thouless’s own text and not from a later guess.</p>
-<h3>Checking for earlier solutions</h3>
 <p>Searches of Schmeh’s blog and its comments, Reddit’s r/codes, and the other 2026 solver logs turned up no earlier solution of Wood’s cryptogram, though that is not proof that nobody got there first.</p>
 </section>
 </div></section>
-<section class="endmatter step" id="credits">
-<h2>Credits</h2>
-<p>The project was run by Colin Reilly. Robert Thouless designed the method, and Richard Bean’s 2019 solve of Thouless’s Message B, found by searching books by computer, showed exactly how it works and pioneered the approach used here. Klaus Schmeh kept the puzzle in view and confirmed the answer, and Richard Bean also confirmed the reading and helped improve this account of the search. The star of the show was Claude (Anthropic), which wrote the search code and found the key. GPT-6 Astra (OpenAI) checked the result independently.</p>
-<h3>Sources</h3>
-<ul>
-<li>Richard Bean, <a href="https://richardbean.id.au/papers/HistoCrypt2020_paper_18.pdf"><em>The use of Project Gutenberg and hexagram statistics to help solve famous unsolved ciphers</em></a>, HistoCrypt 2020.</li>
-<li>Richard Bean and Louie Helm, <a href="https://richardbean.id.au/papers/playfair_histocrypt2025.pdf"><em>New records for Playfair solutions</em></a>, HistoCrypt 2025.</li>
-<li>Klaus Schmeh, <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">“Wood’s cryptogram from the crypt: Another top 50 crypto mystery solved”</a>, October 4, 2026.</li>
-<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2017/04/17/the-top-50-unsolved-encrypted-messages-35-cryptograms-from-the-crypt/">“The Top 50 unsolved encrypted messages: 35. Cryptograms from the crypt”</a>, April 17, 2017.</li>
-<li>Klaus Schmeh, <a href="https://scienceblogs.de/klausis-krypto-kolumne/2019/08/16/richard-bean-solves-another-top-50-crypto-mystery/">“Richard Bean solves another Top 50 crypto mystery”</a>, August 16, 2019.</li>
-<li>T. E. Wood, “A Further Test for Survival”, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v49_1949-52.pdf"><em>Proceedings of the SPR</em> 49</a>, pp. 105–106.</li>
-<li>R. H. Thouless, “A Test of Survival”, <a href="http://www.iapsop.com/archive/materials/spr_proceedings/proceedings_of_the_spr_v48_1946-49.pdf"><em>Proceedings of the Society for Psychical Research</em> 48, part 175</a>, July 1948, pp. 253–263.</li>
-<li><a href="https://www.bibel-online.net/text/luther_1912/matthaeus/6/">Luther Bible 1912, Matthew 6</a>.</li>
-</ul>
-<p>To check the decryption yourself, run <code>python3 harness/wood35t/verify_wood.py</code> from <a href="https://github.com/creilly11235/wood-cryptogram-1950">the repository</a>. The code is released under the MIT License.</p>
-</section>
 <section class="chapter" data-ch="6">
 <div class="text text-before">
 <section class="step" id="the-correction">
-<h2>An error in the original example</h2>
+<h3>An error in the original example</h3>
 <p>While checking the method against the 1948 paper, we found an arithmetic slip in Thouless’s own worked example. It has been in print for 78 years, and as far as we can tell nobody has pointed it out.</p>
 <p>To show how his system works, Thouless enciphered <strong class="cipher-token decoded">THERE IS NO DEATH</strong> with Hamlet’s “To be or not to be” speech as the key. He printed the key letters <strong>IGGWW BG PI VNWNU</strong> and the ciphertext <strong class="cipher-token encoded">BNKNA JYCWY RWGB</strong>.</p>
 </section>
@@ -569,7 +621,7 @@ function Graphic(el){
   const self=this,cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
   const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
   const legend=el.querySelector(".legend");
-  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,revealBase=0;
+  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,trapPrev=-1,trapPrevClock=Infinity,revealBase=0;
   // A scene change cross-fades from the last painted frame, and the new
   // scene's own reveals wait for the fade, so nothing snaps into place.
   const snap=document.createElement("canvas"),snapCtx=snap.getContext("2d"),FADE=360,SETTLE=160;
@@ -637,8 +689,9 @@ function Graphic(el){
     if(stripSig&&stripSig!==s+kind)fadeIn(tiles);stripSig=s+kind;
     sub.replaceChildren();
   }
-  // The trap cycles through its sentences: each fades out with its key letters
-  // and the next fades in, all from the frame clock so pausing holds it.
+  // The trap cycles through its sentences on the frame clock, so pausing
+  // holds it. Between sentences the cards slide back into their groups of
+  // five and flip back to the cipher before the next reading plays.
   function trapShow(index){trapIndex=index;strip("","reading");revealBase=0;}
   function configure(){
     legend.replaceChildren();strip(CT);lastLetter=-1;trapIndex=-1;revealBase=0;tiles.style.opacity="";sub.style.opacity="";
@@ -770,18 +823,31 @@ function Graphic(el){
   // the words of that reading. Both layouts share the same top edge and the
   // cards keep one size throughout.
   const groupFive=s=>s.replace(/ /g,"").match(/.{1,5}/g).join(" ");
-  const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300;
-  function cardStory(text,cipher,p,tile,top,delay=0){
+  const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300,CARD_REWIND=1600;
+  function cardStory(text,cipher,p,tile,top,delay=0,rewindFrom=null){
     const letters=text.replace(/ /g,""),height=tile*1.2,rowStep=height+tile*.35;
     // The cipher starts in the same groups of five the hero uses.
     const start=cardRows(groupFive(letters),p.w,tile),target=cardRows(text,p.w,tile);
-    const move=progress(CARD_MOVE+delay,700);
+    // Rewinding plays the story backwards from wherever it had got to on
+    // its own clock (rewindFrom): the words slide back into fives, then
+    // each card flips back to its cipher letter.
+    const rewind=rewindFrom!==null;
+    const was=at=>ease((rewindFrom-at)/700),wasFlip=i=>ease((rewindFrom-CARD_FLIP-i*25)/320);
+    const move=rewind?was(CARD_MOVE)*(1-progress(delay,700)):progress(CARD_MOVE+delay,700);
     [...letters].forEach((c,i)=>{
       const f=start.positions[i],x0=p.x+f.x,y0=top+height/2+f.row*rowStep;
       const t=target.positions[i],x1=p.x+t.x,y1=top+height/2+t.row*rowStep;
       const x=x0+(x1-x0)*move,y=y0+(y1-y0)*move;
-      ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,tile,height,tile*.62,progress(CARD_FLIP+delay+i*25,320),cipher[i]||c);ctx.restore();
+      const flip=rewind?wasFlip(i)*(1-progress(delay+760+i*25,320)):progress(CARD_FLIP+delay+i*25,320);
+      ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,tile,height,tile*.62,flip,cipher[i]||c);ctx.restore();
     });
+  }
+  // One of the trap's readings. After another reading, that one first
+  // rewinds to the plain cipher, and the new reading plays from there.
+  function trapScene(p,tile,top){
+    const clock=instant?Infinity:elapsed-revealBase-sceneDelay;
+    if(trapPrev>=0&&clock<CARD_REWIND){cardStory(TRAP_MSGS[trapPrev],CT,p,tile,top,0,trapPrevClock);return;}
+    cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,tile,top,trapPrev>=0?CARD_REWIND:0);
   }
   function ideaScene(p,tile){
     // Two readings of the same cipher. Each block flips the cipher cards to
@@ -848,7 +914,7 @@ function Graphic(el){
     switch(state){
       case "trap":case "trap2":case "trap3":
         // Eleven cards fit a row, so the last group of five and its lone letter share one.
-        cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,Math.min(m?36:30,p.w/13.5),p.y+32);break;
+        trapScene(p,Math.min(m?36:30,p.w/13.5),p.y+32);break;
       case "shelves":
         caption(copy.shelves[0],p.y+10,2);
         bookshelves({x:p.x,y:p.y+32,w:p.w,h:Math.max(1,p.h-44)});break;
@@ -945,8 +1011,13 @@ function Graphic(el){
     if(state===next&&this.state===next)return;
     slipShown=Math.min(SLIP_ROWS[state]||0,SLIP_ROWS[next]||0);
     instant=immediate||reduced;
-    // Keep the frame on screen so the next scene can fade over it.
-    fading=!instant&&this.state!==undefined&&cv.width>1&&cv.height>1;
+    // Keep the frame on screen so the next scene can fade over it. Between
+    // the trap's readings the cards rewind instead, with no fade.
+    // The reading being left is rewound from where its own story had got to.
+    const leaving=state.startsWith("trap")&&next.startsWith("trap")&&state!==next;
+    trapPrevClock=leaving&&!instant?elapsed-sceneDelay-(trapPrev>=0?CARD_REWIND:0):Infinity;
+    trapPrev=leaving?TRAP_STATES[state]:-1;
+    fading=!instant&&trapPrev<0&&this.state!==undefined&&cv.width>1&&cv.height>1;
     if(fading){snap.width=cv.width;snap.height=cv.height;snapCtx.drawImage(cv,0,0);}
     sceneDelay=fading?SETTLE:0;
     state=next;this.state=next;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;
@@ -965,7 +1036,7 @@ function Graphic(el){
     // Marks appear at their recorded values; animation never invents new scores.
     // Keep painting until the slowest staggered reveal (the card rows) has finished.
     if(!instant&&before<1700+SETTLE&&elapsed!==before)dirty=true;
-    if((state==="idea"||state.startsWith("trap"))&&!instant&&before<CARD_END+SETTLE&&elapsed!==before)dirty=true;
+    if((state==="idea"||state.startsWith("trap"))&&!instant&&before<CARD_END+SETTLE+(trapPrev>=0?CARD_REWIND:0)&&elapsed!==before)dirty=true;
     if(state==="prayer"&&!instant&&lastLetter<21){
       let n=0;[...tiles.children].forEach((t,i)=>{
         const turn=Math.max(0,Math.min(1,(elapsed-i*90)/320)),decoded=turn>=.5;
@@ -989,6 +1060,21 @@ window.WoodStory={Graphic,reduced};
 <script src="story-scroll.js?v=30"></script>
 <script src="hero-reveal.js?v=25"></script>
 <script src="cipher-tokens.js?v=25"></script>
+<script src="try-cipher.js?v=37"></script>
+<script>
+TryCipher(document.querySelector("#try-it"),{
+  noMessage:"Type a message first.",
+  noLetters:"The message needs at least one letter from A to Z.",
+  longMessage:"Keep the message to {max} letters or fewer.",
+  maxLength:"The message can be up to {max} characters long.",
+  lettersOnly:"Only the letters A to Z count, so accents are dropped and digits and punctuation are left out.",
+  extraWords:"The last {n} words had no letter left to go with, so they were left out.",
+  shortKey:"This passage has {words} distinct words, so the message can have at most {words} letters. Shorten it or choose another key.",
+  missingWords:"Give every letter a key word.",
+  repeatWord:"Each key word can be used only once.",
+  wordFor:"Key word {n}, for the letter {letter}"
+});
+</script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */

@@ -67,7 +67,7 @@
         // whose opening text rises to meet this graphic instead.
         const next = chapter.querySelector('.text-after') ? null : chapter.nextElementSibling;
         const after = chapter.nextElementSibling;
-        if (after && after.classList.contains('chapter') && !after.querySelector('h2')) {
+        if (after && after.classList.contains('chapter') && !after.querySelector('h2, h3')) {
           chapter.classList.add('runs-on');
           after.classList.add('run-on');
         }

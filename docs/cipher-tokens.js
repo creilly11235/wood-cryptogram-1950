@@ -2,7 +2,7 @@
    the graphics use, so a quoted ciphertext reads as the thing it refers to. */
 (() => {
   'use strict';
-  document.querySelectorAll('.cipher-token').forEach(token => {
+  function tile(token) {
     const kind = token.classList.contains('decoded') ? 'decoded' : 'encoded';
     const text = token.textContent;
     const fragment = document.createDocumentFragment();
@@ -38,5 +38,8 @@
     token.setAttribute('aria-label', text);
     token.replaceChildren(fragment);
     token.classList.add('is-tiled');
-  });
+  }
+  document.querySelectorAll('.cipher-token').forEach(tile);
+  // The try-it section builds its key table with the same tiler.
+  window.tileCipherToken = tile;
 })();
