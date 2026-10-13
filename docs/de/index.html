@@ -13,7 +13,7 @@
 <meta property="og:title" content="Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte">
 <meta property="og:description" content="Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch.">
 <meta property="og:url" content="https://creilly11235.github.io/wood-cryptogram-1950/de/">
-<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=5">
+<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=6">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“">
@@ -23,7 +23,7 @@
 <meta property="article:author" content="Colin Reilly">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Courier+Prime:wght@400;700&display=swap">
 <style>
 /* Two garamonds, one for titles and one for reading, on stone paper, with one
    monospace for cipher data. Blue, teal and red retain their meaning in the graphics.
@@ -33,7 +33,7 @@
   --bone:#000; --bone-2:#5e5b54; --bone-3:var(--bone-2); --ink:var(--room);
   --candle:#315f7d; --candle-soft:rgba(49,95,125,.10); --ember:#a64642;
   --dot-g:#8d9ba8; --dot-p:#26796c; --dot-b:var(--candle); --dot-v:var(--ember); --dot-s:#c6ced6; --dot-tew:var(--bone);
-  --de:var(--candle); --af:var(--dot-p); --sig:var(--bone); --label-bg:rgba(235,232,224,.96); --cipher-card-radius:0;
+  --de:var(--candle); --af:var(--dot-p); --sig:var(--bone); --label-bg:rgba(235,232,224,.96);
   --cipher-encoded-bg:#000; --cipher-encoded-fg:#ebe8e0; --cipher-encoded-border:#000;
   --cipher-decoded-bg:#fff; --cipher-decoded-fg:#18584f; --cipher-decoded-border:#26796c;
   --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif; --display:"Cormorant Garamond","EB Garamond",Garamond,Georgia,serif; --mono:"Courier Prime","Courier New",Courier,monospace;
@@ -52,9 +52,9 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 /* A compact article opening; sources and detailed credits follow the story. */
 .sitehead{max-width:1184px;margin:0 auto;padding:36px 24px 0;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 32px}
 .sitehead .name{font:400 1.9375rem/1.4 var(--display);text-decoration:none;white-space:nowrap}
-.sitehead nav{display:flex;gap:36px;font:var(--t-note)}
-.sitehead nav a{text-decoration:none;padding:10px 0 2px;border-bottom:1px solid transparent;white-space:nowrap}
-.sitehead nav a:hover,.sitehead nav a:focus-visible{border-bottom-color:currentColor;outline:0}
+.sitehead .sitelinks{display:flex;flex-wrap:wrap;gap:0 36px;margin:0;font:var(--t-note)}
+.sitehead .sitelinks a{text-decoration:none;padding:10px 0 2px;border-bottom:1px solid transparent;white-space:nowrap}
+.sitehead .sitelinks a:hover{border-bottom-color:currentColor}
 .sitehead .name:hover{text-decoration:none}
 .hero{max-width:780px;margin:0 auto;padding-block:113px 16px;padding-inline:24px;text-align:center}
 .hero .langhint{font:var(--t-note);margin:-28px 0 22px}
@@ -63,8 +63,6 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero h1{font:400 clamp(2.25rem,4.2vw,2.875rem)/1.2 var(--display);margin:0 auto;text-wrap:balance;max-width:24ch;letter-spacing:.005em}
 .hero .byline{display:grid;justify-items:center;gap:2px;font:var(--t-note);color:var(--bone-2);margin:28px 0 0}
 .hero .byline-author{color:var(--bone)}
-.hero .hero-links{display:none;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 20px;margin:6px 0 0;font:var(--t-note)}
-.hero .hero-links a{display:inline-flex;align-items:center;min-height:44px;padding-block:8px}
 /* The ciphertext holds in the middle of the screen while the opening scrolls
    beneath it, decoding as the reader goes. The script measures the figure
    and sets --hero-h so the row sits centred. */
@@ -179,7 +177,7 @@ footer p{margin:0 0 .7em}
   /* Single-column reading layout; sticky panel geometry is in story-layout.css. */
   .hero{padding-top:64px}
   .sitehead{padding:24px 24px 0}
-  .sitehead nav{gap:22px}
+  .sitehead .sitelinks{gap:0 22px}
   .chapter{display:flex;flex-direction:column}
   .chapter>*{width:100%;max-width:100%;min-width:0}
   .chapter>.text{max-width:640px;margin-inline:auto}
@@ -209,16 +207,15 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="../story-layout.css?v=28">
 <link rel="stylesheet" href="../cipher-cards.css?v=26">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=31">
-<link rel="stylesheet" href="../story-graphics.css?v=27">
-<link rel="stylesheet" href="../try-cipher.css?v=38">
+<link rel="stylesheet" href="../story-graphics.css?v=26">
+<link rel="stylesheet" href="../try-cipher.css?v=37">
 </head>
 <body>
 
-<header class="sitehead"><a class="name" href="./">Colin Reilly</a><nav><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a><a class="lang" href="../" hreflang="en" lang="en">English</a></nav></header>
+<header class="sitehead"><a class="name" href="./">Colin Reilly</a><p class="sitelinks"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a> <a class="lang" href="../" hreflang="en" lang="en">English version</a></p></header>
 <div class="hero">
 <h1>Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte</h1>
 <p class="byline"><span class="byline-author">Von <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a></span> <time datetime="2026-10-04">4. Oktober 2026</time></p>
-<p class="hero-links"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a> <a class="lang" href="../" hreflang="en" lang="en">English version</a></p>
   <div class="reveal-track">
   <figure class="cipher-row" aria-label="Woods Geheimtext, FVAMI NTKFX XWATB OIZVV X" data-message="HIER BIN ICH TOTSIENS TEW">
     <p class="intro">„Mein verschlüsselter Text lautet:“</p>
@@ -550,7 +547,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=31"></script>
+<script src="../cipher-walkthrough.js?v=30"></script>
 <script>
 (function(){
 "use strict";
@@ -1068,10 +1065,10 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=31"></script>
-<script src="../hero-reveal.js?v=26"></script>
-<script src="../cipher-tokens.js?v=26"></script>
-<script src="../try-cipher.js?v=38"></script>
+<script src="../story-scroll.js?v=30"></script>
+<script src="../hero-reveal.js?v=25"></script>
+<script src="../cipher-tokens.js?v=25"></script>
+<script src="../try-cipher.js?v=37"></script>
 <script>
 TryCipher(document.querySelector("#try-it"),{
   noMessage:"Geben Sie zuerst eine Botschaft ein.",

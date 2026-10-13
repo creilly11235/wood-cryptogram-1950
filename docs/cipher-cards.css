@@ -1,6 +1,6 @@
 /* Shared ciphertext and candidate-plaintext identity. The outlined face and
    bottom rule distinguish decoded text in addition to its teal color. */
-:root{--cipher-card-radius:4px;--cipher-decoded-rule:inset 0 -2px 0 var(--cipher-decoded-border)}
+:root{--cipher-card-radius:0;--cipher-decoded-rule:inset 0 -2px 0 var(--cipher-decoded-border)}
 .t.encoded,.cipher-token.encoded{border:1px solid var(--cipher-encoded-border);background:var(--cipher-encoded-bg);color:var(--cipher-encoded-fg);box-shadow:inset 0 1px 0 rgb(255 255 255 / 8%)}
 .t.decoded,.cipher-token.decoded{border:1px solid var(--cipher-decoded-border);background:var(--cipher-decoded-bg);color:var(--cipher-decoded-fg);box-shadow:var(--cipher-decoded-rule)}
 .t{border-radius:var(--cipher-card-radius);padding-top:.09em}
