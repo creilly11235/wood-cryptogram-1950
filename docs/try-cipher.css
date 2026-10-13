@@ -16,10 +16,10 @@
 .try .try-step{margin:0 0 24px;transition:opacity .45s ease-out,transform .45s ease-out}
 .try .try-step.is-entering{opacity:0;transform:translateY(12px)}
 .try .try-label{display:block;font:var(--t-note);color:var(--bone-2);margin:0 0 8px}
-.try .try-input{display:block;width:100%;margin:0 0 14px;padding:10px 12px;border:1px solid var(--veil-2);border-radius:2px;background:#fff;color:var(--bone);font:var(--t-body);line-height:1.5;resize:vertical}
+.try .try-input{display:block;width:100%;margin:0 0 14px;padding:10px 12px;border:1px solid var(--veil-2);border-radius:0;background:var(--card-bg,#fff);color:var(--bone);font:var(--t-body);line-height:1.5;resize:vertical}
 .try select.try-input{min-height:44px;padding-block:0;cursor:pointer;text-overflow:ellipsis}
 .try .try-input:focus-visible,.try .try-word-input:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
-.try .try-button{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin:0;padding:8px 22px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:2px;cursor:pointer}
+.try .try-button{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin:0;padding:8px 22px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:0;cursor:pointer}
 .try .try-button:hover{border-color:var(--candle)}
 .try .try-button:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
 .try .try-button.is-primary{background:var(--bone);border-color:var(--bone);color:var(--room)}
@@ -49,7 +49,7 @@
 .try .try-back{transform:rotateY(180deg)}
 .try .try-word{display:block;margin-top:5px;font:400 .75rem/1.25 var(--body);color:var(--bone);text-align:center;white-space:nowrap;min-height:1.25em}
 .try .try-word.is-key{font:400 .875rem/1.1 var(--mono);color:var(--bone-2)}
-.try .try-word-input{box-sizing:border-box;width:6.5ch;min-width:var(--tw);margin-top:5px;padding:5px 4px;border:1px solid var(--veil-2);border-radius:2px;background:#fff;color:var(--bone);font:400 .8125rem/1.3 var(--body);text-align:center}
+.try .try-word-input{box-sizing:border-box;width:6.5ch;min-width:var(--tw);margin-top:5px;padding:5px 4px;border:1px solid var(--veil-2);border-radius:0;background:var(--card-bg,#fff);color:var(--bone);font:400 .8125rem/1.3 var(--body);text-align:center}
 .try .try-word-input.is-duplicate{border-color:var(--ember)}
 .try .try-pairs.is-custom{gap:14px 10px}
 .try .try-status{font:var(--t-note);color:var(--bone-2);margin:0;max-width:52ch;text-wrap:pretty}

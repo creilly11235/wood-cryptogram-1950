@@ -50,7 +50,7 @@
   .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .sub{gap:1px;margin-top:-6px;margin-bottom:8px}
   .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .sub span{font-size:10px}
   .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .tiles .t{
-    height:25px;aspect-ratio:auto;border-radius:2px;font-size:clamp(10px,2.9vw,15px);
+    height:25px;aspect-ratio:auto;border-radius:0;font-size:clamp(10px,2.9vw,15px);
   }
   .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) canvas{
     min-height:0;flex:1 1 0;

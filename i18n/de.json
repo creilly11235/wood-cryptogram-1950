@@ -18,11 +18,6 @@
     },
     {
       "kind": "p",
-      "en": "<span class=\"byline-author\">By <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a></span> <time datetime=\"2026-10-04\">October 4, 2026</time>",
-      "de": "<span class=\"byline-author\">Von <a href=\"https://www.linkedin.com/in/colin-r-10680960/\">Colin Reilly</a></span> <time datetime=\"2026-10-04\">4. Oktober 2026</time>"
-    },
-    {
-      "kind": "p",
       "en": "<a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code and data</a> <a class=\"lang\" href=\"de/\" hreflang=\"de\" lang=\"de\">Deutsche Fassung</a>",
       "de": "<a href=\"https://github.com/creilly11235/wood-cryptogram-1950\">Code und Daten</a> <a class=\"lang\" href=\"../\" hreflang=\"en\" lang=\"en\">English version</a>"
     },
