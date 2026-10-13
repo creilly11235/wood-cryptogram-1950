@@ -198,8 +198,8 @@
     },
     {
       "kind": "p",
-      "en": "The first search, on September 17, 2026, tested 28.6 million candidate keys from 129 publicly available books. We then added 3,848 Project Gutenberg books in 14 languages and tested about 429 million candidate keys, and the bigger library produced more tempting false leads, not a readable message.",
-      "de": "Die erste Suche am 17. September 2026 prüfte 28,6 Millionen mögliche Schlüssel aus 129 öffentlich zugänglichen Büchern. Danach kamen 3.848 Bücher von Project Gutenberg in 14 Sprachen hinzu, insgesamt wurden rund 429 Millionen mögliche Schlüssel geprüft, und die größere Bibliothek lieferte mehr verlockende falsche Fährten, aber keine lesbare Botschaft."
+      "en": "The first search tested 28.6 million candidate keys from 129 publicly available books. We then added 3,848 Project Gutenberg books in 14 languages and tested about 429 million candidate keys, and the bigger library produced more tempting false leads, not a readable message.",
+      "de": "Die erste Suche prüfte 28,6 Millionen mögliche Schlüssel aus 129 öffentlich zugänglichen Büchern. Danach kamen 3.848 Bücher von Project Gutenberg in 14 Sprachen hinzu, insgesamt wurden rund 429 Millionen mögliche Schlüssel geprüft, und die größere Bibliothek lieferte mehr verlockende falsche Fährten, aber keine lesbare Botschaft."
     },
     {
       "kind": "p",
