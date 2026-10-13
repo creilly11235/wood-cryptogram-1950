@@ -13,7 +13,7 @@
 <meta property="og:title" content="Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte">
 <meta property="og:description" content="Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch.">
 <meta property="og:url" content="https://creilly11235.github.io/wood-cryptogram-1950/de/">
-<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=6">
+<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=7">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“">
@@ -23,7 +23,7 @@
 <meta property="article:author" content="Colin Reilly">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Courier+Prime:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Two garamonds, one for titles and one for reading, on stone paper, with one
    monospace for cipher data. Blue, teal and red retain their meaning in the graphics.
@@ -35,8 +35,8 @@
   --dot-g:#8d9ba8; --dot-p:#26796c; --dot-b:var(--candle); --dot-v:var(--ember); --dot-s:#c6ced6; --dot-tew:var(--bone);
   --de:var(--candle); --af:var(--dot-p); --sig:var(--bone); --label-bg:rgba(235,232,224,.96);
   --cipher-encoded-bg:#000; --cipher-encoded-fg:#ebe8e0; --cipher-encoded-border:#000;
-  --cipher-decoded-bg:#fff; --cipher-decoded-fg:#18584f; --cipher-decoded-border:#26796c;
-  --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif; --display:"Cormorant Garamond","EB Garamond",Garamond,Georgia,serif; --mono:"Courier Prime","Courier New",Courier,monospace;
+  --cipher-decoded-bg:transparent; --cipher-decoded-fg:#000; --cipher-decoded-border:#000;
+  --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif; --display:"Cormorant Garamond","EB Garamond",Garamond,Georgia,serif; --mono:"IBM Plex Mono","Courier New",Courier,monospace;
   --t-body:400 1.3125rem/1.6 var(--body);
   --t-note:400 1.1875rem/1.5 var(--body); --t-data:400 1rem/1.5 var(--mono);
   --t-heading:400 clamp(1.75rem,2.8vw,2.125rem)/1.3 var(--display);
@@ -62,14 +62,12 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 :root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3{-webkit-hyphens:manual;hyphens:manual}
 .hero h1{font:400 clamp(2.25rem,4.2vw,2.875rem)/1.2 var(--display);margin:0 auto;text-wrap:balance;max-width:24ch;letter-spacing:.005em}
 .hero .byline{display:grid;justify-items:center;gap:2px;font:var(--t-note);color:var(--bone-2);margin:28px 0 0}
-.hero .byline-author{color:var(--bone)}
 /* The ciphertext holds in the middle of the screen while the opening scrolls
    beneath it, decoding as the reader goes. The script measures the figure
    and sets --hero-h so the row sits centred. */
 .reveal-track{position:relative;margin-top:48px}
 .reveal-hold{height:calc(70svh + var(--hero-extra,0px))}
 .cipher-row{--tw:28px;position:sticky;top:max(var(--hero-stick-top,env(safe-area-inset-top,0px)),calc((100svh - var(--hero-h,0px)) / 2));z-index:3;margin:0;padding:6px 0 12px;display:flex;flex-direction:column;align-items:center;background:var(--room)}
-.cipher-row.is-stuck{border-bottom:1px solid var(--veil)}
 .cipher-row .intro{font:var(--t-note);color:var(--bone-2);margin:0 0 14px}
 .cipher-row .line{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:8px 12px}
 .cipher-row .grp,.cipher-row .tail{display:flex;gap:3px}
@@ -79,13 +77,11 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher-row[data-stage="3"] .gloss{opacity:1}
 .cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.25);font-size:calc(var(--tw) * .65)}
 .cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:58ch;text-wrap:pretty}
-.hero .answer,.hero .lede{max-width:640px;margin-inline:auto;text-align:left}
-.hero .answer{margin-top:8px;padding-top:28px;border-top:1px solid var(--veil-2)}
-.hero .answer p{margin:0 0 .8em}
-.hero .answer-heading{display:grid;gap:4px;margin-bottom:16px}
-.hero .answer .answer-status{font:var(--t-note);color:var(--bone-2);margin:0;text-wrap:pretty}
+.hero .lede{max-width:640px;margin-inline:auto;text-align:left}
+.hero .byline.answer-status{display:block;text-wrap:pretty}
+.hero .answer-status a{color:var(--bone)}
 .hero .answer-status time{white-space:nowrap}
-.hero .lede{margin-top:28px}
+.hero .lede{margin-top:20px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
 .scrolly{max-width:1184px;margin:0 auto;padding-inline:24px}
 .chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start}
@@ -98,17 +94,17 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
 .gbody{display:flex;flex-direction:column;flex:1;min-height:0}
 .replay:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
-.replay{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin-top:8px;padding:8px 14px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:2px;cursor:pointer;max-width:100%}
+.replay{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin-top:8px;padding:8px 14px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:0;cursor:pointer;max-width:100%}
 .replay:hover{border-color:var(--candle);color:var(--bone)}
 .tiles{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;max-width:680px}
 .tiles:empty{display:none}
 .comparison-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:8px;font:var(--t-note);color:var(--bone-2)}
 .comparison-heading:first-child{padding-top:0}
 .comparison-count{font:var(--t-data);white-space:nowrap}
-.t{position:relative;min-width:0;aspect-ratio:1/1.2;display:grid;place-items:center;padding-top:.14em;background:var(--room);border:1px solid var(--bone);font:400 clamp(11px,1.7vw,20px)/1 var(--mono);color:var(--bone);border-radius:1px;transition:background .45s,color .45s,border-color .45s,box-shadow .45s}
+.t{position:relative;min-width:0;aspect-ratio:1/1.2;display:grid;place-items:center;padding-top:.14em;background:var(--room);border:1px solid var(--bone);font:400 clamp(11px,1.7vw,20px)/1 var(--mono);color:var(--bone);border-radius:0;transition:background .45s,color .45s,border-color .45s,box-shadow .45s}
 .t.encoded,.cipher-token.encoded{background:var(--cipher-encoded-bg);color:var(--cipher-encoded-fg);border:1px solid var(--cipher-encoded-border)}
 .t.decoded,.cipher-token.decoded{background:var(--cipher-decoded-bg);color:var(--cipher-decoded-fg);border:1px solid var(--cipher-decoded-border);border-bottom:3px double var(--cipher-decoded-border)}
-.cipher-token{font-family:var(--mono);font-size:.9em;font-weight:400;padding:.1em .25em;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.cipher-token{font-family:var(--mono);font-size:.9em;font-weight:400;padding:.1em .25em;border-radius:0;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 td .cipher-token{display:inline-grid;place-items:center;min-width:1.5em;padding:.1em}
 .sub{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;margin-top:4px;min-height:1.2em;max-width:680px}
 .sub span{min-width:0;text-align:center;font:clamp(8px,1.1vw,11px)/1.2 var(--mono);color:var(--bone-3);overflow:hidden;white-space:nowrap;transition:color .5s}
@@ -152,7 +148,7 @@ html.lb-open{overflow:hidden;scrollbar-gutter:stable}
 .lb .stage.drag{cursor:grabbing}
 .lb .stage img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;background:#fff;user-select:none;-webkit-user-select:none;-webkit-user-drag:none}
 .lb .bar{position:absolute;top:0;right:0;display:flex;gap:6px;padding:12px 16px}
-.lb .bar button{font:20px/1 var(--body);width:44px;height:44px;border:1px solid var(--veil-2);border-radius:2px;background:var(--room-2);color:var(--bone);cursor:pointer}
+.lb .bar button{font:20px/1 var(--body);width:44px;height:44px;border:1px solid var(--veil-2);border-radius:0;background:var(--room-2);color:var(--bone);cursor:pointer}
 .lb .bar button:hover{border-color:var(--candle)}
 .lb .bar button:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
 .lb .hint{position:absolute;top:0;left:0;margin:0;padding:22px 16px;font:var(--t-note);color:var(--bone-3);pointer-events:none}
@@ -168,7 +164,7 @@ th{font:var(--t-note);color:var(--bone-2);border-bottom:1px solid var(--bone)}
 footer{max-width:1184px;margin:0 auto;padding:32px 24px 64px;border-top:1px solid var(--veil-2);color:var(--bone-2);font:var(--t-note)}
 footer>p{max-width:72ch}
 footer p{margin:0 0 .7em}
-.counter{display:inline-block;font:var(--t-data);line-height:1;letter-spacing:3px;padding:5px 8px 4px;border:1px solid var(--veil-2);border-radius:1px;background:var(--room-2);color:var(--bone)}
+.counter{display:inline-block;font:var(--t-data);line-height:1;letter-spacing:3px;padding:5px 8px 4px;border:1px solid var(--veil-2);border-radius:0;background:var(--room-2);color:var(--bone)}
 .small{color:var(--bone-3)}
 @media (min-width:901px) and (max-width:1100px){
   .chapter{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:0 40px}
@@ -204,18 +200,18 @@ footer p{margin:0 0 .7em}
 .endmatter h2{margin-top:0}
 .endmatter.step{min-height:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=28">
-<link rel="stylesheet" href="../cipher-cards.css?v=26">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=31">
-<link rel="stylesheet" href="../story-graphics.css?v=26">
-<link rel="stylesheet" href="../try-cipher.css?v=37">
+<link rel="stylesheet" href="../story-layout.css?v=29">
+<link rel="stylesheet" href="../cipher-cards.css?v=27">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=32">
+<link rel="stylesheet" href="../story-graphics.css?v=27">
+<link rel="stylesheet" href="../try-cipher.css?v=38">
 </head>
 <body>
 
 <header class="sitehead"><a class="name" href="./">Colin Reilly</a><p class="sitelinks"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a> <a class="lang" href="../" hreflang="en" lang="en">English version</a></p></header>
 <div class="hero">
 <h1>Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte</h1>
-<p class="byline"><span class="byline-author">Von <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a></span> <time datetime="2026-10-04">4. Oktober 2026</time></p>
+<p class="byline answer-status">Lösung bestätigt von <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">Klaus Schmeh</a> am <time datetime="2026-10-04">4. Oktober 2026</time></p>
   <div class="reveal-track">
   <figure class="cipher-row" aria-label="Woods Geheimtext, FVAMI NTKFX XWATB OIZVV X" data-message="HIER BIN ICH TOTSIENS TEW">
     <p class="intro">„Mein verschlüsselter Text lautet:“</p>
@@ -230,11 +226,6 @@ footer p{margin:0 0 .7em}
   </figure>
   <div class="reveal-hold"></div>
   </div>
-<div class="answer">
-<div class="answer-heading">
-<p class="answer-status">Lösung bestätigt von <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">Klaus Schmeh</a> am <time datetime="2026-10-04">4. Oktober 2026</time></p>
-</div>
-</div>
 <p class="lede">1950 veröffentlichte ein Rechtsanwalt aus Yorkshire namens T. E. Wood diese 21 Buchstaben als Prüfung eines Lebens nach dem Tod. Nur er kannte den Schlüssel, und er wollte ihn nach seinem Tod durch ein Medium zurücksenden. Sechsundsiebzig Jahre später haben wir den Schlüssel gefunden, den Anfang des Vaterunsers in einer Lutherbibel von 1912, ganz ohne Séance.</p>
 </div>
 <main class="scrolly">
