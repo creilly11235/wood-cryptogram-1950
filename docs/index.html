@@ -234,14 +234,14 @@ footer p{margin:0 0 .7em}
 <p data-walk-stage="3">Each key word pairs with one letter of the message, so the 14 letters of THERE IS NO DEATH need 14 distinct key words.</p>
 </li>
 <li>
-<p data-walk-stage="4">Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word To.</p>
+<p data-walk-stage="4">Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word “To”.</p>
 <p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. “To” adds up to 35, which leaves 9.</p>
 <p data-walk-stage="6">What is left names a letter by its place in the alphabet, where 1 is A, 25 is Y and 0 is Z. The 9th letter is I, so I is the key letter for T.</p>
 </li>
 <li>
-<p data-walk-stage="7">The key letter is then used as a distance to move, and for that the count starts at A with zero. Counted that way, I is 8 places on from A, so I means a shift of 8.</p>
-<p data-walk-stage="8">The message letter moves that far along the alphabet, wrapping from Z back to A. T moves forward 8 places.</p>
-<p data-walk-stage="9">T becomes B, the first letter of the ciphertext.</p>
+<p data-walk-stage="7">The key letter is then used to calculate a shift on each letter. For this method the count starts with A=0 or no shift, B=1 and so on. I is 8 places from A, so it means a shift of 8.</p>
+<p data-walk-stage="8">The message letter then moves that far along the alphabet, wrapping from Z back to A.</p>
+<p data-walk-stage="9">So T moves forward 8 places to become B, the first letter of the ciphertext.</p>
 </li>
 </ol>
 <p data-walk-stage="10">The same happens for all 14 letters and the cipher is written in groups of five. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.</p>

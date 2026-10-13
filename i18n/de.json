@@ -88,8 +88,8 @@
     },
     {
       "kind": "p",
-      "en": "Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word To.",
-      "de": "Jedem Buchstaben wird ein Wort aus dem Text zugeordnet. Das erste Paar ist der Klartextbuchstabe T und das Schlüsselwort To."
+      "en": "Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word “To”.",
+      "de": "Jedem Buchstaben wird ein Wort aus dem Text zugeordnet. Das erste Paar ist der Klartextbuchstabe T und das Schlüsselwort „To“."
     },
     {
       "kind": "p",
@@ -103,18 +103,18 @@
     },
     {
       "kind": "p",
-      "en": "The key letter is then used as a distance to move, and for that the count starts at A with zero. Counted that way, I is 8 places on from A, so I means a shift of 8.",
-      "de": "Der Schlüsselbuchstabe wird dann als Abstand verwendet, und dafür beginnt die Zählung bei A mit null. So gezählt steht I 8 Stellen nach A, also bedeutet I eine Verschiebung um 8."
+      "en": "The key letter is then used to calculate a shift on each letter. For this method the count starts with A=0 or no shift, B=1 and so on. I is 8 places from A, so it means a shift of 8.",
+      "de": "Aus dem Schlüsselbuchstaben wird dann eine Verschiebung für jeden Buchstaben berechnet. Bei diesem Verfahren beginnt die Zählung mit A=0, also keiner Verschiebung, B=1 und so weiter. I steht 8 Stellen nach A, bedeutet also eine Verschiebung um 8."
     },
     {
       "kind": "p",
-      "en": "The message letter moves that far along the alphabet, wrapping from Z back to A. T moves forward 8 places.",
-      "de": "Der Klartextbuchstabe rückt so weit im Alphabet vor, nach Z geht es bei A weiter. T rückt 8 Stellen vor."
+      "en": "The message letter then moves that far along the alphabet, wrapping from Z back to A.",
+      "de": "Der Klartextbuchstabe rückt dann so weit im Alphabet vor, nach Z geht es bei A weiter."
     },
     {
       "kind": "p",
-      "en": "T becomes B, the first letter of the ciphertext.",
-      "de": "Aus T wird B, der erste Buchstabe des Geheimtexts."
+      "en": "So T moves forward 8 places to become B, the first letter of the ciphertext.",
+      "de": "So rückt T 8 Stellen vor und wird zu B, dem ersten Buchstaben des Geheimtexts."
     },
     {
       "kind": "p",
