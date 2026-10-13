@@ -63,13 +63,8 @@
     });
   }
 
-  function encipher(message, passage) {
-    const words = message.split(/\s+/).map(letters).filter(Boolean);
-    const plain = words.join('');
-    const key = keyFromPassage(passage, plain.length);
-    const rows = rowsFor(plain, key.words);
-    return { words, plain, rows, passage: key.excerpt, distinct: key.distinct, short: rows.length < plain.length };
-  }
+  // The words of a message, letters only, empty words dropped.
+  const messageWords = raw => raw.split(/\s+/).map(letters).filter(Boolean);
 
   const node = (tag, className, text) => {
     const element = document.createElement(tag);
@@ -78,13 +73,10 @@
     return element;
   };
   const card = (letter, kind) => node('span', kind ? 't ' + kind : 't', letter);
+  // A table cell's letter, tiled by the article's own cipher token script.
   const token = (letter, kind) => {
-    const run = node('span', 'cipher-run is-whole');
-    run.append(card(letter, kind));
-    const wrap = node('span', 'cipher-token is-tiled ' + kind);
-    wrap.setAttribute('role', 'img');
-    wrap.setAttribute('aria-label', letter);
-    wrap.append(run);
+    const wrap = node('span', 'cipher-token ' + kind, letter);
+    if (window.tileCipherToken) window.tileCipherToken(wrap);
     return wrap;
   };
   const fill = (template, values) => template.replace(/\{(\w+)\}/g, (match, name) => name in values ? values[name] : match);
@@ -122,16 +114,26 @@
     // at the right, with Back at the left while the key is chosen and Start
     // again once the cipher is made.
     function stage(name) {
+      const focused = document.activeElement;
       Object.keys(buttons).forEach(key => { buttons[key].hidden = key !== name; });
       back.hidden = name !== 'key';
       restart.hidden = name !== 'cipher';
       panel.dataset.stage = name;
+      // Keyboard focus stays in the panel when the button that held it goes.
+      if (focused && focused.hidden && panel.contains(focused)) (buttons[name] || panel).focus({ preventScroll: true });
     }
     // A panel taller than the screen scrolls up until its foot reaches the
     // bottom of the screen, then locks there the way the graphics do.
+    let fitPending = false;
     function fit() {
-      panel.style.setProperty('--try-top', Math.min(0, window.innerHeight - panel.offsetHeight) + 'px');
+      if (fitPending) return;
+      fitPending = true;
+      requestAnimationFrame(() => {
+        fitPending = false;
+        panel.style.setProperty('--try-top', Math.min(0, window.innerHeight - panel.offsetHeight) + 'px');
+      });
     }
+    panel.tabIndex = -1;
     if (typeof ResizeObserver === 'function') new ResizeObserver(fit).observe(panel);
     window.addEventListener('resize', fit);
     fit();
@@ -201,8 +203,9 @@
     // Only the letters A to Z take part, and a note says so when anything
     // else was typed; a message too long for the panel is sent back.
     function setMessage() {
+      if (state.busy || panel.dataset.stage !== 'message') return;
       const raw = message.value;
-      const words = raw.split(/\s+/).map(letters).filter(Boolean);
+      const words = messageWords(raw);
       if (!words.length) { status.textContent = /\S/.test(raw) ? labels.noLetters : labels.noMessage; message.focus(); return; }
       const plain = words.join('');
       if (plain.length > MAX_LETTERS) { status.textContent = fill(labels.longMessage, { max: MAX_LETTERS }); message.focus(); return; }
@@ -220,7 +223,9 @@
       lock('message', true);
       message.blur();
       settle();
+      state.busy = true;
       reveal([...plainOut.querySelectorAll('.t')], 40).then(() => {
+        state.busy = false;
         show('key', true);
         stage('key');
         renderKey();
@@ -309,13 +314,15 @@
     function spread(index) {
       const input = state.pairs[index].input;
       const parts = input.value.trim().split(/\s+/).filter(Boolean);
-      if (parts.length < 2) return;
+      if (parts.length < 2) return '';
       parts.forEach((part, offset) => {
         const target = state.pairs[index + offset];
         if (target && target.input) target.input.value = part;
       });
       const next = state.pairs[Math.min(index + parts.length, state.pairs.length - 1)];
       if (next && next.input) next.input.focus();
+      const room = state.pairs.length - index;
+      return parts.length > room ? fill(labels.extraWords, { n: parts.length - room }) : '';
     }
 
     // Step 3: the key words stay as a phrase, each word under its card becomes
@@ -330,7 +337,7 @@
       const rows = rowsFor(state.plain, state.keyWords);
       lock('key', true);
       stage('none');
-      settle();
+      if (panel.offsetHeight <= window.innerHeight) settle();
       if (!PRESETS[preset.value]) {
         // Typed words read as a phrase of their own above the cards.
         passageOut.replaceChildren();
@@ -435,22 +442,20 @@
     pairsOut.addEventListener('input', event => {
       const index = state.pairs.findIndex(item => item.input === event.target);
       if (index < 0) return;
-      spread(index);
-      validateCustom();
+      const dropped = spread(index);
+      if (validateCustom() && dropped) status.textContent = dropped;
     });
     pairsOut.addEventListener('keydown', event => {
       if (event.key !== 'Enter' || !event.target.classList.contains('try-word-input')) return;
       event.preventDefault();
       const index = state.pairs.findIndex(item => item.input === event.target);
       const next = state.pairs[index + 1];
-      if (next && next.input) next.input.focus(); else buttons.key.focus();
+      if (next && next.input) next.input.focus(); else if (!buttons.key.disabled) buttons.key.focus();
     });
     buttons.key.addEventListener('click', generateCipher);
     buttons.cipher.addEventListener('click', done);
     restart.addEventListener('click', () => { state.keyWords = []; editMessage(); });
     stage('message');
 
-    return { encipher, setMessage, generateCipher };
   };
-  window.TryCipher.encipher = encipher;
 })();

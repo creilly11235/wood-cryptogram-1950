@@ -256,7 +256,7 @@ footer p{margin:0 0 .7em}
 </li>
 <li>
 <p data-walk-stage="4">Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word To.</p>
-<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. What is left gives the letter (1 is A, 25 is Y, 26 is Z). To adds up to 35, which leaves 9, so its letter is I.</p>
+<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. What is left gives the letter (1 is A, 25 is Y, 0 is Z). To adds up to 35, which leaves 9, so its letter is I.</p>
 </li>
 <li>
 <p data-walk-stage="6">That key letter shifts the message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. I moves T forward 8 places.</p>
@@ -621,7 +621,7 @@ function Graphic(el){
   const self=this,cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
   const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
   const legend=el.querySelector(".legend");
-  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,trapPrev=-1,revealBase=0;
+  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,trapPrev=-1,trapPrevClock=Infinity,revealBase=0;
   // A scene change cross-fades from the last painted frame, and the new
   // scene's own reveals wait for the fade, so nothing snaps into place.
   const snap=document.createElement("canvas"),snapCtx=snap.getContext("2d"),FADE=360,SETTLE=160;
@@ -824,18 +824,21 @@ function Graphic(el){
   // cards keep one size throughout.
   const groupFive=s=>s.replace(/ /g,"").match(/.{1,5}/g).join(" ");
   const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300,CARD_REWIND=1600;
-  function cardStory(text,cipher,p,tile,top,delay=0,rewind=false){
+  function cardStory(text,cipher,p,tile,top,delay=0,rewindFrom=null){
     const letters=text.replace(/ /g,""),height=tile*1.2,rowStep=height+tile*.35;
     // The cipher starts in the same groups of five the hero uses.
     const start=cardRows(groupFive(letters),p.w,tile),target=cardRows(text,p.w,tile);
-    // Rewinding plays the story backwards: the words slide back into fives,
-    // then each card flips back to its cipher letter.
-    const move=rewind?1-progress(delay,700):progress(CARD_MOVE+delay,700);
+    // Rewinding plays the story backwards from wherever it had got to on
+    // its own clock (rewindFrom): the words slide back into fives, then
+    // each card flips back to its cipher letter.
+    const rewind=rewindFrom!==null;
+    const was=at=>ease((rewindFrom-at)/700),wasFlip=i=>ease((rewindFrom-CARD_FLIP-i*25)/320);
+    const move=rewind?was(CARD_MOVE)*(1-progress(delay,700)):progress(CARD_MOVE+delay,700);
     [...letters].forEach((c,i)=>{
       const f=start.positions[i],x0=p.x+f.x,y0=top+height/2+f.row*rowStep;
       const t=target.positions[i],x1=p.x+t.x,y1=top+height/2+t.row*rowStep;
       const x=x0+(x1-x0)*move,y=y0+(y1-y0)*move;
-      const flip=rewind?1-progress(delay+760+i*25,320):progress(CARD_FLIP+delay+i*25,320);
+      const flip=rewind?wasFlip(i)*(1-progress(delay+760+i*25,320)):progress(CARD_FLIP+delay+i*25,320);
       ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,tile,height,tile*.62,flip,cipher[i]||c);ctx.restore();
     });
   }
@@ -843,7 +846,7 @@ function Graphic(el){
   // rewinds to the plain cipher, and the new reading plays from there.
   function trapScene(p,tile,top){
     const clock=instant?Infinity:elapsed-revealBase-sceneDelay;
-    if(trapPrev>=0&&clock<CARD_REWIND){cardStory(TRAP_MSGS[trapPrev],CT,p,tile,top,0,true);return;}
+    if(trapPrev>=0&&clock<CARD_REWIND){cardStory(TRAP_MSGS[trapPrev],CT,p,tile,top,0,trapPrevClock);return;}
     cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,tile,top,trapPrev>=0?CARD_REWIND:0);
   }
   function ideaScene(p,tile){
@@ -1010,7 +1013,10 @@ function Graphic(el){
     instant=immediate||reduced;
     // Keep the frame on screen so the next scene can fade over it. Between
     // the trap's readings the cards rewind instead, with no fade.
-    trapPrev=state.startsWith("trap")&&next.startsWith("trap")&&state!==next?TRAP_STATES[state]:-1;
+    // The reading being left is rewound from where its own story had got to.
+    const leaving=state.startsWith("trap")&&next.startsWith("trap")&&state!==next;
+    trapPrevClock=leaving&&!instant?elapsed-sceneDelay-(trapPrev>=0?CARD_REWIND:0):Infinity;
+    trapPrev=leaving?TRAP_STATES[state]:-1;
     fading=!instant&&trapPrev<0&&this.state!==undefined&&cv.width>1&&cv.height>1;
     if(fading){snap.width=cv.width;snap.height=cv.height;snapCtx.drawImage(cv,0,0);}
     sceneDelay=fading?SETTLE:0;
@@ -1062,6 +1068,7 @@ TryCipher(document.querySelector("#try-it"),{
   longMessage:"Keep the message to {max} letters or fewer.",
   maxLength:"The message can be up to {max} characters long.",
   lettersOnly:"Only the letters A to Z count, so accents are dropped and digits and punctuation are left out.",
+  extraWords:"The last {n} words had no letter left to go with, so they were left out.",
   shortKey:"This passage has {words} distinct words, so the message can have at most {words} letters. Shorten it or choose another key.",
   missingWords:"Give every letter a key word.",
   repeatWord:"Each key word can be used only once.",
