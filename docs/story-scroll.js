@@ -6,9 +6,6 @@
   function start() {
     const api = window.WoodStory;
     if (!api) throw new Error('The Wood graphic factory must load before story-scroll.js');
-    // Every width uses the pinned flow; the media object stays so the
-    // listeners below keep their shape.
-    const mobile = {matches: true, addEventListener() {}};
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const root = document.documentElement;
     const records = [];
@@ -21,10 +18,10 @@
     function walkSequence(target) {
       return target.dataset.walkStage.trim().split(/\s+/).map(Number).filter(Number.isFinite);
     }
-    // On phones the passages are cards that rise over the full-screen graphic;
-    // a card takes over its stage as it enters the lower part of the screen.
+    // The passages are cards that rise over the full-screen graphic; a card
+    // takes over its stage as it enters the lower part of the screen.
     function walkLine() {
-      return innerHeight * (mobile.matches ? .88 : .55);
+      return innerHeight * .88;
     }
     function fadeCards(record) {
       // Short portrait screens read the card a little lower, leaving the chart its space.
@@ -56,7 +53,7 @@
       chapter.classList.add('pinned-chapter');
       const record = {
         chapter, el, graphic, steps,
-        state: null, renderMode: null,
+        state: null,
         walkTargets: [...chapter.querySelectorAll('[data-walk-stage]')], walkIndex: null, walkPreferred: undefined,
         cards: [...chapter.querySelectorAll('.pin > .text [data-walk-stage]')],
       };
@@ -125,16 +122,7 @@
     }
 
     function layout() {
-      root.dataset.storyLayout = mobile.matches ? 'stack' : 'side';
       root.style.setProperty('--story-viewport-height', `${innerHeight}px`);
-      const mode = mobile.matches ? 'pinned' : 'desktop';
-      records.forEach(record => {
-        if (record.renderMode === mode) return;
-        record.renderMode = mode;
-        record.state = null;
-        record.walkIndex = null;
-        if (mode === 'desktop') record.cards.forEach(card => { card.style.opacity = ''; });
-      });
       update();
     }
 
@@ -170,7 +158,7 @@
           if (held) record.graphic.hold();
           if (!record.graphic.visible) record.graphic.pause();
         }
-        if (mobile.matches) fadeCards(record);
+        fadeCards(record);
         if (record.graphic.walkthrough) {
           let walkIndex = 0;
           record.walkTargets.forEach((target, i) => { if (target.getBoundingClientRect().top <= line) walkIndex = i; });
@@ -194,17 +182,7 @@
     addEventListener('scroll', schedule, {passive: true});
     addEventListener('resize', layout, {passive: true});
     addEventListener('pageshow', layout);
-    mobile.addEventListener('change', layout);
     document.fonts?.ready.then(layout);
-
-    document.querySelectorAll('.replay').forEach(button => button.addEventListener('click', () => {
-      const record = records.find(item => item.chapter === button.closest('.chapter'));
-      if (!record) return;
-      const index = record.steps.findIndex(step => step.dataset.s === 'prayer');
-      if (index >= 0) record.steps[index].scrollIntoView({block: 'start', behavior: 'instant'});
-      record.graphic.replay();
-      schedule();
-    }));
 
     function paint(now) {
       records.forEach(record => { if (record.inView) record.graphic.frame(now); });

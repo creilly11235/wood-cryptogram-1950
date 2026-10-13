@@ -74,8 +74,6 @@ the passages that explain it rise over its lower part, one at a time. */
 .gbody { min-height: 0; overflow: visible; }
 .gbody canvas { flex: 1 1 0; min-height: 0; }
 .sub:empty { display: none; }
-/* The replay button belongs to the desktop column; phones replay by scrolling. */
-.chapter .replay { display: none; }
 
 /* Each graphic fills the screen and holds while the passages that explain
 it rise over its lower part one at a time, news-graphic style. */

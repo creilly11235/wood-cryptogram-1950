@@ -3,7 +3,7 @@
 .cw{
   --cw-encoded-bg:var(--cipher-encoded-bg,#282e35);--cw-encoded-fg:var(--cipher-encoded-fg,#fafbfc);
   --cw-decoded-bg:var(--cipher-decoded-bg,#e4f1ed);--cw-decoded-fg:var(--cipher-decoded-fg,#18584f);--cw-decoded-border:var(--cipher-decoded-border,#26796c);
-  container-type:inline-size;width:100%;height:100%;max-height:490px;min-width:0;min-height:0;padding:22px;
+  container-type:inline-size;width:100%;height:100%;max-height:none;min-width:0;min-height:0;padding:22px;
   display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:18px;
   border:0;border-radius:0;background:transparent;color:var(--bone,#282e35);
   font-family:var(--body,Georgia,serif);box-shadow:none;

@@ -85,22 +85,16 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
 .scrolly{max-width:1184px;margin:0 auto;padding-inline:24px}
 /* Every width reads the same way: one column, the graphic pinned full screen
-   with the passages rising over it (geometry in story-layout.css). */
-.chapter{display:flex;flex-direction:column}
-.chapter>*{width:100%;max-width:100%;min-width:0}
-.chapter>.text{max-width:640px;margin-inline:auto}
+   with the passages rising over it. Chapter geometry lives in story-layout.css. */
+.chapter>*{min-width:0}
 .chapter+.chapter,.endmatter+.chapter{border-top:1px solid var(--veil-2)}
 /* A chapter that opens without a heading runs on from the one before it
    (the scroll script marks the pair run-on and runs-on). */
 .chapter+.chapter:not(:has(h2,h3)),.chapter.run-on{border-top:0}
 .chapter.run-on>.text.text-before{padding-top:0}
 .chapter.runs-on>.text.text-after,.chapter.runs-on>.text.text-after>.step:last-child{padding-bottom:0}
-.graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;z-index:2;display:flex;flex-direction:column;padding:12px 0 12px;min-width:0;background:var(--room);border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
-.text{order:1}
+.graphic{position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;min-width:0;background:var(--room)}
 .gbody{display:flex;flex-direction:column;flex:1;min-height:0}
-.replay:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
-.replay{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin-top:8px;padding:8px 14px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:0;cursor:pointer;max-width:100%}
-.replay:hover{border-color:var(--candle);color:var(--bone)}
 .tiles{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:2px;max-width:680px}
 .tiles:empty{display:none}
 .comparison-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:8px;font:var(--t-note);color:var(--bone-2)}
@@ -119,11 +113,7 @@ canvas{flex:1;width:100%;min-height:0;display:block}
 .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 .text{min-width:0}
 .beats,.beatcap{display:none}
-/* article column */
-.text{padding-block:40px 24px}
-.chapter:first-child .text{padding-top:40px}
-.step{min-height:0;padding:0 0 32px;scroll-margin-top:32px}
-.step+.step{padding-top:16px}
+/* article column; spacing is set in story-layout.css */
 .step h2{font:var(--t-heading);color:var(--bone);margin:0 0 24px;text-wrap:balance;letter-spacing:.005em}
 .step h3{font:500 1em/1.5 var(--body);color:var(--bone);margin:1.8em 0 .75em;text-wrap:balance}
 .step>h3:first-child{margin-top:0}
@@ -190,9 +180,9 @@ footer p{margin:0 0 .7em}
 .endmatter h2{margin-top:0}
 .endmatter.step{min-height:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=32">
+<link rel="stylesheet" href="../story-layout.css?v=33">
 <link rel="stylesheet" href="../cipher-cards.css?v=28">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=37">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=38">
 <link rel="stylesheet" href="../story-graphics.css?v=28">
 <link rel="stylesheet" href="../try-cipher.css?v=39">
 </head>
@@ -358,7 +348,6 @@ footer p{margin:0 0 .7em}
 <section class="step">
 <p>Wood wollte, dass die Botschaft erst nach seinem Tod gelesen würde, sobald ein Medium den Schlüssel übermittelt hätte. Darin gibt er sich zu erkennen, verabschiedet sich und unterschreibt. Der Schlüssel, den er zurückgesendet hätte, beginnt mit „Unser Vater in dem Himmel“.</p>
 <blockquote class="quote" lang="de" translate="no">Unser Vater in dem Himmel! Dein Name werde geheiligt. Dein Reich komme. Dein Wille geschehe auf Erden wie im Himmel. Unser täglich Brot gib uns …</blockquote>
-<button class="replay" type="button">Entschlüsselung erneut abspielen</button>
 <p>Der Schlüssel verwendet 21 verschiedene Wörter, von „Unser“ bis „uns“. Vier Wiederholungen werden übersprungen („Dein“ zweimal, „Himmel“ und „Unser“ jeweils einmal), und das ä in „täglich“ wird als a gelesen.</p>
 <figure><img src="../luther_1922_mt6_9-11.jpg" width="1272" height="538" alt="Matthäus 6,9–11 in einem Druck von 1922 der Lutherbibel von 1912" loading="lazy"><figcaption><a href="https://archive.org/details/diebibeloderdie00luth/page/n923/mode/1up">Der Schlüsseltext, Matthäus 6,9–11, in einem Berliner Druck von 1922 der Lutherbibel von 1912</a>, herausgegeben von der Britischen und Ausländischen Bibelgesellschaft.</figcaption></figure>
 </section>
@@ -647,9 +636,9 @@ function Graphic(el){
   function dot(x,y,r,c=muted){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,Math.max(.4,r),0,Math.PI*2);ctx.fill();mark(y+r);}
   function outlineDot(x,y,r,c=blue){ctx.fillStyle=background;ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,Math.max(.4,r),0,Math.PI*2);ctx.fill();ctx.stroke();}
   function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);mark(y+h);}
-  // Portrait phones get the full-screen scenes; a landscape phone is short and wide, like the desktop column.
-  // Every width now uses the full-screen pinned scenes; a landscape phone is the one short panel.
-  const isMobilePanel=()=>!matchMedia("(max-width:900px) and (orientation:landscape)").matches;
+  // Every width uses the full-screen scenes; a landscape phone is the one short, wide panel.
+  const landscapePhone=matchMedia("(max-width:900px) and (orientation:landscape)");
+  const isMobilePanel=()=>!landscapePhone.matches;
   function panel(){const h=isMobilePanel()?Math.max(0,H-12):Math.min(H,322);return{x:5,y:(H-h)/2,w:W-10,h};}
   const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
   function progress(delay=0,duration=400){return instant?1:ease((elapsed-revealBase-sceneDelay-delay)/duration);}
@@ -907,8 +896,7 @@ function Graphic(el){
     if(tail!==inkTail){inkTail=tail;el.dispatchEvent(new Event("inktail"));}
   }
   function paintScene(){
-    // Portrait phones get the full-screen scenes; a landscape phone is short
-    // and wide, like the desktop column, so it shares the column layout.
+    // A landscape phone is short and wide, so its scenes take the compact layout.
     const m=isMobilePanel(),p=panel(),cx=W/2,short=p.h<300;
     // Card size from the panel: the divisor for a short panel, then for a tall one.
     const tileFor=(tall,wide,limit=300)=>Math.min(m?30:26,p.w/13.5,p.h/(p.h<limit?tall:wide));
@@ -1056,7 +1044,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=31"></script>
+<script src="../story-scroll.js?v=32"></script>
 <script src="../hero-reveal.js?v=26"></script>
 <script src="../cipher-tokens.js?v=25"></script>
 <script src="../try-cipher.js?v=37"></script>
