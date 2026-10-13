@@ -1,11 +1,12 @@
 /* The reader's own cipher, built in three steps inside a panel that fills
-   the screen the way the article's graphics do, with the one button that
-   moves the reader on centred at its foot. First the message becomes letter cards. Then every letter gets
-   a key word, from a chosen passage (repeats skipped, as Thouless's rule
-   says) or typed by the reader one word per letter. Then each word turns
-   into its key letter (A=1 to Z=26, summed and reduced modulo 26) and the
-   card flips to the cipher letter, one pair after another. A finished step
-   locks and can be reopened with its Edit button; later steps then clear. */
+   the screen the way the article's graphics do, with the button that moves
+   the reader on at the right of its foot and a Back button at the left.
+   First the message becomes letter cards. Then every letter gets a key
+   word, from a chosen passage (repeats skipped, as Thouless's rule says)
+   or typed by the reader one word per letter. Then each word turns into
+   its key letter (A=1 to Z=26, summed and reduced modulo 26) and the
+   cipher forms below in fives, each card flipping from the message letter
+   to the cipher letter. Back reopens the previous step; later steps clear. */
 (() => {
   'use strict';
 
@@ -102,6 +103,7 @@
       key: section.querySelector('[data-act="generate"]'),
       cipher: section.querySelector('[data-act="restart"]')
     };
+    const back = section.querySelector('[data-act="back"]');
     const message = section.querySelector('#try-message');
     const preset = section.querySelector('#try-preset');
     const plainOut = steps.message.querySelector('.try-plain');
@@ -114,11 +116,21 @@
     const state = { words: [], plain: '', keyWords: [], pairs: [], busy: false };
     let run = 0; // bumps on every edit so an animation in flight stops
 
-    // The foot of the panel carries the one button for the current stage.
+    // The foot of the panel carries the one button for the current stage at
+    // the right, and Back at the left once there is a step to go back to.
     function stage(name) {
       Object.keys(buttons).forEach(key => { buttons[key].hidden = key !== name; });
+      back.hidden = name !== 'key' && name !== 'cipher';
       panel.dataset.stage = name;
     }
+    // A panel taller than the screen scrolls up until its foot reaches the
+    // bottom of the screen, then locks there the way the graphics do.
+    function fit() {
+      panel.style.setProperty('--try-top', Math.min(0, window.innerHeight - panel.offsetHeight) + 'px');
+    }
+    if (typeof ResizeObserver === 'function') new ResizeObserver(fit).observe(panel);
+    window.addEventListener('resize', fit);
+    fit();
     function show(step, visible) {
       const el = steps[step];
       if (!visible) { el.hidden = true; el.classList.remove('is-entering'); return; }
@@ -130,8 +142,6 @@
     }
     function lock(step, locked) {
       steps[step].classList.toggle('is-locked', locked);
-      const edit = steps[step].querySelector('.try-edit');
-      if (edit) edit.hidden = !locked;
     }
     function reveal(items, gap) {
       if (reduced) return Promise.resolve();
@@ -200,11 +210,7 @@
         const group = node('span', 'try-group');
         word.split('').forEach(letter => {
           const pair = node('span', 'try-pair');
-          const flip = node('span', 'try-card');
-          const turn = node('span', 'try-card-turn');
-          turn.append(node('span', 't decoded try-face', letter), node('span', 't encoded try-face try-back', ''));
-          flip.append(turn);
-          pair.append(flip);
+          pair.append(card(letter, 'decoded'));
           let input = null;
           if (chosen) {
             pair.append(node('span', 'try-word', words[index] || ''));
@@ -218,7 +224,7 @@
             if (state.keyWords[index]) input.value = state.keyWords[index];
             pair.append(input);
           }
-          state.pairs.push({ pair, turn, letter, input, back: turn.lastChild });
+          state.pairs.push({ pair, letter, input });
           group.append(pair);
           index += 1;
         });
@@ -263,8 +269,9 @@
       if (next && next.input) next.input.focus();
     }
 
-    // Step 3: each word becomes its key letter and the card flips to the
-    // cipher letter, one pair after another, then the cipher reads in fives.
+    // Step 3: each word becomes its key letter, one pair after another, then
+    // the cipher forms below in fives, each card flipping from the message
+    // letter to the cipher letter.
     async function generateCipher() {
       if (state.busy) return;
       if (!PRESETS[preset.value] && !validateCustom()) { if (!status.textContent) status.textContent = labels.missingWords; return; }
@@ -282,14 +289,12 @@
       const gap = reduced ? 0 : 130;
       const turn = (item, row) => {
         const word = item.pair.querySelector('.try-word');
-        item.back.textContent = row.cipher;
         const swap = () => { word.textContent = row.key; word.classList.add('is-key'); };
-        if (reduced) { swap(); item.pair.classList.add('is-flipped'); return; }
+        if (reduced) { swap(); return; }
         word.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, fill: 'forwards' }).finished.then(() => {
           if (run !== ticket) return;
           swap();
           word.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, fill: 'forwards' });
-          item.pair.classList.add('is-flipped');
         });
       };
       for (let index = 0; index < rows.length; index += 1) {
@@ -298,12 +303,20 @@
         if (gap) await wait(gap);
       }
       if (run !== ticket) { state.busy = false; return; }
-      if (!reduced) await wait(700);
+      if (!reduced) await wait(500);
       const cipher = rows.map(row => row.cipher).join('');
+      const flips = [];
       const groups = [];
       for (let index = 0; index < cipher.length; index += 5) {
         const group = node('span', 'grp');
-        group.append(...cipher.slice(index, index + 5).split('').map(letter => card(letter, 'encoded')));
+        rows.slice(index, index + 5).forEach(row => {
+          const flip = node('span', 'try-card');
+          const turn = node('span', 'try-card-turn');
+          turn.append(node('span', 't decoded try-face', row.plain), node('span', 't encoded try-face try-back', row.cipher));
+          flip.append(turn);
+          flips.push(flip);
+          group.append(flip);
+        });
         groups.push(group);
       }
       cipherOut.replaceChildren(...groups);
@@ -318,8 +331,15 @@
       }));
       show('cipher', true);
       table.hidden = false;
+      await reveal(flips, 40);
+      if (run !== ticket) { state.busy = false; return; }
+      for (let index = 0; index < flips.length; index += 1) {
+        if (run !== ticket) { state.busy = false; return; }
+        flips[index].classList.add('is-flipped');
+        if (gap) await wait(gap);
+      }
+      if (!reduced) await wait(400);
       stage('cipher');
-      await reveal([...cipherOut.querySelectorAll('.t')], 60);
       state.busy = false;
     }
 
@@ -345,8 +365,7 @@
 
     buttons.message.addEventListener('click', setMessage);
     message.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); setMessage(); } });
-    steps.message.querySelector('.try-edit').addEventListener('click', editMessage);
-    steps.key.querySelector('.try-edit').addEventListener('click', editKey);
+    back.addEventListener('click', () => { if (panel.dataset.stage === 'cipher') editKey(); else editMessage(); });
     preset.addEventListener('change', () => { state.keyWords = []; renderKey(); });
     pairsOut.addEventListener('input', event => {
       const index = state.pairs.findIndex(item => item.input === event.target);

@@ -201,7 +201,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="../cipher-cards.css?v=25">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="../story-graphics.css?v=26">
-<link rel="stylesheet" href="../try-cipher.css?v=34">
+<link rel="stylesheet" href="../try-cipher.css?v=35">
 </head>
 <body>
 
@@ -380,12 +380,12 @@ footer p{margin:0 0 .7em}
 <div class="try-panel" data-stage="message">
 <div class="try-body">
 <div class="try-step" data-step="message">
-<div class="try-head"><label class="try-label" for="try-message">Ihre Botschaft</label><button class="try-edit" type="button" hidden>Ändern</button></div>
+<label class="try-label" for="try-message">Ihre geheime Botschaft</label>
 <textarea id="try-message" class="try-input" rows="2" maxlength="70" spellcheck="false" autocomplete="off">THERE IS NO DEATH</textarea>
 <div class="try-cards try-plain" role="img" translate="no" hidden></div>
 </div>
 <div class="try-step" data-step="key" hidden>
-<div class="try-head"><label class="try-label" for="try-preset">Ihr Schlüssel</label><button class="try-edit" type="button" hidden>Ändern</button></div>
+<label class="try-label" for="try-preset">Ihr Schlüssel</label>
 <select id="try-preset" class="try-input">
 <option value="own">Eigene Wörter, eines je Buchstabe</option>
 <hr>
@@ -407,9 +407,12 @@ footer p{margin:0 0 .7em}
 </div>
 <div class="try-foot">
 <p class="try-status" aria-live="polite"></p>
-<button class="try-button" type="button" data-act="message">Weiter</button>
-<button class="try-button" type="button" data-act="generate" hidden>Geheimtext erzeugen</button>
-<button class="try-button" type="button" data-act="restart" hidden>Von vorn beginnen</button>
+<div class="try-actions">
+<button class="try-button try-prev" type="button" data-act="back" hidden>Zurück</button>
+<button class="try-button is-primary" type="button" data-act="message">Schlüsseltext wählen</button>
+<button class="try-button is-primary" type="button" data-act="generate" hidden>Geheimtext erzeugen</button>
+<button class="try-button is-primary" type="button" data-act="restart" hidden>Von vorn beginnen</button>
+</div>
 </div>
 </div>
 <div class="try-hold">
@@ -1038,7 +1041,7 @@ window.WoodStory={Graphic,reduced};
 <script src="../story-scroll.js?v=30"></script>
 <script src="../hero-reveal.js?v=25"></script>
 <script src="../cipher-tokens.js?v=25"></script>
-<script src="../try-cipher.js?v=34"></script>
+<script src="../try-cipher.js?v=35"></script>
 <script>
 TryCipher(document.querySelector("#try-it"),{
   noMessage:"Geben Sie zuerst eine Botschaft ein.",

@@ -693,8 +693,8 @@
     },
     {
       "kind": "label",
-      "en": "Your message",
-      "de": "Ihre Botschaft"
+      "en": "Your secret message",
+      "de": "Ihre geheime Botschaft"
     },
     {
       "kind": "label",
@@ -723,13 +723,13 @@
     },
     {
       "kind": "button",
-      "en": "Edit",
-      "de": "Ändern"
+      "en": "Back",
+      "de": "Zurück"
     },
     {
       "kind": "button",
-      "en": "Next",
-      "de": "Weiter"
+      "en": "Pick key phrase",
+      "de": "Schlüsseltext wählen"
     },
     {
       "kind": "option",
