@@ -180,7 +180,7 @@ footer p{margin:0 0 .7em}
 .endmatter h2{margin-top:0}
 .endmatter.step{min-height:0}
 </style>
-<link rel="stylesheet" href="story-layout.css?v=36">
+<link rel="stylesheet" href="story-layout.css?v=37">
 <link rel="stylesheet" href="cipher-cards.css?v=28">
 <link rel="stylesheet" href="cipher-walkthrough.css?v=44">
 <link rel="stylesheet" href="story-graphics.css?v=28">
@@ -635,7 +635,7 @@ function Graphic(el){
     ctx.fillStyle=kind==="decoded"?decodedBg:ink;
     ctx.strokeStyle=kind==="decoded"?decodedBorder:ink;ctx.lineWidth=1;
     ctx.fillRect(left+.5,top+.5,width-1,height-1);ctx.strokeRect(left+.5,top+.5,width-1,height-1);
-    if(kind==="decoded")line(left+3,top+height-2.5,left+width-3,top+height-2.5,decodedBorder,2);
+    if(kind==="decoded")line(left+1,top+height-2,left+width-1,top+height-2,decodedBorder,2);
     text(s,x+1,y,fitted,kind==="decoded"?decodedFg:background,"left",true);
   }
   function line(x1,y1,x2,y2,c=pale,width=1){ctx.strokeStyle=c;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();mark(Math.max(y1,y2)+width);}
@@ -773,7 +773,7 @@ function Graphic(el){
     ctx.save();ctx.translate(x+tile/2,y);ctx.scale(sx,1);
     ctx.fillStyle=kind==="encoded"?encodedBg:decodedBg;ctx.strokeStyle=kind==="encoded"?encodedBorder:decodedBorder;ctx.lineWidth=1;
     ctx.fillRect(-tile/2+.5,-height/2+.5,tile-1,height-1);ctx.strokeRect(-tile/2+.5,-height/2+.5,tile-1,height-1);
-    if(kind==="decoded")line(-tile/2+2,height/2-2,tile/2-2,height/2-2,decodedBorder,1.5);
+    if(kind==="decoded")line(-tile/2+1,height/2-2,tile/2-1,height/2-2,decodedBorder,2);
     text(kind==="encoded"?back:c,0,0,size,kind==="encoded"?encodedFg:decodedFg,"center",true);
     ctx.restore();mark(y+height/2);
   }
