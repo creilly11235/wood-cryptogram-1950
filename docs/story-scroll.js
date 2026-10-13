@@ -1,13 +1,14 @@
-/* Every chapter pins its graphic beside the passages that explain it. On
-   desktop the graphic follows the reading column; on phones it fills the
-   screen while the passages rise over its lower part, one card per stage. */
+/* Every chapter pins its graphic full screen while the passages that explain
+   it rise over its lower part, one card per stage, at every width. */
 (() => {
   'use strict';
 
   function start() {
     const api = window.WoodStory;
     if (!api) throw new Error('The Wood graphic factory must load before story-scroll.js');
-    const mobile = matchMedia('(max-width: 900px)');
+    // Every width uses the pinned flow; the media object stays so the
+    // listeners below keep their shape.
+    const mobile = {matches: true, addEventListener() {}};
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const root = document.documentElement;
     const records = [];

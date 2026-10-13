@@ -59,7 +59,7 @@ frame.addEventListener('load', async () => {
     const chapters = [...doc.querySelectorAll('.chapter')];
     const graphics = chapters.map(chapter => chapter.querySelector('.graphic'));
     const walk = graphics[0].querySelector('.cw');
-    const mobile = width <= 900;
+    const mobile = true; // every width uses the pinned flow
     check(chapters.length === 6 && graphics.every(Boolean) && doc.querySelectorAll('.graphic').length === 6,
       'Six original graphics serve every stage and both layouts');
     check(doc.querySelectorAll('.cw').length === 1, 'One walkthrough serves every cipher stage');

@@ -84,19 +84,24 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero .lede{margin-top:20px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
 .scrolly{max-width:1184px;margin:0 auto;padding-inline:24px}
-.chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start}
+/* Every width reads the same way: one column, the graphic pinned full screen
+   with the passages rising over it (geometry in story-layout.css). */
+.chapter{display:flex;flex-direction:column}
+.chapter>*{width:100%;max-width:100%;min-width:0}
+.chapter>.text{max-width:640px;margin-inline:auto}
 .chapter+.chapter,.endmatter+.chapter{border-top:1px solid var(--veil-2)}
 /* A chapter that opens without a heading runs on from the one before it
    (the scroll script marks the pair run-on and runs-on). */
 .chapter+.chapter:not(:has(h2,h3)),.chapter.run-on{border-top:0}
 .chapter.run-on>.text.text-before{padding-top:0}
 .chapter.runs-on>.text.text-after,.chapter.runs-on>.text.text-after>.step:last-child{padding-bottom:0}
-.graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding:16px 0 10px;min-width:0;background:var(--room)}
+.graphic{order:2;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;z-index:2;display:flex;flex-direction:column;padding:12px 0 12px;min-width:0;background:var(--room);border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
+.text{order:1}
 .gbody{display:flex;flex-direction:column;flex:1;min-height:0}
 .replay:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
 .replay{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin-top:8px;padding:8px 14px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:0;cursor:pointer;max-width:100%}
 .replay:hover{border-color:var(--candle);color:var(--bone)}
-.tiles{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;max-width:680px}
+.tiles{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:2px;max-width:680px}
 .tiles:empty{display:none}
 .comparison-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:8px;font:var(--t-note);color:var(--bone-2)}
 .comparison-heading:first-child{padding-top:0}
@@ -106,19 +111,19 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .t.decoded,.cipher-token.decoded{background:var(--cipher-decoded-bg);color:var(--cipher-decoded-fg);border:1px solid var(--cipher-decoded-border);border-bottom:3px double var(--cipher-decoded-border)}
 .cipher-token{font-family:var(--mono);font-size:.9em;font-weight:400;padding:.1em .25em;border-radius:0;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 td .cipher-token{display:inline-grid;place-items:center;min-width:1.5em;padding:.1em}
-.sub{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:4px;margin-top:4px;min-height:1.2em;max-width:680px}
+.sub{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:2px;margin-top:4px;min-height:1.2em;max-width:680px}
 .sub span{min-width:0;text-align:center;font:clamp(8px,1.1vw,11px)/1.2 var(--mono);color:var(--bone-3);overflow:hidden;white-space:nowrap;transition:color .5s}
 .sub span.on{color:var(--candle)}
 canvas{flex:1;width:100%;min-height:0;display:block}
-.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font:var(--t-note);color:var(--bone-2);margin-top:8px;min-height:1.4em}
+.legend{display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px 16px;font:var(--t-note);color:var(--bone-2);margin-top:8px;min-height:44px}
 .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 .text{min-width:0}
 .beats,.beatcap{display:none}
 /* article column */
-.text{padding-block:113px 113px}
-.chapter:first-child .text{padding-top:113px}
-.step{min-height:52vh;padding:0 0 64px;scroll-margin-top:32px}
-.step+.step{padding-top:24px}
+.text{padding-block:40px 24px}
+.chapter:first-child .text{padding-top:40px}
+.step{min-height:0;padding:0 0 32px;scroll-margin-top:32px}
+.step+.step{padding-top:16px}
 .step h2{font:var(--t-heading);color:var(--bone);margin:0 0 24px;text-wrap:balance;letter-spacing:.005em}
 .step h3{font:500 1em/1.5 var(--body);color:var(--bone);margin:1.8em 0 .75em;text-wrap:balance}
 .step>h3:first-child{margin-top:0}
@@ -166,26 +171,11 @@ footer>p{max-width:72ch}
 footer p{margin:0 0 .7em}
 .counter{display:inline-block;font:var(--t-data);line-height:1;letter-spacing:3px;padding:5px 8px 4px;border:1px solid var(--veil-2);border-radius:0;background:var(--room-2);color:var(--bone)}
 .small{color:var(--bone-3)}
-@media (min-width:901px) and (max-width:1100px){
-  .chapter{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:0 40px}
-}
 @media (max-width:900px){
-  /* Single-column reading layout; sticky panel geometry is in story-layout.css. */
   .hero{padding-top:64px}
   .sitehead{padding:24px 24px 0}
   .sitehead .sitelinks{gap:0 22px}
-  .chapter{display:flex;flex-direction:column}
-  .chapter>*{width:100%;max-width:100%;min-width:0}
-  .chapter>.text{max-width:640px;margin-inline:auto}
-  .text{order:1;padding-block:40px 24px}
-  .chapter:first-child .text{padding-top:40px}
-  .step{min-height:0;padding:0 0 32px}
-  .step+.step{padding-top:16px}
   th,td{padding:8px 4px}
-  .graphic{order:2;height:100vh;height:100dvh;z-index:2;padding:12px 0 12px;border-top:1px solid var(--veil);border-bottom:1px solid var(--veil)}
-  .beatcap{display:block;margin:12px 0 0;font:var(--t-note);color:var(--bone);border-top:1px solid var(--veil);padding-top:12px;min-height:calc(4 * 1.6em + 13px)}
-  .legend{min-height:44px;align-content:flex-start}
-  .tiles,.sub{gap:2px}
 }
 @media (max-width:600px){
   .cipher-row{--tw:clamp(20px,calc((100vw - 104px) / 11),26px)}
@@ -200,15 +190,15 @@ footer p{margin:0 0 .7em}
 .endmatter h2{margin-top:0}
 .endmatter.step{min-height:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=31">
+<link rel="stylesheet" href="../story-layout.css?v=32">
 <link rel="stylesheet" href="../cipher-cards.css?v=28">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=37">
-<link rel="stylesheet" href="../story-graphics.css?v=27">
+<link rel="stylesheet" href="../story-graphics.css?v=28">
 <link rel="stylesheet" href="../try-cipher.css?v=39">
 </head>
 <body>
 
-<header class="sitehead"><a class="name" href="./">Colin Reilly</a><p class="sitelinks"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a> <a class="lang" href="../" hreflang="en" lang="en">English version</a></p></header>
+<header class="sitehead"><a class="name" href="https://www.linkedin.com/in/colin-r-10680960/" rel="me">Colin Reilly</a><p class="sitelinks"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a> <a class="lang" href="../" hreflang="en" lang="en">English version</a></p></header>
 <div class="hero">
 <h1>Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte</h1>
 <p class="byline answer-status">Lösung bestätigt von <a href="https://klausschmeh.net/woods-cryptogram-from-the-crypt-another-top-50-crypto-mystery-solved/">Klaus Schmeh</a> am <time datetime="2026-10-04">4. Oktober 2026</time></p>
@@ -658,7 +648,8 @@ function Graphic(el){
   function outlineDot(x,y,r,c=blue){ctx.fillStyle=background;ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,Math.max(.4,r),0,Math.PI*2);ctx.fill();ctx.stroke();}
   function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);mark(y+h);}
   // Portrait phones get the full-screen scenes; a landscape phone is short and wide, like the desktop column.
-  const isMobilePanel=()=>matchMedia("(max-width:900px) and (orientation:portrait)").matches;
+  // Every width now uses the full-screen pinned scenes; a landscape phone is the one short panel.
+  const isMobilePanel=()=>!matchMedia("(max-width:900px) and (orientation:landscape)").matches;
   function panel(){const h=isMobilePanel()?Math.max(0,H-12):Math.min(H,322);return{x:5,y:(H-h)/2,w:W-10,h};}
   const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
   function progress(delay=0,duration=400){return instant?1:ease((elapsed-revealBase-sceneDelay-delay)/duration);}
@@ -1065,7 +1056,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=30"></script>
+<script src="../story-scroll.js?v=31"></script>
 <script src="../hero-reveal.js?v=26"></script>
 <script src="../cipher-tokens.js?v=25"></script>
 <script src="../try-cipher.js?v=37"></script>

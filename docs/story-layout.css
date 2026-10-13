@@ -1,5 +1,5 @@
-/* Desktop follows the article. Mobile card/viewer geometry lives in
-   story-viewer.css; the reading column keeps its normal document flow. */
+/* One layout for every width: the reading column with each chapter's graphic
+   pinned full screen and its passages rising over it as cards. */
 :root {
   --story-viewport-height: 100svh;
   --story-panel-height: 100svh;
@@ -61,124 +61,101 @@ figure img {
   max-inline-size: 100%;
 }
 
-@media (min-width: 901px) {
-  .step {
-    min-height: calc(var(--story-viewport-height) * .52);
-  }
+/* Every width shares one flow: the graphic fills the screen and holds while
+the passages that explain it rise over its lower part, one at a time. */
+:root { --story-panel-height: 100dvh; }
+.scrolly { --story-gutter: 24px; padding-inline: var(--story-gutter); }
+.chapter { display: block; position: relative; }
+.chapter > .text { max-width: none; padding-block: 24px 40px; }
+.chapter:first-child .text { padding-top: 24px; }
+.step { min-height: 0; max-width: 640px; margin-inline: auto; padding-bottom: 32px; scroll-margin-top: 24px; }
+.step + .step { padding-top: 16px; }
 
-  /* The pinned wrapper exists for phones; the desktop grid sees through it. */
-  .chapter > .pin { display: contents; }
-  .chapter > .text.text-before,
-  .chapter > .pin > .text,
-  .chapter > .text.text-after { grid-column: 1; }
-  .chapter > .pin > .graphic { grid-column: 2; grid-row: 1 / span 3; }
-  .chapter > .text.text-before { padding-bottom: 0; }
-  .chapter > .pin > .text { padding-block: 0; }
-  .chapter > .text.text-after { padding-top: 0; }
-  .chapter > .text.text-before > .step:last-child,
-  .chapter > .pin > .text > .step:last-child { min-height: calc(var(--story-viewport-height) * .52); }
+.gbody { min-height: 0; overflow: visible; }
+.gbody canvas { flex: 1 1 0; min-height: 0; }
+.sub:empty { display: none; }
+/* The replay button belongs to the desktop column; phones replay by scrolling. */
+.chapter .replay { display: none; }
 
-  /* The final paragraph must leave room for its full-height sticky neighbor.
-     Otherwise the chapter boundary pushes the chart up before it can be read. */
-  .chapter > .text > .step:last-child,
-  .chapter > .pin:last-child > .text > .step:last-child {
-    min-height: calc(var(--story-viewport-height) - 32px);
-  }
+/* Each graphic fills the screen and holds while the passages that explain
+it rise over its lower part one at a time, news-graphic style. */
+.chapter.pinned-chapter > .pin { position: relative; }
+.chapter.pinned-chapter > .pin > .graphic {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: auto;
+  max-width: none;
+  height: 100vh;
+  height: 100svh;
+  min-height: 0;
+  margin-inline: calc(-1 * var(--story-gutter));
+  padding: max(10px, env(safe-area-inset-top, 0px)) var(--story-gutter) var(--card-space);
+  border: 0;
+  background: var(--room);
+  --card-space: 42svh;
 }
-
-@media (max-width: 900px) {
-  :root { --story-panel-height: 100dvh; }
-  .scrolly { --story-gutter: 24px; padding-inline: var(--story-gutter); }
-  .chapter { display: block; position: relative; }
-  .chapter > .text { max-width: none; padding-block: 24px 40px; }
-  .chapter:first-child .text { padding-top: 24px; }
-  .step { min-height: 0; max-width: 640px; margin-inline: auto; padding-bottom: 32px; scroll-margin-top: 24px; }
-  .step + .step { padding-top: 16px; }
-
-  .gbody { min-height: 0; overflow: visible; }
-  .gbody canvas { flex: 1 1 0; min-height: 0; }
-  .sub:empty { display: none; }
-  /* The replay button belongs to the desktop column; phones replay by scrolling. */
-  .chapter .replay { display: none; }
-
-  /* Each graphic fills the screen and holds while the passages that explain
-     it rise over its lower part one at a time, news-graphic style. */
-  .chapter.pinned-chapter > .pin { position: relative; }
-  .chapter.pinned-chapter > .pin > .graphic {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    width: auto;
-    max-width: none;
-    height: 100vh;
-    height: 100svh;
-    min-height: 0;
-    margin-inline: calc(-1 * var(--story-gutter));
-    padding: max(10px, env(safe-area-inset-top, 0px)) var(--story-gutter) var(--card-space);
-    border: 0;
-    background: var(--room);
-    --card-space: 42svh;
-  }
-  .chapter.pinned-chapter > .pin > .text {
-    display: flow-root; /* keeps the last card's spacing inside the pinned run */
-    position: relative;
-    z-index: 2;
-    margin-top: -38svh;
-    /* The graphic holds on the plain cipher for a screen's worth of scrolling
-       after the introduction has gone, then the first card rises into view. */
-    padding-block: 66svh 0;
-    pointer-events: none;
-  }
-  .chapter.pinned-chapter > .text.text-before { padding-bottom: 0; }
-  .chapter.pinned-chapter > .text.text-before > .step { padding-bottom: 8px; }
-  .pinned-chapter .pin .step { padding: 0; }
-  .pinned-chapter .pin .step + .step { padding-top: 0; }
-  .pinned-chapter .pin .step ol { padding: 0; margin: 0; }
-  .pinned-chapter .pin .step ul { margin: 0; }
-  .chapter.pinned-chapter > .pin .step ol > li { list-style: none; padding: 0; margin: 0; }
-  /* Every passage in the pinned run is one card, spaced a screen apart.
-     The graphic's "Step n of 3" line carries the numbering here. */
-  .pinned-chapter .pin > .text :is(.step [data-walk-stage], .step[data-walk-stage]) {
-    display: block;
-    margin: 0 auto 64svh;
-    padding: 16px 18px;
-    max-width: 560px;
-    border: 1px solid var(--veil-2);
-    border-radius: 0;
-    background: var(--card-bg, #fff);
-    box-shadow: 0 6px 24px rgb(0 0 0 / 8%);
-    pointer-events: auto;
-    will-change: opacity;
-  }
-  .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child,
-  .pinned-chapter .pin > .text > .step[data-walk-stage]:last-child { margin-bottom: 72svh; }
-  /* After the last card, the next section comes up to meet the graphic: the
-     passage holds a little longer, and the text rises over the empty part of
-     the panel (--walk-tail, measured by the script) before pushing it. */
-  .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child,
-  .pinned-chapter .pin > .text > .step[data-walk-stage]:last-child { margin-bottom: calc(var(--walk-tail, 0px) + 60svh); }
-  .chapter.pinned-chapter > .text.text-after { position: relative; z-index: 3; background: var(--room); margin-top: calc(-1 * var(--walk-tail, 0px)); padding-top: 0; }
-  .chapter.pinned-chapter + .chapter > .text.text-before { position: relative; z-index: 3; background: var(--room); margin-top: calc(-1 * var(--walk-tail-prev, 0px)); }
-  .chapter[style*="--walk-tail-prev"] > .text.text-before { padding-top: 0; }
-  .pinned-chapter .pin > .text > .step[data-walk-stage] p + p { margin-top: .7em; }
-  .pinned-chapter .pin .step p:last-child, .pinned-chapter .pin .step li:last-child { margin-bottom: 0; }
-  .pinned-chapter .pin .step p { margin: 0; }
-  .pinned-chapter .pin [data-walk-stage]::before, .pinned-chapter .pin .step[data-walk-stage]::before { display: none; }
-  .pinned-chapter .cw-controls,
-  .pinned-chapter .cw-swipe-hint { display: none; }
-  .pinned-chapter .cw { padding: 8px 0 4px; gap: 8px; }
-  .pinned-chapter .cw-scene { container-type: size; }
-  .pinned-chapter .cw-source-letter,
-  .pinned-chapter .cw-card { width: min(100%, 44px); height: clamp(32px, calc((100cqh - 78px) / 3), 46px); }
-  .pinned-chapter .cw-source-grid { gap: clamp(8px, 4cqh, 16px) 14px; --cw-src-w: clamp(30px, calc((100cqh - 78px) / 3 * .95), 44px); }
-  .pinned-chapter .cw-grid { gap: clamp(6px, 3cqh, 12px) 5px; }
-  .pinned-chapter .cw-source-letter,
-  .pinned-chapter .cw-face { font-size: clamp(20px, 6.5cqw, 28px); }
-  .pinned-chapter .cw-word { font-size: clamp(10.5px, 3cqw, 12.5px); }
-  .pinned-chapter .cw-prayer { font-size: clamp(17px, 5cqw, 21px); max-width: 32ch; }
-  .pinned-chapter .cw-single { width: 64px; height: 72px; font-size: 44px; }
-  .pinned-chapter .cw:is([data-stage="5"],[data-stage="6"]) .cw-single { width: 36px; height: 40px; font-size: 26px; }
+/* On a wide screen the drawing keeps the reading column's width, centred. */
+.chapter.pinned-chapter > .pin > .graphic > .gbody { width: 100%; max-width: 720px; margin-inline: auto; }
+.chapter.pinned-chapter > .pin > .text {
+  display: flow-root; /* keeps the last card's spacing inside the pinned run */
+  position: relative;
+  z-index: 2;
+  margin-top: -38svh;
+  /* The graphic holds on the plain cipher for a screen's worth of scrolling
+  after the introduction has gone, then the first card rises into view. */
+  padding-block: 66svh 0;
+  pointer-events: none;
 }
+.chapter.pinned-chapter > .text.text-before { padding-bottom: 0; }
+.chapter.pinned-chapter > .text.text-before > .step { padding-bottom: 8px; }
+.pinned-chapter .pin .step { padding: 0; }
+.pinned-chapter .pin .step + .step { padding-top: 0; }
+.pinned-chapter .pin .step ol { padding: 0; margin: 0; }
+.pinned-chapter .pin .step ul { margin: 0; }
+.chapter.pinned-chapter > .pin .step ol > li { list-style: none; padding: 0; margin: 0; }
+/* Every passage in the pinned run is one card, spaced a screen apart.
+The graphic's "Step n of 3" line carries the numbering here. */
+.pinned-chapter .pin > .text :is(.step [data-walk-stage], .step[data-walk-stage]) {
+  display: block;
+  margin: 0 auto 64svh;
+  padding: 16px 18px;
+  max-width: 560px;
+  border: 1px solid var(--veil-2);
+  border-radius: 0;
+  background: var(--card-bg, #fff);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 8%);
+  pointer-events: auto;
+  will-change: opacity;
+}
+.pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child,
+.pinned-chapter .pin > .text > .step[data-walk-stage]:last-child { margin-bottom: 72svh; }
+/* After the last card, the next section comes up to meet the graphic: the
+passage holds a little longer, and the text rises over the empty part of
+the panel (--walk-tail, measured by the script) before pushing it. */
+.pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child,
+.pinned-chapter .pin > .text > .step[data-walk-stage]:last-child { margin-bottom: calc(var(--walk-tail, 0px) + 60svh); }
+.chapter.pinned-chapter > .text.text-after { position: relative; z-index: 3; background: var(--room); margin-top: calc(-1 * var(--walk-tail, 0px)); padding-top: 0; }
+.chapter.pinned-chapter + .chapter > .text.text-before { position: relative; z-index: 3; background: var(--room); margin-top: calc(-1 * var(--walk-tail-prev, 0px)); }
+.chapter[style*="--walk-tail-prev"] > .text.text-before { padding-top: 0; }
+.pinned-chapter .pin > .text > .step[data-walk-stage] p + p { margin-top: .7em; }
+.pinned-chapter .pin .step p:last-child, .pinned-chapter .pin .step li:last-child { margin-bottom: 0; }
+.pinned-chapter .pin .step p { margin: 0; }
+.pinned-chapter .pin [data-walk-stage]::before, .pinned-chapter .pin .step[data-walk-stage]::before { display: none; }
+.pinned-chapter .cw-controls,
+.pinned-chapter .cw-swipe-hint { display: none; }
+.pinned-chapter .cw { padding: 8px 0 4px; gap: 8px; }
+.pinned-chapter .cw-scene { container-type: size; }
+.pinned-chapter .cw-source-letter,
+.pinned-chapter .cw-card { width: min(100%, 44px); height: clamp(32px, calc((100cqh - 78px) / 3), 46px); }
+.pinned-chapter .cw-source-grid { gap: clamp(8px, 4cqh, 16px) 14px; --cw-src-w: clamp(30px, calc((100cqh - 78px) / 3 * .95), 44px); }
+.pinned-chapter .cw-grid { gap: clamp(6px, 3cqh, 12px) 5px; }
+.pinned-chapter .cw-source-letter,
+.pinned-chapter .cw-face { font-size: clamp(20px, 6.5cqw, 28px); }
+.pinned-chapter .cw-word { font-size: clamp(10.5px, 3cqw, 12.5px); }
+.pinned-chapter .cw-prayer { font-size: clamp(17px, 5cqw, 21px); max-width: 32ch; }
+.pinned-chapter .cw-single { width: 64px; height: 72px; font-size: 44px; }
+.pinned-chapter .cw:is([data-stage="5"],[data-stage="6"]) .cw-single { width: 36px; height: 40px; font-size: 26px; }
 @media (max-width: 360px) {
   .scrolly { --story-gutter: 20px; }
 }
