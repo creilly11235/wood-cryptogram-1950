@@ -187,8 +187,7 @@
 
       this.focus = this.node('div', 'cw-focus');
       this.focusPair = this.node('div', 'cw-focus-pair');
-      this.focusCard = this.node('div', 'cw-single decoded', this.firstPlain);
-      this.focusPair.append(this.focusCard, this.node('span', 'cw-focus-word', this.words[0]));
+      this.focusPair.append(this.node('div', 'cw-single decoded', this.firstPlain), this.node('span', 'cw-focus-word', this.words[0]));
       this.math = this.node('div', 'cw-math');
       const sum = this.node('div', 'cw-sum');
       this.firstTerms.forEach(([letter, value], index) => {
@@ -587,11 +586,16 @@
       } else if (stage === 4) {
         this.moveFrom(this.focusPair, from);
       } else if (stage === 5) {
-        this.moveFrom(this.focusPair, from, 360);
-        this.math.querySelectorAll('.cw-term, .cw-plus, .cw-equals, .cw-total').forEach((element, index) => {
-          this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 320, delay: index * 55, fill: 'backwards'});
-        });
-        this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
+        if (previous > 5) {
+          // Stepping back from the cleared count, the card and sum return together.
+          this.animate(this.focus, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
+        } else {
+          this.moveFrom(this.focusPair, from, 360);
+          this.math.querySelectorAll('.cw-term, .cw-plus, .cw-equals, .cw-total').forEach((element, index) => {
+            this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 320, delay: index * 55, fill: 'backwards'});
+          });
+          this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
+        }
       } else if (stage === 6) {
         // The alphabet counts up to the remainder one letter at a time on a
         // cleared panel, and the sentence names the letter once the count lands.
@@ -619,7 +623,7 @@
       } else if (stage === 8) {
         // Arriving from the first cipher letter, the card travels back to its
         // place on the left; otherwise the scene fades in and the count starts.
-        const glide = Boolean(from) && !this.reduced;
+        const glide = previous === 9 && Boolean(from) && !this.reduced;
         const settle = glide ? 420 : 0;
         if (glide) {
           this.moveFrom(this.shiftFrom, from, 520);
