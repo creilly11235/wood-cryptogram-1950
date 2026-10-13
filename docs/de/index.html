@@ -201,7 +201,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="../cipher-cards.css?v=25">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="../story-graphics.css?v=26">
-<link rel="stylesheet" href="../try-cipher.css?v=33">
+<link rel="stylesheet" href="../try-cipher.css?v=34">
 </head>
 <body>
 
@@ -412,9 +412,11 @@ footer p{margin:0 0 .7em}
 <button class="try-button" type="button" data-act="restart" hidden>Von vorn beginnen</button>
 </div>
 </div>
+<div class="try-hold">
 <div class="try-table" hidden>
 <h3>Der Schlüssel, Wort für Wort</h3>
 <div class="table-wrap"><table><thead><tr><th scope="col">Nr.</th><th scope="col">Wort</th><th scope="col">Sum.</th><th scope="col">Schlüssel</th><th scope="col">Klartext → Geheimtext</th></tr></thead><tbody translate="no"></tbody></table></div>
+</div>
 </div>
 </section>
 <section class="endmatter step" id="credits">
@@ -1036,7 +1038,7 @@ window.WoodStory={Graphic,reduced};
 <script src="../story-scroll.js?v=30"></script>
 <script src="../hero-reveal.js?v=25"></script>
 <script src="../cipher-tokens.js?v=25"></script>
-<script src="../try-cipher.js?v=33"></script>
+<script src="../try-cipher.js?v=34"></script>
 <script>
 TryCipher(document.querySelector("#try-it"),{
   noMessage:"Geben Sie zuerst eine Botschaft ein.",
