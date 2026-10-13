@@ -200,7 +200,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="cipher-cards.css?v=25">
 <link rel="stylesheet" href="cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="story-graphics.css?v=26">
-<link rel="stylesheet" href="try-cipher.css?v=35">
+<link rel="stylesheet" href="try-cipher.css?v=36">
 </head>
 <body>
 
@@ -409,9 +409,10 @@ footer p{margin:0 0 .7em}
 <p class="try-status" aria-live="polite"></p>
 <div class="try-actions">
 <button class="try-button try-prev" type="button" data-act="back" hidden>Back</button>
+<button class="try-button try-prev" type="button" data-act="restart" hidden>Start again</button>
 <button class="try-button is-primary" type="button" data-act="message">Pick key phrase</button>
 <button class="try-button is-primary" type="button" data-act="generate" hidden>Generate the cipher</button>
-<button class="try-button is-primary" type="button" data-act="restart" hidden>Start again</button>
+<button class="try-button is-primary" type="button" data-act="done" hidden>Done</button>
 </div>
 </div>
 </div>
@@ -1040,7 +1041,7 @@ window.WoodStory={Graphic,reduced};
 <script src="story-scroll.js?v=30"></script>
 <script src="hero-reveal.js?v=25"></script>
 <script src="cipher-tokens.js?v=25"></script>
-<script src="try-cipher.js?v=35"></script>
+<script src="try-cipher.js?v=36"></script>
 <script>
 TryCipher(document.querySelector("#try-it"),{
   noMessage:"Type a message first.",

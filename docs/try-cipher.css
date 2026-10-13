@@ -23,20 +23,23 @@
 .try .try-button:hover{border-color:var(--candle)}
 .try .try-button:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
 .try .try-button.is-primary{background:var(--bone);border-color:var(--bone);color:var(--room)}
+.try .try-button.is-primary::after{content:"";flex:none;width:7px;height:11px;margin-left:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 11'%3E%3Cpath d='M1 1l4.5 4.5L1 10' fill='none' stroke='%23fafbfc' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
 .try .try-button.is-primary:hover{background:var(--candle);border-color:var(--candle)}
+.try .try-button.is-primary:disabled::after{display:none}
 .try .try-button:disabled,.try .try-button.is-primary:disabled{background:transparent;color:var(--bone-2);border-color:var(--veil);cursor:default}
-.try .is-locked .try-input,.try .is-locked .try-passage{display:none}
+.try .is-locked .try-input{display:none}
 .try .try-cards{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 12px;margin:0;min-height:calc(var(--tw) * 1.25)}
 .try .grp{display:flex;gap:3px}
 .try .t{width:var(--tw);height:calc(var(--tw) * 1.25);aspect-ratio:auto;font-size:calc(var(--tw) * .65);transition:none}
-.try .try-passage{margin:0 0 14px;font:var(--t-note);color:var(--bone);text-wrap:pretty}
+.try .try-passage{margin:0 0 26px;font:var(--t-note);color:var(--bone);text-wrap:pretty}
 .try .try-word-src.is-repeat{color:var(--bone-2);text-decoration:line-through;text-decoration-thickness:1px}
-/* One pair per letter: the letter card above its key word, grouped by message word. */
+/* One pair per letter: the letter card above its key word, grouped by message
+   word. On generate the word becomes its key letter, the card flips to the
+   cipher letter, and the cards then slide into groups of five below. */
 .try .try-pairs{display:flex;flex-wrap:wrap;align-items:flex-start;gap:14px 14px;margin:0}
 .try .try-pairs:empty{display:none}
 .try .try-group{display:flex;flex-wrap:wrap;align-items:flex-start;gap:4px}
 .try .try-pair{display:flex;flex-direction:column;align-items:center;min-width:var(--tw)}
-/* The cipher's cards show the message letter and flip to the cipher letter. */
 .try .try-card{display:block;position:relative;width:var(--tw);height:calc(var(--tw) * 1.25);perspective:360px}
 .try .try-card-turn{display:block;position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .try .is-flipped .try-card-turn{transform:rotateY(180deg)}

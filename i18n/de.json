@@ -783,6 +783,11 @@
     },
     {
       "kind": "button",
+      "en": "Done",
+      "de": "Fertig"
+    },
+    {
+      "kind": "button",
       "en": "Start again",
       "de": "Von vorn beginnen"
     }
