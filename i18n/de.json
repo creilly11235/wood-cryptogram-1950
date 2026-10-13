@@ -93,8 +93,8 @@
     },
     {
       "kind": "p",
-      "en": "The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. To adds up to 35, which leaves 9.",
-      "de": "Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26), und 26 wird so oft abgezogen, wie es ganz hineinpasst. To ergibt 35, es bleibt 9."
+      "en": "The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. “To” adds up to 35, which leaves 9.",
+      "de": "Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26), und 26 wird so oft abgezogen, wie es ganz hineinpasst. „To“ ergibt 35, es bleibt 9."
     },
     {
       "kind": "p",
