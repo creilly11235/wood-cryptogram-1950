@@ -103,8 +103,13 @@
     },
     {
       "kind": "p",
-      "en": "That key letter shifts the message letter along the alphabet, where A means no shift, B one place, C two, and so on, wrapping from Z back to A. I moves T forward 8 places.",
-      "de": "Dieser Schlüsselbuchstabe verschiebt den Klartextbuchstaben im Alphabet, wobei A keine Verschiebung bedeutet, B eine Stelle, C zwei und so weiter, nach Z geht es bei A weiter. I verschiebt T um 8 Stellen vorwärts."
+      "en": "The key letter is then used as a distance to move, and for that the count starts at A with zero. Counted that way, I is 8 places on from A, so I means a shift of 8.",
+      "de": "Der Schlüsselbuchstabe wird dann als Abstand verwendet, und dafür beginnt die Zählung bei A mit null. So gezählt steht I 8 Stellen nach A, also bedeutet I eine Verschiebung um 8."
+    },
+    {
+      "kind": "p",
+      "en": "The message letter moves that far along the alphabet, wrapping from Z back to A. T moves forward 8 places.",
+      "de": "Der Klartextbuchstabe rückt so weit im Alphabet vor, nach Z geht es bei A weiter. T rückt 8 Stellen vor."
     },
     {
       "kind": "p",
@@ -1019,6 +1024,10 @@
     {
       "en": "\"The 9th letter is I\"",
       "de": "\"Der 9. Buchstabe ist I\""
+    },
+    {
+      "en": "\"Counted from A, I means a shift of 8\"",
+      "de": "\"Von A an gezählt bedeutet I eine Verschiebung um 8\""
     },
     {
       "en": "\"Use I to shift T forward 8 places\"",

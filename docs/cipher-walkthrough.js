@@ -1,4 +1,4 @@
-/* The article controls the eleven steps; buttons also let a reader explore them.
+/* The article controls the twelve steps; buttons also let a reader explore them.
    The example is Thouless's own from 1948, THERE IS NO DEATH enciphered with
    the opening of Hamlet's soliloquy, worked in the enciphering direction.
    Animation is presentational. Every step has a complete reduced-motion view. */
@@ -17,6 +17,7 @@
       'Start with T and To',
       'Add the letters in To',
       'The 9th letter is I',
+      'Counted from A, I means a shift of 8',
       'Use I to shift T forward 8 places',
       'The first cipher letter is B',
       'Repeat for all 14 letters',
@@ -76,6 +77,9 @@
         throw new Error('CipherWalkthrough: the first cipher letter does not follow from the key word.');
       }
       this.labels = Object.assign({}, DEFAULT_LABELS, options.labels || {});
+      // Stage numbers the logic below leans on; the rest follow in order.
+      this.lastStage = this.labels.stages.length - 1;
+      this.cipherStage = this.lastStage - 1;
       this.reduced = Boolean(options.reduced);
       this.onStageChange = options.onStageChange;
       this.onNavigate = options.onNavigate;
@@ -94,7 +98,7 @@
         const rect = this.scene.getBoundingClientRect();
         const size = [rect.width, rect.height];
         if (this.lastSceneSize && size.some((value, index) => Math.abs(value - this.lastSceneSize[index]) > 1)) {
-          if (this.stage === 9 && ['moving', 'revealing'].includes(this.root.dataset.finale)) {
+          if (this.stage === this.cipherStage && ['moving', 'revealing'].includes(this.root.dataset.finale)) {
             this.cancel();
             this.settleMessage();
           }
@@ -205,10 +209,14 @@
         const cell = this.node('span', 'cw-alpha-cell');
         const last = index === this.firstRemainder - 1;
         cell.append(this.node('span', 'cw-alpha-card' + (last ? ' is-key' : ''), String.fromCharCode(65 + index)), this.node('span', 'cw-alpha-num', String(index + 1)));
+        cell.dataset.place = String(index + 1);
+        cell.dataset.shift = String(index);
         alphaRow.append(cell);
         this.alphaCells.push(cell);
       }
-      this.alpha.append(alphaRow, this.node('div', 'cw-key-letter', label.keyLetter));
+      this.alphaKeyLetter = this.node('div', 'cw-key-letter', label.keyLetter);
+      this.alphaShift = this.node('div', 'cw-key-letter cw-shift-count', label.shiftKey);
+      this.alpha.append(alphaRow, this.alphaKeyLetter, this.alphaShift);
       this.focus.append(this.focusPair, this.math, this.alpha);
 
       this.shift = this.node('div', 'cw-shift');
@@ -220,7 +228,7 @@
       arrow.append(this.node('span', 'cw-arrow-label', label.shift), arrowLine);
       this.shiftTo = this.node('div', 'cw-single encoded', this.firstCipher);
       shiftCards.append(this.shiftFrom, arrow, this.shiftTo);
-      this.shift.append(this.node('div', 'cw-shift-key', label.shiftKey), shiftCards);
+      this.shift.append(shiftCards);
 
       this.result = this.node('div', 'cw-result');
       this.resultCard = this.node('div', 'cw-single encoded', this.firstCipher);
@@ -286,7 +294,7 @@
       this.counter = this.node('span', 'cw-step-count');
       this.next = this.node('button', 'cw-next', label.next);
       this.next.type = 'button';
-      this.next.addEventListener('click', () => this.stage === 10 ? this.replay() : this.choose(this.stage + 1));
+      this.next.addEventListener('click', () => this.stage === this.lastStage ? this.replay() : this.choose(this.stage + 1));
       controls.append(this.previous, this.counter, this.next);
       this.root.append(header, this.scene, controls);
       this.host.replaceChildren(this.root);
@@ -325,7 +333,7 @@
         // Vertical motion belongs to the page; a deliberate horizontal swipe
         // chooses one step through the same navigation callback as the buttons.
         if (Math.abs(dx) < 45 || Math.abs(dx) <= 1.5 * Math.abs(dy)) return;
-        const stage = Math.max(0, Math.min(10, this.stage + (dx < 0 ? 1 : -1)));
+        const stage = Math.max(0, Math.min(this.lastStage, this.stage + (dx < 0 ? 1 : -1)));
         if (stage !== this.stage) this.choose(stage);
       }, options);
     }
@@ -421,7 +429,7 @@
     }
 
     settleMessage() {
-      if (this.destroyed || this.stage !== 9) return;
+      if (this.destroyed || this.stage !== this.cipherStage) return;
       this.ghosts.forEach(ghost => ghost.remove());
       this.ghosts.clear();
       this.grid.hidden = true;
@@ -430,11 +438,11 @@
       this.freezeMessageRows();
       this.message.offsetWidth;
       this.root.dataset.finale = 'settled';
-      this.counter.setAttribute('aria-label', this.labels.step + ' 10: ' + this.labels.decodedMessage);
+      this.counter.setAttribute('aria-label', this.labels.step + ' ' + (this.cipherStage + 1) + ': ' + this.labels.decodedMessage);
     }
 
     revealMessage() {
-      if (this.destroyed || this.stage !== 9) return;
+      if (this.destroyed || this.stage !== this.cipherStage) return;
       if (this.reduced) {
         this.settleMessage();
         return;
@@ -474,19 +482,19 @@
     }
 
     go(stage, options = {}) {
-      stage = Math.max(0, Math.min(10, Number(stage) || 0));
+      stage = Math.max(0, Math.min(this.lastStage, Number(stage) || 0));
       if (this.destroyed || (stage === this.stage && !options.force)) return;
       const previous = this.stage;
       let from = null;
       let wordOrigins = [];
       let repeatOrigins = [];
       let cipherOrigins = [];
-      if (previous === 9 && stage === 10 && !this.message.hidden) cipherOrigins = this.messageLetters.map(letter => letter.getBoundingClientRect());
+      if (previous === this.cipherStage && stage === this.lastStage && !this.message.hidden) cipherOrigins = this.messageLetters.map(letter => letter.getBoundingClientRect());
       if (previous === 3) from = this.pairs[0].getBoundingClientRect();
-      else if (previous === 6 && stage === 7) from = this.focusCard.getBoundingClientRect();
-      else if (previous >= 4 && previous <= 6) from = this.focusPair.getBoundingClientRect();
-      else if (previous === 7) from = this.shiftTo.getBoundingClientRect();
-      else if (previous === 8) from = this.resultCard.getBoundingClientRect();
+      else if (previous === 7 && stage === 8) from = this.focusCard.getBoundingClientRect();
+      else if (previous >= 4 && previous <= 7) from = this.focusPair.getBoundingClientRect();
+      else if (previous === 8) from = this.shiftTo.getBoundingClientRect();
+      else if (previous === 9) from = this.resultCard.getBoundingClientRect();
       else if (previous === 2 && stage === 3) {
         wordOrigins = this.prayerUnique.map(word => word.getBoundingClientRect());
         repeatOrigins = this.prayerRepeats.map(word => ({
@@ -503,19 +511,23 @@
       this.root.dataset.finale = '';
       this.root.dataset.intro = '';
       this.host.dataset.walkthroughStage = String(stage);
-      this.counter.textContent = (stage + 1) + ' / 11';
+      this.counter.textContent = (stage + 1) + ' / ' + (this.lastStage + 1);
       this.counter.setAttribute('aria-label', this.labels.step + ' ' + (stage + 1) + ': ' + this.labels.stages[stage]);
       this.previous.disabled = stage === 0;
-      this.next.textContent = stage === 10 ? this.labels.replay : this.labels.next;
+      this.next.textContent = stage === this.lastStage ? this.labels.replay : this.labels.next;
       this.source.hidden = stage !== 0;
       this.keyphrase.hidden = stage !== 1 && stage !== 2;
-      this.grid.hidden = stage !== 3 && stage !== 9;
-      this.focus.hidden = stage < 4 || stage > 6;
-      this.math.hidden = stage !== 5 && stage !== 6;
-      this.alpha.hidden = stage !== 6;
-      this.shift.hidden = stage !== 7;
-      this.result.hidden = stage !== 8;
-      this.overview.hidden = stage !== 10;
+      this.grid.hidden = stage !== 3 && stage !== this.cipherStage;
+      this.root.toggleAttribute('data-compact', stage >= 5 && stage <= 7);
+      this.root.toggleAttribute('data-cipher', stage === this.cipherStage);
+      this.focus.hidden = stage < 4 || stage > 7;
+      this.math.hidden = stage < 5 || stage > 7;
+      this.alpha.hidden = stage !== 6 && stage !== 7;
+      this.alphaKeyLetter.hidden = stage !== 6;
+      this.alphaShift.hidden = stage !== 7;
+      this.shift.hidden = stage !== 8;
+      this.result.hidden = stage !== 9;
+      this.overview.hidden = stage !== this.lastStage;
       this.message.hidden = true;
       this.message.setAttribute('aria-hidden', 'true');
       this.shiftTo.textContent = this.firstCipher;
@@ -585,22 +597,36 @@
       } else if (stage === 6) {
         // The sum stays put; the alphabet counts up to the remainder one letter
         // at a time, and the sentence names the letter once the count lands.
-        if (previous !== 5) this.animate(this.focus, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
-        const count = previous === 5 ? 110 : 60;
-        this.alphaCells.forEach((cell, index) => {
-          this.animate(cell, [{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 260, delay: 200 + index * count, fill: 'backwards'});
-        });
-        const key = this.alphaCells[this.alphaCells.length - 1].querySelector('.cw-alpha-card');
-        this.animate(key, [{transform: 'scale(.9)'}, {transform: 'scale(1)'}], {duration: 300, delay: 200 + this.alphaCells.length * count});
-        this.animate(this.alpha.querySelector('.cw-key-letter'), [{opacity: 0}, {opacity: 1}], {duration: 350, delay: 350 + this.alphaCells.length * count, fill: 'backwards'});
+        if (previous === 7) {
+          // Stepping back from the shift count, the numbers simply return to
+          // their places in the alphabet.
+          this.renumberAlphabet(0);
+        } else {
+          this.renumberAlphabet();
+          if (previous !== 5) this.animate(this.focus, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
+          const count = previous === 5 ? 110 : 60;
+          this.alphaCells.forEach((cell, index) => {
+            this.animate(cell, [{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 260, delay: 200 + index * count, fill: 'backwards'});
+          });
+          const key = this.alphaCells[this.alphaCells.length - 1].querySelector('.cw-alpha-card');
+          this.animate(key, [{transform: 'scale(.9)'}, {transform: 'scale(1)'}], {duration: 300, delay: 200 + this.alphaCells.length * count});
+          this.animate(this.alphaKeyLetter, [{opacity: 0}, {opacity: 1}], {duration: 350, delay: 350 + this.alphaCells.length * count, fill: 'backwards'});
+        }
       } else if (stage === 7) {
+        // The same row is counted again from A as zero, one number at a time,
+        // so the key letter's second use is seen to come from the first.
+        if (previous !== 6) this.animate(this.focus, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
+        const count = previous === 6 ? 90 : 0;
+        this.renumberAlphabet(count);
+        this.animate(this.alphaShift, [{opacity: 0}, {opacity: 1}], {duration: 350, delay: 300 + this.alphaCells.length * count, fill: 'backwards'});
+      } else if (stage === 8) {
         // From the sum, the message card travels to its place on the left and
         // the rest of the scene follows; the count starts once it has landed.
-        const glide = previous === 6 && Boolean(from) && !this.reduced;
+        const glide = previous === 7 && Boolean(from) && !this.reduced;
         const settle = glide ? 420 : 0;
         if (glide) {
           this.moveFrom(this.shiftFrom, from, 520);
-          this.shift.querySelectorAll('.cw-shift-key, .cw-arrow, .cw-single.encoded').forEach(element => {
+          this.shift.querySelectorAll('.cw-arrow, .cw-single.encoded').forEach(element => {
             this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350, delay: 300, fill: 'backwards'});
           });
         } else {
@@ -620,10 +646,10 @@
             }, settle + 250 + step * 43);
           }
         }
-      } else if (stage === 8) {
-        if (previous === 7) this.moveFrom(this.resultCard, from);
-        else this.animate(this.resultCard, [{opacity: 0, transform: 'scale(.85)'}, {opacity: 1, transform: 'scale(1)'}]);
       } else if (stage === 9) {
+        if (previous === 8) this.moveFrom(this.resultCard, from);
+        else this.animate(this.resultCard, [{opacity: 0, transform: 'scale(.85)'}, {opacity: 1, transform: 'scale(1)'}]);
+      } else if (stage === this.cipherStage) {
         this.root.dataset.finale = 'flipping';
         // Arriving from the previous step, the first cipher letter glides from
         // the big card to its place in the grid before the other cards flip.
@@ -648,7 +674,7 @@
         });
         if (this.reduced) this.revealMessage();
         else this.later(() => this.revealMessage(), glide ? 3700 : 3500);
-      } else if (stage === 10) {
+      } else if (stage === this.lastStage) {
         // Coming from the finished cipher, its cards glide down into the
         // overview while the message and the key fade in above them.
         const glide = cipherOrigins.length > 0 && !this.reduced;
@@ -664,6 +690,23 @@
           if (label) this.animate(label, [{opacity: 0}, {opacity: 1}], {duration: 400, delay: 500, fill: 'backwards'});
         }
       }
+    }
+
+    // Each number under the alphabet steps to its other value in turn, left to
+    // right, with a small drop so the change reads as a recount.
+    renumberAlphabet(count = 0) {
+      const key = this.stage === 7 ? 'shift' : 'place';
+      this.alphaCells.forEach((cell, index) => {
+        const num = cell.querySelector('.cw-alpha-num');
+        if (this.reduced || !count) {
+          num.textContent = cell.dataset[key];
+          return;
+        }
+        this.later(() => {
+          num.textContent = cell.dataset[key];
+          this.animate(num, [{opacity: 0, transform: 'translateY(-5px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 220});
+        }, 150 + index * count);
+      });
     }
 
     pause() {
