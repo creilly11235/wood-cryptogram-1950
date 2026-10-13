@@ -70,15 +70,17 @@
 .cw[data-stage="5"] .cw-focus-pair{gap:6px}
 .cw[data-stage="5"] .cw-single{width:45px;height:52px;font-size:32px}
 .cw[data-stage="5"] .cw-focus-word{font-size:15px}
-.cw-math{display:flex;flex-direction:column;align-items:center;gap:17px;width:100%}
-.cw-sum{display:flex;justify-content:center;align-items:center;gap:clamp(3px,1.5cqw,10px);font-family:var(--mono,monospace)}
-.cw-term{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:22px}
+/* The three arithmetic lines share one gap, set once and read by the result line. */
+.cw-math{--cw-math-gap:16px;display:flex;flex-direction:column;align-items:center;gap:var(--cw-math-gap);width:100%}
+/* The gaps between terms equal a mono space, so the sum lines up with the lines below. */
+.cw-sum{display:flex;justify-content:center;align-items:center;gap:.6em;font:400 22px/1 var(--mono,monospace)}
+.cw-term{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:22px}
 .cw-term-letter{color:var(--bone-2,#5b646e);font:400 15px/1 var(--body,Georgia,serif)}
 .cw-term-value{font-size:22px;line-height:1;font-weight:400}
-.cw-plus,.cw-equals{font-size:22px;padding-top:21px;color:var(--bone-2,#5b646e)}
-.cw-total{font-size:22px;font-weight:400;padding-top:21px}
-.cw-reduction{font:400 22px/1.3 var(--mono,monospace);text-align:center;white-space:nowrap}
-.cw-reduction-result{display:block;margin-top:6px}
+.cw-plus,.cw-equals{font-size:22px;line-height:1;padding-top:20px;color:var(--bone-2,#5b646e)}
+.cw-total{font-size:22px;line-height:1;font-weight:400;padding-top:20px}
+.cw-reduction{font:400 22px/1 var(--mono,monospace);text-align:center;white-space:nowrap}
+.cw-reduction-result{display:block;margin-top:var(--cw-math-gap)}
 .cw-reduction-arrow{position:relative;top:-.1em}
 .cw-shift-key,.cw-result-label{font-size:16px;text-align:center;line-height:1.4}
 .cw-shift-cards{display:flex;align-items:center;gap:clamp(18px,4cqw,30px)}
@@ -102,7 +104,7 @@
   .cw-pair{gap:4px}.cw-word{font-size:10.5px}.cw-prayer{font-size:18px;line-height:1.55;max-width:31ch}
   .cw-single{width:59px;height:68px;font-size:42px}.cw-focus{gap:12px}.cw-focus-pair{gap:6px}.cw-focus-word{font-size:16px}
   .cw[data-stage="5"] .cw-focus{gap:10px}.cw[data-stage="5"] .cw-single{width:32px;height:36px;font-size:24px}.cw[data-stage="5"] .cw-focus-word{font-size:12px}
-  .cw-math{gap:10px}.cw-term{gap:4px;min-width:18px}.cw-term-letter{font-size:13px}.cw-term-value{font-size:18px}.cw-plus,.cw-equals{font-size:18px;padding-top:17px}.cw-total{font-size:18px;padding-top:17px}.cw-reduction{font-size:18px}
+  .cw-math{--cw-math-gap:12px}.cw-sum{font-size:18px}.cw-term{gap:4px;min-width:18px}.cw-term-letter{font-size:13px}.cw-term-value{font-size:18px}.cw-plus,.cw-equals{font-size:18px;padding-top:17px}.cw-total{font-size:18px;padding-top:17px}.cw-reduction{font-size:18px}
   .cw-shift{gap:14px}.cw-shift-key,.cw-result-label{font-size:13px}.cw-shift-cards{gap:16px}.cw-arrow-label{font-size:12px}.cw-result{gap:12px}
   .cw-controls{padding-top:8px}.cw-previous,.cw-next{min-height:36px;min-width:66px;font-size:12px;padding-inline:11px}
 }
@@ -110,7 +112,7 @@
   .cw{padding:8px;gap:6px}
   .cw-source-grid,.cw-grid{gap:5px 3px}.cw-source-letter,.cw-card,.cw-msg-letter{width:30px;height:29px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:19px}.cw-pair{gap:2px}.cw-word{font-size:10px;letter-spacing:-.025em}
   .cw-prayer{font-size:15px;line-height:1.4}
-  .cw[data-stage="5"] .cw-focus{gap:6px}.cw[data-stage="5"] .cw-focus-pair{gap:2px}.cw[data-stage="5"] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-stage="5"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
+  .cw[data-stage="5"] .cw-focus{gap:6px}.cw[data-stage="5"] .cw-focus-pair{gap:2px}.cw[data-stage="5"] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-stage="5"] .cw-focus-word{font-size:11px}.cw-math{--cw-math-gap:8px}
   .cw-controls{padding-top:5px}.cw-previous,.cw-next{min-height:32px}
 }
 /* Browser chrome can leave a wide phone with a short reading viewport.
@@ -126,7 +128,7 @@
     .cw-single{width:52px;height:60px;font-size:36px}.cw-focus,.cw-result,.cw-shift{gap:10px}
     .cw[data-stage="5"] .cw-focus{gap:6px}.cw[data-stage="5"] .cw-focus-pair{gap:2px}
     .cw[data-stage="5"] .cw-single{width:26px;height:28px;font-size:21px}
-    .cw[data-stage="5"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
+    .cw[data-stage="5"] .cw-focus-word{font-size:11px}.cw-math{--cw-math-gap:8px}
     .cw-controls{padding-top:5px}
   }
 }
