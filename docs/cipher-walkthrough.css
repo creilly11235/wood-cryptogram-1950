@@ -12,46 +12,64 @@
 .cw-head{text-align:center}
 .cw-swipe-scene{touch-action:pan-y pinch-zoom}
 .cw-swipe-hint{display:none;margin-top:3px;font-size:11px;line-height:1.3;color:var(--bone-2,#5b646e)}
-.cw-step-tag{margin-bottom:5px;font:400 13px/1.3 var(--body,Georgia,serif);color:var(--candle,#315f7d)}
-.cw-title{margin-bottom:9px;min-height:1.3em;font-size:clamp(15px,3.4cqw,19px);line-height:1.3;text-wrap:balance}
 .cw-legend{display:flex;justify-content:center;gap:18px;font-size:12px;line-height:1.3;color:var(--bone-2,#5b646e)}
 .cw-legend-item{display:inline-flex;align-items:center;gap:6px}
 .cw-swatch{display:inline-block;width:12px;height:15px;border-radius:3px}
 .cw .encoded{background:var(--cw-encoded-bg);color:var(--cw-encoded-fg);border:1px solid var(--cipher-encoded-border,#282e35);box-shadow:inset 0 1px 0 rgb(255 255 255 / 8%)}
 .cw .decoded{background:var(--cw-decoded-bg);color:var(--cw-decoded-fg);border:1px solid var(--cw-decoded-border);box-shadow:inset 0 -2px 0 var(--cw-decoded-border)}
 .cw-scene{position:relative;display:grid;align-items:center;min-height:0;min-width:0}
-.cw-message{position:absolute;inset:0;display:grid;place-items:center;min-width:0;color:var(--cw-decoded-fg)}
-.cw-message-reading{margin:0;text-align:center;font:400 clamp(24px,6cqw,36px)/1.45 var(--body,Georgia,serif);letter-spacing:0}
-.cw-message-line{display:block;white-space:nowrap}
-.cw[data-finale="moving"] .cw-message-reading{opacity:0}
+.cw-message{position:absolute;inset:0;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:10px 14px;min-width:0;padding:0 4px}
+.cw-msg-row{display:flex;flex:0 0 100%;justify-content:center;gap:inherit}
+.cw-msg-word,.cw-source-word{display:flex;gap:4px}
+.cw-msg-letter{display:grid;place-items:center;padding-top:.09em;border-radius:5px;box-sizing:border-box;font:400 clamp(20px,4.5cqw,28px)/1 var(--mono,monospace)}
+.cw-msg-label{flex:0 0 100%;margin-bottom:0;opacity:0;transition:opacity .5s .2s}
+.cw[data-finale="settled"] .cw-msg-label{opacity:1}
+.cw[data-finale="moving"] .cw-message .cw-msg-letter{opacity:0}
+/* Step 10: the message, the key passage and the cipher on one screen. */
+.cw-overview{display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,4cqh,22px);width:100%;min-height:0}
+.cw-ov-block{display:flex;flex-direction:column;align-items:center;min-width:0}
+.cw-ov-block .cw-scene-label{margin-bottom:8px}
+.cw-ov-cards{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 12px;width:100%}
+.cw-ov-word{display:flex;gap:3px}
+.cw-ov-letter{display:grid;place-items:center;flex:none;width:28px;height:31px;padding-top:.09em;border-radius:4px;box-sizing:border-box;font:400 18px/1 var(--mono,monospace)}
+.cw-ov-passage{margin:0 auto;max-width:34ch;font-size:clamp(14px,3.6cqw,17px);line-height:1.5;text-align:center;text-wrap:pretty}
+@media(max-width:360px){.cw-ov-letter{width:22px;height:24px;font-size:14px}.cw-ov-passage{font-size:13px;line-height:1.4}.cw-ov-cards{gap:4px 8px}}
+@container walkthrough-space (max-height:320px){.cw-overview{gap:6px}.cw-ov-block .cw-scene-label{margin-bottom:3px}.cw-ov-letter{width:19px;height:21px;font-size:13px;border-radius:3px}.cw-ov-passage{font-size:12px;line-height:1.3;max-width:60ch}.cw-ov-cards{gap:3px 8px}}
 .cw[data-finale="moving"] .cw-grid,.cw[data-finale="revealing"] .cw-grid{opacity:0}
-.cw-finale-letter{position:absolute;display:block;text-align:center;white-space:nowrap;color:var(--cw-decoded-fg);pointer-events:none;transform-origin:center;z-index:1}
+/* On the last step the key words have done their work; only the cards flip. */
+.cw[data-stage="8"] .cw-word{display:none}
+.cw-finale-letter{position:absolute;display:block;text-align:center;white-space:nowrap;pointer-events:none;transform-origin:center;z-index:1}
 .cw[data-finale="revealing"] .cw-finale-letter{opacity:0}
+.cw-finale-letter.cw-msg-letter{display:grid;transition:none}
 .cw-source,.cw-keyphrase{min-width:0}
-.cw-source-grid,.cw-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));align-content:center;justify-items:center;gap:17px 7px;width:100%;max-height:100%}
-.cw-source-grid{gap:12px 7px}
+.cw-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));align-content:center;justify-items:center;gap:17px 7px;width:100%;max-height:100%}
+.cw-source-grid{display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:12px 16px;width:100%;padding:0 4px}
 .cw-source-letter,.cw-face,.cw-single{display:grid;place-items:center;padding-top:.09em;border-radius:5px;box-sizing:border-box;font:400 clamp(20px,4.5cqw,28px)/1 var(--mono,monospace)}
-.cw-source-letter,.cw-card{width:min(100%,48px);height:54px}
+.cw-source-letter{flex:none}
+.cw-source-letter,.cw-card,.cw-msg-letter{width:min(100%,48px);height:54px}
 .cw-prayer{margin:0 auto;max-width:29ch;font-size:clamp(19px,4.5cqw,24px);line-height:1.65;text-align:center;text-wrap:pretty}
 .cw-prayer-word{display:inline-block}
-.cw-prayer-word.is-repeat{color:var(--bone-2,#5b646e);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--bone-2,#5b646e)}
-.cw-key-note{margin:15px auto 0;max-width:39ch;color:var(--bone-2,#5b646e);font-size:12px;line-height:1.45;text-align:center;text-wrap:balance}
+.cw-prayer-word.is-repeat{position:relative;color:var(--bone-2,#5b646e);transition:color .35s}
+.cw-prayer-word.is-repeat::after{content:"";position:absolute;left:0;right:0;top:calc(50% + .04em);height:1px;background:var(--bone-2,#5b646e);transform:scaleX(1);transform-origin:left center;transition:transform .35s cubic-bezier(.2,.7,.2,1);transition-delay:inherit}
+.cw[data-stage="1"] .cw-prayer-word.is-repeat{color:inherit}
+.cw[data-stage="1"] .cw-prayer-word.is-repeat::after{transform:scaleX(0)}
+.cw-scene-label{margin:0 auto 14px;color:var(--bone-2,#5b646e);font-size:12px;line-height:1.45;text-align:center}
 .cw-pair{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
 .cw-card{perspective:360px;flex:none}
 .cw-card-turn{position:relative;width:100%;height:100%;transform-style:preserve-3d}
-.cw-pair.is-decoded .cw-card-turn{transform:rotateY(180deg)}
+.cw-pair.is-flipped .cw-card-turn{transform:rotateY(180deg)}
 .cw-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.cw-face.decoded{transform:rotateY(180deg)}
+.cw-face.cw-back{transform:rotateY(180deg)}
 .cw-word{display:block;width:max-content;max-width:none;white-space:nowrap;font-size:clamp(11px,2.55cqw,14px);line-height:1.25;text-align:center}
 .cw-pair.is-decoded .cw-word{opacity:0}
 .cw-focus,.cw-result,.cw-shift{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;min-height:0}
 .cw-focus-pair{display:flex;align-items:center;flex-direction:column;gap:10px}
 .cw-single{width:82px;height:94px;font-size:56px;flex:none}
 .cw-focus-word{font-size:20px;line-height:1.2}
-.cw[data-stage="4"] .cw-focus{gap:20px}
-.cw[data-stage="4"] .cw-focus-pair{gap:6px}
-.cw[data-stage="4"] .cw-single{width:45px;height:52px;font-size:32px}
-.cw[data-stage="4"] .cw-focus-word{font-size:15px}
+.cw[data-stage="5"] .cw-focus{gap:20px}
+.cw[data-stage="5"] .cw-focus-pair{gap:6px}
+.cw[data-stage="5"] .cw-single{width:45px;height:52px;font-size:32px}
+.cw[data-stage="5"] .cw-focus-word{font-size:15px}
 .cw-math{display:flex;flex-direction:column;align-items:center;gap:17px;width:100%}
 .cw-sum{display:flex;justify-content:center;align-items:center;gap:clamp(3px,1.5cqw,10px);font-family:var(--mono,monospace)}
 .cw-term{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:22px}
@@ -78,20 +96,20 @@
 @media(max-width:900px){
   .cw-swipe-hint{display:block}
   .cw{padding:12px;gap:10px;max-height:none}
-  .cw-step-tag{margin-bottom:3px;font-size:12px}.cw-title{margin-bottom:6px;font-size:14px}.cw-legend{font-size:11px;gap:16px}.cw-swatch{width:10px;height:12px;border-radius:2px}
-  .cw-source-grid,.cw-grid{gap:10px 4px}.cw-source-letter,.cw-card{width:35px;height:37px}.cw-source-letter,.cw-face{font-size:23px;border-radius:4px}
-  .cw-pair{gap:4px}.cw-word{font-size:10.5px}.cw-prayer{font-size:18px;line-height:1.55;max-width:31ch}.cw-key-note{font-size:11px;line-height:1.35;margin-top:9px}
+  .cw-legend{gap:16px}.cw-swatch{width:10px;height:12px;border-radius:2px}
+  .cw-source-grid,.cw-grid{gap:10px 4px}.cw-source-letter,.cw-card,.cw-msg-letter{width:35px;height:37px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:23px;border-radius:4px}
+  .cw-pair{gap:4px}.cw-word{font-size:10.5px}.cw-prayer{font-size:18px;line-height:1.55;max-width:31ch}
   .cw-single{width:59px;height:68px;font-size:42px}.cw-focus{gap:12px}.cw-focus-pair{gap:6px}.cw-focus-word{font-size:16px}
-  .cw[data-stage="4"] .cw-focus{gap:10px}.cw[data-stage="4"] .cw-single{width:32px;height:36px;font-size:24px}.cw[data-stage="4"] .cw-focus-word{font-size:12px}
+  .cw[data-stage="5"] .cw-focus{gap:10px}.cw[data-stage="5"] .cw-single{width:32px;height:36px;font-size:24px}.cw[data-stage="5"] .cw-focus-word{font-size:12px}
   .cw-math{gap:10px}.cw-term{gap:4px;min-width:18px}.cw-term-letter{font-size:12px}.cw-term-value{font-size:16px}.cw-plus,.cw-equals{font-size:12px;padding-top:13px}.cw-total{font-size:22px;padding-top:11px}.cw-reduction{font-size:12px}
   .cw-shift{gap:14px}.cw-shift-key,.cw-result-label{font-size:13px}.cw-shift-cards{gap:16px}.cw-arrow-label{font-size:12px}.cw-result{gap:12px}
   .cw-controls{padding-top:8px}.cw-previous,.cw-next{min-height:36px;min-width:66px;font-size:12px;padding-inline:11px}
 }
 @media(max-width:360px){
-  .cw{padding:8px;gap:6px}.cw-title{font-size:13px;margin-bottom:4px}.cw-legend{font-size:10px}
-  .cw-source-grid,.cw-grid{gap:5px 3px}.cw-source-letter,.cw-card{width:30px;height:29px}.cw-source-letter,.cw-face{font-size:19px}.cw-pair{gap:2px}.cw-word{font-size:10px;letter-spacing:-.025em}
-  .cw-prayer{font-size:15px;line-height:1.4}.cw-key-note{margin-top:7px;font-size:10px}
-  .cw[data-stage="4"] .cw-focus{gap:6px}.cw[data-stage="4"] .cw-focus-pair{gap:2px}.cw[data-stage="4"] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-stage="4"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
+  .cw{padding:8px;gap:6px}
+  .cw-source-grid,.cw-grid{gap:5px 3px}.cw-source-letter,.cw-card,.cw-msg-letter{width:30px;height:29px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:19px}.cw-pair{gap:2px}.cw-word{font-size:10px;letter-spacing:-.025em}
+  .cw-prayer{font-size:15px;line-height:1.4}
+  .cw[data-stage="5"] .cw-focus{gap:6px}.cw[data-stage="5"] .cw-focus-pair{gap:2px}.cw[data-stage="5"] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-stage="5"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
   .cw-controls{padding-top:5px}.cw-previous,.cw-next{min-height:32px}
 }
 /* Browser chrome can leave a wide phone with a short reading viewport.
@@ -99,81 +117,30 @@
 @media(min-width:361px){
   @container walkthrough-space (max-height:320px){
     .cw{padding:8px;gap:6px}
-    .cw-title{font-size:13px;margin-bottom:4px}.cw-legend{font-size:10px}
+    .cw-legend{font-size:10px}
     .cw-source-grid,.cw-grid{gap:6px 4px}
-    .cw-source-letter,.cw-card{width:32px;height:31px}.cw-source-letter,.cw-face{font-size:21px}
+    .cw-source-letter,.cw-card,.cw-msg-letter{width:32px;height:31px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:21px}
     .cw-pair{gap:3px}.cw-word{font-size:10.5px}
-    .cw-prayer{font-size:15px;line-height:1.4}.cw-key-note{margin-top:7px;font-size:10.5px}
+    .cw-prayer{font-size:15px;line-height:1.4}
     .cw-single{width:52px;height:60px;font-size:36px}.cw-focus,.cw-result,.cw-shift{gap:10px}
-    .cw[data-stage="4"] .cw-focus{gap:6px}.cw[data-stage="4"] .cw-focus-pair{gap:2px}
-    .cw[data-stage="4"] .cw-single{width:26px;height:28px;font-size:21px}
-    .cw[data-stage="4"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
+    .cw[data-stage="5"] .cw-focus{gap:6px}.cw[data-stage="5"] .cw-focus-pair{gap:2px}
+    .cw[data-stage="5"] .cw-single{width:26px;height:28px;font-size:21px}
+    .cw[data-stage="5"] .cw-focus-word{font-size:11px}.cw-math{gap:6px}
     .cw-controls{padding-top:5px}
   }
 }
-/* The mobile viewer gives each animation the available screen space.
-   Key words stay readable; the available scene height sets the card size. */
-@media(max-width:900px){
-  .mobile-visual .cipher-walkthrough-host{align-items:stretch}
-  .mobile-visual .cw{height:100%;max-height:none;padding:12px;gap:12px}
-  .mobile-visual .cw-step-tag{font-size:15px;margin-bottom:6px}
-  .mobile-visual .cw-title{font-size:clamp(20px,5.2vw,25px);line-height:1.25;margin-bottom:9px}
-  .mobile-visual .cw-legend{font-size:15px;gap:20px}
-  .mobile-visual .cw-legend-item{gap:7px}
-  .mobile-visual .cw-swatch{width:13px;height:16px;border-radius:3px}
-  .mobile-visual .cw-scene{container-type:size}
-  .mobile-visual .cw-source-grid{gap:18px 6px}
-  .mobile-visual .cw-source-letter{width:min(100%,48px);height:clamp(36px,11cqw,54px);font-size:clamp(25px,7cqw,34px)}
-  .mobile-visual .cw-grid{height:100%;min-height:0;max-height:630px;align-self:center;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(7,minmax(0,1fr));gap:3px 8px;align-items:center}
-  .mobile-visual .cw-pair{gap:2px}
-  .mobile-visual .cw-card{width:clamp(27px,calc((100cqh - 178px)/7),52px);height:clamp(21px,calc((100cqh - 178px)/7),52px)}
-  .mobile-visual .cw-face{font-size:clamp(18px,calc((100cqh - 194px)/9),32px);border-radius:4px}
-  .mobile-visual .cw-word{font-size:clamp(14px,3.8vw,16px);line-height:1.25;letter-spacing:0}
-  .mobile-visual .cw-prayer{font-size:clamp(22px,6vw,29px);line-height:1.55;max-width:28ch}
-  .mobile-visual .cw-key-note{font-size:15px;line-height:1.45;margin-top:20px}
-  .mobile-visual .cw-single{width:82px;height:94px;font-size:56px}
-  .mobile-visual .cw-focus,.mobile-visual .cw-result,.mobile-visual .cw-shift{gap:24px}
-  .mobile-visual .cw-focus-pair{gap:10px}
-  .mobile-visual .cw-focus-word{font-size:23px}
-  .mobile-visual .cw[data-stage="4"] .cw-focus{gap:28px}
-  .mobile-visual .cw[data-stage="4"] .cw-focus-pair{gap:8px}
-  .mobile-visual .cw[data-stage="4"] .cw-single{width:64px;height:74px;font-size:45px}
-  .mobile-visual .cw[data-stage="4"] .cw-focus-word{font-size:21px}
-  .mobile-visual .cw-math{gap:23px}
-  .mobile-visual .cw-sum{gap:clamp(3px,1.3cqw,7px)}
-  .mobile-visual .cw-term{gap:7px;min-width:21px}
-  .mobile-visual .cw-term-letter{font-size:16px}
-  .mobile-visual .cw-term-value{font-size:clamp(19px,5.8cqw,25px)}
-  .mobile-visual .cw-plus,.mobile-visual .cw-equals{font-size:16px;padding-top:21px}
-  .mobile-visual .cw-total{font-size:29px;padding-top:20px}
-  .mobile-visual .cw-reduction{font-size:clamp(15px,4.4cqw,19px)}
-  .mobile-visual .cw-shift-key,.mobile-visual .cw-result-label{font-size:19px;line-height:1.4}
-  .mobile-visual .cw-shift-cards{gap:clamp(10px,4cqw,24px)}
-  .mobile-visual .cw-arrow-label{font-size:15px}
-  .mobile-visual .cw-message-reading{font-size:clamp(30px,8cqw,42px);line-height:1.5}
-  .mobile-visual .cw-controls{padding-top:10px;gap:8px}
-  .mobile-visual .cw-previous,.mobile-visual .cw-next{font-size:16px;min-height:44px;min-width:82px;padding-inline:14px}
-  .mobile-visual .cw-step-count{font-size:14px}
-}
-@media(max-width:900px) and (orientation:landscape){
-  .mobile-visual .cw{padding:10px 16px;gap:8px}
-  .mobile-visual .cw-title{font-size:20px;margin-bottom:5px}
-  .mobile-visual .cw-legend{font-size:14px}
-  .mobile-visual .cw-grid{grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:4px 7px}
-  .mobile-visual .cw-card{width:clamp(24px,calc((100cqh - 72px)/3),43px);height:clamp(24px,calc((100cqh - 72px)/3),43px)}
-  .mobile-visual .cw-face{font-size:clamp(20px,calc((100cqh - 72px)/4),29px)}
-  .mobile-visual .cw-word{font-size:14px}
-  .mobile-visual .cw-source-grid{gap:8px 6px}
-  .mobile-visual .cw-source-letter{width:40px;height:clamp(28px,24cqh,43px);font-size:27px}
-  .mobile-visual .cw-prayer{font-size:22px;line-height:1.45;max-width:42ch}
-  .mobile-visual .cw-key-note{font-size:14px;margin-top:10px}
-  .mobile-visual .cw-focus,.mobile-visual .cw-result,.mobile-visual .cw-shift{gap:12px}
-  .mobile-visual .cw-single{width:57px;height:63px;font-size:42px}
-  .mobile-visual .cw[data-stage="4"] .cw-focus{flex-direction:row;gap:30px}
-  .mobile-visual .cw[data-stage="4"] .cw-focus-pair{gap:5px}
-  .mobile-visual .cw[data-stage="4"] .cw-single{width:48px;height:52px;font-size:36px}
-  .mobile-visual .cw-math{width:auto;gap:14px}
-  .mobile-visual .cw-message-reading{font-size:28px;line-height:1.3}
-  .mobile-visual .cw-controls{padding-top:7px}
-}
-@media(prefers-reduced-motion:reduce){.cw *,.cw *::before,.cw *::after{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){.cw *,.cw *::before,.cw *::after{scroll-behavior:auto;transition:none}.cw-prayer-word.is-repeat,.cw-prayer-word.is-repeat::after{transition:none}}
+/* Cards inside a word group size from their height, since the group's width
+   is indefinite and a percentage width would collapse them. */
+.cw .cw-msg-word .cw-msg-letter{flex:none;width:auto;aspect-ratio:.92}
+.cw .cw-source-word .cw-source-letter{flex:none;width:var(--cw-src-w,48px);aspect-ratio:auto;transition:width .6s,height .6s,background-color .6s,border-color .6s,box-shadow .6s}
+@media(max-width:900px){.cw{--cw-src-w:35px}}
+@media(max-width:360px){.cw{--cw-src-w:30px}}
+@media(min-width:361px){@container walkthrough-space (max-height:320px){.cw{--cw-src-w:32px}}}
+/* The message first reads as plain text; the cards then form around the letters. */
+.cw-source-row{display:flex;flex:0 0 100%;justify-content:center;gap:inherit}
+.cw-source-grid,.cw-source-word{transition:gap .6s}
+.cw[data-intro="text"] .cw-source-grid{gap:10px .5em}
+.cw[data-intro="text"] .cw-source-word{gap:0}
+.cw[data-intro="text"] .cw-source-word .cw-source-letter{width:.68em;height:1.3em;background:transparent;border-color:transparent;box-shadow:none}
+@media(prefers-reduced-motion:reduce){.cw .cw-source-word .cw-source-letter,.cw-source-grid,.cw-source-word{transition:none}}

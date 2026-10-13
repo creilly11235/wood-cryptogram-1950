@@ -33,10 +33,6 @@ body,
   display: none;
 }
 
-.walkthrough-graphic .progress {
-  display: none;
-}
-
 .step {
   overflow-wrap: break-word;
 }
@@ -48,23 +44,6 @@ body,
 }
 .chapter[data-ch="1"] .step[data-s="method"] ol li p { margin: 0; }
 .chapter[data-ch="1"] .step[data-s="method"] ol li p + p { margin-top: .7em; }
-
-/* The passage driving the animation carries a thin mark in the margin, so
-   a reader can see which sentence the graphic is illustrating. */
-.step[data-walk-stage], .step [data-walk-stage] { position: relative; }
-.step[data-walk-stage]::before, .step [data-walk-stage]::before {
-  content: "";
-  position: absolute;
-  top: .3em;
-  bottom: .3em;
-  left: -16px;
-  width: 2px;
-  background: var(--candle);
-  opacity: 0;
-  transition: opacity .4s;
-}
-.step[data-walk-stage].is-walk-active::before, .step [data-walk-stage].is-walk-active::before { opacity: 1; }
-.step ol > li:has(.is-walk-active)::marker { color: var(--candle); }
 
 .step .cipher,
 .step code,
@@ -101,7 +80,8 @@ figure img {
 
   /* The final paragraph must leave room for its full-height sticky neighbor.
      Otherwise the chapter boundary pushes the chart up before it can be read. */
-  .chapter > .text > .step:last-child {
+  .chapter > .text > .step:last-child,
+  .chapter > .pin:last-child > .text > .step:last-child {
     min-height: calc(var(--story-viewport-height) - 32px);
   }
 }
@@ -117,13 +97,12 @@ figure img {
 
   .gbody { min-height: 0; overflow: visible; }
   .gbody canvas { flex: 1 1 0; min-height: 0; }
-  .gbar { flex: none; gap: 8px; margin-bottom: 8px; padding-bottom: 8px; }
-  .gbar .ct { font-size: 1rem; line-height: 1.3; }
-  .progress { display: flex; flex: none; gap: 5px; align-items: center; margin-left: auto; }
-  .gcap span:empty, .sub:empty { display: none; }
+  .sub:empty { display: none; }
+  /* The replay button belongs to the desktop column; phones replay by scrolling. */
+  .chapter .replay { display: none; }
 
-  /* The cipher walkthrough fills the screen and holds while the passages
-     that explain it rise over its lower part one at a time, news-graphic style. */
+  /* Each graphic fills the screen and holds while the passages that explain
+     it rise over its lower part one at a time, news-graphic style. */
   .chapter.pinned-chapter > .pin { position: relative; }
   .chapter.pinned-chapter > .pin > .graphic {
     position: sticky;
@@ -152,7 +131,6 @@ figure img {
   }
   .chapter.pinned-chapter > .text.text-before { padding-bottom: 0; }
   .chapter.pinned-chapter > .text.text-before > .step { padding-bottom: 8px; }
-  .chapter.pinned-chapter > .text.text-after { padding-top: 32px; }
   .pinned-chapter .pin .step { padding: 0; }
   .pinned-chapter .pin .step + .step { padding-top: 0; }
   .pinned-chapter .pin .step ol { padding: 0; margin: 0; }
@@ -160,7 +138,7 @@ figure img {
   .chapter.pinned-chapter > .pin .step ol > li { list-style: none; padding: 0; margin: 0; }
   /* Every passage in the pinned run is one card, spaced a screen apart.
      The graphic's "Step n of 3" line carries the numbering here. */
-  .pinned-chapter .pin > .text .step [data-walk-stage] {
+  .pinned-chapter .pin > .text :is(.step [data-walk-stage], .step[data-walk-stage]) {
     display: block;
     margin: 0 auto 64svh;
     padding: 16px 18px;
@@ -172,45 +150,61 @@ figure img {
     pointer-events: auto;
     will-change: opacity;
   }
-  .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child { margin-bottom: 72svh; }
-  .pinned-chapter .pin .step h2 { font-size: 1.5rem; margin-bottom: 12px; }
+  .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child,
+  .pinned-chapter .pin > .text > .step[data-walk-stage]:last-child { margin-bottom: 72svh; }
+  /* After the last card, the next section comes up to meet the graphic: the
+     passage holds a little longer, and the text rises over the empty part of
+     the panel (--walk-tail, measured by the script) before pushing it. */
+  .pinned-chapter .pin > .text .step > p[data-walk-stage]:last-child,
+  .pinned-chapter .pin > .text > .step[data-walk-stage]:last-child { margin-bottom: calc(var(--walk-tail, 0px) + 60svh); }
+  .chapter.pinned-chapter > .text.text-after { position: relative; z-index: 3; background: var(--room); margin-top: calc(-1 * var(--walk-tail, 0px)); padding-top: 0; }
+  .chapter.pinned-chapter + .chapter > .text.text-before { position: relative; z-index: 3; background: var(--room); margin-top: calc(-1 * var(--walk-tail-prev, 0px)); }
+  .chapter[style*="--walk-tail-prev"] > .text.text-before { padding-top: 0; }
+  .pinned-chapter .pin > .text > .step[data-walk-stage] p + p { margin-top: .7em; }
   .pinned-chapter .pin .step p:last-child, .pinned-chapter .pin .step li:last-child { margin-bottom: 0; }
   .pinned-chapter .pin .step p { margin: 0; }
   .pinned-chapter .pin [data-walk-stage]::before, .pinned-chapter .pin .step[data-walk-stage]::before { display: none; }
-  .chapter.pinned-chapter .gbar { margin-bottom: 4px; padding-bottom: 6px; }
   .pinned-chapter .cw-controls,
   .pinned-chapter .cw-swipe-hint { display: none; }
   .pinned-chapter .cw { padding: 8px 0 4px; gap: 8px; }
   .pinned-chapter .cw-scene { container-type: size; }
   .pinned-chapter .cw-source-letter,
   .pinned-chapter .cw-card { width: min(100%, 44px); height: clamp(32px, calc((100cqh - 78px) / 3), 46px); }
-  .pinned-chapter .cw-source-grid { gap: clamp(8px, 4cqh, 16px) 5px; }
+  .pinned-chapter .cw-source-grid { gap: clamp(8px, 4cqh, 16px) 14px; --cw-src-w: clamp(30px, calc((100cqh - 78px) / 3 * .95), 44px); }
   .pinned-chapter .cw-grid { gap: clamp(6px, 3cqh, 12px) 5px; }
   .pinned-chapter .cw-source-letter,
   .pinned-chapter .cw-face { font-size: clamp(20px, 6.5cqw, 28px); }
   .pinned-chapter .cw-word { font-size: clamp(10.5px, 3cqw, 12.5px); }
   .pinned-chapter .cw-prayer { font-size: clamp(17px, 5cqw, 21px); max-width: 32ch; }
   .pinned-chapter .cw-single { width: 64px; height: 72px; font-size: 44px; }
-  .pinned-chapter .cw[data-stage="4"] .cw-single { width: 36px; height: 40px; font-size: 26px; }
-  .pinned-chapter .cw-message-reading { font-size: clamp(22px, 7cqw, 30px); }
+  .pinned-chapter .cw[data-stage="5"] .cw-single { width: 36px; height: 40px; font-size: 26px; }
 }
 @media (max-width: 360px) {
   .scrolly { --story-gutter: 20px; }
 }
+/* A short phone screen keeps the chart readable by giving the cards a little
+   less room and setting them in a slightly smaller size. */
+@media (max-width: 900px) and (max-height: 640px) and (orientation: portrait) {
+  .chapter.pinned-chapter > .pin > .graphic { --card-space: 36svh; }
+  .chapter.pinned-chapter > .pin > .text { margin-top: -32svh; }
+  .pinned-chapter .pin > .text :is(.step [data-walk-stage], .step[data-walk-stage]) {
+    padding: 12px 14px;
+    font-size: .9375rem;
+    line-height: 1.6;
+  }
+}
 @media (max-width: 900px) and (orientation: landscape) {
   .chapter.pinned-chapter > .pin > .graphic { --card-space: 30svh; }
   .chapter.pinned-chapter > .pin > .text { margin-top: -26svh; padding-top: 52svh; }
-  .gbar { margin-bottom: 5px; padding-bottom: 5px; }
   .pinned-chapter .cw { padding-top: 4px; gap: 4px; }
   .pinned-chapter .cw-legend { display: none; }
-  .pinned-chapter .cw-step-tag { margin-bottom: 1px; }
-  .pinned-chapter .cw-title { margin-bottom: 2px; }
   .pinned-chapter .cw-source-letter,
   .pinned-chapter .cw-card { height: clamp(22px, calc((100cqh - 58px) / 3), 40px); }
   .pinned-chapter .cw-face, .pinned-chapter .cw-source-letter { font-size: 18px; }
   .pinned-chapter .cw-word { font-size: 10.5px; }
   .pinned-chapter .cw-pair { gap: 2px; }
   .pinned-chapter .cw-source-grid, .pinned-chapter .cw-grid { gap: 3px 5px; }
+  .pinned-chapter .cw-source-grid { --cw-src-w: clamp(22px, calc((100cqh - 58px) / 3 * .95), 38px); }
   .pinned-chapter .cw-prayer { font-size: 16px; line-height: 1.4; max-width: 46ch; }
   .pinned-chapter .cw-single { width: 48px; height: 54px; font-size: 34px; }
 }
