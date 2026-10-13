@@ -83,7 +83,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
 .scrolly{max-width:1184px;margin:0 auto;padding-inline:24px}
 .chapter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:0 64px;align-items:start}
-.chapter+.chapter{border-top:1px solid var(--veil-2)}
+.chapter+.chapter,.endmatter+.chapter{border-top:1px solid var(--veil-2)}
 /* A chapter that opens without a heading runs on from the one before it
    (the scroll script marks the pair run-on and runs-on). */
 .chapter+.chapter:not(:has(h2)),.chapter.run-on{border-top:0}
@@ -194,7 +194,7 @@ footer p{margin:0 0 .7em}
 /* Sources conclude the reading without keeping a graphic pinned. */
 .endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
-.endmatter+.chapter{border-top:1px solid var(--veil-2)}
+.endmatter.step{min-height:0}
 </style>
 <link rel="stylesheet" href="story-layout.css?v=27">
 <link rel="stylesheet" href="cipher-cards.css?v=25">
@@ -768,13 +768,13 @@ function Graphic(el){
   }
   // A run of cipher cards flips to its reading, then the cards slide into
   // the words of that reading. Both layouts share the same top edge and the
-  // cards keep one size throughout. Returns the number of rows the block spans.
+  // cards keep one size throughout.
   const groupFive=s=>s.replace(/ /g,"").match(/.{1,5}/g).join(" ");
   const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300;
   function cardStory(text,cipher,p,tile,top,delay=0){
     const letters=text.replace(/ /g,""),height=tile*1.2,rowStep=height+tile*.35;
     // The cipher starts in the same groups of five the hero uses.
-    const start=cardRows(groupFive(letters),p.w,tile),target=cardRows(text,p.w,tile),rows=Math.max(start.rows,target.rows);
+    const start=cardRows(groupFive(letters),p.w,tile),target=cardRows(text,p.w,tile);
     const move=progress(CARD_MOVE+delay,700);
     [...letters].forEach((c,i)=>{
       const f=start.positions[i],x0=p.x+f.x,y0=top+height/2+f.row*rowStep;
@@ -782,7 +782,6 @@ function Graphic(el){
       const x=x0+(x1-x0)*move,y=y0+(y1-y0)*move;
       ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,tile,height,tile*.62,progress(CARD_FLIP+delay+i*25,320),cipher[i]||c);ctx.restore();
     });
-    return rows;
   }
   function ideaScene(p,tile){
     // Two readings of the same cipher. Each block flips the cipher cards to
