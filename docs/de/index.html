@@ -13,7 +13,7 @@
 <meta property="og:title" content="Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte">
 <meta property="og:description" content="Wie T. E. Woods Kryptogramm von 1950, ein Test des Fortlebens nach dem Tod und Nr. 35 auf Klaus Schmehs Top-50-Liste ungelöster Verschlüsselungen, gelöst wurde. Der Schlüssel ist das Vaterunser auf Deutsch.">
 <meta property="og:url" content="https://creilly11235.github.io/wood-cryptogram-1950/de/">
-<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=5">
+<meta property="og:image" content="https://creilly11235.github.io/wood-cryptogram-1950/de/card.png?v=6">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Woods Geheimtext FVAMI NTKFX XWATB OIZVV X unter dem Titel „Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte“">
@@ -23,45 +23,50 @@
 <meta property="article:author" content="Colin Reilly">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Courier+Prime:wght@400;700&display=swap">
 <style>
-/* One serif for the article, one monospace for cipher data. Headings share the
-   article's ink; blue, teal and red retain their meaning in the graphics.
+/* Two garamonds, one for titles and one for reading, on stone paper, with one
+   monospace for cipher data. Blue, teal and red retain their meaning in the graphics.
    Each chapter keeps its own pinned graphic beside the reading column. */
 :root{
-  --room:#fafbfc; --room-2:#f0f2f4; --veil:#e3e6e9; --veil-2:#d3d9df;
-  --bone:#282e35; --bone-2:#5b646e; --bone-3:var(--bone-2); --ink:var(--room);
+  --room:#ebe8e0; --room-2:#e2dfd6; --veil:#d3cfc4; --veil-2:#bcb7aa;
+  --bone:#000; --bone-2:#5e5b54; --bone-3:var(--bone-2); --ink:var(--room);
   --candle:#315f7d; --candle-soft:rgba(49,95,125,.10); --ember:#a64642;
   --dot-g:#8d9ba8; --dot-p:#26796c; --dot-b:var(--candle); --dot-v:var(--ember); --dot-s:#c6ced6; --dot-tew:var(--bone);
-  --de:var(--candle); --af:var(--dot-p); --sig:var(--bone); --label-bg:rgba(250,251,252,.96);
-  --cipher-encoded-bg:#282e35; --cipher-encoded-fg:#fafbfc; --cipher-encoded-border:#282e35;
-  --cipher-decoded-bg:#e4f1ed; --cipher-decoded-fg:#18584f; --cipher-decoded-border:#26796c;
-  --body:"Libre Caslon Text",Georgia,"Times New Roman",serif; --mono:"Courier Prime","Courier New",Courier,monospace;
-  --t-body:400 1.0625rem/1.75 var(--body);
-  --t-note:400 .875rem/1.6 var(--body); --t-data:400 .8125rem/1.5 var(--mono);
-  --t-heading:400 clamp(1.5rem,2.6vw,2rem)/1.3 var(--body);
+  --de:var(--candle); --af:var(--dot-p); --sig:var(--bone); --label-bg:rgba(235,232,224,.96);
+  --cipher-encoded-bg:#000; --cipher-encoded-fg:#ebe8e0; --cipher-encoded-border:#000;
+  --cipher-decoded-bg:#fff; --cipher-decoded-fg:#18584f; --cipher-decoded-border:#26796c;
+  --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif; --display:"Cormorant Garamond","EB Garamond",Garamond,Georgia,serif; --mono:"Courier Prime","Courier New",Courier,monospace;
+  --t-body:400 1.3125rem/1.6 var(--body);
+  --t-note:400 1.1875rem/1.5 var(--body); --t-data:400 1rem/1.5 var(--mono);
+  --t-heading:400 clamp(1.75rem,2.8vw,2.125rem)/1.3 var(--display);
   color-scheme:light;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;background:var(--room)}
 body{margin:0;background:var(--room);color:var(--bone);font:var(--t-body)}
 a{color:var(--bone);text-decoration-line:underline;text-decoration-color:currentColor;text-decoration-thickness:1px;text-underline-offset:.2em;text-decoration-skip-ink:auto}
-a:hover{color:var(--candle)}
+a:hover{color:var(--bone);text-decoration-thickness:1.5px}
 a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher,code{font-family:var(--mono);font-size:.9em}
 /* A compact article opening; sources and detailed credits follow the story. */
-.hero{max-width:780px;margin:0 auto;padding-block:64px 16px;padding-inline:24px;text-align:center}
+.sitehead{max-width:1184px;margin:0 auto;padding:36px 24px 0;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 32px}
+.sitehead .name{font:400 1.9375rem/1.4 var(--display);text-decoration:none;white-space:nowrap}
+.sitehead .sitelinks{display:flex;flex-wrap:wrap;gap:0 36px;margin:0;font:var(--t-note)}
+.sitehead .sitelinks a{text-decoration:none;padding:10px 0 2px;border-bottom:1px solid transparent;white-space:nowrap}
+.sitehead .sitelinks a:hover{border-bottom-color:currentColor}
+.sitehead .name:hover{text-decoration:none}
+.hero{max-width:780px;margin:0 auto;padding-block:113px 16px;padding-inline:24px;text-align:center}
 .hero .langhint{font:var(--t-note);margin:-28px 0 22px}
 :root[lang="de"] body{-webkit-hyphens:auto;hyphens:auto}
 :root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3{-webkit-hyphens:manual;hyphens:manual}
-.hero h1{font:400 clamp(2rem,4.2vw,3rem)/1.2 var(--body);margin:0 auto;text-wrap:balance;max-width:22ch;letter-spacing:-.025em}
-.hero .byline{display:grid;justify-items:center;gap:2px;font:var(--t-note);color:var(--bone-2);margin:24px 0 0}
-.hero .hero-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 20px;margin:6px 0 0;font:var(--t-note)}
-.hero .hero-links a{display:inline-flex;align-items:center;min-height:44px;padding-block:8px}
+.hero h1{font:400 clamp(2.25rem,4.2vw,2.875rem)/1.2 var(--display);margin:0 auto;text-wrap:balance;max-width:24ch;letter-spacing:.005em}
+.hero .byline{display:grid;justify-items:center;gap:2px;font:var(--t-note);color:var(--bone-2);margin:28px 0 0}
+.hero .byline-author{color:var(--bone)}
 /* The ciphertext holds in the middle of the screen while the opening scrolls
    beneath it, decoding as the reader goes. The script measures the figure
    and sets --hero-h so the row sits centred. */
-.reveal-track{position:relative;margin-top:12px}
+.reveal-track{position:relative;margin-top:48px}
 .reveal-hold{height:calc(70svh + var(--hero-extra,0px))}
 .cipher-row{--tw:28px;position:sticky;top:max(var(--hero-stick-top,env(safe-area-inset-top,0px)),calc((100svh - var(--hero-h,0px)) / 2));z-index:3;margin:0;padding:6px 0 12px;display:flex;flex-direction:column;align-items:center;background:var(--room)}
 .cipher-row.is-stuck{border-bottom:1px solid var(--veil)}
@@ -78,7 +83,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .hero .answer{margin-top:8px;padding-top:28px;border-top:1px solid var(--veil-2)}
 .hero .answer p{margin:0 0 .8em}
 .hero .answer-heading{display:grid;gap:4px;margin-bottom:16px}
-.hero .answer .answer-status{font:400 .8125rem/1.5 var(--body);color:var(--bone-2);margin:0;text-wrap:pretty}
+.hero .answer .answer-status{font:var(--t-note);color:var(--bone-2);margin:0;text-wrap:pretty}
 .hero .answer-status time{white-space:nowrap}
 .hero .lede{margin-top:28px}
 /* scrolly: one chapter = one graphic that sticks while the chapter's text scrolls, then lets go */
@@ -100,7 +105,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .comparison-heading{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:8px;font:var(--t-note);color:var(--bone-2)}
 .comparison-heading:first-child{padding-top:0}
 .comparison-count{font:var(--t-data);white-space:nowrap}
-.t{position:relative;min-width:0;aspect-ratio:1/1.2;display:grid;place-items:center;padding-top:.14em;background:var(--room-2);border:1px solid var(--veil-2);font:400 clamp(11px,1.7vw,20px)/1 var(--mono);color:var(--bone);border-radius:1px;transition:background .45s,color .45s,border-color .45s,box-shadow .45s}
+.t{position:relative;min-width:0;aspect-ratio:1/1.2;display:grid;place-items:center;padding-top:.14em;background:var(--room);border:1px solid var(--bone);font:400 clamp(11px,1.7vw,20px)/1 var(--mono);color:var(--bone);border-radius:1px;transition:background .45s,color .45s,border-color .45s,box-shadow .45s}
 .t.encoded,.cipher-token.encoded{background:var(--cipher-encoded-bg);color:var(--cipher-encoded-fg);border:1px solid var(--cipher-encoded-border)}
 .t.decoded,.cipher-token.decoded{background:var(--cipher-decoded-bg);color:var(--cipher-decoded-fg);border:1px solid var(--cipher-decoded-border);border-bottom:3px double var(--cipher-decoded-border)}
 .cipher-token{font-family:var(--mono);font-size:.9em;font-weight:400;padding:.1em .25em;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
@@ -114,12 +119,12 @@ canvas{flex:1;width:100%;min-height:0;display:block}
 .text{min-width:0}
 .beats,.beatcap{display:none}
 /* article column */
-.text{padding-block:80px 96px}
-.chapter:first-child .text{padding-top:80px}
+.text{padding-block:113px 113px}
+.chapter:first-child .text{padding-top:113px}
 .step{min-height:52vh;padding:0 0 64px;scroll-margin-top:32px}
 .step+.step{padding-top:24px}
-.step h2{font:var(--t-heading);color:var(--bone);margin:0 0 20px;text-wrap:balance;letter-spacing:-.015em}
-.step h3{font:700 1em/1.5 var(--body);color:var(--bone);margin:1.8em 0 .75em;text-wrap:balance}
+.step h2{font:var(--t-heading);color:var(--bone);margin:0 0 24px;text-wrap:balance;letter-spacing:.005em}
+.step h3{font:500 1em/1.5 var(--body);color:var(--bone);margin:1.8em 0 .75em;text-wrap:balance}
 .step>h3:first-child{margin-top:0}
 .step p,.step li{margin:0 0 1em}
 .step ul,.step ol{padding-left:1.3em;margin:0 0 1em}
@@ -129,14 +134,14 @@ canvas{flex:1;width:100%;min-height:0;display:block}
 .step .check-list li{margin:0 0 1.8em}
 .step .check-list h3{margin:0 0 .55em}
 .step .check-list p{margin:0}
-.step strong,.step b{font-weight:700}
+.step strong,.step b{font-weight:500}
 .step .fig{font:var(--t-note);color:var(--bone-2);margin:1.5em 0}
-.step .fig b{color:var(--bone);font-weight:700}
+.step .fig b{color:var(--bone);font-weight:500}
 .quote{color:var(--bone);margin:1.5em 0;padding-left:1em;border-left:2px solid var(--veil-2)}
 .quote small{display:block;font:var(--t-note);color:var(--bone-2);margin-top:8px}
 figure{margin:1.4em 0}
-figure img{width:100%;height:auto;border:0;border-radius:1px;background:#fff}
-figcaption{font:var(--t-note);color:var(--bone-2);margin-top:10px}
+figure img{width:100%;height:auto;border:0;border-radius:0;background:#fff}
+figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;text-align:center}
 /* image viewer: every figure image opens full size in an overlay, zoomable and draggable */
 figure img[role=button]{cursor:zoom-in}
 figure img[role=button]:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
@@ -156,7 +161,7 @@ html.lb-open{overflow:hidden;scrollbar-gutter:stable}
 .table-wrap{overflow-x:auto;margin:0 0 1.2em}
 table{border-collapse:collapse;width:100%;font:var(--t-data);font-variant-numeric:tabular-nums}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--veil);vertical-align:top}
-th{font:var(--t-note);color:var(--bone-2);border-bottom:1px solid var(--veil-2)}
+th{font:var(--t-note);color:var(--bone-2);border-bottom:1px solid var(--bone)}
 /* Keep the five-column arithmetic table readable on narrow phones. */
 @media (max-width:600px){th{font-size:.75rem;line-height:1.4;overflow-wrap:normal!important}td{font-size:.75rem}}
 /* footer */
@@ -170,7 +175,9 @@ footer p{margin:0 0 .7em}
 }
 @media (max-width:900px){
   /* Single-column reading layout; sticky panel geometry is in story-layout.css. */
-  .hero{padding-top:40px}
+  .hero{padding-top:64px}
+  .sitehead{padding:24px 24px 0}
+  .sitehead .sitelinks{gap:0 22px}
   .chapter{display:flex;flex-direction:column}
   .chapter>*{width:100%;max-width:100%;min-width:0}
   .chapter>.text{max-width:640px;margin-inline:auto}
@@ -193,22 +200,22 @@ footer p{margin:0 0 .7em}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* Sources conclude the reading without keeping a graphic pinned. */
-.endmatter{max-width:720px;margin:0 auto;padding:48px 0 64px;min-height:0;border-top:1px solid var(--veil-2)}
+.endmatter{max-width:720px;margin:0 auto;padding:64px 0 80px;min-height:0;border-top:1px solid var(--veil-2)}
 .endmatter h2{margin-top:0}
 .endmatter.step{min-height:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=27">
-<link rel="stylesheet" href="../cipher-cards.css?v=25">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=30">
+<link rel="stylesheet" href="../story-layout.css?v=28">
+<link rel="stylesheet" href="../cipher-cards.css?v=26">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=31">
 <link rel="stylesheet" href="../story-graphics.css?v=26">
 <link rel="stylesheet" href="../try-cipher.css?v=37">
 </head>
 <body>
 
+<header class="sitehead"><a class="name" href="./">Colin Reilly</a><p class="sitelinks"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a> <a class="lang" href="../" hreflang="en" lang="en">English version</a></p></header>
 <div class="hero">
 <h1>Die Lösung des Kryptogramms von 1950, das ein Leben nach dem Tod prüfen sollte</h1>
 <p class="byline"><span class="byline-author">Von <a href="https://www.linkedin.com/in/colin-r-10680960/">Colin Reilly</a></span> <time datetime="2026-10-04">4. Oktober 2026</time></p>
-<p class="hero-links"><a href="https://github.com/creilly11235/wood-cryptogram-1950">Code und Daten</a> <a class="lang" href="../" hreflang="en" lang="en">English version</a></p>
   <div class="reveal-track">
   <figure class="cipher-row" aria-label="Woods Geheimtext, FVAMI NTKFX XWATB OIZVV X" data-message="HIER BIN ICH TOTSIENS TEW">
     <p class="intro">„Mein verschlüsselter Text lautet:“</p>
@@ -944,7 +951,7 @@ function Graphic(el){
         const cols=m?(W<500?2:4):W<330?3:W<420?4:5,nrows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/nrows;
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*70,()=>{
           const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;
-          ctx.fillStyle="#f5f7f8";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,3);ctx.fill();ctx.stroke();mark(y+dy);
+          ctx.fillStyle="#f4f2ec";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,3);ctx.fill();ctx.stroke();mark(y+dy);
           line(x+7,y+7,x+7,y+dy-7,muted,1.5);label(name,x+13,y+dy/2,dx-21,m?16:CAP,ink);
         }));break;
       }

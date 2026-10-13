@@ -145,8 +145,8 @@ figure img {
     max-width: 560px;
     border: 1px solid var(--veil-2);
     border-radius: 3px;
-    background: rgb(250 251 252 / 96%);
-    box-shadow: 0 6px 24px rgb(31 44 48 / 8%);
+    background: var(--label-bg);
+    box-shadow: 0 6px 24px rgb(0 0 0 / 8%);
     pointer-events: auto;
     will-change: opacity;
   }
