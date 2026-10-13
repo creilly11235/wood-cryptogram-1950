@@ -201,7 +201,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="../cipher-cards.css?v=25">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="../story-graphics.css?v=26">
-<link rel="stylesheet" href="../try-cipher.css?v=36">
+<link rel="stylesheet" href="../try-cipher.css?v=37">
 </head>
 <body>
 
@@ -381,7 +381,7 @@ footer p{margin:0 0 .7em}
 <div class="try-body">
 <div class="try-step" data-step="message">
 <label class="try-label" for="try-message">Ihre geheime Botschaft</label>
-<textarea id="try-message" class="try-input" rows="2" maxlength="70" spellcheck="false" autocomplete="off">THERE IS NO DEATH</textarea>
+<textarea id="try-message" class="try-input" rows="2" maxlength="70" spellcheck="false" autocomplete="off" autocapitalize="characters">THERE IS NO DEATH</textarea>
 <div class="try-cards try-plain" role="img" translate="no" hidden></div>
 </div>
 <div class="try-step" data-step="key" hidden>
@@ -1055,10 +1055,14 @@ window.WoodStory={Graphic,reduced};
 <script src="../story-scroll.js?v=30"></script>
 <script src="../hero-reveal.js?v=25"></script>
 <script src="../cipher-tokens.js?v=25"></script>
-<script src="../try-cipher.js?v=36"></script>
+<script src="../try-cipher.js?v=37"></script>
 <script>
 TryCipher(document.querySelector("#try-it"),{
   noMessage:"Geben Sie zuerst eine Botschaft ein.",
+  noLetters:"Die Botschaft braucht mindestens einen Buchstaben von A bis Z.",
+  longMessage:"Die Botschaft darf höchstens {max} Buchstaben haben.",
+  maxLength:"Die Botschaft darf höchstens {max} Zeichen lang sein.",
+  lettersOnly:"Nur die Buchstaben A bis Z zählen, Akzente entfallen, und Ziffern und Satzzeichen bleiben weg.",
   shortKey:"Dieser Text hat {words} verschiedene Wörter, die Botschaft kann also höchstens {words} Buchstaben haben. Kürzen Sie sie oder wählen Sie einen anderen Schlüssel.",
   missingWords:"Geben Sie jedem Buchstaben ein Schlüsselwort.",
   repeatWord:"Jedes Schlüsselwort darf nur einmal verwendet werden.",

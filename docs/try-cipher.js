@@ -114,7 +114,8 @@
     const table = section.querySelector('.try-table');
     const body = table.querySelector('tbody');
     const status = section.querySelector('.try-status');
-    const state = { words: [], plain: '', keyWords: [], pairs: [], busy: false };
+    const state = { words: [], plain: '', keyWords: [], pairs: [], busy: false, note: '' };
+    const MAX_LETTERS = 60, MAX_CHARS = Number(message.getAttribute('maxlength')) || 70;
     let run = 0; // bumps on every edit so an animation in flight stops
 
     // The foot of the panel carries the primary button for the current stage
@@ -145,6 +146,27 @@
     }
     function lock(step, locked) {
       steps[step].classList.toggle('is-locked', locked);
+      const input = step === 'message' ? message : preset;
+      if (locked) collapse(input); else expand(input);
+    }
+    // An input folds away when its step is done and unfolds when it reopens.
+    function collapse(el) {
+      if (el.hidden) return;
+      if (reduced) { el.hidden = true; return; }
+      const height = el.offsetHeight, margin = getComputedStyle(el).marginBottom;
+      el.style.overflow = 'hidden'; el.style.minHeight = '0';
+      const anim = el.animate([{ opacity: 1, height: height + 'px', marginBottom: margin }, { opacity: 0, height: '0px', marginBottom: '0px' }], { duration: 360, easing: 'ease-in', fill: 'forwards' });
+      anim.finished.then(() => { anim.cancel(); el.hidden = true; el.style.overflow = ''; el.style.minHeight = ''; }).catch(() => {});
+    }
+    function expand(el) {
+      if (!el.hidden) return;
+      el.getAnimations().forEach(anim => anim.cancel());
+      el.hidden = false;
+      if (reduced) return;
+      const height = el.offsetHeight, margin = getComputedStyle(el).marginBottom;
+      el.style.overflow = 'hidden'; el.style.minHeight = '0';
+      const anim = el.animate([{ opacity: 0, height: '0px', marginBottom: '0px' }, { opacity: 1, height: height + 'px', marginBottom: margin }], { duration: 360, easing: 'ease-out' });
+      anim.finished.then(() => { el.style.overflow = ''; el.style.minHeight = ''; }).catch(() => {});
     }
     function reveal(items, gap) {
       if (reduced) return Promise.resolve();
@@ -176,12 +198,18 @@
     }
 
     // Step 1: the message becomes cards, one letter each, grouped by word.
+    // Only the letters A to Z take part, and a note says so when anything
+    // else was typed; a message too long for the panel is sent back.
     function setMessage() {
-      const words = message.value.split(/\s+/).map(letters).filter(Boolean);
-      if (!words.length) { status.textContent = labels.noMessage; message.focus(); return; }
+      const raw = message.value;
+      const words = raw.split(/\s+/).map(letters).filter(Boolean);
+      if (!words.length) { status.textContent = /\S/.test(raw) ? labels.noLetters : labels.noMessage; message.focus(); return; }
+      const plain = words.join('');
+      if (plain.length > MAX_LETTERS) { status.textContent = fill(labels.longMessage, { max: MAX_LETTERS }); message.focus(); return; }
+      state.note = raw.normalize('NFKD').toUpperCase().replace(/\s+/g, '') === plain ? '' : labels.lettersOnly;
       status.textContent = '';
       state.words = words;
-      state.plain = words.join('');
+      state.plain = plain;
       plainOut.replaceChildren(...words.map(word => {
         const group = node('span', 'grp');
         group.append(...word.split('').map(letter => card(letter, 'decoded')));
@@ -208,7 +236,7 @@
       passageOut.replaceChildren();
       passageOut.hidden = true;
       pairsOut.hidden = false;
-      status.textContent = '';
+      status.textContent = state.note;
       buttons.key.disabled = false;
       if (chosen) {
         const key = keyFromPassage(chosen.text, length);
@@ -392,10 +420,15 @@
     }
     // Done moves on to the key table, which rises over the panel.
     function done() {
-      table.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' });
+      const margin = parseFloat(getComputedStyle(table).scrollMarginTop) || 0;
+      window.scrollTo({ top: table.getBoundingClientRect().top + window.scrollY - margin, behavior: reduced ? 'auto' : 'smooth' });
     }
 
     buttons.message.addEventListener('click', setMessage);
+    message.addEventListener('input', () => {
+      if (panel.dataset.stage !== 'message') return;
+      status.textContent = message.value.length >= MAX_CHARS ? fill(labels.maxLength, { max: MAX_CHARS }) : '';
+    });
     message.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); setMessage(); } });
     back.addEventListener('click', editMessage);
     preset.addEventListener('change', () => { state.keyWords = []; renderKey(); });

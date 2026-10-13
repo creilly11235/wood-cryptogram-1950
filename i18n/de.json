@@ -1110,6 +1110,22 @@
       "de": "\"Geben Sie zuerst eine Botschaft ein.\""
     },
     {
+      "en": "\"The message needs at least one letter from A to Z.\"",
+      "de": "\"Die Botschaft braucht mindestens einen Buchstaben von A bis Z.\""
+    },
+    {
+      "en": "\"Keep the message to {max} letters or fewer.\"",
+      "de": "\"Die Botschaft darf höchstens {max} Buchstaben haben.\""
+    },
+    {
+      "en": "\"The message can be up to {max} characters long.\"",
+      "de": "\"Die Botschaft darf höchstens {max} Zeichen lang sein.\""
+    },
+    {
+      "en": "\"Only the letters A to Z count, so accents are dropped and digits and punctuation are left out.\"",
+      "de": "\"Nur die Buchstaben A bis Z zählen, Akzente entfallen, und Ziffern und Satzzeichen bleiben weg.\""
+    },
+    {
       "en": "\"This passage has {words} distinct words, so the message can have at most {words} letters. Shorten it or choose another key.\"",
       "de": "\"Dieser Text hat {words} verschiedene Wörter, die Botschaft kann also höchstens {words} Buchstaben haben. Kürzen Sie sie oder wählen Sie einen anderen Schlüssel.\""
     },
