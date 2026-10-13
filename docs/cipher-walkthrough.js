@@ -187,8 +187,7 @@
 
       this.focus = this.node('div', 'cw-focus');
       this.focusPair = this.node('div', 'cw-focus-pair');
-      this.focusCard = this.node('div', 'cw-single decoded', this.firstPlain);
-      this.focusPair.append(this.focusCard, this.node('span', 'cw-focus-word', this.words[0]));
+      this.focusPair.append(this.node('div', 'cw-single decoded', this.firstPlain), this.node('span', 'cw-focus-word', this.words[0]));
       this.math = this.node('div', 'cw-math');
       const sum = this.node('div', 'cw-sum');
       this.firstTerms.forEach(([letter, value], index) => {
@@ -491,8 +490,7 @@
       let cipherOrigins = [];
       if (previous === this.cipherStage && stage === this.lastStage && !this.message.hidden) cipherOrigins = this.messageLetters.map(letter => letter.getBoundingClientRect());
       if (previous === 3) from = this.pairs[0].getBoundingClientRect();
-      else if (previous === 7 && stage === 8) from = this.focusCard.getBoundingClientRect();
-      else if (previous >= 4 && previous <= 7) from = this.focusPair.getBoundingClientRect();
+      else if (previous === 4 || previous === 5) from = this.focusPair.getBoundingClientRect();
       else if (previous === 8) from = this.shiftTo.getBoundingClientRect();
       else if (previous === 9) from = this.resultCard.getBoundingClientRect();
       else if (previous === 2 && stage === 3) {
@@ -518,10 +516,12 @@
       this.source.hidden = stage !== 0;
       this.keyphrase.hidden = stage !== 1 && stage !== 2;
       this.grid.hidden = stage !== 3 && stage !== this.cipherStage;
-      this.root.toggleAttribute('data-compact', stage >= 5 && stage <= 7);
+      this.root.toggleAttribute('data-compact', stage === 5);
       this.root.toggleAttribute('data-cipher', stage === this.cipherStage);
       this.focus.hidden = stage < 4 || stage > 7;
-      this.math.hidden = stage < 5 || stage > 7;
+      // The letter count and the recount stand alone, with the card and sum cleared away.
+      this.focusPair.hidden = stage > 5;
+      this.math.hidden = stage !== 5;
       this.alpha.hidden = stage !== 6 && stage !== 7;
       this.alphaKeyLetter.hidden = stage !== 6;
       this.alphaShift.hidden = stage !== 7;
@@ -586,8 +586,10 @@
       } else if (stage === 4) {
         this.moveFrom(this.focusPair, from);
       } else if (stage === 5) {
-        // Stepping back from the alphabet leaves the sum where it already is.
-        if (previous !== 6) {
+        if (previous > 5) {
+          // Stepping back from the cleared count, the card and sum return together.
+          this.animate(this.focus, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
+        } else {
           this.moveFrom(this.focusPair, from, 360);
           this.math.querySelectorAll('.cw-term, .cw-plus, .cw-equals, .cw-total').forEach((element, index) => {
             this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 320, delay: index * 55, fill: 'backwards'});
@@ -595,15 +597,14 @@
           this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
         }
       } else if (stage === 6) {
-        // The sum stays put; the alphabet counts up to the remainder one letter
-        // at a time, and the sentence names the letter once the count lands.
+        // The alphabet counts up to the remainder one letter at a time on a
+        // cleared panel, and the sentence names the letter once the count lands.
         if (previous === 7) {
           // Stepping back from the shift count, the numbers simply return to
           // their places in the alphabet.
           this.renumberAlphabet(0);
         } else {
           this.renumberAlphabet();
-          if (previous !== 5) this.animate(this.focus, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350});
           const count = previous === 5 ? 110 : 60;
           this.alphaCells.forEach((cell, index) => {
             this.animate(cell, [{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 260, delay: 200 + index * count, fill: 'backwards'});
@@ -620,9 +621,9 @@
         this.renumberAlphabet(count);
         this.animate(this.alphaShift, [{opacity: 0}, {opacity: 1}], {duration: 350, delay: 300 + this.alphaCells.length * count, fill: 'backwards'});
       } else if (stage === 8) {
-        // From the sum, the message card travels to its place on the left and
-        // the rest of the scene follows; the count starts once it has landed.
-        const glide = previous === 7 && Boolean(from) && !this.reduced;
+        // Arriving from the first cipher letter, the card travels back to its
+        // place on the left; otherwise the scene fades in and the count starts.
+        const glide = previous === 9 && Boolean(from) && !this.reduced;
         const settle = glide ? 420 : 0;
         if (glide) {
           this.moveFrom(this.shiftFrom, from, 520);

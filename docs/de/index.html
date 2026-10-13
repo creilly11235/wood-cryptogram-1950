@@ -50,7 +50,8 @@ a:hover{color:var(--bone);text-decoration-thickness:1.5px}
 a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher,code{font-family:var(--mono);font-size:.9em}
 /* A compact article opening; sources and detailed credits follow the story. */
-.sitehead{max-width:1184px;margin:0 auto;padding:36px 24px 0;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 32px}
+/* The page draws under the phone's status bar, so the header keeps clear of it. */
+.sitehead{max-width:1184px;margin:0 auto;padding:calc(36px + env(safe-area-inset-top,0px)) 24px 0;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 32px}
 .sitehead .name{font:400 1.9375rem/1.4 var(--display);text-decoration:none;white-space:nowrap}
 .sitehead .sitelinks{display:flex;flex-wrap:wrap;gap:0 36px;margin:0;font:var(--t-note)}
 .sitehead .sitelinks a{text-decoration:none;padding:10px 0 2px;border-bottom:1px solid transparent;white-space:nowrap}
@@ -163,7 +164,7 @@ footer p{margin:0 0 .7em}
 .small{color:var(--bone-3)}
 @media (max-width:900px){
   .hero{padding-top:64px}
-  .sitehead{padding:24px 24px 0}
+  .sitehead{padding:calc(24px + env(safe-area-inset-top,0px)) 24px 0}
   .sitehead .sitelinks{gap:0 22px}
   th,td{padding:8px 4px}
 }
@@ -182,7 +183,7 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="../story-layout.css?v=35">
 <link rel="stylesheet" href="../cipher-cards.css?v=28">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=40">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=44">
 <link rel="stylesheet" href="../story-graphics.css?v=28">
 <link rel="stylesheet" href="../try-cipher.css?v=39">
 </head>
@@ -233,14 +234,14 @@ footer p{margin:0 0 .7em}
 <p data-walk-stage="3">Jedes Schlüsselwort gehört zu einem Buchstaben der Botschaft. Die 14 Buchstaben von THERE IS NO DEATH brauchen also 14 verschiedene Schlüsselwörter.</p>
 </li>
 <li>
-<p data-walk-stage="4">Jedem Buchstaben wird ein Wort aus dem Text zugeordnet. Das erste Paar ist der Klartextbuchstabe T und das Schlüsselwort To.</p>
-<p data-walk-stage="5">Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26), und 26 wird so oft abgezogen, wie es ganz hineinpasst. To ergibt 35, es bleibt 9.</p>
+<p data-walk-stage="4">Jedem Buchstaben wird ein Wort aus dem Text zugeordnet. Das erste Paar ist der Klartextbuchstabe T und das Schlüsselwort „To“.</p>
+<p data-walk-stage="5">Die Buchstabenwerte des Wortes werden addiert (A=1 bis Z=26), und 26 wird so oft abgezogen, wie es ganz hineinpasst. „To“ ergibt 35, es bleibt 9.</p>
 <p data-walk-stage="6">Was übrig bleibt, benennt einen Buchstaben nach seiner Stelle im Alphabet, wobei 1 A ist, 25 Y und 0 Z. Der 9. Buchstabe ist I, also ist I der Schlüsselbuchstabe für T.</p>
 </li>
 <li>
-<p data-walk-stage="7">Der Schlüsselbuchstabe wird dann als Abstand verwendet, und dafür beginnt die Zählung bei A mit null. So gezählt steht I 8 Stellen nach A, also bedeutet I eine Verschiebung um 8.</p>
-<p data-walk-stage="8">Der Klartextbuchstabe rückt so weit im Alphabet vor, nach Z geht es bei A weiter. T rückt 8 Stellen vor.</p>
-<p data-walk-stage="9">Aus T wird B, der erste Buchstabe des Geheimtexts.</p>
+<p data-walk-stage="7">Aus dem Schlüsselbuchstaben wird dann eine Verschiebung für jeden Buchstaben berechnet. Bei diesem Verfahren beginnt die Zählung mit A=0, also keiner Verschiebung, B=1 und so weiter. I steht 8 Stellen nach A, bedeutet also eine Verschiebung um 8.</p>
+<p data-walk-stage="8">Der Klartextbuchstabe rückt dann so weit im Alphabet vor, nach Z geht es bei A weiter.</p>
+<p data-walk-stage="9">So rückt T 8 Stellen vor und wird zu B, dem ersten Buchstaben des Geheimtexts.</p>
 </li>
 </ol>
 <p data-walk-stage="10">Dasselbe geschieht mit allen 14 Buchstaben, und der Geheimtext wird in Fünfergruppen geschrieben. Thouless’ gedruckte Fassung endet auf B statt auf D, ein Fehler, auf den der Artikel später zurückkommt.</p>
@@ -519,7 +520,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=37"></script>
+<script src="../cipher-walkthrough.js?v=39"></script>
 <script>
 (function(){
 "use strict";
@@ -581,7 +582,7 @@ function Graphic(el){
     const measureTail=()=>{
       if(!chapter||walk.stage!==walk.lastStage)return;
       const bottom=walk.overview.getBoundingClientRect().bottom;
-      const tail=el.getBoundingClientRect().bottom-bottom-28;
+      const tail=el.getBoundingClientRect().bottom-bottom-64;
       if(Number.isFinite(tail)&&tail>0)chapter.style.setProperty("--walk-tail",Math.round(tail)+"px");
     };
     this.showStage=stage=>{walk.go(stage);if(stage===walk.lastStage)requestAnimationFrame(measureTail);};
@@ -1045,7 +1046,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="../story-scroll.js?v=32"></script>
+<script src="../story-scroll.js?v=33"></script>
 <script src="../hero-reveal.js?v=26"></script>
 <script src="../cipher-tokens.js?v=25"></script>
 <script src="../try-cipher.js?v=37"></script>

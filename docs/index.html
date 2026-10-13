@@ -49,7 +49,8 @@ a:hover{color:var(--bone);text-decoration-thickness:1.5px}
 a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher,code{font-family:var(--mono);font-size:.9em}
 /* A compact article opening; sources and detailed credits follow the story. */
-.sitehead{max-width:1184px;margin:0 auto;padding:36px 24px 0;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 32px}
+/* The page draws under the phone's status bar, so the header keeps clear of it. */
+.sitehead{max-width:1184px;margin:0 auto;padding:calc(36px + env(safe-area-inset-top,0px)) 24px 0;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 32px}
 .sitehead .name{font:400 1.9375rem/1.4 var(--display);text-decoration:none;white-space:nowrap}
 .sitehead .sitelinks{display:flex;flex-wrap:wrap;gap:0 36px;margin:0;font:var(--t-note)}
 .sitehead .sitelinks a{text-decoration:none;padding:10px 0 2px;border-bottom:1px solid transparent;white-space:nowrap}
@@ -162,7 +163,7 @@ footer p{margin:0 0 .7em}
 .small{color:var(--bone-3)}
 @media (max-width:900px){
   .hero{padding-top:64px}
-  .sitehead{padding:24px 24px 0}
+  .sitehead{padding:calc(24px + env(safe-area-inset-top,0px)) 24px 0}
   .sitehead .sitelinks{gap:0 22px}
   th,td{padding:8px 4px}
 }
@@ -181,7 +182,7 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="story-layout.css?v=35">
 <link rel="stylesheet" href="cipher-cards.css?v=28">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=40">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=44">
 <link rel="stylesheet" href="story-graphics.css?v=28">
 <link rel="stylesheet" href="try-cipher.css?v=39">
 </head>
@@ -233,14 +234,14 @@ footer p{margin:0 0 .7em}
 <p data-walk-stage="3">Each key word pairs with one letter of the message, so the 14 letters of THERE IS NO DEATH need 14 distinct key words.</p>
 </li>
 <li>
-<p data-walk-stage="4">Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word To.</p>
-<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. To adds up to 35, which leaves 9.</p>
+<p data-walk-stage="4">Each letter is assigned a word from the phrase. The first pair is the message letter T and the key word “To”.</p>
+<p data-walk-stage="5">The letters of the word are added up (A=1 to Z=26), and 26 is taken off as many times as it fits whole. “To” adds up to 35, which leaves 9.</p>
 <p data-walk-stage="6">What is left names a letter by its place in the alphabet, where 1 is A, 25 is Y and 0 is Z. The 9th letter is I, so I is the key letter for T.</p>
 </li>
 <li>
-<p data-walk-stage="7">The key letter is then used as a distance to move, and for that the count starts at A with zero. Counted that way, I is 8 places on from A, so I means a shift of 8.</p>
-<p data-walk-stage="8">The message letter moves that far along the alphabet, wrapping from Z back to A. T moves forward 8 places.</p>
-<p data-walk-stage="9">T becomes B, the first letter of the ciphertext.</p>
+<p data-walk-stage="7">The key letter is then used to calculate a shift on each letter. For this method the count starts with A=0 or no shift, B=1 and so on. I is 8 places from A, so it means a shift of 8.</p>
+<p data-walk-stage="8">The message letter then moves that far along the alphabet, wrapping from Z back to A.</p>
+<p data-walk-stage="9">So T moves forward 8 places to become B, the first letter of the ciphertext.</p>
 </li>
 </ol>
 <p data-walk-stage="10">The same happens for all 14 letters and the cipher is written in groups of five. Thouless’s printed version ends in B rather than D, a slip the article comes back to later.</p>
@@ -518,7 +519,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=37"></script>
+<script src="cipher-walkthrough.js?v=39"></script>
 <script>
 (function(){
 "use strict";
@@ -580,7 +581,7 @@ function Graphic(el){
     const measureTail=()=>{
       if(!chapter||walk.stage!==walk.lastStage)return;
       const bottom=walk.overview.getBoundingClientRect().bottom;
-      const tail=el.getBoundingClientRect().bottom-bottom-28;
+      const tail=el.getBoundingClientRect().bottom-bottom-64;
       if(Number.isFinite(tail)&&tail>0)chapter.style.setProperty("--walk-tail",Math.round(tail)+"px");
     };
     this.showStage=stage=>{walk.go(stage);if(stage===walk.lastStage)requestAnimationFrame(measureTail);};
@@ -1044,7 +1045,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="story-scroll.js?v=32"></script>
+<script src="story-scroll.js?v=33"></script>
 <script src="hero-reveal.js?v=26"></script>
 <script src="cipher-tokens.js?v=25"></script>
 <script src="try-cipher.js?v=37"></script>

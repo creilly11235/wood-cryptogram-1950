@@ -70,6 +70,8 @@
 .cw[data-compact] .cw-focus-pair{gap:6px}
 .cw[data-compact] .cw-single{width:45px;height:52px;font-size:32px}
 .cw[data-compact] .cw-focus-word{font-size:15px}
+/* The sum sits a little further below the card and its key word than the rows below it do. */
+.cw[data-compact] .cw-math{margin-top:18px}
 /* The three arithmetic lines share one gap, set once and read by the result line. */
 .cw-math{--cw-math-gap:16px;display:flex;flex-direction:column;align-items:center;gap:var(--cw-math-gap);width:100%}
 /* The gaps between terms equal a mono space, so the sum lines up with the lines below. */
@@ -83,9 +85,10 @@
 .cw-alpha{display:flex;flex-direction:column;align-items:center;gap:var(--cw-math-gap,16px)}
 .cw-alpha-row{display:flex;gap:6px}
 .cw-alpha-cell{display:flex;flex-direction:column;align-items:center;gap:5px}
-.cw-alpha-card{box-sizing:border-box;width:28px;height:32px;border:1px solid var(--veil-2,#bcb7aa);color:var(--bone-2,#5e5b54);font:400 18px/30px var(--mono,monospace);text-align:center}
-.cw-alpha-card.is-key{border-color:var(--bone,#000);border-bottom:3px double var(--bone,#000);color:var(--bone,#000)}
-.cw-alpha-num{font:400 13px/1 var(--mono,monospace);color:var(--bone-2,#5e5b54)}
+.cw-alpha-card{box-sizing:border-box;width:32px;height:38px;border:1px solid var(--veil-2,#bcb7aa);color:var(--bone-2,#5e5b54);font:400 20px/36px var(--mono,monospace);text-align:center}
+.cw-alpha-card.is-key{border-color:var(--bone,#000);color:var(--bone,#000)}
+.cw-alpha-num{font:400 14px/1 var(--mono,monospace);color:var(--bone-2,#5e5b54)}
+@media(max-width:360px){.cw-alpha-row{gap:4px}.cw-alpha-card{width:28px;height:32px;font:400 18px/30px var(--mono,monospace)}.cw-alpha-num{font-size:13px}}
 .cw-key-letter{font:400 16px/1.4 var(--body,Georgia,serif);text-align:center}
 .cw-result-label{font-size:16px;text-align:center;line-height:1.4}
 .cw-shift-cards{display:flex;align-items:center;gap:clamp(18px,4cqw,30px)}
@@ -108,8 +111,8 @@
   .cw-source-grid,.cw-grid{gap:10px 4px}.cw-source-letter,.cw-card,.cw-msg-letter{width:35px;height:37px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:23px;border-radius:0}
   .cw-pair{gap:4px}.cw-word{font-size:10.5px}.cw-prayer{font-size:18px;line-height:1.55;max-width:31ch}
   .cw-single{width:59px;height:68px;font-size:42px}.cw-focus{gap:12px}.cw-focus-pair{gap:6px}.cw-focus-word{font-size:16px}
-  .cw[data-compact] .cw-focus{gap:10px}.cw[data-compact] .cw-single{width:32px;height:36px;font-size:24px}.cw[data-compact] .cw-focus-word{font-size:12px}
-  .cw-math{--cw-math-gap:12px}.cw-sum{font-size:18px}.cw-term{gap:4px;min-width:18px}.cw-term-letter{font-size:13px}.cw-term-value{font-size:18px}.cw-plus,.cw-equals{font-size:18px;padding-top:17px}.cw-total{font-size:18px;padding-top:17px}.cw-reduction{font-size:18px}.cw-key-letter{font-size:15px}.cw-alpha-row{gap:4px}.cw-alpha-card{width:24px;height:28px;font-size:15px;line-height:26px}.cw-alpha-num{font-size:11px}
+  .cw[data-compact] .cw-focus{gap:10px}.cw[data-compact] .cw-math{margin-top:20px}.cw[data-compact] .cw-single{width:32px;height:36px;font-size:24px}.cw[data-compact] .cw-focus-word{font-size:12px}
+  .cw-math{--cw-math-gap:12px}.cw-sum{font-size:18px}.cw-term{gap:4px;min-width:18px}.cw-term-letter{font-size:13px}.cw-term-value{font-size:18px}.cw-plus,.cw-equals{font-size:18px;padding-top:17px}.cw-total{font-size:18px;padding-top:17px}.cw-reduction{font-size:18px}.cw-key-letter{font-size:15px}
   .cw-shift{gap:14px}.cw-result-label{font-size:13px}.cw-shift-cards{gap:16px}.cw-arrow-label{font-size:12px}.cw-result{gap:12px}
   .cw-controls{padding-top:8px}.cw-previous,.cw-next{min-height:36px;min-width:66px;font-size:12px;padding-inline:11px}
 }
@@ -117,7 +120,7 @@
   .cw{padding:8px;gap:6px}
   .cw-source-grid,.cw-grid{gap:5px 3px}.cw-source-letter,.cw-card,.cw-msg-letter{width:30px;height:29px}.cw-source-letter,.cw-face,.cw-msg-letter{font-size:19px}.cw-pair{gap:2px}.cw-word{font-size:10px;letter-spacing:-.025em}
   .cw-prayer{font-size:15px;line-height:1.4}
-  .cw[data-compact] .cw-focus{gap:6px}.cw[data-compact] .cw-focus-pair{gap:2px}.cw[data-compact] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-compact] .cw-focus-word{font-size:11px}.cw-math{--cw-math-gap:8px}
+  .cw[data-compact] .cw-focus{gap:6px}.cw[data-compact] .cw-math{margin-top:12px}.cw[data-compact] .cw-focus-pair{gap:2px}.cw[data-compact] .cw-single{width:26px;height:28px;font-size:21px}.cw[data-compact] .cw-focus-word{font-size:11px}.cw-math{--cw-math-gap:8px}
   .cw-controls{padding-top:5px}.cw-previous,.cw-next{min-height:32px}
 }
 /* Browser chrome can leave a wide phone with a short reading viewport.
@@ -131,7 +134,7 @@
     .cw-pair{gap:3px}.cw-word{font-size:10.5px}
     .cw-prayer{font-size:15px;line-height:1.4}
     .cw-single{width:52px;height:60px;font-size:36px}.cw-focus,.cw-result,.cw-shift{gap:10px}
-    .cw[data-compact] .cw-focus{gap:6px}.cw[data-compact] .cw-focus-pair{gap:2px}
+    .cw[data-compact] .cw-focus{gap:6px}.cw[data-compact] .cw-math{margin-top:6px}.cw[data-compact] .cw-focus-pair{gap:2px}
     .cw[data-compact] .cw-single{width:26px;height:28px;font-size:21px}
     .cw[data-compact] .cw-focus-word{font-size:11px}.cw-math{--cw-math-gap:8px}
     .cw-controls{padding-top:5px}
