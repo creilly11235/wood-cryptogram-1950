@@ -695,6 +695,61 @@
       "kind": "p",
       "en": "A third is just as readable. A sentence on its own would not tell you whether it was Wood’s, particularly one this short, so the key has to come from somewhere that can be checked.",
       "de": "Ein dritter liest sich genauso gut. Ein Satz für sich allein verrät nicht, ob er von Wood stammt, zumal ein so kurzer, also muss der Schlüssel von einer Stelle kommen, die sich überprüfen lässt."
+    },
+    {
+      "kind": "h2",
+      "en": "Try Thouless’s method yourself",
+      "de": "Thouless’ Methode selbst ausprobieren"
+    },
+    {
+      "kind": "p",
+      "en": "Type a message and choose a passage to serve as the key. The page enciphers it the way Thouless described, skipping any key word that has already appeared, so the passage needs one distinct word for every letter of the message.",
+      "de": "Geben Sie eine Botschaft ein und wählen Sie einen Text als Schlüssel. Die Seite verschlüsselt sie so, wie Thouless es beschrieben hat, und überspringt jedes Schlüsselwort, das schon einmal vorgekommen ist, sodass der Text für jeden Buchstaben der Botschaft ein eigenes Wort braucht."
+    },
+    {
+      "kind": "label",
+      "en": "Your message",
+      "de": "Ihre Botschaft"
+    },
+    {
+      "kind": "label",
+      "en": "Your key",
+      "de": "Ihr Schlüssel"
+    },
+    {
+      "kind": "option",
+      "en": "Hamlet’s soliloquy, the passage Thouless used",
+      "de": "Hamlets Monolog, der Text, den Thouless verwendete"
+    },
+    {
+      "kind": "option",
+      "en": "The Lord’s Prayer in the 1912 Luther Bible, the passage Wood used",
+      "de": "Das Vaterunser aus der Lutherbibel von 1912, der Text, den Wood verwendete"
+    },
+    {
+      "kind": "option",
+      "en": "A passage of your own",
+      "de": "Ein eigener Text"
+    },
+    {
+      "kind": "p",
+      "en": "The message",
+      "de": "Die Botschaft"
+    },
+    {
+      "kind": "p",
+      "en": "The key",
+      "de": "Der Schlüssel"
+    },
+    {
+      "kind": "p",
+      "en": "The cipher",
+      "de": "Der Geheimtext"
+    },
+    {
+      "kind": "th",
+      "en": "Plain → cipher",
+      "de": "Klartext → Geheimtext"
     }
   ],
   "js": [
@@ -1009,6 +1064,18 @@
     {
       "en": "\"Best readings from 19 Bibles\"",
       "de": "\"Beste Lesarten aus 19 Bibeln\""
+    },
+    {
+      "en": "\"Type a message and its cipher appears here.\"",
+      "de": "\"Geben Sie eine Botschaft ein, und ihr Geheimtext erscheint hier.\""
+    },
+    {
+      "en": "\"Choose or type a key passage.\"",
+      "de": "\"Wählen Sie einen Schlüsseltext oder geben Sie einen ein.\""
+    },
+    {
+      "en": "\"The passage has {words} distinct words, so it enciphers the first {words} letters of the message. A longer passage or a shorter message would cover all {letters}.\"",
+      "de": "\"Der Text hat {words} verschiedene Wörter und verschlüsselt darum die ersten {words} Buchstaben der Botschaft. Ein längerer Text oder eine kürzere Botschaft würde alle {letters} abdecken.\""
     }
   ]
 }

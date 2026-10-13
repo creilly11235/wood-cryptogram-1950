@@ -200,6 +200,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="cipher-cards.css?v=25">
 <link rel="stylesheet" href="cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="story-graphics.css?v=26">
+<link rel="stylesheet" href="try-cipher.css?v=31">
 </head>
 <body>
 
@@ -480,6 +481,32 @@ footer p{margin:0 0 .7em}
 <p>Wood, for his part, followed Thouless’s written rule correctly. All 21 of his key letters agree with it, and that is the method that decrypts his message.</p>
 </section>
 </div></section>
+<section class="endmatter step try" id="try-it">
+<h2>Try Thouless’s method yourself</h2>
+<p>Type a message and choose a passage to serve as the key. The page enciphers it the way Thouless described, skipping any key word that has already appeared, so the passage needs one distinct word for every letter of the message.</p>
+<div class="try-form">
+<label class="try-label" for="try-message">Your message</label>
+<textarea id="try-message" class="try-input" rows="2" maxlength="300" spellcheck="false" autocomplete="off">THERE IS NO DEATH</textarea>
+<label class="try-label" for="try-preset">Your key</label>
+<select id="try-preset" class="try-input">
+<option value="hamlet">Hamlet’s soliloquy, the passage Thouless used</option>
+<option value="luther">The Lord’s Prayer in the 1912 Luther Bible, the passage Wood used</option>
+<option value="own">A passage of your own</option>
+</select>
+<textarea id="try-key" class="try-input" rows="4" spellcheck="false" autocomplete="off" aria-label="The key passage" translate="no"></textarea>
+</div>
+<div class="try-output">
+<p class="try-label">The message</p>
+<div class="try-cards try-plain" role="img" translate="no"></div>
+<p class="try-label">The key</p>
+<p class="try-passage" translate="no"></p>
+<p class="try-label">The cipher</p>
+<div class="try-cards try-cipher" role="img" translate="no"></div>
+<p class="try-status" aria-live="polite"></p>
+</div>
+<h3>The key, word by word</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">No.</th><th scope="col">Key word</th><th scope="col">Sum</th><th scope="col">Key</th><th scope="col">Plain → cipher</th></tr></thead><tbody translate="no"></tbody></table></div>
+</section>
 </main>
 <footer>
 <p>You are visitor no. <span class="counter" id="visits">------</span></p>
@@ -989,6 +1016,14 @@ window.WoodStory={Graphic,reduced};
 <script src="story-scroll.js?v=30"></script>
 <script src="hero-reveal.js?v=25"></script>
 <script src="cipher-tokens.js?v=25"></script>
+<script src="try-cipher.js?v=31"></script>
+<script>
+TryCipher(document.querySelector("#try-it"),{
+  noMessage:"Type a message and its cipher appears here.",
+  noKey:"Choose or type a key passage.",
+  shortKey:"The passage has {words} distinct words, so it enciphers the first {words} letters of the message. A longer passage or a shorter message would cover all {letters}."
+});
+</script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */

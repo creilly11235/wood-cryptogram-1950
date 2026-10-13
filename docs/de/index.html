@@ -201,6 +201,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="../cipher-cards.css?v=25">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="../story-graphics.css?v=26">
+<link rel="stylesheet" href="../try-cipher.css?v=31">
 </head>
 <body>
 
@@ -480,6 +481,32 @@ footer p{margin:0 0 .7em}
 <p>Wood dagegen hielt sich korrekt an Thouless’ schriftliche Regel. Alle 21 seiner Schlüsselbuchstaben stimmen damit überein, und nach diesem Verfahren wurde seine Botschaft entschlüsselt.</p>
 </section>
 </div></section>
+<section class="endmatter step try" id="try-it">
+<h2>Thouless’ Methode selbst ausprobieren</h2>
+<p>Geben Sie eine Botschaft ein und wählen Sie einen Text als Schlüssel. Die Seite verschlüsselt sie so, wie Thouless es beschrieben hat, und überspringt jedes Schlüsselwort, das schon einmal vorgekommen ist, sodass der Text für jeden Buchstaben der Botschaft ein eigenes Wort braucht.</p>
+<div class="try-form">
+<label class="try-label" for="try-message">Ihre Botschaft</label>
+<textarea id="try-message" class="try-input" rows="2" maxlength="300" spellcheck="false" autocomplete="off">THERE IS NO DEATH</textarea>
+<label class="try-label" for="try-preset">Ihr Schlüssel</label>
+<select id="try-preset" class="try-input">
+<option value="hamlet">Hamlets Monolog, der Text, den Thouless verwendete</option>
+<option value="luther">Das Vaterunser aus der Lutherbibel von 1912, der Text, den Wood verwendete</option>
+<option value="own">Ein eigener Text</option>
+</select>
+<textarea id="try-key" class="try-input" rows="4" spellcheck="false" autocomplete="off" aria-label="The key passage" translate="no"></textarea>
+</div>
+<div class="try-output">
+<p class="try-label">Die Botschaft</p>
+<div class="try-cards try-plain" role="img" translate="no"></div>
+<p class="try-label">Der Schlüssel</p>
+<p class="try-passage" translate="no"></p>
+<p class="try-label">Der Geheimtext</p>
+<div class="try-cards try-cipher" role="img" translate="no"></div>
+<p class="try-status" aria-live="polite"></p>
+</div>
+<h3>Der Schlüssel, Wort für Wort</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">Nr.</th><th scope="col">Wort</th><th scope="col">Sum.</th><th scope="col">Schlüssel</th><th scope="col">Klartext → Geheimtext</th></tr></thead><tbody translate="no"></tbody></table></div>
+</section>
 </main>
 <footer>
 <p>Sie sind Besucher Nr.&nbsp;<span class="counter" id="visits">------</span></p>
@@ -990,6 +1017,14 @@ window.WoodStory={Graphic,reduced};
 <script src="../story-scroll.js?v=30"></script>
 <script src="../hero-reveal.js?v=25"></script>
 <script src="../cipher-tokens.js?v=25"></script>
+<script src="../try-cipher.js?v=31"></script>
+<script>
+TryCipher(document.querySelector("#try-it"),{
+  noMessage:"Geben Sie eine Botschaft ein, und ihr Geheimtext erscheint hier.",
+  noKey:"Wählen Sie einen Schlüsseltext oder geben Sie einen ein.",
+  shortKey:"Der Text hat {words} verschiedene Wörter und verschlüsselt darum die ersten {words} Buchstaben der Botschaft. Ein längerer Text oder eine kürzere Botschaft würde alle {letters} abdecken."
+});
+</script>
 <script>
 /* image viewer: click, tap or Enter on a figure image opens it full size; wheel, pinch, double-click or +/- zoom
    (past 100% too, a little soft), drag pans, Esc, x or a click outside the image closes */

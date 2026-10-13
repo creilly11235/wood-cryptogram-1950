@@ -1,0 +1,23 @@
+/* The reader's own cipher at the end of the article. Inputs sit above, and
+   the result below reads like the walkthrough's last frame: the message, the
+   key passage with repeats struck through, and the cipher in groups of five,
+   each under the same muted helper label the graphics use. */
+.try{--tw:28px}
+.try .try-label{display:block;font:var(--t-note);color:var(--bone-2);margin:0 0 8px}
+.try .try-form{margin:28px 0 0}
+.try .try-input{display:block;width:100%;margin:0 0 24px;padding:10px 12px;border:1px solid var(--veil-2);border-radius:2px;background:#fff;color:var(--bone);font:var(--t-body);line-height:1.5;resize:vertical}
+.try select.try-input{min-height:44px;margin-bottom:12px;padding-block:0;cursor:pointer;text-overflow:ellipsis}
+.try .try-input:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
+.try .try-input::placeholder{color:var(--bone-2);opacity:1}
+.try .try-output{margin:28px 0 0}
+.try .try-cards{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 12px;margin:0 0 24px;min-height:calc(var(--tw) * 1.25)}
+.try .grp{display:flex;gap:3px}
+.try .t{width:var(--tw);height:calc(var(--tw) * 1.25);aspect-ratio:auto;font-size:calc(var(--tw) * .65);transition:none}
+.try .try-passage{margin:0 0 24px;text-wrap:pretty}
+.try .try-passage:empty{display:none}
+.try .try-word.is-repeat{color:var(--bone-2);text-decoration:line-through;text-decoration-thickness:1px}
+.try .try-status{font:var(--t-note);color:var(--bone-2);margin:0 0 24px}
+.try .try-status:empty{display:none}
+.try h3{margin-top:0}
+.try .table-wrap:last-child{margin-bottom:0}
+@media(max-width:600px){.try{--tw:clamp(20px,calc((100vw - 104px) / 11),26px)}}
