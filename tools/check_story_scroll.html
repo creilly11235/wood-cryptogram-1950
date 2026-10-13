@@ -11,7 +11,7 @@
 </style>
 <h1>Story navigation regression check</h1>
 <p>Serve the repository over HTTP and open this page. It tests the real article’s pinned graphics
-  on phones (one card per stage rising over the full-screen graphic) and the desktop scroll sequence. Use
+  at every size (one card per stage rising over the full-screen graphic). Use
   <code>?width=320&amp;height=568&amp;lang=de</code> for another viewport or language.</p>
 <nav id="sizes"></nav>
 <p id="status">Loading…</p>
@@ -59,9 +59,8 @@ frame.addEventListener('load', async () => {
     const chapters = [...doc.querySelectorAll('.chapter')];
     const graphics = chapters.map(chapter => chapter.querySelector('.graphic'));
     const walk = graphics[0].querySelector('.cw');
-    const mobile = width <= 900;
     check(chapters.length === 6 && graphics.every(Boolean) && doc.querySelectorAll('.graphic').length === 6,
-      'Six original graphics serve every stage and both layouts');
+      'Six original graphics serve every stage at every width');
     check(doc.querySelectorAll('.cw').length === 1, 'One walkthrough serves every cipher stage');
     check(doc.querySelectorAll('.mobile-story-card, .mobile-story-dialog, .story-run').length === 0, 'No mobile card, viewer or runway remains');
     check(!!win.WoodStoryController && win.WoodStoryController.records.length === 6, 'The scroll controller drives all six chapters');
@@ -80,57 +79,44 @@ frame.addEventListener('load', async () => {
     function overflow(label) {
       check(doc.documentElement.scrollWidth <= win.innerWidth + 1, `${label}: no horizontal overflow`);
     }
-    // Both layouts: each passage selects its stage, the graphic stays beside or behind it,
-    // and scrolling back restores the stage of the passage returned to.
+    // Each card selects its stage, the graphic stays behind it, and scrolling
+    // back restores the stage of the card returned to.
     async function followsProse(index, label) {
       const chapter = chapters[index], graphic = graphics[index];
-      const targets = [...chapter.querySelectorAll(mobile ? '.pin > .text [data-walk-stage]' : '[data-walk-stage]')];
+      const targets = [...chapter.querySelectorAll('.pin > .text [data-walk-stage]')];
       check(targets.length > 0, `${label}: has passages that drive the graphic`);
       const expected = target => index === 0 ? lastStage(target) : target.dataset.s;
       const shown = () => index === 0 ? walk.dataset.stage : graphic.dataset.state;
       for (const target of [...targets, ...targets.slice(0, -1).reverse()]) {
         const place = target.getBoundingClientRect();
-        // Phones centre the card on its focal line; desktop crosses the trigger line.
-        win.scrollTo({ top: win.scrollY + (mobile ? (place.top + place.bottom) / 2 - focal : place.top - height * .55 + 15), behavior: 'instant' });
+        // Centre the card on its focal line.
+        win.scrollTo({ top: win.scrollY + (place.top + place.bottom) / 2 - focal, behavior: 'instant' });
         await settle();
         await until(() => shown() === expected(target), `${label}: scroll did not reach ${expected(target)}`, 6000);
         check(target.classList.contains('is-walk-active') && chapter.querySelectorAll('.is-walk-active').length === 1,
           `${label}: the passage for ${expected(target)} is marked as current`);
-        const box = graphic.getBoundingClientRect(), prose = chapter.querySelector('.text').getBoundingClientRect();
-        if (mobile && !target.closest('.pin')) {
-          check(box.top > 0, `${label}: ${expected(target)} reads before the graphic takes the screen`);
-        } else {
-          check(box.width > 0 && box.bottom > 0 && box.top < height && (mobile ? box.top >= -1 && Number(getComputedStyle(target).opacity) > .9 : box.left >= prose.right - 1),
-            `${label}: ${expected(target)} shows with the graphic ${mobile ? 'behind a fully visible card' : 'visible to the right'}`);
-          if (mobile) check([...chapter.querySelectorAll('.pin > .text [data-walk-stage]')].filter(card => Number(getComputedStyle(card).opacity) > .5).length === 1,
-            `${label}: only the card for ${expected(target)} is readable`);
-        }
+        const box = graphic.getBoundingClientRect();
+        check(box.width > 0 && box.bottom > 0 && box.top < height && box.top >= -1 && Number(getComputedStyle(target).opacity) > .9,
+          `${label}: ${expected(target)} shows with the graphic behind a fully visible card`);
+        check([...chapter.querySelectorAll('.pin > .text [data-walk-stage]')].filter(card => Number(getComputedStyle(card).opacity) > .5).length === 1,
+          `${label}: only the card for ${expected(target)} is readable`);
         overflow(label);
       }
     }
-    if (mobile) {
-      check(graphics.every(graphic => graphic.parentElement.matches('.chapter > .pin') && getComputedStyle(graphic).position === 'sticky'),
-        'Every graphic stays pinned in its chapter');
-      // The graphic holds on its first state for a while after the introduction has gone.
-      for (let i = 0; i < chapters.length; i++) {
-        const graphic = graphics[i];
-        win.scrollTo({ top: 0, behavior: 'instant' });
-        await settle();
-        const pin = win.scrollY + graphic.getBoundingClientRect().top;
-        win.scrollTo({ top: pin, behavior: 'instant' });
-        await settle();
-        const card = chapters[i].querySelector('.pin > .text [data-walk-stage]').getBoundingClientRect();
-        check(graphic.getBoundingClientRect().top <= 1 && card.top >= height, `Mobile chapter ${i + 1}: the first card arrives after the graphic pins`);
-      }
-    } else {
-      check(graphics.every(graphic => graphic.parentElement.matches('.chapter > .pin')), 'Desktop graphics stay directly beside their reading columns');
+    check(graphics.every(graphic => graphic.parentElement.matches('.chapter > .pin') && getComputedStyle(graphic).position === 'sticky'),
+      'Every graphic stays pinned in its chapter');
+    // The graphic holds on its first state for a while after the introduction has gone.
+    for (let i = 0; i < chapters.length; i++) {
+      const graphic = graphics[i];
+      win.scrollTo({ top: 0, behavior: 'instant' });
+      await settle();
+      const pin = win.scrollY + graphic.getBoundingClientRect().top;
+      win.scrollTo({ top: pin, behavior: 'instant' });
+      await settle();
+      const card = chapters[i].querySelector('.pin > .text [data-walk-stage]').getBoundingClientRect();
+      check(graphic.getBoundingClientRect().top <= 1 && card.top >= height, `Chapter ${i + 1}: the first card arrives after the graphic pins`);
     }
-    for (let i = 0; i < chapters.length; i++) await followsProse(i, `${mobile ? 'Mobile' : 'Desktop'} chapter ${i + 1}`);
-    frame.style.width = mobile ? '1440px' : '390px'; frame.style.height = mobile ? '900px' : '844px';
-    await pause(500);
-    check(graphics.every(graphic => graphic.isConnected && graphic.parentElement.matches('.chapter > .pin')), 'Crossing the breakpoint keeps every graphic in place');
-    frame.style.width = `${width}px`; frame.style.height = `${height}px`;
-    await pause(500);
+    for (let i = 0; i < chapters.length; i++) await followsProse(i, `Chapter ${i + 1}`);
     result.status = 'passed'; status.className = 'pass';
     status.textContent = `PASS: ${result.checks.length} checks at ${width} × ${height} (${language})`;
   } catch (error) {

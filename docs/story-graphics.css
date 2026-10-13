@@ -38,30 +38,28 @@
   .graphic:not(.walkthrough-graphic) .tiles .t{transform:none!important}
 }
 
-/* On phones the pinned graphic gives the canvas the screen space above the
-   cards. The caption and cipher stay compact; the chart's labels stay readable. */
-@media(max-width:900px){
-  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .gbody{
-    flex:1 1 0;min-height:0;max-height:none;padding:12px;gap:0;
-  }
-  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .tiles{
-    flex:none;width:100%;max-width:none;gap:2px;margin-bottom:14px;
-  }
-  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .sub{gap:1px;margin-top:-6px;margin-bottom:8px}
-  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .sub span{font-size:10px}
-  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .tiles .t{
-    height:25px;aspect-ratio:auto;border-radius:0;font-size:clamp(10px,2.9vw,15px);
-  }
-  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) canvas{
-    min-height:0;flex:1 1 0;
-  }
-  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .legend{
-    flex:none;font-size:12px;line-height:1.35;gap:6px 16px;
-    padding-top:0;margin-top:10px;
-  }
-  .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .legend i{
-    width:9px;height:9px;margin-right:6px;
-  }
+/* The pinned graphic gives the canvas the screen space above the cards. The
+   caption and cipher stay compact; the chart's labels stay readable. */
+.pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .gbody{
+  flex:1 1 0;min-height:0;max-height:none;padding:12px;gap:0;
+}
+.pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .tiles{
+  flex:none;width:100%;max-width:none;gap:2px;margin-bottom:14px;
+}
+.pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .sub{gap:1px;margin-top:-6px;margin-bottom:8px}
+.pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .sub span{font-size:10px}
+.pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .tiles .t{
+  height:25px;aspect-ratio:auto;border-radius:0;font-size:clamp(10px,2.9vw,15px);
+}
+.pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) canvas{
+  min-height:0;flex:1 1 0;
+}
+.pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .legend{
+  flex:none;font-size:12px;line-height:1.35;gap:6px 16px;
+  padding-top:0;margin-top:10px;
+}
+.pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .legend i{
+  width:9px;height:9px;margin-right:6px;
 }
 @media(max-width:360px){
   .pinned-chapter > .pin > .graphic:not(.walkthrough-graphic) .gbody{padding:8px}
