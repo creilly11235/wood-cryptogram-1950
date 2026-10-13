@@ -181,7 +181,7 @@ footer p{margin:0 0 .7em}
 .endmatter h2{margin-top:0}
 .endmatter.step{min-height:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=35">
+<link rel="stylesheet" href="../story-layout.css?v=36">
 <link rel="stylesheet" href="../cipher-cards.css?v=28">
 <link rel="stylesheet" href="../cipher-walkthrough.css?v=44">
 <link rel="stylesheet" href="../story-graphics.css?v=28">
@@ -579,10 +579,15 @@ function Graphic(el){
     // On phones the next section rises to meet the decoded message, so the
     // chapter learns how much empty graphic sits below it at the last stage.
     const chapter=el.closest(".chapter");
+    // The overview sits centred in the panel, so when a phone's browser bars
+    // come and go between measurements, half the height change lands under it.
+    let measured=null;
     const measureTail=()=>{
-      if(!chapter||walk.stage!==walk.lastStage)return;
-      const bottom=walk.overview.getBoundingClientRect().bottom;
-      const tail=el.getBoundingClientRect().bottom-bottom-64;
+      if(!chapter)return;
+      const box=el.getBoundingClientRect();let tail;
+      if(walk.stage===walk.lastStage){tail=box.bottom-walk.overview.getBoundingClientRect().bottom-64;measured={height:box.height,tail};}
+      else if(measured)tail=measured.tail+(box.height-measured.height)/2;
+      else return;
       if(Number.isFinite(tail)&&tail>0)chapter.style.setProperty("--walk-tail",Math.round(tail)+"px");
     };
     this.showStage=stage=>{walk.go(stage);if(stage===walk.lastStage)requestAnimationFrame(measureTail);};
@@ -602,7 +607,7 @@ function Graphic(el){
   const self=this,cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
   const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
   const legend=el.querySelector(".legend");
-  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,trapFrom=-1,trapFromClock=0,trapRewind=0,trapOffset=0,revealBase=0;
+  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,trapFrom=-1,trapFromClock=0,trapRewind=0,trapOffset=0,revealBase=0,holdAt=null;
   // A scene change cross-fades from the last painted frame, and the new
   // scene's own reveals wait for the fade, so nothing snaps into place.
   const snap=document.createElement("canvas"),snapCtx=snap.getContext("2d"),FADE=360,SETTLE=160;
@@ -1009,19 +1014,30 @@ function Graphic(el){
     fading=!instant&&!leaving&&this.state!==undefined&&cv.width>1&&cv.height>1;
     if(fading){snap.width=cv.width;snap.height=cv.height;snapCtx.drawImage(cv,0,0);}
     sceneDelay=fading?SETTLE:0;
-    state=next;this.state=next;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;
+    state=next;this.state=next;started=performance.now();pausedAt=0;elapsed=0;holdAt=null;configure();dirty=true;
   };
   this.inkTail=()=>Math.max(0,inkTail);
   this.pause=function(){if(!pausedAt){pausedAt=performance.now();this.frame(pausedAt);}};
   this.resume=function(){if(pausedAt){started+=performance.now()-pausedAt;pausedAt=0;}dirty=true;};
   // Before a chapter's first card arrives the scene waits on its opening
   // frame; the card's arrival starts the animation from the beginning.
-  this.hold=function(){started=performance.now();pausedAt=started;elapsed=0;instant=reduced;dirty=true;};
-  this.restart=function(){started=performance.now();pausedAt=0;elapsed=0;instant=reduced;dirty=true;};
+  // Holding above the trap's first card while another reading is on screen
+  // lets that reading rewind to the plain cipher first, then freezes there.
+  this.hold=function(){
+    started=performance.now();elapsed=0;instant=reduced;dirty=true;
+    const rewinding=state.startsWith("trap")&&trapFrom>=0&&!instant;
+    holdAt=rewinding?trapRewind:null;pausedAt=rewinding?0:started;
+  };
+  this.restart=function(){
+    // A rewind that was held at the plain cipher is finished; start clean.
+    if(holdAt!==null){trapFrom=-1;trapRewind=0;trapOffset=0;holdAt=null;}
+    started=performance.now();pausedAt=0;elapsed=0;instant=reduced;dirty=true;
+  };
   this.replay=function(){if(state!=="prayer")return;instant=reduced;started=performance.now();pausedAt=0;elapsed=0;lastLetter=21;strip("","reading");dirty=true;};
   this.frame=function(now){
     if(W<2||H<2)return;
     const before=elapsed;elapsed=Math.max(0,(pausedAt||now)-started);
+    if(holdAt!==null&&elapsed>=holdAt){elapsed=holdAt;if(!pausedAt)pausedAt=started+holdAt;}
     // Marks appear at their recorded values; animation never invents new scores.
     // Keep painting until the slowest staggered reveal (the card rows) has finished.
     if(!instant&&before<1700+SETTLE&&elapsed!==before)dirty=true;

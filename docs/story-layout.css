@@ -67,6 +67,8 @@ the passages that explain it rise over its lower part, one at a time. */
 .scrolly { --story-gutter: 24px; padding-inline: var(--story-gutter); }
 .chapter { display: block; position: relative; }
 .chapter > .text { max-width: none; padding-block: 24px 40px; }
+/* A chapter heading sits well clear of the rule above it. */
+.chapter + .chapter > .text.text-before:has(h2, h3) { padding-top: 56px; }
 .chapter:first-child .text { padding-top: 24px; }
 .step { min-height: 0; max-width: 640px; margin-inline: auto; padding-bottom: 32px; scroll-margin-top: 24px; }
 .step + .step { padding-top: 16px; }
