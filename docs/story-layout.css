@@ -145,7 +145,7 @@ figure img {
     max-width: 560px;
     border: 1px solid var(--veil-2);
     border-radius: 0;
-    background: #fff;
+    background: var(--card-bg, #fff);
     box-shadow: 0 6px 24px rgb(0 0 0 / 8%);
     pointer-events: auto;
     will-change: opacity;

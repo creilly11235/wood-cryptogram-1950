@@ -22,7 +22,7 @@
 <meta property="article:author" content="Colin Reilly">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400&display=swap">
 <style>
 /* Two garamonds, one for titles and one for reading, on stone paper, with one
    monospace for cipher data. Blue, teal and red retain their meaning in the graphics.
@@ -32,7 +32,7 @@
   --bone:#000; --bone-2:#5e5b54; --bone-3:var(--bone-2); --ink:var(--room);
   --candle:#315f7d; --candle-soft:rgba(49,95,125,.10); --ember:#a64642;
   --dot-g:#8d9ba8; --dot-p:#26796c; --dot-b:var(--candle); --dot-v:var(--ember); --dot-s:#c6ced6; --dot-tew:var(--bone);
-  --de:var(--candle); --af:var(--dot-p); --sig:var(--bone); --label-bg:rgba(235,232,224,.96);
+  --de:var(--candle); --af:var(--dot-p); --sig:var(--bone); --label-bg:rgba(235,232,224,.96); --card-bg:#fff;
   --cipher-encoded-bg:#000; --cipher-encoded-fg:#ebe8e0; --cipher-encoded-border:#000;
   --cipher-decoded-bg:transparent; --cipher-decoded-fg:#000; --cipher-decoded-border:#000;
   --body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif; --display:"Cormorant Garamond","EB Garamond",Garamond,Georgia,serif; --mono:"IBM Plex Mono","Courier New",Courier,monospace;
@@ -60,7 +60,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 :root[lang="de"] body{-webkit-hyphens:auto;hyphens:auto}
 :root[lang="de"] .hero h1,:root[lang="de"] .step h2,:root[lang="de"] .step h3{-webkit-hyphens:manual;hyphens:manual}
 .hero h1{font:400 clamp(2.25rem,4.2vw,2.875rem)/1.2 var(--display);margin:0 auto;text-wrap:balance;max-width:24ch;letter-spacing:.005em}
-.hero .byline{display:grid;justify-items:center;gap:2px;font:var(--t-note);color:var(--bone-2);margin:28px 0 0}
+.hero .byline{font:var(--t-note);color:var(--bone-2);margin:28px 0 0}
 /* The ciphertext holds in the middle of the screen while the opening scrolls
    beneath it, decoding as the reader goes. The script measures the figure
    and sets --hero-h so the row sits centred. */
@@ -77,7 +77,7 @@ a:focus-visible{outline:2px solid var(--candle);outline-offset:4px}
 .cipher-row .t{width:var(--tw);height:calc(var(--tw) * 1.25);font-size:calc(var(--tw) * .65)}
 .cipher-row figcaption{font:var(--t-note);color:var(--bone-2);margin-top:14px;max-width:58ch;text-wrap:pretty}
 .hero .lede{max-width:640px;margin-inline:auto;text-align:left}
-.hero .byline.answer-status{display:block;text-wrap:pretty}
+.hero .byline.answer-status{text-wrap:pretty}
 .hero .answer-status a{color:var(--bone)}
 .hero .answer-status time{white-space:nowrap}
 .hero .lede{margin-top:20px}
@@ -199,11 +199,11 @@ footer p{margin:0 0 .7em}
 .endmatter h2{margin-top:0}
 .endmatter.step{min-height:0}
 </style>
-<link rel="stylesheet" href="story-layout.css?v=29">
-<link rel="stylesheet" href="cipher-cards.css?v=27">
-<link rel="stylesheet" href="cipher-walkthrough.css?v=32">
+<link rel="stylesheet" href="story-layout.css?v=30">
+<link rel="stylesheet" href="cipher-cards.css?v=28">
+<link rel="stylesheet" href="cipher-walkthrough.css?v=33">
 <link rel="stylesheet" href="story-graphics.css?v=27">
-<link rel="stylesheet" href="try-cipher.css?v=38">
+<link rel="stylesheet" href="try-cipher.css?v=39">
 </head>
 <body>
 
@@ -537,7 +537,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="cipher-walkthrough.js?v=30"></script>
+<script src="cipher-walkthrough.js?v=31"></script>
 <script>
 (function(){
 "use strict";
@@ -619,7 +619,7 @@ function Graphic(el){
   const self=this,cv=el.querySelector("canvas"),ctx=cv.getContext("2d");
   const tiles=el.querySelector(".tiles"),sub=el.querySelector(".sub");
   const legend=el.querySelector(".legend");
-  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,trapPrev=-1,trapPrevClock=Infinity,revealBase=0;
+  let state="summary",dirty=true,started=0,pausedAt=0,instant=true,lastLetter=-1,stripKind="cipher",elapsed=0,slipShown=0,trapIndex=-1,trapFrom=-1,trapFromClock=0,trapRewind=0,trapOffset=0,revealBase=0;
   // A scene change cross-fades from the last painted frame, and the new
   // scene's own reveals wait for the fade, so nothing snaps into place.
   const snap=document.createElement("canvas"),snapCtx=snap.getContext("2d"),FADE=360,SETTLE=160;
@@ -631,7 +631,8 @@ function Graphic(el){
   const mark=y=>{if(y>inkBottom)inkBottom=y;};
   const color=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   let ink,muted,blue,teal,pale,background,gridGray,decodedBg,decodedFg,decodedBorder,encodedBg,encodedFg,encodedBorder;
-  const serif='"Libre Caslon Text", Georgia, serif',mono='"Courier Prime", monospace';
+  // The canvas uses the page's own faces, read from its tokens on resize.
+  let serif="Georgia, serif",mono="monospace";
   const font=(size,code=false)=>`${size}px ${code?mono:serif}`;
   function text(s,x,y,size=14,c=ink,align="left",code=false){
     ctx.font=font(size,code);ctx.fillStyle=c;ctx.textAlign=align;ctx.textBaseline="middle";ctx.fillText(s,x,y);mark(y+size*.6);
@@ -646,7 +647,7 @@ function Graphic(el){
     const width=ctx.measureText(s).width+12,height=fitted+12,left=x-5,top=y-height/2;
     ctx.fillStyle=kind==="decoded"?decodedBg:ink;
     ctx.strokeStyle=kind==="decoded"?decodedBorder:ink;ctx.lineWidth=1;
-    ctx.beginPath();ctx.roundRect(left+.5,top+.5,width-1,height-1,4);ctx.fill();ctx.stroke();
+    ctx.fillRect(left+.5,top+.5,width-1,height-1);ctx.strokeRect(left+.5,top+.5,width-1,height-1);
     if(kind==="decoded")line(left+3,top+height-2.5,left+width-3,top+height-2.5,decodedBorder,2);
     text(s,x+1,y,fitted,kind==="decoded"?decodedFg:background,"left",true);
   }
@@ -687,12 +688,13 @@ function Graphic(el){
     if(stripSig&&stripSig!==s+kind)fadeIn(tiles);stripSig=s+kind;
     sub.replaceChildren();
   }
-  // The trap cycles through its sentences on the frame clock, so pausing
-  // holds it. Between sentences the cards slide back into their groups of
-  // five and flip back to the cipher before the next reading plays.
+  // The trap's readings run on the frame clock, so pausing holds them.
+  // Between readings the cards on screen slide back into their groups of
+  // five and flip back to the cipher, at double speed, and the next reading
+  // plays from there without the opening pause.
   function trapShow(index){trapIndex=index;strip("","reading");revealBase=0;}
   function configure(){
-    legend.replaceChildren();strip(CT);lastLetter=-1;trapIndex=-1;revealBase=0;tiles.style.opacity="";sub.style.opacity="";
+    legend.replaceChildren();strip(CT);lastLetter=-1;trapIndex=-1;revealBase=0;if(!state.startsWith("trap")){trapFrom=-1;trapRewind=0;trapOffset=0;}tiles.style.opacity="";sub.style.opacity="";
     switch(state){
       case "trap":case "trap2":case "trap3":trapShow(TRAP_STATES[state]);break;
       case "shelves":strip("","reading");break;
@@ -782,7 +784,7 @@ function Graphic(el){
     const kind=flip<.5?"encoded":"decoded",sx=Math.max(.04,Math.abs(1-2*flip));
     ctx.save();ctx.translate(x+tile/2,y);ctx.scale(sx,1);
     ctx.fillStyle=kind==="encoded"?encodedBg:decodedBg;ctx.strokeStyle=kind==="encoded"?encodedBorder:decodedBorder;ctx.lineWidth=1;
-    ctx.beginPath();ctx.roundRect(-tile/2+.5,-height/2+.5,tile-1,height-1,3);ctx.fill();ctx.stroke();
+    ctx.fillRect(-tile/2+.5,-height/2+.5,tile-1,height-1);ctx.strokeRect(-tile/2+.5,-height/2+.5,tile-1,height-1);
     if(kind==="decoded")line(-tile/2+2,height/2-2,tile/2-2,height/2-2,decodedBorder,1.5);
     text(kind==="encoded"?back:c,0,0,size,kind==="encoded"?encodedFg:decodedFg,"center",true);
     ctx.restore();mark(y+height/2);
@@ -819,33 +821,41 @@ function Graphic(el){
   }
   // A run of cipher cards flips to its reading, then the cards slide into
   // the words of that reading. Both layouts share the same top edge and the
-  // cards keep one size throughout.
+  // cards keep one size throughout. The story is drawn at a clock of its
+  // own, so it can play forward, hold, or run backwards.
   const groupFive=s=>s.replace(/ /g,"").match(/.{1,5}/g).join(" ");
-  const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300,CARD_REWIND=1600;
-  function cardStory(text,cipher,p,tile,top,delay=0,rewindFrom=null){
+  const CARD_FLIP=400,CARD_MOVE=1300,CARD_END=2300,CARD_SETTLED=CARD_MOVE+700;
+  function cardStoryAt(text,cipher,p,tile,top,clock){
     const letters=text.replace(/ /g,""),height=tile*1.2,rowStep=height+tile*.35;
     // The cipher starts in the same groups of five the hero uses.
     const start=cardRows(groupFive(letters),p.w,tile),target=cardRows(text,p.w,tile);
-    // Rewinding plays the story backwards from wherever it had got to on
-    // its own clock (rewindFrom): the words slide back into fives, then
-    // each card flips back to its cipher letter.
-    const rewind=rewindFrom!==null;
-    const was=at=>ease((rewindFrom-at)/700),wasFlip=i=>ease((rewindFrom-CARD_FLIP-i*25)/320);
-    const move=rewind?was(CARD_MOVE)*(1-progress(delay,700)):progress(CARD_MOVE+delay,700);
+    const move=ease((clock-CARD_MOVE)/700);
     [...letters].forEach((c,i)=>{
       const f=start.positions[i],x0=p.x+f.x,y0=top+height/2+f.row*rowStep;
       const t=target.positions[i],x1=p.x+t.x,y1=top+height/2+t.row*rowStep;
-      const x=x0+(x1-x0)*move,y=y0+(y1-y0)*move;
-      const flip=rewind?wasFlip(i)*(1-progress(delay+760+i*25,320)):progress(CARD_FLIP+delay+i*25,320);
+      const x=x0+(x1-x0)*move,y=y0+(y1-y0)*move,flip=ease((clock-CARD_FLIP-i*25)/320);
       ctx.save();ctx.globalAlpha=sceneAlpha;card(c,x,y,tile,height,tile*.62,flip,cipher[i]||c);ctx.restore();
     });
   }
-  // One of the trap's readings. After another reading, that one first
-  // rewinds to the plain cipher, and the new reading plays from there.
-  function trapScene(p,tile,top){
+  function cardStory(text,cipher,p,tile,top,delay=0){
+    cardStoryAt(text,cipher,p,tile,top,instant?Infinity:elapsed-revealBase-sceneDelay-delay);
+  }
+  // Which reading the trap shows right now, and how far along its story is.
+  function trapShown(){
     const clock=instant?Infinity:elapsed-revealBase-sceneDelay;
-    if(trapPrev>=0&&clock<CARD_REWIND){cardStory(TRAP_MSGS[trapPrev],CT,p,tile,top,0,trapPrevClock);return;}
-    cardStory(TRAP_MSGS[Math.max(0,trapIndex)],CT,p,tile,top,trapPrev>=0?CARD_REWIND:0);
+    if(trapFrom>=0&&clock<trapRewind)return {index:trapFrom,clock:trapFromClock-2*clock};
+    return {index:Math.max(0,trapIndex),clock:clock-trapRewind+trapOffset};
+  }
+  // Leaving one reading for another rewinds whatever is on screen first.
+  // Going back to the reading still on screen simply carries on from where it is.
+  function trapLeave(next){
+    const shown=trapShown(),at=Math.max(0,Math.min(CARD_SETTLED,shown.clock));
+    if(shown.index===next){trapFrom=-1;trapRewind=0;trapOffset=at;return;}
+    trapFrom=shown.index;trapFromClock=at;trapRewind=Math.max(0,at-CARD_FLIP)/2;trapOffset=CARD_FLIP;
+  }
+  function trapScene(p,tile,top){
+    const shown=trapShown();
+    cardStoryAt(TRAP_MSGS[shown.index],CT,p,tile,top,shown.clock);
   }
   function ideaScene(p,tile){
     // Two readings of the same cipher. Each block flips the cipher cards to
@@ -941,7 +951,7 @@ function Graphic(el){
         const cols=m?(W<500?2:4):W<330?3:W<420?4:5,nrows=Math.ceil(BIBLE_LANGUAGES.length/cols),dx=p.w/cols,dy=p.h/nrows;
         BIBLE_LANGUAGES.forEach((name,i)=>reveal(Math.floor(i/cols)*70,()=>{
           const x=p.x+(i%cols)*dx,y=p.y+Math.floor(i/cols)*dy;
-          ctx.fillStyle="#f4f2ec";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x+2.5,y+2.5,dx-6,dy-5,3);ctx.fill();ctx.stroke();mark(y+dy);
+          ctx.fillStyle="#f4f2ec";ctx.strokeStyle=pale;ctx.lineWidth=1;ctx.fillRect(x+2.5,y+2.5,dx-6,dy-5);ctx.strokeRect(x+2.5,y+2.5,dx-6,dy-5);mark(y+dy);
           line(x+7,y+7,x+7,y+dy-7,muted,1.5);label(name,x+13,y+dy/2,dx-21,m?16:CAP,ink);
         }));break;
       }
@@ -998,7 +1008,7 @@ function Graphic(el){
     // Measure layout space, not the temporary scale during card expansion.
     W=Math.max(1,cv.clientWidth);H=Math.max(1,cv.clientHeight);DPR=Math.min(devicePixelRatio||1,2);
     cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);
-    ink=color("--bone")||"#242a2c";muted=color("--bone-2")||"#64707b";blue=color("--candle")||"#276b86";teal=color("--af")||"#568b82";pale=color("--veil")||"#dce2e4";background=color("--room")||"#fafbfc";gridGray=color("--dot-s")||"#c6ced6";dirty=true;
+    serif=color("--body")||serif;mono=color("--mono")||mono;ink=color("--bone")||"#242a2c";muted=color("--bone-2")||"#64707b";blue=color("--candle")||"#276b86";teal=color("--af")||"#568b82";pale=color("--veil")||"#dce2e4";background=color("--room")||"#fafbfc";gridGray=color("--dot-s")||"#c6ced6";dirty=true;
     decodedBg=color("--cipher-decoded-bg");decodedFg=color("--cipher-decoded-fg");decodedBorder=color("--cipher-decoded-border");
     encodedBg=color("--cipher-encoded-bg");encodedFg=color("--cipher-encoded-fg");encodedBorder=color("--cipher-encoded-border");
     // Resizing clears the bitmap. Paint the current paused scene in this same
@@ -1011,11 +1021,9 @@ function Graphic(el){
     instant=immediate||reduced;
     // Keep the frame on screen so the next scene can fade over it. Between
     // the trap's readings the cards rewind instead, with no fade.
-    // The reading being left is rewound from where its own story had got to.
     const leaving=state.startsWith("trap")&&next.startsWith("trap")&&state!==next;
-    trapPrevClock=leaving&&!instant?elapsed-sceneDelay-(trapPrev>=0?CARD_REWIND:0):Infinity;
-    trapPrev=leaving?TRAP_STATES[state]:-1;
-    fading=!instant&&trapPrev<0&&this.state!==undefined&&cv.width>1&&cv.height>1;
+    if(leaving)trapLeave(TRAP_STATES[next]);
+    fading=!instant&&!leaving&&this.state!==undefined&&cv.width>1&&cv.height>1;
     if(fading){snap.width=cv.width;snap.height=cv.height;snapCtx.drawImage(cv,0,0);}
     sceneDelay=fading?SETTLE:0;
     state=next;this.state=next;started=performance.now();pausedAt=0;elapsed=0;configure();dirty=true;
@@ -1034,7 +1042,7 @@ function Graphic(el){
     // Marks appear at their recorded values; animation never invents new scores.
     // Keep painting until the slowest staggered reveal (the card rows) has finished.
     if(!instant&&before<1700+SETTLE&&elapsed!==before)dirty=true;
-    if((state==="idea"||state.startsWith("trap"))&&!instant&&before<CARD_END+SETTLE+(trapPrev>=0?CARD_REWIND:0)&&elapsed!==before)dirty=true;
+    if((state==="idea"||state.startsWith("trap"))&&!instant&&before<CARD_END+SETTLE+trapRewind&&elapsed!==before)dirty=true;
     if(state==="prayer"&&!instant&&lastLetter<21){
       let n=0;[...tiles.children].forEach((t,i)=>{
         const turn=Math.max(0,Math.min(1,(elapsed-i*90)/320)),decoded=turn>=.5;
@@ -1056,7 +1064,7 @@ window.WoodStory={Graphic,reduced};
 })();
 </script>
 <script src="story-scroll.js?v=30"></script>
-<script src="hero-reveal.js?v=25"></script>
+<script src="hero-reveal.js?v=26"></script>
 <script src="cipher-tokens.js?v=25"></script>
 <script src="try-cipher.js?v=37"></script>
 <script>

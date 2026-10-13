@@ -78,6 +78,7 @@
 .cw-plus,.cw-equals{font-size:22px;padding-top:21px;color:var(--bone-2,#5b646e)}
 .cw-total{font-size:22px;font-weight:400;padding-top:21px}
 .cw-reduction{font:400 22px/1.3 var(--mono,monospace);text-align:center;white-space:nowrap}
+.cw-reduction-result{display:block;margin-top:6px}
 .cw-reduction-arrow{position:relative;top:-.1em}
 .cw-shift-key,.cw-result-label{font-size:16px;text-align:center;line-height:1.4}
 .cw-shift-cards{display:flex;align-items:center;gap:clamp(18px,4cqw,30px)}

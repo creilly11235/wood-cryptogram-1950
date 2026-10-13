@@ -105,7 +105,6 @@
     // finishes before the opening's text arrives.
     const range = Math.max(1, box.height - figure.offsetHeight - start);
     const progress = scrolled / range;
-    figure.classList.toggle('is-stuck', scrolled > 0 && progress < 1);
     const stage = progress < .08 ? 0 : progress < .42 ? 1 : progress < .66 ? 2 : 3;
     if (figure.dataset.stage !== String(stage)) apply(stage);
   }

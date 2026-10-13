@@ -192,9 +192,12 @@
       });
       sum.append(this.node('span', 'cw-equals', '='), this.node('strong', 'cw-total', String(this.firstSum)));
       const reduction = this.node('div', 'cw-reduction');
+      // The arithmetic sits on one line and the letter it gives on the next.
       label.keyReduction.split('→').forEach((part, index) => {
-        if (index) reduction.append(this.node('span', 'cw-reduction-arrow', '→'));
-        reduction.append(part);
+        if (!index) { reduction.append(part.trim()); return; }
+        const result = this.node('span', 'cw-reduction-result');
+        result.append(this.node('span', 'cw-reduction-arrow', '→'), ' ' + part.trim());
+        reduction.append(result);
       });
       this.math.append(sum, reduction);
       this.focus.append(this.focusPair, this.math);
