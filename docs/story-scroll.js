@@ -73,7 +73,7 @@
           // The drawing ends at its lowest mark, or at the legend when one shows.
           const foot = legend && legend.childElementCount ? legend.getBoundingClientRect().bottom
             : canvas.getBoundingClientRect().bottom - (graphic.inkTail ? graphic.inkTail() : 0);
-          const tail = el.getBoundingClientRect().bottom - foot - 28;
+          const tail = el.getBoundingClientRect().bottom - foot - 64;
           const value = Number.isFinite(tail) && tail > 0 ? Math.round(tail) + 'px' : '';
           chapter.style.setProperty('--walk-tail', value);
           if (next) next.style.setProperty('--walk-tail-prev', value);

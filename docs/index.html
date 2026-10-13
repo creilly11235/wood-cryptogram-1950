@@ -581,7 +581,7 @@ function Graphic(el){
     const measureTail=()=>{
       if(!chapter||walk.stage!==walk.lastStage)return;
       const bottom=walk.overview.getBoundingClientRect().bottom;
-      const tail=el.getBoundingClientRect().bottom-bottom-28;
+      const tail=el.getBoundingClientRect().bottom-bottom-64;
       if(Number.isFinite(tail)&&tail>0)chapter.style.setProperty("--walk-tail",Math.round(tail)+"px");
     };
     this.showStage=stage=>{walk.go(stage);if(stage===walk.lastStage)requestAnimationFrame(measureTail);};
@@ -1045,7 +1045,7 @@ function Graphic(el){
 window.WoodStory={Graphic,reduced};
 })();
 </script>
-<script src="story-scroll.js?v=32"></script>
+<script src="story-scroll.js?v=33"></script>
 <script src="hero-reveal.js?v=26"></script>
 <script src="cipher-tokens.js?v=25"></script>
 <script src="try-cipher.js?v=37"></script>
