@@ -85,9 +85,10 @@
 .cw-alpha{display:flex;flex-direction:column;align-items:center;gap:var(--cw-math-gap,16px)}
 .cw-alpha-row{display:flex;gap:6px}
 .cw-alpha-cell{display:flex;flex-direction:column;align-items:center;gap:5px}
-.cw-alpha-card{box-sizing:border-box;width:28px;height:32px;border:1px solid var(--veil-2,#bcb7aa);color:var(--bone-2,#5e5b54);font:400 18px/30px var(--mono,monospace);text-align:center}
-.cw-alpha-card.is-key{border-color:var(--bone,#000);border-bottom:3px double var(--bone,#000);color:var(--bone,#000)}
-.cw-alpha-num{font:400 13px/1 var(--mono,monospace);color:var(--bone-2,#5e5b54)}
+.cw-alpha-card{box-sizing:border-box;width:32px;height:38px;border:1px solid var(--veil-2,#bcb7aa);color:var(--bone-2,#5e5b54);font:400 20px/36px var(--mono,monospace);text-align:center}
+.cw-alpha-card.is-key{border-color:var(--bone,#000);color:var(--bone,#000)}
+.cw-alpha-num{font:400 14px/1 var(--mono,monospace);color:var(--bone-2,#5e5b54)}
+@media(max-width:360px){.cw-alpha-row{gap:4px}.cw-alpha-card{width:28px;height:32px;font:400 18px/30px var(--mono,monospace)}.cw-alpha-num{font-size:13px}}
 .cw-key-letter{font:400 16px/1.4 var(--body,Georgia,serif);text-align:center}
 .cw-result-label{font-size:16px;text-align:center;line-height:1.4}
 .cw-shift-cards{display:flex;align-items:center;gap:clamp(18px,4cqw,30px)}
