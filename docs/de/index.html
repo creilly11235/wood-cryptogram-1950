@@ -202,7 +202,7 @@ footer p{margin:0 0 .7em}
 </style>
 <link rel="stylesheet" href="../story-layout.css?v=30">
 <link rel="stylesheet" href="../cipher-cards.css?v=28">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=35">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=36">
 <link rel="stylesheet" href="../story-graphics.css?v=27">
 <link rel="stylesheet" href="../try-cipher.css?v=39">
 </head>
@@ -538,7 +538,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=32"></script>
+<script src="../cipher-walkthrough.js?v=33"></script>
 <script>
 (function(){
 "use strict";
@@ -590,7 +590,7 @@ function Graphic(el){
     const walk=new CipherWalkthrough(host,{reduced,labels:{
       label:"Von der Botschaft zum Geheimtext",encoded:"Geheimtext",decoded:"Botschaft",
       stages:["Die Botschaft: 14 Buchstaben","Der Schlüsseltext","Wiederholte Wörter werden übersprungen","Ein Schlüsselwort pro Buchstabe","Start mit T und To","Die Buchstabenwerte von To addieren","Mit I: T um 8 Stellen vorwärts","Der erste Geheimtextbuchstabe: B","Für alle 14 Buchstaben wiederholen","Botschaft, Schlüssel und Geheimtext zusammen"],
-      previous:"Zurück",next:"Weiter",replay:"Wiederholen",encryptedMessage:"Die Botschaft",keyLabel:"Der Schlüssel",keyReduction:"35 − 26 = 9 → I",shiftKey:"I verschiebt um 8 Stellen",shift:"8 vorwärts",firstDecoded:"Der Geheimtext beginnt",step:"Schritt",keyWord:"Schlüsselwort",decodedMessage:"Der Geheimtext",swipeHint:"Scrollen oder die Tasten verwenden"
+      previous:"Zurück",next:"Weiter",replay:"Wiederholen",encryptedMessage:"Die Botschaft",keyLabel:"Der Schlüssel",keyReduction:"35 − 26 = 9",keyLetter:"I ist der 9. Buchstabe",shiftKey:"I verschiebt um 8 Stellen",shift:"8 vorwärts",firstDecoded:"Der Geheimtext beginnt",step:"Schritt",keyWord:"Schlüsselwort",decodedMessage:"Der Geheimtext",swipeHint:"Scrollen oder die Tasten verwenden"
     }});
     this.walkthrough=walk;
     this.go=state=>{this.state=state;};

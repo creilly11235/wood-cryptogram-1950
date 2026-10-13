@@ -1089,8 +1089,12 @@
       "de": "\"Der Schlüssel\""
     },
     {
-      "en": "\"35 − 26 = 9 → I\"",
-      "de": "\"35 − 26 = 9 → I\""
+      "en": "\"35 − 26 = 9\"",
+      "de": "\"35 − 26 = 9\""
+    },
+    {
+      "en": "\"I is the 9th letter\"",
+      "de": "\"I ist der 9. Buchstabe\""
     },
     {
       "en": "\"Message, key and cipher together\"",

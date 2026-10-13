@@ -24,7 +24,8 @@
     previous: 'Previous',
     next: 'Next',
     replay: 'Replay',
-    keyReduction: '35 − 26 = 9 → I',
+    keyReduction: '35 − 26 = 9',
+    keyLetter: 'I is the 9th letter',
     shiftKey: 'I means a shift of 8',
     shift: 'Forward 8',
     firstDecoded: 'The ciphertext begins',
@@ -191,15 +192,10 @@
         sum.append(term);
       });
       sum.append(this.node('span', 'cw-equals', '='), this.node('strong', 'cw-total', String(this.firstSum)));
-      const reduction = this.node('div', 'cw-reduction');
-      // The arithmetic sits on one line; the next repeats what is left and
-      // names the letter it gives.
-      const [arithmetic, letter] = label.keyReduction.split('→').map(part => part.trim());
-      reduction.append(arithmetic);
-      const result = this.node('span', 'cw-reduction-result');
-      result.append(arithmetic.split('=').pop().trim() + ' ', this.node('span', 'cw-reduction-arrow', '→'), ' ' + letter);
-      reduction.append(result);
-      this.math.append(sum, reduction);
+      // The arithmetic sits on one line and a sentence names the letter it gives.
+      const reduction = this.node('div', 'cw-reduction', label.keyReduction);
+      const keyLetter = this.node('div', 'cw-key-letter', label.keyLetter);
+      this.math.append(sum, reduction, keyLetter);
       this.focus.append(this.focusPair, this.math);
 
       this.shift = this.node('div', 'cw-shift');
@@ -568,7 +564,9 @@
         this.math.querySelectorAll('.cw-term, .cw-plus, .cw-equals, .cw-total').forEach((element, index) => {
           this.animate(element, [{opacity: 0, transform: 'translateY(7px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 320, delay: index * 55, fill: 'backwards'});
         });
-        this.animate(this.math.querySelector('.cw-reduction'), [{opacity: 0}, {opacity: 1}], {delay: 700, duration: 350, fill: 'backwards'});
+        this.math.querySelectorAll('.cw-reduction, .cw-key-letter').forEach((element, index) => {
+          this.animate(element, [{opacity: 0}, {opacity: 1}], {delay: 700 + index * 250, duration: 350, fill: 'backwards'});
+        });
       } else if (stage === 6) {
         // From the sum, the message card travels to its place on the left and
         // the rest of the scene follows; the count starts once it has landed.
