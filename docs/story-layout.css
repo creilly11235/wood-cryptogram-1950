@@ -177,7 +177,7 @@ figure img {
   .pinned-chapter .cw-word { font-size: clamp(10.5px, 3cqw, 12.5px); }
   .pinned-chapter .cw-prayer { font-size: clamp(17px, 5cqw, 21px); max-width: 32ch; }
   .pinned-chapter .cw-single { width: 64px; height: 72px; font-size: 44px; }
-  .pinned-chapter .cw[data-stage="5"] .cw-single { width: 36px; height: 40px; font-size: 26px; }
+  .pinned-chapter .cw:is([data-stage="5"],[data-stage="6"]) .cw-single { width: 36px; height: 40px; font-size: 26px; }
 }
 @media (max-width: 360px) {
   .scrolly { --story-gutter: 20px; }
