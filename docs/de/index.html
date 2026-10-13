@@ -180,9 +180,9 @@ footer p{margin:0 0 .7em}
 .endmatter h2{margin-top:0}
 .endmatter.step{min-height:0}
 </style>
-<link rel="stylesheet" href="../story-layout.css?v=34">
+<link rel="stylesheet" href="../story-layout.css?v=35">
 <link rel="stylesheet" href="../cipher-cards.css?v=28">
-<link rel="stylesheet" href="../cipher-walkthrough.css?v=39">
+<link rel="stylesheet" href="../cipher-walkthrough.css?v=40">
 <link rel="stylesheet" href="../story-graphics.css?v=28">
 <link rel="stylesheet" href="../try-cipher.css?v=39">
 </head>
@@ -519,7 +519,7 @@ footer p{margin:0 0 .7em}
 </footer>
 
 
-<script src="../cipher-walkthrough.js?v=36"></script>
+<script src="../cipher-walkthrough.js?v=37"></script>
 <script>
 (function(){
 "use strict";
@@ -579,12 +579,12 @@ function Graphic(el){
     // chapter learns how much empty graphic sits below it at the last stage.
     const chapter=el.closest(".chapter");
     const measureTail=()=>{
-      if(!chapter||walk.stage!==9)return;
+      if(!chapter||walk.stage!==walk.lastStage)return;
       const bottom=walk.overview.getBoundingClientRect().bottom;
       const tail=el.getBoundingClientRect().bottom-bottom-28;
       if(Number.isFinite(tail)&&tail>0)chapter.style.setProperty("--walk-tail",Math.round(tail)+"px");
     };
-    this.showStage=stage=>{walk.go(stage);if(stage===9)requestAnimationFrame(measureTail);};
+    this.showStage=stage=>{walk.go(stage);if(stage===walk.lastStage)requestAnimationFrame(measureTail);};
     // The first step plays as the panel comes into view, so the reader sees
     // the sentence as text before the cards form around it.
     const built=performance.now();let introSeen=false;
