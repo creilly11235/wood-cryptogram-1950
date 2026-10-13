@@ -200,7 +200,7 @@ footer p{margin:0 0 .7em}
 <link rel="stylesheet" href="cipher-cards.css?v=25">
 <link rel="stylesheet" href="cipher-walkthrough.css?v=30">
 <link rel="stylesheet" href="story-graphics.css?v=26">
-<link rel="stylesheet" href="try-cipher.css?v=32">
+<link rel="stylesheet" href="try-cipher.css?v=33">
 </head>
 <body>
 
@@ -377,18 +377,19 @@ footer p{margin:0 0 .7em}
 <section class="endmatter step try" id="try-it">
 <h2>Try Thouless’s method yourself</h2>
 <p>Write a short message, give each of its letters a key word, and watch the cipher form the way it did for Thouless and Wood. The key can be a famous passage or words of your own, and no word is used twice.</p>
+<div class="try-panel" data-stage="message">
+<div class="try-body">
 <div class="try-step" data-step="message">
 <div class="try-head"><label class="try-label" for="try-message">Your message</label><button class="try-edit" type="button" hidden>Edit</button></div>
-<textarea id="try-message" class="try-input" rows="2" maxlength="120" spellcheck="false" autocomplete="off">THERE IS NO DEATH</textarea>
-<p class="try-status" aria-live="polite"></p>
-<button class="try-button" type="button" data-act="message">Next</button>
+<textarea id="try-message" class="try-input" rows="2" maxlength="70" spellcheck="false" autocomplete="off">THERE IS NO DEATH</textarea>
 <div class="try-cards try-plain" role="img" translate="no" hidden></div>
 </div>
 <div class="try-step" data-step="key" hidden>
 <div class="try-head"><label class="try-label" for="try-preset">Your key</label><button class="try-edit" type="button" hidden>Edit</button></div>
 <select id="try-preset" class="try-input">
 <option value="own">Words of your own, one for each letter</option>
-<option value="hamlet">Hamlet’s soliloquy, Thouless’s own key</option>
+<hr>
+<option value="hamlet" selected>Hamlet’s soliloquy, Thouless’s own key</option>
 <option value="luther">The Lord’s Prayer in the 1912 Luther Bible, Wood’s key</option>
 <option value="gettysburg">The Gettysburg Address</option>
 <option value="genesis">Genesis, chapter 1, in the King James Bible</option>
@@ -398,15 +399,22 @@ footer p{margin:0 0 .7em}
 </select>
 <p class="try-passage" translate="no" hidden></p>
 <div class="try-pairs" translate="no"></div>
-<p class="try-status" aria-live="polite"></p>
-<button class="try-button" type="button" data-act="generate">Generate the cipher</button>
 </div>
 <div class="try-step" data-step="cipher" hidden>
 <p class="try-label">Your cipher</p>
 <div class="try-cards try-cipher" role="img" translate="no"></div>
+</div>
+</div>
+<div class="try-foot">
+<p class="try-status" aria-live="polite"></p>
+<button class="try-button" type="button" data-act="message">Next</button>
+<button class="try-button" type="button" data-act="generate" hidden>Generate the cipher</button>
+<button class="try-button" type="button" data-act="restart" hidden>Start again</button>
+</div>
+</div>
+<div class="try-table" hidden>
 <h3>The key, word by word</h3>
 <div class="table-wrap"><table><thead><tr><th scope="col">No.</th><th scope="col">Key word</th><th scope="col">Sum</th><th scope="col">Key</th><th scope="col">Plain → cipher</th></tr></thead><tbody translate="no"></tbody></table></div>
-<button class="try-button" type="button" data-act="restart">Start again</button>
 </div>
 </section>
 <section class="endmatter step" id="credits">
@@ -1027,7 +1035,7 @@ window.WoodStory={Graphic,reduced};
 <script src="story-scroll.js?v=30"></script>
 <script src="hero-reveal.js?v=25"></script>
 <script src="cipher-tokens.js?v=25"></script>
-<script src="try-cipher.js?v=32"></script>
+<script src="try-cipher.js?v=33"></script>
 <script>
 TryCipher(document.querySelector("#try-it"),{
   noMessage:"Type a message first.",

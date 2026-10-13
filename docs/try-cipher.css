@@ -1,9 +1,16 @@
-/* The reader's own cipher at the end of the article, in three steps. Each
-   step sits under the same muted helper label the graphics use, locks when
-   done, and reopens from its Edit button. The cards are the article's own
-   letter cards, and a key word's card flips the way the walkthrough's do. */
+/* The reader's own cipher at the end of the article. The panel fills the
+   screen the way the graphics do and sticks while the heading above it
+   scrolls away. Three steps sit inside it under the same muted helper
+   labels the graphics use, each locking when done and reopening from its
+   Edit button, and the one button for the current stage is centred at the
+   foot. The letter cards are the article's own, and a key word's card
+   flips the way the walkthrough's do. The key table follows the panel. */
 .try{--tw:28px}
-.try .try-step{margin:28px 0 0;transition:opacity .45s ease-out,transform .45s ease-out}
+.try [hidden]{display:none!important}
+.try .try-panel{position:sticky;top:0;z-index:1;display:flex;flex-direction:column;min-height:100vh;min-height:100svh;margin:28px 0 0;background:var(--room)}
+.try .try-body{flex:1 1 auto;min-height:0;padding-top:max(16px,env(safe-area-inset-top,0px))}
+.try .try-foot{flex:none;display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 0 max(18px,env(safe-area-inset-bottom,0px));border-top:1px solid var(--veil)}
+.try .try-step{margin:0 0 24px;transition:opacity .45s ease-out,transform .45s ease-out}
 .try .try-step.is-entering{opacity:0;transform:translateY(12px)}
 .try .try-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 8px}
 .try .try-label{display:block;font:var(--t-note);color:var(--bone-2);margin:0 0 8px}
@@ -11,22 +18,21 @@
 .try .try-edit{appearance:none;border:0;background:none;padding:4px 0;margin:-4px 0;font:var(--t-note);color:var(--bone-2);text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
 .try .try-edit:hover{color:var(--candle)}
 .try .try-edit:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
-.try .try-input{display:block;width:100%;margin:0 0 16px;padding:10px 12px;border:1px solid var(--veil-2);border-radius:2px;background:#fff;color:var(--bone);font:var(--t-body);line-height:1.5;resize:vertical}
+.try .try-input{display:block;width:100%;margin:0 0 14px;padding:10px 12px;border:1px solid var(--veil-2);border-radius:2px;background:#fff;color:var(--bone);font:var(--t-body);line-height:1.5;resize:vertical}
 .try select.try-input{min-height:44px;padding-block:0;cursor:pointer;text-overflow:ellipsis}
 .try .try-input:focus-visible,.try .try-word-input:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
-.try .try-input::placeholder{color:var(--bone-2);opacity:1}
-.try .try-button{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin:4px 0 0;padding:8px 16px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:2px;cursor:pointer}
+.try .try-button{display:inline-flex;align-items:center;justify-content:center;font:var(--t-note);min-height:44px;margin:0;padding:8px 22px;border:1px solid var(--veil-2);background:transparent;color:var(--bone);border-radius:2px;cursor:pointer}
 .try .try-button:hover{border-color:var(--candle)}
 .try .try-button:focus-visible{outline:2px solid var(--candle);outline-offset:3px}
 .try .try-button:disabled{color:var(--bone-2);border-color:var(--veil);cursor:default}
-.try .is-locked .try-input,.try .is-locked .try-button,.try .is-locked .try-status,.try .is-locked .try-passage{display:none}
-.try .try-cards{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 12px;margin:0 0 8px;min-height:calc(var(--tw) * 1.25)}
+.try .is-locked .try-input,.try .is-locked .try-passage{display:none}
+.try .try-cards{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 12px;margin:0;min-height:calc(var(--tw) * 1.25)}
 .try .grp{display:flex;gap:3px}
 .try .t{width:var(--tw);height:calc(var(--tw) * 1.25);aspect-ratio:auto;font-size:calc(var(--tw) * .65);transition:none}
-.try .try-passage{margin:0 0 16px;font:var(--t-note);color:var(--bone);text-wrap:pretty}
+.try .try-passage{margin:0 0 14px;font:var(--t-note);color:var(--bone);text-wrap:pretty}
 .try .try-word-src.is-repeat{color:var(--bone-2);text-decoration:line-through;text-decoration-thickness:1px}
 /* One pair per letter: the letter card above its key word, grouped by message word. */
-.try .try-pairs{display:flex;flex-wrap:wrap;align-items:flex-start;gap:14px 14px;margin:0 0 16px}
+.try .try-pairs{display:flex;flex-wrap:wrap;align-items:flex-start;gap:14px 14px;margin:0}
 .try .try-pairs:empty{display:none}
 .try .try-group{display:flex;flex-wrap:wrap;align-items:flex-start;gap:4px}
 .try .try-pair{display:flex;flex-direction:column;align-items:center;min-width:var(--tw)}
@@ -40,11 +46,13 @@
 .try .try-word-input{box-sizing:border-box;width:6.5ch;min-width:var(--tw);margin-top:5px;padding:5px 4px;border:1px solid var(--veil-2);border-radius:2px;background:#fff;color:var(--bone);font:400 .8125rem/1.3 var(--body);text-align:center}
 .try .try-word-input.is-duplicate{border-color:var(--ember)}
 .try .try-pairs.is-custom{gap:14px 10px}
-.try .try-pairs.is-custom .try-group{gap:4px}
-.try .try-status{font:var(--t-note);color:var(--bone-2);margin:0 0 12px}
+.try .try-status{font:var(--t-note);color:var(--bone-2);margin:0;text-align:center;max-width:52ch;text-wrap:pretty}
 .try .try-status:empty{display:none}
-.try .try-cipher{margin-bottom:24px}
-.try h3{margin-top:0}
-.try .table-wrap{margin-bottom:8px}
+.try .try-table{position:relative;z-index:2;padding-top:32px;background:var(--room)}
+.try .try-table h3{margin-top:0}
+.try .try-table .table-wrap{margin-bottom:0}
+@media(max-width:900px){
+  .try .try-panel{margin-inline:calc(-1 * var(--story-gutter,24px));padding-inline:var(--story-gutter,24px)}
+}
 @media(max-width:600px){.try{--tw:clamp(20px,calc((100vw - 104px) / 11),26px)}.try .try-word{font-size:.6875rem}.try .try-word-input{width:6ch;font-size:.75rem}}
 @media(prefers-reduced-motion:reduce){.try .try-step,.try .try-card-turn{transition:none}}

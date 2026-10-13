@@ -1,5 +1,6 @@
-/* The reader's own cipher, built in three steps the way the walkthrough
-   shows it. First the message becomes letter cards. Then every letter gets
+/* The reader's own cipher, built in three steps inside a panel that fills
+   the screen the way the article's graphics do, with the one button that
+   moves the reader on centred at its foot. First the message becomes letter cards. Then every letter gets
    a key word, from a chosen passage (repeats skipped, as Thouless's rule
    says) or typed by the reader one word per letter. Then each word turns
    into its key letter (A=1 to Z=26, summed and reduced modulo 26) and the
@@ -90,23 +91,34 @@
 
   window.TryCipher = function (section, labels) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const panel = section.querySelector('.try-panel');
     const steps = {
       message: section.querySelector('[data-step="message"]'),
       key: section.querySelector('[data-step="key"]'),
       cipher: section.querySelector('[data-step="cipher"]')
+    };
+    const buttons = {
+      message: section.querySelector('[data-act="message"]'),
+      key: section.querySelector('[data-act="generate"]'),
+      cipher: section.querySelector('[data-act="restart"]')
     };
     const message = section.querySelector('#try-message');
     const preset = section.querySelector('#try-preset');
     const plainOut = steps.message.querySelector('.try-plain');
     const passageOut = steps.key.querySelector('.try-passage');
     const pairsOut = steps.key.querySelector('.try-pairs');
-    const generate = steps.key.querySelector('[data-act="generate"]');
     const cipherOut = steps.cipher.querySelector('.try-cipher');
-    const body = steps.cipher.querySelector('tbody');
-    const status = { message: steps.message.querySelector('.try-status'), key: steps.key.querySelector('.try-status') };
+    const table = section.querySelector('.try-table');
+    const body = table.querySelector('tbody');
+    const status = section.querySelector('.try-status');
     const state = { words: [], plain: '', keyWords: [], pairs: [], busy: false };
     let run = 0; // bumps on every edit so an animation in flight stops
 
+    // The foot of the panel carries the one button for the current stage.
+    function stage(name) {
+      Object.keys(buttons).forEach(key => { buttons[key].hidden = key !== name; });
+      panel.dataset.stage = name;
+    }
     function show(step, visible) {
       const el = steps[step];
       if (!visible) { el.hidden = true; el.classList.remove('is-entering'); return; }
@@ -128,12 +140,17 @@
       });
       return wait(items.length ? (items.length - 1) * gap + 320 : 0);
     }
+    function settle() {
+      // The panel fills the screen; the heading above it scrolls away.
+      const top = panel.getBoundingClientRect().top;
+      if (Math.abs(top) > 2) panel.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' });
+    }
 
     // Step 1: the message becomes cards, one letter each, grouped by word.
     function setMessage() {
       const words = message.value.split(/\s+/).map(letters).filter(Boolean);
-      if (!words.length) { status.message.textContent = labels.noMessage; message.focus(); return; }
-      status.message.textContent = '';
+      if (!words.length) { status.textContent = labels.noMessage; message.focus(); return; }
+      status.textContent = '';
       state.words = words;
       state.plain = words.join('');
       plainOut.replaceChildren(...words.map(word => {
@@ -144,10 +161,12 @@
       plainOut.setAttribute('aria-label', words.join(' '));
       plainOut.hidden = false;
       lock('message', true);
+      message.blur();
+      settle();
       reveal([...plainOut.querySelectorAll('.t')], 40).then(() => {
         show('key', true);
+        stage('key');
         renderKey();
-        steps.key.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
       });
     }
 
@@ -159,8 +178,8 @@
       let words = [];
       passageOut.replaceChildren();
       passageOut.hidden = true;
-      status.key.textContent = '';
-      generate.disabled = false;
+      status.textContent = '';
+      buttons.key.disabled = false;
       if (chosen) {
         const key = keyFromPassage(chosen.text, length);
         words = key.words;
@@ -171,8 +190,8 @@
         passageOut.lang = chosen.lang;
         passageOut.hidden = false;
         if (words.length < length) {
-          status.key.textContent = fill(labels.shortKey, { words: key.distinct, letters: length });
-          generate.disabled = true;
+          status.textContent = fill(labels.shortKey, { words: key.distinct, letters: length });
+          buttons.key.disabled = true;
         }
       }
       state.pairs = [];
@@ -228,8 +247,8 @@
         else seen.set(tok, item.input);
         if (!bad) item.input.classList.remove('is-duplicate');
       });
-      status.key.textContent = duplicate ? labels.repeatWord : missing ? '' : '';
-      generate.disabled = missing || duplicate;
+      status.textContent = duplicate ? labels.repeatWord : '';
+      buttons.key.disabled = missing || duplicate;
       return !(missing || duplicate);
     }
     function spread(index) {
@@ -248,15 +267,16 @@
     // cipher letter, one pair after another, then the cipher reads in fives.
     async function generateCipher() {
       if (state.busy) return;
-      if (!PRESETS[preset.value] && !validateCustom()) { if (!status.key.textContent) status.key.textContent = labels.missingWords; return; }
+      if (!PRESETS[preset.value] && !validateCustom()) { if (!status.textContent) status.textContent = labels.missingWords; return; }
       state.busy = true;
       run += 1;
       const ticket = run;
       const rows = rowsFor(state.plain, state.keyWords);
       lock('key', true);
+      stage('none');
+      settle();
       pairsOut.querySelectorAll('.try-word-input').forEach((input, index) => {
-        const word = node('span', 'try-word', rows[index].word);
-        input.replaceWith(word);
+        input.replaceWith(node('span', 'try-word', rows[index].word));
       });
       const pairs = state.pairs;
       const gap = reduced ? 0 : 130;
@@ -297,7 +317,8 @@
         return tr;
       }));
       show('cipher', true);
-      steps.cipher.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
+      table.hidden = false;
+      stage('cipher');
       await reveal([...cipherOut.querySelectorAll('.t')], 60);
       state.busy = false;
     }
@@ -305,19 +326,24 @@
     function editMessage() {
       run += 1; state.busy = false;
       show('cipher', false); show('key', false);
+      table.hidden = true;
       lock('key', false);
       lock('message', false);
       plainOut.hidden = true;
+      status.textContent = '';
+      stage('message');
       message.focus();
     }
     function editKey() {
       run += 1; state.busy = false;
       show('cipher', false);
+      table.hidden = true;
       lock('key', false);
+      stage('key');
       renderKey();
     }
 
-    steps.message.querySelector('[data-act="message"]').addEventListener('click', setMessage);
+    buttons.message.addEventListener('click', setMessage);
     message.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); setMessage(); } });
     steps.message.querySelector('.try-edit').addEventListener('click', editMessage);
     steps.key.querySelector('.try-edit').addEventListener('click', editKey);
@@ -333,10 +359,11 @@
       event.preventDefault();
       const index = state.pairs.findIndex(item => item.input === event.target);
       const next = state.pairs[index + 1];
-      if (next && next.input) next.input.focus(); else generate.focus();
+      if (next && next.input) next.input.focus(); else buttons.key.focus();
     });
-    generate.addEventListener('click', generateCipher);
-    steps.cipher.querySelector('[data-act="restart"]').addEventListener('click', () => { state.keyWords = []; editMessage(); });
+    buttons.key.addEventListener('click', generateCipher);
+    buttons.cipher.addEventListener('click', () => { state.keyWords = []; editMessage(); });
+    stage('message');
 
     return { encipher, setMessage, generateCipher };
   };
